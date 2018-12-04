@@ -8,8 +8,6 @@ import fmcomponents from 'fmcomponents/dist/fmcomponents';
 
 import createI18n from './i18n';
 
-window.hello = 12;
-
 if (process.env.NODE_ENV !== 'production') {
   Vue.config.productionTip = false;
 }
