@@ -1,7 +1,8 @@
 import Vue from 'vue';
 import App from './App.vue';
-import router from './router';
-import store from './store';
+import createRouter from './router';
+import createStore from './stores';
+import { sync } from 'vuex-router-sync';
 import './registerServiceWorker';
 import fmui from '@fmfe/fm-vue-ui';
 import fmcomponents from 'fmcomponents/dist/fmcomponents';
@@ -11,7 +12,6 @@ import createI18n from './i18n';
 if (process.env.NODE_ENV !== 'production') {
   Vue.config.productionTip = false;
 }
-(window as any).FMLang = 'zh-CN';
 
 const injectEnv: any = {
   install(vue: any, option: any) {
@@ -41,7 +41,10 @@ Vue.use(fmcomponents, {
 Vue.use(fmui);
 
 const i18n = createI18n();
+const store = createStore();
+const router = createRouter();
 
+sync(store, router);
 const app = new Vue({
   i18n,
   router,
