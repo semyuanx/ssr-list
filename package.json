@@ -57,6 +57,7 @@
   "lint-staged": {
     "*.{js,vue,ts,tsx}": [
       "yarn lint",
+      "yarn lint --no-fix",
       "git add"
     ]
   }
