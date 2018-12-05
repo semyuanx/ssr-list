@@ -16,6 +16,7 @@
     "chai": "^4.1.2",
     "fmcomponents": "git+ssh://git@gitlab.followme.com/Frontend/fmcomponents.git#production",
     "lib-message": "git+ssh://git@gitlab.followme.com:Frontend/lib-message.git#master",
+    "minireset.css": "^0.0.3",
     "register-service-worker": "^1.5.2",
     "vue": "^2.5.17",
     "vue-class-component": "^6.0.0",

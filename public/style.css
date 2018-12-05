@@ -1,0 +1,407 @@
+@font-face {
+  font-family: 'Followme-iconfont';
+  src:  url('fonts/Followme-iconfont.eot?5svaaa');
+  src:  url('fonts/Followme-iconfont.eot?5svaaa#iefix') format('embedded-opentype'),
+    url('fonts/Followme-iconfont.ttf?5svaaa') format('truetype'),
+    url('fonts/Followme-iconfont.woff?5svaaa') format('woff'),
+    url('fonts/Followme-iconfont.svg?5svaaa#Followme-iconfont') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+[class^="icon-"], [class*=" icon-"] {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'Followme-iconfont' !important;
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-like_filled_24px:before {
+  content: "\e900";
+}
+.icon-message_filled_24px:before {
+  content: "\e901";
+}
+.icon-share_filled_24px:before {
+  content: "\e902";
+}
+.icon-vip_24px:before {
+  content: "\e903";
+}
+.icon-undo_24px:before {
+  content: "\e904";
+}
+.icon-redo_24px:before {
+  content: "\e905";
+}
+.icon-bold_24px:before {
+  content: "\e906";
+}
+.icon-underline_24px:before {
+  content: "\e907";
+}
+.icon-italic_24px:before {
+  content: "\e908";
+}
+.icon-ordered_24px:before {
+  content: "\e909";
+}
+.icon-ordered_list_24px:before {
+  content: "\e90a";
+}
+.icon-line_24px:before {
+  content: "\e90b";
+}
+.icon-quote_24px:before {
+  content: "\e90c";
+}
+.icon-link_24px:before {
+  content: "\e90d";
+}
+.icon-video_24px:before {
+  content: "\e90e";
+}
+.icon-picture_24px:before {
+  content: "\e90f";
+}
+.icon-expression_24px:before {
+  content: "\e910";
+}
+.icon-dollar_24px:before {
+  content: "\e911";
+}
+.icon-_24px:before {
+  content: "\e912";
+}
+.icon-idcard_24px:before {
+  content: "\e913";
+}
+.icon-note_24px:before {
+  content: "\e914";
+}
+.icon-flag_24px:before {
+  content: "\e915";
+}
+.icon-bookmark02_24px:before {
+  content: "\e916";
+}
+.icon-clock_circle_24px:before {
+  content: "\e917";
+}
+.icon-like_24px:before {
+  content: "\e918";
+}
+.icon-share_24px:before {
+  content: "\e919";
+}
+.icon-message_24px:before {
+  content: "\e91a";
+}
+.icon-text_24px:before {
+  content: "\e91b";
+}
+.icon-Topic_24px:before {
+  content: "\e91c";
+}
+.icon-search_24px:before {
+  content: "\e91d";
+}
+.icon-zoom-in_24px:before {
+  content: "\e91e";
+}
+.icon-zoom-out_24px:before {
+  content: "\e91f";
+}
+.icon-bell_24px:before {
+  content: "\e920";
+}
+.icon-refresh_24px:before {
+  content: "\e921";
+}
+.icon-eye_24px:before {
+  content: "\e922";
+}
+.icon-close-ones-eyes_24px:before {
+  content: "\e923";
+}
+.icon-right_24px:before {
+  content: "\e924";
+}
+.icon-left_24px:before {
+  content: "\e925";
+}
+.icon-down_24px:before {
+  content: "\e926";
+}
+.icon-up_24px:before {
+  content: "\e927";
+}
+.icon-plus_24px:before {
+  content: "\e928";
+}
+.icon-user_24px:before {
+  content: "\e929";
+}
+.icon-delete_24px:before {
+  content: "\e92a";
+}
+.icon-mail_24px:before {
+  content: "\e92b";
+}
+.icon-transaction_24px:before {
+  content: "\e92c";
+}
+.icon-line_chart_24px:before {
+  content: "\e92d";
+}
+.icon-wallet_24px:before {
+  content: "\e92e";
+}
+.icon-rocket_24px:before {
+  content: "\e92f";
+}
+.icon-pen_24px:before {
+  content: "\e930";
+}
+.icon-quill-pen_24px:before {
+  content: "\e931";
+}
+.icon-form_24px:before {
+  content: "\e932";
+}
+.icon-home_24px:before {
+  content: "\e933";
+}
+.icon-setting_24px:before {
+  content: "\e934";
+}
+.icon-bookmark_24px:before {
+  content: "\e935";
+}
+.icon-particular_24px:before {
+  content: "\e936";
+}
+.icon-ranking-list_24px:before {
+  content: "\e937";
+}
+.icon-calender_24px:before {
+  content: "\e938";
+}
+.icon-man_24px:before {
+  content: "\e939";
+}
+.icon-woman_24px:before {
+  content: "\e93a";
+}
+.icon-camera_24px:before {
+  content: "\e93b";
+}
+.icon-caret_up_small_24px:before {
+  content: "\e93c";
+}
+.icon-caret_down_small_24px:before {
+  content: "\e93d";
+}
+.icon-caret_up_24px:before {
+  content: "\e93e";
+}
+.icon-caret_down_24px:before {
+  content: "\e93f";
+}
+.icon-close_24px:before {
+  content: "\e940";
+}
+.icon-check_24px:before {
+  content: "\e941";
+}
+.icon-menu_overflow_verticality_24px:before {
+  content: "\e942";
+}
+.icon-menu_overflow_across_24px:before {
+  content: "\e943";
+}
+.icon-arrow_down_24px:before {
+  content: "\e944";
+}
+.icon-arrow_up_24px:before {
+  content: "\e945";
+}
+.icon-location_24px:before {
+  content: "\e946";
+}
+.icon-video_camera_24px:before {
+  content: "\e947";
+}
+.icon-book_24px:before {
+  content: "\e948";
+}
+.icon-sketch_24px:before {
+  content: "\e949";
+}
+.icon-market_24px:before {
+  content: "\e94a";
+}
+.icon-export_24px:before {
+  content: "\e94b";
+}
+.icon-unfold_24px:before {
+  content: "\e94c";
+}
+.icon-pack-up_24px:before {
+  content: "\e94d";
+}
+.icon-lock_24px:before {
+  content: "\e94e";
+}
+.icon-unlock_24px:before {
+  content: "\e94f";
+}
+.icon-swap_24px:before {
+  content: "\e950";
+}
+.icon-Multi_profile_24px:before {
+  content: "\e951";
+}
+.icon-question_circle_24px:before {
+  content: "\e952";
+}
+.icon-info_circle_24px:before {
+  content: "\e953";
+}
+.icon-check_circle_24px:before {
+  content: "\e954";
+}
+.icon-close_circle_24px:before {
+  content: "\e955";
+}
+.icon-exclamation_circle_24px:before {
+  content: "\e956";
+}
+.icon-question_filled_24px:before {
+  content: "\e957";
+}
+.icon-info_filled_24px:before {
+  content: "\e958";
+}
+.icon-check_filled_24px:before {
+  content: "\e959";
+}
+.icon-close_filled_24px:before {
+  content: "\e95a";
+}
+.icon-exclamation_filled_24px:before {
+  content: "\e95b";
+}
+.icon-wechat_24px:before {
+  content: "\e95c";
+}
+.icon-Qzone_24px:before {
+  content: "\e95d";
+}
+.icon-weibo_24px:before {
+  content: "\e95e";
+}
+.icon-facebook_24px:before {
+  content: "\e95f";
+}
+.icon-tiwtter_24px:before {
+  content: "\e960";
+}
+.icon-linkedin_24px:before {
+  content: "\e961";
+}
+.icon-bell_filled_24px:before {
+  content: "\e962";
+}
+.icon-eye_filled_24px:before {
+  content: "\e963";
+}
+.icon-close-ones-eyes_filled_24px:before {
+  content: "\e964";
+}
+.icon-ranking-list_filled_24px:before {
+  content: "\e965";
+}
+.icon-Create-a-New-Account_24px:before {
+  content: "\e966";
+}
+.icon-transaction-setting_24px:before {
+  content: "\e967";
+}
+.icon-gift_24px:before {
+  content: "\e968";
+}
+.icon-hamburger_24px:before {
+  content: "\e969";
+}
+.icon-RSS_24px:before {
+  content: "\e96a";
+}
+.icon-QQ_24px:before {
+  content: "\e96b";
+}
+.icon-Trade-setting_24px:before {
+  content: "\e96c";
+}
+.icon-filtrate_24px:before {
+  content: "\e96d";
+}
+.icon-tiwtter_filled_24px:before {
+  content: "\e96e";
+}
+.icon-linkedin_filled_24px:before {
+  content: "\e96f";
+}
+.icon-facebook_filled_24px:before {
+  content: "\e970";
+}
+.icon-QQ_filled_24px:before {
+  content: "\e971";
+}
+.icon-wechat_filled_24px:before {
+  content: "\e972";
+}
+.icon-weibo_filled_24px:before {
+  content: "\e973";
+}
+.icon-Qzone_filled_24px:before {
+  content: "\e974";
+}
+.icon-like_filled_24px1:before {
+  content: "\e975";
+}
+.icon-ios_filled_24px:before {
+  content: "\e976";
+}
+.icon-Android_filled_24px:before {
+  content: "\e977";
+}
+.icon-month_24px:before {
+  content: "\e978";
+}
+.icon-profit-and-loss_24px:before {
+  content: "\e979";
+}
+.icon-remaining-sum_24px:before {
+  content: "\e97a";
+}
+.icon-Earnings_24px:before {
+  content: "\e97b";
+}
+.icon-order-form_24px:before {
+  content: "\e97c";
+}
+.icon-comparison_24px:before {
+  content: "\e97d";
+}
+.icon-MAM_24px:before {
+  content: "\e97e";
+}

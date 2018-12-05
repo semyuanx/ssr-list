@@ -1,11 +1,13 @@
 <template>
-  <div id="app">
+  <div id="app1">
     <div>
       <!--顶部导航栏-->
       <FMNav :baseStrings="baseStrings" @blogPosted="onBlogPosted"></FMNav>
     </div>
     <div class="content-container">
-      <router-view/>
+      <div class="router-container">
+        <router-view/>
+      </div>
     </div>
     <div>
       <FMFooter :base-strings="baseStrings"></FMFooter>
@@ -17,6 +19,7 @@ import { Component, Vue } from 'vue-property-decorator';
 import FMNav from 'fmcomponents/lib/nav2';
 import FMFooter from 'fmcomponents/lib/footer';
 
+import 'minireset.css';
 import 'fmcomponents/src/styles/global.css';
 import 'fmcomponents/lib/nav2-main.css';
 import 'fmcomponents/lib/footer-main.css';
@@ -37,11 +40,14 @@ export default class App extends Vue {
 
 }
 </script>
-
-
 <style lang="less">
 
-    .content-container {
-      margin-top: 50px;
+  .content-container {
+    margin-top: 50px;
+    width: 100%;
+    .router-container {
+      width: 1180px;
+      margin: 0 auto;
     }
+  }
 </style>
