@@ -2,7 +2,7 @@
 import { get } from '@/request';
 import { login } from '@/api/home';
 
-export const getLoginStatus = (params?: object) => get(login(), {
+export const getLoginStatus = (params?: object): any => get(login(), {
   params,
 });
 

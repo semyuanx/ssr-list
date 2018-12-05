@@ -1,29 +1,24 @@
 import {
   State, Repository, Action, Getter, Mutation, Set,
 } from '@/utils/store-class-annotation';
+import { Commit, ActionTree } from 'vuex';
 import { getLoginStatus } from '@/service/home';
 
 @Repository('homeStore')
 export default class HomeStore {
-  @State
+  @State(false)
   public isLogin: boolean = false;
 
-  @Mutation
-  /**
-   * setLoginStatus
-   */
-  public setLoginStatus(state: any, isLogin: boolean) {
-    state.isLogin = isLogin;
+  @Set('isLogin')
+  public setLoginStatus(): any | null {
+
   }
 
   @Action
-  /**
-   * getLoginInfo
-   */
-  public getLoginInfo({ commit }: any, payload: any) {
+  public getLoginInfo(context: { commit: Commit }, payload: any): any {
     getLoginStatus().then((res: any) => {
       if (res) {
-        commit('setLoginStatus', res.isLogin);
+        context.commit('setLoginStatus', res.isLogin);
       }
     }).catch(() => {});
   }

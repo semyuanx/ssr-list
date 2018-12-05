@@ -34,7 +34,7 @@ function createNote(type: any): any {
       const object = obj;
       // eslint-disable-next-line
       const setFun: any = (state: any, value: any) => { state[options] = value; };
-      object.mutations = { ...object.mutations, [name]: setFun || null };
+      object.mutations = { ...object.mutations, ...{ [name]: setFun || null } };
     };
   }
   return (obj: any, key: any, content: any) => {
