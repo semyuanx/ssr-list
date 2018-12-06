@@ -8,7 +8,7 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import FmStrategy from '@/views/Strategy.vue'; // @ is an alias to /src
+import FmStrategy from '@/views/home/Strategy.vue'; // @ is an alias to /src
 
 @Component({
   components: {
