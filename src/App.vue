@@ -2,12 +2,13 @@
   <div id="app">
     <div>
       <!--顶部导航栏-->
-      <FMNav :baseStrings="baseStrings" @blogPosted="onBlogPosted"></FMNav>
+      <FMNav
+        :baseStrings="baseStrings"
+        @blogPosted="onBlogPosted"
+      ></FMNav>
     </div>
     <div class="content-container">
-      <div class="router-container">
-        <router-view/>
-      </div>
+      <router-view />
     </div>
     <div v-show="isShow">
       <FMFooter :base-strings="baseStrings"></FMFooter>
@@ -19,7 +20,6 @@ import { Component, Vue } from 'vue-property-decorator';
 import FMNav from 'fmcomponents/lib/nav2';
 import FMFooter from 'fmcomponents/lib/footer';
 
-import 'minireset.css';
 import 'fmcomponents/src/styles/global.css';
 import 'fmcomponents/lib/nav2-main.css';
 import 'fmcomponents/lib/footer-main.css';
@@ -27,7 +27,9 @@ import 'fmcomponents/src/styles/icon.less';
 import 'fmcomponents/src/styles/arrow.less';
 import 'fmcomponents/src/styles/btn.less';
 
+import '@/styles/normalize.css';
 import '@/theme/main.less';
+import '@/styles/mixin.less';
 
 @Component({
   components: {
