@@ -28,6 +28,7 @@ export default class FmHeader extends Vue {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="less">
+@base-font: 24px;
 .header-contain {
   display: flex;
   flex-direction: row;
@@ -37,6 +38,13 @@ export default class FmHeader extends Vue {
     display: flex;
     align-items: center;
     flex-direction: row;
+  }
+}
+@media screen and (max-width: 880px) {
+  .header-contain {
+    .right {
+      display: none;
+    }
   }
 }
 </style>
