@@ -29,7 +29,7 @@
 </template>
 <script lang="ts">
 import {
-  Vue, Watch, Prop, Component, Emit,
+  Vue, Prop, Component, Emit,
 } from 'vue-property-decorator';
 
 @Component
