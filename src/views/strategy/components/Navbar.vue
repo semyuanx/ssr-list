@@ -34,9 +34,9 @@ import {
 
 @Component
 export default class Navbar extends Vue {
-  currentTag: number = 0;
+  public currentTag: number = 0;
 
-  tags: Array<string> = ['进行中', '已结束'];
+  public tags: Array<string> = ['进行中', '已结束'];
 
   @Emit('change')
   handleClick(index: number) {
@@ -46,17 +46,27 @@ export default class Navbar extends Vue {
 }
 </script>
 <style lang="less" scoped>
+@base-font: 24;
+@media screen and (max-width: 880px) {
+  @base-font: 20;
+}
+.height(@value) { height:unit(@value / @base-font,rem)}
 .navbar {
   background-color: #fff;
-  height: 60px;
-  width: 1180px;
+  .height(60);
+  width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  font-size: 16px;
+  font-size: 16rem/@base-font;
   font-family: MicrosoftYaHei;
   color: rgba(51, 51, 51, 1);
-  padding: 0 26px;
+  padding: 0 26rem/@base-font;
+  white-space: nowrap;
+  @media screen and (max-width: 880px) {
+  padding: 0 10rem/@base-font;
+  font-size: 12rem/@base-font;
+}
   &-item {
     display: inline-flex;
     align-items: center;
@@ -67,7 +77,7 @@ export default class Navbar extends Vue {
         color: rgba(51, 51, 51, 1);
       }
       & + li {
-        margin-left: 20px;
+        margin-left: 20rem/@base-font;
       }
     }
   }
@@ -80,7 +90,7 @@ export default class Navbar extends Vue {
       display: inline-flex;
       align-items: center;
       position: relative;
-      padding: 0 5px;
+      padding: 0 5rem/@base-font;
       height: 100%;
       &.active {
         &:after {
@@ -102,4 +112,6 @@ export default class Navbar extends Vue {
     }
   }
 }
+
+
 </style>
