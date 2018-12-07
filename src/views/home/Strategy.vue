@@ -1,7 +1,7 @@
 <template>
   <div class="strategy-container">
     <div class="header">
-      <LineHeader />
+      <LineHeader rightTitle="筛选器" />
     </div>
     <div class="lists">
       <div class="list-item">

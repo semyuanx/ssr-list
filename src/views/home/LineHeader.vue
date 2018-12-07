@@ -6,7 +6,7 @@
           <h2 class="h2-titile">精选策略</h2>
           <div class="flex-center sub-title">
             <i class="icon-plus_24px"></i>
-            <span>成为交易员</span>
+            <span>{{ subTitle || '' }}</span>
             <i class="icon-right_24px"></i>
           </div>
         </div>
