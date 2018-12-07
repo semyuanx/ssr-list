@@ -1,5 +1,5 @@
 <template>
-  <div id="app1">
+  <div id="app">
     <div>
       <!--顶部导航栏-->
       <FMNav
@@ -10,7 +10,7 @@
     <div class="content-container">
       <router-view />
     </div>
-    <div>
+    <div v-show="isShow">
       <FMFooter :base-strings="baseStrings"></FMFooter>
     </div>
   </div>
@@ -37,10 +37,77 @@ import '@/styles/mixin.less';
     FMFooter,
   },
 })
-export default class App extends Vue {}
+export default class App extends Vue {
+  public isShow: boolean = true;
+
+  private resize() {
+    const this$ = this;
+    const optimizedResize = (function optimizedResize() {
+      const cbs:Array<Function> = [];
+      let running: boolean = false;
+
+      function runCbs() {
+        cbs.forEach((cb) => {
+          cb.call(this$, this$);
+        });
+        running = false;
+      }
+
+      function resize() {
+        if (!running) {
+          running = true;
+          if (window.requestAnimationFrame) {
+            window.requestAnimationFrame(runCbs);
+          } else {
+            setTimeout(runCbs, 60);
+          }
+        }
+      }
+
+      function addCb(cb: Function) {
+        if (cb && cb instanceof Function) {
+          cbs.push(cb);
+        }
+      }
+      return {
+        add(cb: Function) {
+          if (!cbs.length) {
+            window.addEventListener('resize', resize);
+          }
+          addCb(cb);
+        },
+      };
+    }());
+
+    this.computeIsShow();
+    optimizedResize.add(() => {
+      this.computeIsShow();
+    });
+  }
+
+  public computeIsShow() {
+    const w = window.innerWidth;
+    if (w && w < 880) {
+      this.isShow = false;
+    } else {
+      this.isShow = true;
+    }
+  }
+
+  public mounted() {
+    this.resize();
+  }
+}
 </script>
 <style lang="less">
-.content-container {
-  margin-top: 50px;
-}
+
+  .content-container {
+    margin-top: 50px;
+    width: 100%;
+    .router-container {
+      width: 100%;
+      max-width: 1180px;
+      margin: 0 auto;
+    }
+  }
 </style>
