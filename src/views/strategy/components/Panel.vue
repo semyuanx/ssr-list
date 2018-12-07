@@ -1,7 +1,7 @@
 <template>
   <div class="panel-container" :style="{width:width}">
     <section class="panel-header">
-      <h2 class="panel-title">{{panelData.Name}}</h2>
+      <h2 class="panel-title">博海飞舟</h2>
       <div class="panel-desc">
         <div class="avatar-circle">博海</div>
         <div class="desc-info">
@@ -53,7 +53,7 @@ import {
 } from 'vue-property-decorator';
 
 interface Context {
-    Name: string;
+    Name?: string;
 }
 
 @Component
@@ -169,11 +169,17 @@ export default class Panel extends Vue {
     border-radius: 36rem/@base-font;
     border: 2px solid @theme-color;
     color: @theme-color;
+    background-color: #fff;
   }
   .safe-img {
     position: absolute;
     right: 30rem/@base-font;
     top: 0;
   }
+}
+
+@media screen and (max-width: 880px) {
+  @base-font: 20;
+
 }
 </style>

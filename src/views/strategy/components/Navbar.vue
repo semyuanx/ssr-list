@@ -47,12 +47,14 @@ export default class Navbar extends Vue {
 </script>
 <style lang="less" scoped>
 @base-font: 24;
-.width(@value) { width:unit(@value / @base-font,rem)}
+@media screen and (max-width: 880px) {
+  @base-font: 20;
+}
 .height(@value) { height:unit(@value / @base-font,rem)}
 .navbar {
   background-color: #fff;
   .height(60);
-  .width(1180);
+  width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -60,6 +62,11 @@ export default class Navbar extends Vue {
   font-family: MicrosoftYaHei;
   color: rgba(51, 51, 51, 1);
   padding: 0 26rem/@base-font;
+  white-space: nowrap;
+  @media screen and (max-width: 880px) {
+  padding: 0 10rem/@base-font;
+  font-size: 12rem/@base-font;
+}
   &-item {
     display: inline-flex;
     align-items: center;
@@ -105,4 +112,6 @@ export default class Navbar extends Vue {
     }
   }
 }
+
+
 </style>
