@@ -1,7 +1,7 @@
 <template>
-  <div class="panel-container">
+  <div class="panel-container" :style="{width:width}">
     <section class="panel-header">
-      <h2 class="panel-title">博海飞舟 甲木1</h2>
+      <h2 class="panel-title">{{panelData.Name}}</h2>
       <div class="panel-desc">
         <div class="avatar-circle">博海</div>
         <div class="desc-info">
@@ -36,7 +36,7 @@
         </li>
         <li>
           <span class="sub-info-label">收益分配</span>
-          <span class="sub-info-value">2：8</span>
+          <span class="sub-info-value">2:8</span>
         </li>
       </ul>
       <button class="submit-button" @click="handleCommit">立即参与</button>
@@ -52,8 +52,16 @@ import {
   Vue, Watch, Prop, Component,
 } from 'vue-property-decorator';
 
+interface Context {
+    Name: string;
+}
+
 @Component
 export default class Panel extends Vue {
+  @Prop() private width!: string;
+
+  @Prop({ default: () => {} }) private panelData!: Context;
+
   handleCommit() {
 
   }
@@ -62,17 +70,21 @@ export default class Panel extends Vue {
 <style lang="less" scoped>
 @theme-color: #ff6200;
 @border-color: #f4f4f5;
+@base-font: 24;
+.width(@value) { width:unit(@value / @base-font,rem)}
+.height(@value) { height:unit(@value / @base-font,rem)}
 .panel-container {
+  font-size: 12rem/@base-font;
   position: relative;
   background-color: #fff;
   overflow: hidden;
-  width: 391px;
-  height: 464px;
+  .width(380);
+  .height(460);
   .panel-header {
-    border-bottom: 1px solid @border-color;
-    padding: 15px 35px;
+    border-bottom: 1PX solid @border-color;
+    padding: 15rem/@base-font  35rem/@base-font;
     .panel-title {
-      font-size: 18px;
+      font-size: 18rem/@base-font;
       font-weight: bold;
     }
 
@@ -82,7 +94,7 @@ export default class Panel extends Vue {
     }
 
     .avatar-circle {
-      @size: 36px;
+      @size: 36rem/@base-font;
       width: @size;
       height: @size;
       line-height: @size;
@@ -90,44 +102,44 @@ export default class Panel extends Vue {
       color: #fff;
       border-radius: 50%;
       background-color: @theme-color;
-      font-size: 14px;
-      margin-right: 10px;
+      font-size: 14rem/@base-font;
+      margin-right: 10rem/@base-font;
     }
 
     .desc-info {
       p {
-        margin: 5px 0;
+        margin: 5rem/@base-font 0;
       }
     }
     .info-main {
-      font-size: 14px;
+      font-size: 14rem/@base-font;
       color: #6d6d6d;
     }
     .info-sub {
-      font-size: 12px;
+      font-size: 12rem/@base-font;
       color: #aaaaaa;
       span {
-        margin-right: 10px;
+        margin-right: 10rem/@base-font;
       }
     }
   }
   .panel-body {
-    padding: 0 35px;
+    padding: 0 35rem/@base-font;
     .income {
       border-bottom: 1px solid @border-color;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      height: 150px;
+      height: 150rem/@base-font;
       @value-color: #01aa6d;
       .income-value {
         color: @value-color;
-        font-size: 30px;
+        font-size: 30rem/@base-font;
         font-weight: bold;
         display: block;
       }
       .income-label {
-        font-size: 14px;
+        font-size: 14rem/@base-font;
         line-height: 1.8;
         color: #aaaaaa;
       }
@@ -136,7 +148,7 @@ export default class Panel extends Vue {
       display: flex;
       flex-wrap: wrap;
       justify-content: flex-start;
-      margin: 35px 0;
+      margin: 35rem/@base-font 0;
       li {
         min-width: 50%;
         line-height: 1.8;
@@ -152,14 +164,15 @@ export default class Panel extends Vue {
   }
   .submit-button {
     width: 100%;
-    height: 36px;
-    border-radius: 36px;
+    font-size: 14rem/@base-font;
+    height: 36rem/@base-font;
+    border-radius: 36rem/@base-font;
     border: 2px solid @theme-color;
     color: @theme-color;
   }
   .safe-img {
     position: absolute;
-    right: 30px;
+    right: 30rem/@base-font;
     top: 0;
   }
 }

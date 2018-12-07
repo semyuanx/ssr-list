@@ -4,7 +4,7 @@
     <div class="panel-wrapper">
       <Panel
         class="panel"
-        v-for="(item,index) in 2"
+        v-for="(item,index) in 3"
         :key="index"
       ></Panel>
     </div>
@@ -33,9 +33,10 @@ export default class Manager extends Vue {
 </script>
 
 <style rel="stylesheet/less" lang="less" scoped>
+@base-font: 24;
 .manager {
   &-container {
-    width: 1180px;
+    width: 1180rem/@base-font;
     margin: 0 auto;
     padding-top: 30px;
     .panel-wrapper {
@@ -43,6 +44,9 @@ export default class Manager extends Vue {
         display: inline-block;
         margin-top: 20px;
         margin-right: 20px;
+        &:nth-child(3n){
+          margin-right: 0;
+        }
       }
     }
   }
