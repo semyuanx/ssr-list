@@ -1,7 +1,29 @@
 <template>
-  <div class="strategy-container">
+  <div class="invest-container">
     <div class="header">
-      <LineHeader />
+      <LineHeader
+        subIcon="flag_24px"
+        rightIcon="right_24px"
+        rightTitle="更多"
+        subTitle="发起产品"
+        title="投资管家">
+
+        <template slot="right">
+          <span>{{ rightTitle || '' }}</span>
+          <i :class="`icon-right_24px`"></i>
+        </template>
+      </LineHeader>
+    </div>
+    <div class="invest-content">
+      <div class="left">
+        <div><span>交易大牛</span></div>
+        <div>
+          <button>立即订阅</button>
+        </div>
+      </div>
+      <div class="right">
+
+      </div>
     </div>
   </div>
 </template>
@@ -19,20 +41,23 @@ export default class Home extends Vue {
 }
 </script>
 <style lang="less" scoped>
-.strategy-container {
-  .lists {
+.invest-container {
+  .invest-content {
     display: flex;
     flex-direction: row;
-    width: 100%;
-    overflow: auto;
-    .list-item {
-      margin-right: 20px;
+    .left {
+      width:280px;
+      height:240px;
+      border: 1px solid red;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
     }
-    &::-webkit-scrollbar {
-      display: none;
-    }
-    &::-webkit-scrollbar-track {
-      width: 0;
+    .right {
+      width: 95%;
+      margin-left: 2%;
+      border: 1px solid red;
     }
   }
 }
@@ -43,7 +68,7 @@ export default class Home extends Vue {
     padding-right: @page-padding;
     padding-left: @page-padding;
   }
-  .strategy-container {
+  .invest-container {
 
   }
 

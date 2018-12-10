@@ -5,7 +5,8 @@ Vue.use(Vuex);
 const r:any = require.context('./', false, /\.ts/);
 const modules = r.keys().filter((i: any) => i !== './index.ts').map((file: any) => {
   // eslint-disable-next-line
-  const m: any = new r(file).default;
+  const R = r(file).default
+  const m: any = new R();
   return { [m.namespace]: m };
 }).reduce((j: any, k: any) => ({ ...j, ...k }));
 export default function createStore() {

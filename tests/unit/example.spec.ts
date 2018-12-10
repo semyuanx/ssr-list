@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 import { shallowMount } from '@vue/test-utils';
-import HelloWorld from '@/components/FmHeader.vue';
+import HelloWorld from '@/components/header/FmHeader.vue';
 
 describe('HelloWorld.vue', () => {
   it('renders props.msg when passed', () => {

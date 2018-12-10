@@ -3,19 +3,23 @@
     <FmHeader>
       <template slot="left">
         <div class="content-header">
-          <h2 class="h2-titile">精选策略</h2>
+          <h2 class="h2-titile">{{title || ''}}</h2>
           <div class="flex-center sub-title">
-            <i class="icon-plus_24px"></i>
+            <slot name="left">
+            <i :class="`icon-${subIcon}`"></i>
             <span>{{ subTitle || '' }}</span>
-            <i class="icon-right_24px"></i>
+            <i :class="`icon-${subRespIcon}`"></i>
+            </slot>
           </div>
         </div>
       </template>
       <template slot="right">
         <div class="content-header">
           <div class="flex-center right-filter">
-            <i class="icon-filtrate_24px"></i>
-            <span>{{ rightTitle || '' }}</span>
+            <slot name="right">
+              <i :class="`icon-${rightIcon}`"></i>
+              <span>{{ rightTitle || '' }}</span>
+            </slot>
           </div>
         </div>
       </template>
@@ -24,7 +28,7 @@
 </template>
 <script lang="ts">
 import { Component, Vue, Prop } from 'vue-property-decorator';
-import FmHeader from '@/components/FmHeader.vue'; // @ is an alias to /src
+import FmHeader from '@/components/header/FmHeader.vue'; // @ is an alias to /src
 
 @Component({
   components: {
@@ -40,7 +44,26 @@ export default class Home extends Vue {
 
   @Prop() private rightTitle!: string;
 
-  @Prop() private icon!: string;
+  @Prop({
+    default() {
+      return 'plus_24px';
+    },
+  })
+  private subIcon!: string;
+
+  @Prop({
+    default() {
+      return 'right_24px';
+    },
+  })
+  private subRespIcon!: string;
+
+  @Prop({
+    default() {
+      return 'filtrate_24px';
+    },
+  })
+  private rightIcon!: string;
 }
 </script>
 <style lang="less" scoped>

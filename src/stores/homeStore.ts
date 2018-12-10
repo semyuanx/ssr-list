@@ -4,7 +4,7 @@ import {
 import { Commit, ActionTree } from 'vuex';
 import { getLoginStatus } from '@/service/home';
 
-@Repository('homeStore')
+@Repository('HomeStore')
 export default class HomeStore {
   @State(false)
   public isLogin: boolean = false;
