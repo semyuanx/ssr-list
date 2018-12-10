@@ -1,13 +1,29 @@
+
+const path = require('path');
+
+function addStyleResource(rule) {
+  rule.use('style-resource')
+    .loader('style-resources-loader')
+    .options({
+      patterns: [
+        path.resolve(__dirname, 'src/theme/theme.less'),
+      ],
+    });
+}
+
 module.exports = {
   devServer: {
     disableHostCheck: true,
   },
   lintOnSave: true,
+  chainWebpack: (config) => {
+    const types = ['vue-modules', 'vue', 'normal-modules', 'normal'];
+    types.forEach(type => addStyleResource(config.module.rule('less').oneOf(type)));
+  },
   css: {
     loaderOptions: {
       less: {
-        // eslint-disable-next-line
-        data: `@import "@/theme/theme.less";`
+        include: [/^fmcomponents/],
       },
     },
   },
