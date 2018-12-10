@@ -1,10 +1,6 @@
 module.exports = {
   devServer: {
-    overlay: {
-      warnings: false,
-      errors: false,
-    },
+    disableHostCheck: true,
   },
-  lintOnSave: false,
-  productionSourceMap: false,
+  lintOnSave: true,
 };
