@@ -56,7 +56,7 @@ export default class Manager extends Vue {
   }
 
 }
-@media screen and (max-width: 1180px) {
+@media screen and (max-width: 880px) {
     .manager-list{
     padding-left: 15rem/@base-font;
     padding-right: 15rem/@base-font;

@@ -72,14 +72,12 @@ export default class Panel extends Vue {
 @border-color: #f4f4f5;
 @base-font: 24;
 .width(@value) { width:unit(@value / @base-font,rem)}
-.height(@value) { height:unit(@value / @base-font,rem)}
 .panel-container {
   font-size: 12rem/@base-font;
   position: relative;
   background-color: #fff;
   overflow: hidden;
   .width(380);
-  .height(460);
   .panel-header {
     border-bottom: 1PX solid @border-color;
     padding: 15rem/@base-font  35rem/@base-font;
@@ -170,6 +168,7 @@ export default class Panel extends Vue {
     border: 2px solid @theme-color;
     color: @theme-color;
     background-color: #fff;
+    margin-bottom: 40rem/@base-font;
   }
   .safe-img {
     position: absolute;
