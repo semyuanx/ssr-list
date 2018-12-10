@@ -23,13 +23,13 @@ import FMFooter from 'fmcomponents/lib/footer';
 import 'fmcomponents/src/styles/global.css';
 import 'fmcomponents/lib/nav2-main.css';
 import 'fmcomponents/lib/footer-main.css';
+import 'fmcomponents/lib/sidebar-main.css';
+
+import 'fmcomponents/src/styles/btn.less';
 import 'fmcomponents/src/styles/icon.less';
 import 'fmcomponents/src/styles/arrow.less';
-import 'fmcomponents/src/styles/btn.less';
 
-import '@/styles/normalize.css';
 import '@/theme/main.less';
-import '@/styles/mixin.less';
 
 @Component({
   components: {
@@ -102,12 +102,14 @@ export default class App extends Vue {
 <style lang="less">
 
   .content-container {
+    margin: 0 auto;
     margin-top: 50px;
-    width: 100%;
-    .router-container {
-      width: 100%;
-      max-width: 1180px;
-      margin: 0 auto;
-    }
+    max-width: @pc-max-width;
+    // width: 100%;
+    // .router-container {
+    //   width: 100%;
+    //   max-width: 1180px;
+    //   margin: 0 auto;
+    // }
   }
 </style>
