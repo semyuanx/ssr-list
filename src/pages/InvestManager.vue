@@ -8,28 +8,27 @@
       <fm-col></fm-col>
       <div></div>
       <fm-col
-        v-for="(item,index) in 5"
+        v-for="(item,index) in allProducts"
         class="panel-wrapper"
         :key="index"
         :xs="24"
         :sm="12"
         :lg="8"
       >
-        <Panel width="100%"></Panel>
+        <Panel width="100%" :panelData="item"></Panel>
       </fm-col>
     </fm-row>
-    {{ntest}}
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import { Navbar, Panel } from './components';
+import { Navbar, Panel } from '@/views/InvestManager';
 import FmCol from '@/components/grid/Col.vue';
 import FmRow from '@/components/grid/Row.vue';
 import { namespace } from 'vuex-class';
 
-const managerStore = namespace('managerStore');
+const ManagerStore = namespace('ManagerStore');
 
 @Component({
   components: {
@@ -40,21 +39,22 @@ const managerStore = namespace('managerStore');
   },
 })
 export default class Manager extends Vue {
-  @managerStore.State
-  public allProducts:any;
+  @ManagerStore.State
+  public allProducts: any;
 
-   @managerStore.Action
-        public getAccounts: Function;
+  @ManagerStore.Action
+  public getAllProductsAsync: Function;
 
-   mounted() {
-     console.log('====================================');
-     console.log(this.allProducts);
-     console.log('====================================');
-   }
+  mounted() {
+    console.log('====================================');
+    console.log(this.allProducts);
+    this.getAllProductsAsync();
+    console.log('====================================');
+  }
 
-   handleChange() {
-     console.log('切换成功了');
-   }
+  handleChange() {
+    console.log('切换成功了');
+  }
 }
 </script>
 
