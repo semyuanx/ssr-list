@@ -29,7 +29,7 @@ import FmCol from '@/components/grid/Col.vue';
 import FmRow from '@/components/grid/Row.vue';
 import { namespace } from 'vuex-class';
 
-// const someModule = namespace('managerStore')
+const managerStore = namespace('managerStore');
 
 @Component({
   components: {
@@ -40,16 +40,21 @@ import { namespace } from 'vuex-class';
   },
 })
 export default class Manager extends Vue {
-  get managerStore() {
-    return namespace('managerStore');
-  }
+  @managerStore.State
+  public allProducts:any;
 
-  mounted() {
-  }
+   @managerStore.Action
+        public getAccounts: Function;
 
-  handleChange() {
-    console.log('切换成功了');
-  }
+   mounted() {
+     console.log('====================================');
+     console.log(this.allProducts);
+     console.log('====================================');
+   }
+
+   handleChange() {
+     console.log('切换成功了');
+   }
 }
 </script>
 

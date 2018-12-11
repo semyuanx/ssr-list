@@ -1,5 +1,5 @@
 import {
-  State, Repository, Action, Getter, Set,
+  State, Repository, Action, Mutation,
 } from '@/utils/store-class-annotation';
 import { Commit } from 'vuex';
 import { getAllProducts } from '@/service/manager';
@@ -9,20 +9,37 @@ import { getAllProducts } from '@/service/manager';
  */
 @Repository('managerStore')
 export default class ManagerStore {
-  @State(() => [1, 2, 3])
-  public allProducts: Array<any> = [1, 2, 3];
+  @State([])
+  public allProducts: any[] | undefined;
 
-  @Set('allProducts')
-  public setAllProducts(): any | null {
-
+  @Mutation
+  public setAccounts(state: any, allProducts: any[]) {
+    state.allProducts = allProducts;
   }
 
   @Action
-  public getAllProductsAsync(context: { commit: Commit }, payload: any): any {
-    getAllProducts().then((res: any) => {
-      if (res) {
-        context.commit('setAllProducts', res);
-      }
-    }).catch(() => {});
+  public async getAllProductsAsync(context: any, params: any) {
+    const { commit } = context;
+    let data: any = {};
+    try {
+      data = await getAllProducts(params);
+    } catch (e) {
+      console.log(e);
+    }
+    if (data.accounts) {
+      commit('setAccounts', data.accounts);
+    }
+    return data;
+
+    // {
+    //   status: '',
+    //   profitRatio: '',
+    //   followerMaxRisk: '',
+    //   expectDays: '',
+    //   minFollowBalance: '',
+    //   roi: '',
+    //   pageSize: '',
+    //   pageIndex: '1',
+    // }
   }
 }
