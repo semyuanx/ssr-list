@@ -12,7 +12,7 @@
         <router-view />
       </div>
     </div>
-    <div v-show="isShow">
+    <div class="page-footer" v-show="isShow">
       <FMFooter :base-strings="baseStrings"></FMFooter>
     </div>
   </div>
@@ -111,5 +111,10 @@ export default class App extends Vue {
       max-width: @pc-max-width;
       margin: 0 auto;
     }
+  }
+  .page-footer {
+    padding-top: 20px;
+    position: relative;
+    padding-bottom: 146px;
   }
 </style>

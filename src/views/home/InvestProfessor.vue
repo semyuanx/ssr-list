@@ -2,11 +2,11 @@
   <div class="invest-container">
     <div class="header">
       <LineHeader
-        subIcon="flag_24px"
+        subIcon="flag"
         rightIcon="right_24px"
         rightTitle="更多"
-        subTitle="发起产品"
-        title="投资管家">
+        subTitle="上榜条件：交易周期>12周、收益率>10%"
+        title="交易专家">
 
         <template slot="right">
           <span>{{ rightTitle || '' }}</span>
@@ -18,16 +18,22 @@
       <div class="left">
         <div><span>交易大牛</span></div>
         <div>
-          <button>立即订阅</button>
+          <button class="sub-btn">立即订阅</button>
         </div>
       </div>
       <div class="right">
         <div class="right-lists">
           <div class="list-item">
-            <LineCard />
+            <LittleCard />
           </div>
           <div class="list-item">
-            <LineCard />
+            <LittleCard />
+          </div>
+          <div class="list-item">
+            <LittleCard />
+          </div>
+          <div class="list-item">
+            <LittleCard />
           </div>
         </div>
       </div>
@@ -37,16 +43,16 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 import LineHeader from './LineHeader.vue'; // @ is an alias to /src
-import LineCard from '@/components/line-card/card.vue'; // @ is an alias to /src
+import LittleCard from '@/components/little-card/card.vue'; // @ is an alias to /src
 
 @Component({
   components: {
     LineHeader,
-    LineCard,
+    LittleCard,
   },
 })
 export default class Index extends Vue {
-  public name: string = 'fm-invest-manager';
+  public name: string = 'fm-invest-professor';
 }
 </script>
 <style lang="less" scoped>
@@ -56,23 +62,40 @@ export default class Index extends Vue {
     flex-direction: row;
     .left {
       width:280px;
-      height:240px;
       display: flex;
       align-items: center;
       justify-content: center;
       flex-direction: column;
       background-color: #ffffff;
+      .sub-btn {
+        cursor: pointer;
+        width:100px;
+        height:30px;
+        border-radius:18px;
+        border:1px solid rgba(255, 255, 255, 0.23);
+        background-color: rgba(0, 0, 0, 0.23);
+        font-family:MicrosoftYaHei;
+        color:rgba(255,255,255,1);
+        line-height:19px;
+      }
     }
     .right {
       width: 95%;
       margin-left: 2%;
       .right-lists {
         display: flex;
-        flex-direction: column;
+        flex-wrap: wrap;
         .list-item {
+          // flex: 1;
+          width: 50%;
           display: flex;
           flex-direction: row;
-          margin-bottom: 1px;
+          &:nth-child(2n+1) {
+            border-right: 1px solid #f5f5f5;
+          }
+          &:first-child {
+            border-bottom: 1px solid #f5f5f5;
+          }
         }
       }
     }

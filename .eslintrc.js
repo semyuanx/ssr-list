@@ -14,6 +14,9 @@ module.exports = {
     'import/order': false,
     'class-methods-use-this': 0,
     'no-param-reassign': 0,
+    'vue/no-parsing-error': [2, {
+      'invalid-first-character-of-tag-name': 0,
+    }],
   },
   parserOptions: {
     parser: 'typescript-eslint-parser',
