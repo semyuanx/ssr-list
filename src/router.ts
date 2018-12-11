@@ -23,12 +23,12 @@ export default function createRouter() {
         component: () => import(/* webpackChunkName: "about" */ './pages/Rank.vue'),
       },
       {
-        path: '/manager',
-        name: 'manager',
+        path: '/invest-manager',
+        name: 'investManager',
         // route level code-splitting
         // this generates a separate chunk (about.[hash].js) for this route
         // which is lazy-loaded when the route is visited.
-        component: () => import(/* webpackChunkName: "about" */ './views/strategy/InvestmentManager.vue'),
+        component: () => import(/* webpackChunkName: "about" */ './pages/InvestManager.vue'),
       },
     ],
   });
