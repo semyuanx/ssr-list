@@ -6,7 +6,7 @@ import { getLoginStatus } from '@/service/home';
 
 @Repository('HomeStore')
 export default class HomeStore {
-  @State(false)
+  @State(true)
   public isLogin: boolean = false;
 
   @Set('isLogin')

@@ -37,7 +37,7 @@
 import { Component, Prop, Vue } from 'vue-property-decorator';
 
 @Component
-export default class FmHeader extends Vue {
+export default class FmCard extends Vue {
   public name: string = 'fm-card';
 
   @Prop() private title!: string;

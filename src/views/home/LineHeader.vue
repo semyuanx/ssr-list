@@ -4,7 +4,7 @@
       <template slot="left">
         <div class="content-header">
           <h2 class="h2-titile">{{title || ''}}</h2>
-          <div class="flex-center sub-title">
+          <div :style="subTitle ? {} : {background: 'transparent'}" class="flex-center sub-title">
             <slot name="left">
             <i :class="`icon-${subIcon}`"></i>
             <span>{{ subTitle || '' }}</span>
