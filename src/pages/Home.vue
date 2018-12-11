@@ -25,7 +25,7 @@ import FmInvestManager from '@/views/home/InvestManager.vue'; // @ is an alias t
 import InvestProfessor from '@/views/home/InvestProfessor.vue'; // @ is an alias to /src
 import DangerKeep from '@/views/home/DangerKeep.vue'; // @ is an alias to /src
 import TradeMaster from '@/views/home/TradeMaster.vue'; // @ is an alias to /src
-import { namespace } from 'vuex-class';
+import { namespace, Action } from 'vuex-class';
 
 const HomeStore = namespace('HomeStore');
 
@@ -42,8 +42,12 @@ export default class Home extends Vue {
   @HomeStore.State
   public isLogin: any;
 
+  @HomeStore.Action
+  public getLoginInfo: any;
+
   mounted() {
     console.log(this.isLogin, 'islogin');
+    this.getLoginInfo();
   }
 }
 </script>

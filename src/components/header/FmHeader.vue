@@ -43,7 +43,7 @@ export default class FmHeader extends Vue {
 @media screen and (max-width: 880px) {
   .header-contain {
     .right {
-      display: none;
+      // display: none;
     }
   }
 }

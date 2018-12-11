@@ -17,8 +17,18 @@
         <div class="content-header">
           <div class="flex-center right-filter">
             <slot name="right">
-              <i :class="`icon-${rightIcon}`"></i>
-              <span>{{ rightTitle || '' }}</span>
+              <div @click="rightClick" class="right-click right-big">
+                <i
+                  v-if="rightIconDirection === 'left'"
+                  :class="`icon-${rightIcon}` + ' icon-font'"></i>
+                <span>{{ rightTitle || '' }}</span>
+                <i v-if="rightIconDirection ==='right'"
+                  :class="`icon-${rightIcon}`+ ' icon-font'"></i>
+              </div>
+              <div @click="rightClick" class="right-click right-small">
+                <span v-if="subTitle">{{ subTitle || '' }}</span>
+                <i :class="`icon-right_24px`"></i>
+              </div>
             </slot>
           </div>
         </div>
@@ -53,6 +63,13 @@ export default class Home extends Vue {
 
   @Prop({
     default() {
+      return 'right';
+    },
+  })
+  private rightIconDirection!: string;
+
+  @Prop({
+    default() {
       return 'right_24px';
     },
   })
@@ -64,9 +81,17 @@ export default class Home extends Vue {
     },
   })
   private rightIcon!: string;
+
+  public rightClick() {
+    console.log('@click="rightClick"');
+    this.$emit('rightClick');
+  }
 }
 </script>
 <style lang="less" scoped>
+.icon-font {
+  vertical-align: middle;
+}
 .header {
   margin-bottom: 20px;
   .flex-center {
@@ -95,6 +120,12 @@ export default class Home extends Vue {
       justify-content: flex-end;
       width: 100%;
       font-size: 14px;
+      .right-small {
+        display: none;
+      }
+      .right-click {
+        cursor: pointer;
+      }
     }
   }
 }
@@ -119,9 +150,18 @@ export default class Home extends Vue {
         background-color: transparent;
         font-size: 14rem / @base-font;
         padding: 0;
+        display: none;
         .icon-plus_24px {
           display: none;
         }
+      }
+    }
+    .right-filter {
+      .right-small {
+        display: block !important;
+      }
+      .right-big {
+        display: none;
       }
     }
   }

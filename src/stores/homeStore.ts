@@ -17,6 +17,7 @@ export default class HomeStore {
   @Action
   public getLoginInfo(context: { commit: Commit }, payload: any): any {
     getLoginStatus().then((res: any) => {
+      console.log(res, 'getLoginStatus');
       if (res) {
         context.commit('setLoginStatus', res.isLogin);
       }

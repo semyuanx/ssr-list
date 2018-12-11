@@ -8,10 +8,10 @@
         subTitle="发起产品"
         title="投资管家">
 
-        <template slot="right">
+        <!-- <template slot="right">
           <span>{{ rightTitle || '' }}</span>
           <i :class="`icon-right_24px`"></i>
-        </template>
+        </template> -->
       </LineHeader>
     </div>
     <div class="invest-content">

@@ -1,7 +1,7 @@
 <template>
   <div class="strategy-container">
     <div class="header">
-      <LineHeader rightTitle="筛选器" subTitle="成为交易员" title="精选策略" />
+      <LineHeader rightIconDirection='left' rightTitle="筛选器" subTitle="成为交易员" title="精选策略" />
     </div>
     <div class="lists">
       <div class="list-item">

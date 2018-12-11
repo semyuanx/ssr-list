@@ -8,10 +8,10 @@
         subTitle="上榜条件：交易周期>12周、收益率>10%"
         title="交易专家">
 
-        <template slot="right">
+        <!-- <template slot="right">
           <span>{{ rightTitle || '' }}</span>
           <i :class="`icon-right_24px`"></i>
-        </template>
+        </template> -->
       </LineHeader>
     </div>
     <div class="invest-content">
