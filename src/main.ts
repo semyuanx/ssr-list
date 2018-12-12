@@ -8,11 +8,17 @@ import fmui from '@fmfe/fm-vue-ui';
 import '@fmfe/fm-vue-ui/lib/theme-default/index.css';
 import fmcomponents from 'fmcomponents/dist/fmcomponents';
 
+import 'v2-table/dist/index.css';
+import 'beautify-scrollbar/dist/index.css';
+import V2Table from 'v2-table';
+
 import createI18n from './i18n';
 
 if (process.env.NODE_ENV !== 'production') {
   Vue.config.productionTip = false;
 }
+
+Vue.use(V2Table);
 
 const injectEnv: any = {
   install(vue: any, option: any) {
