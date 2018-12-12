@@ -43,7 +43,7 @@ export default class Manager extends Vue {
   public allProducts: any;
 
   @ManagerStore.Action
-  public getAllProductsAsync: any;
+  getAllProductsAsync: any;
 
   mounted() {
     console.log('====================================');
