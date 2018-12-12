@@ -75,6 +75,7 @@ export default class Navbar extends Vue {
         display: inline-flex;
         align-items: center;
         color: rgba(51, 51, 51, 1);
+        text-decoration: none;
       }
       & + li {
         margin-left: 20rem/@base-font;
