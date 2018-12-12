@@ -16,8 +16,8 @@
       <v2-table-column label="订阅" prop="age"></v2-table-column>
       <template slot="empty">
         <div class="empty-table">
-          <div class="empty-image"></div>
-          <div><span>没有找到相关内容，请您换个条件试试吧~</span></div>
+          <div class="empty-image"><SvgIcon width="218" height="218" name="no-data" /></div>
+          <div class="empty-text"><span>没有找到相关内容，请您换个条件试试吧~</span></div>
         </div>
       </template>
     </v2-table>
@@ -27,15 +27,15 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 import { namespace } from 'vuex-class';
-
+import SvgIcon from '@/components/svg/index.ts';
 
 @Component({
   components: {
-
+    SvgIcon,
   },
 })
 export default class List extends Vue {
-  getRowClassName({ row, rowIndex }) {
+  getRowClassName({ row, rowIndex }: any) {
     if (rowIndex % 2 === 0) {
       return 'default-row odd-row';
     }
@@ -115,6 +115,9 @@ export default class List extends Vue {
           box-shadow:0px 0px 30px 0px rgba(0,0,0,0.1);
         }
       }
+      :global(.v2-table__empty-data) {
+        height: auto;
+      }
 
       .empty-table {
         display: flex;
@@ -123,6 +126,12 @@ export default class List extends Vue {
         justify-content: center;
         .empty-image {
 
+        }
+        .empty-text {
+          font-size:18px;
+          font-family:MicrosoftYaHei;
+          color:rgba(51,51,51,1);
+          line-height:24px;
         }
       }
     }
