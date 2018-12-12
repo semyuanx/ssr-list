@@ -14,6 +14,7 @@
   "dependencies": {
     "@fmfe/fm-vue-ui": "^2.0.60",
     "axios": "^0.18.0",
+    "beautify-scrollbar": "^1.0.8",
     "chai": "^4.1.2",
     "fmcomponents": "git+ssh://git@gitlab.followme.com/Frontend/fmcomponents.git#production",
     "lib-message": "git+ssh://git@gitlab.followme.com:Frontend/lib-message.git#master",
@@ -21,6 +22,7 @@
     "numeral": "^2.0.6",
     "postcss-pxtorem": "^4.0.1",
     "register-service-worker": "^1.5.2",
+    "v2-table": "^3.0.3",
     "vue": "^2.5.17",
     "vue-class-component": "^6.0.0",
     "vue-i18n": "^8.4.0",
