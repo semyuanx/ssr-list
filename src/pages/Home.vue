@@ -43,7 +43,7 @@ export default class Home extends Vue {
   public isLogin: any;
 
   @HomeStore.Action
-  public getLoginInfo: any;
+  getLoginInfo: any;
 
   mounted() {
     console.log(this.isLogin, 'islogin');

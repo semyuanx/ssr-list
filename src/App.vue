@@ -7,7 +7,7 @@
         @blogPosted="onBlogPosted"
       ></FMNav>
     </div>
-    <div class="content-container">
+    <div class="fm-content-container">
       <div class="router-container">
         <router-view />
       </div>
@@ -103,7 +103,7 @@ export default class App extends Vue {
 }
 </script>
 <style lang="less">
-  .content-container {
+  .fm-content-container {
     margin-top: 50px;
     width: 100%;
     .router-container {
