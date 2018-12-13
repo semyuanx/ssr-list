@@ -4,7 +4,6 @@
     class="panel-container"
     :style="{width:width}"
   >
-    {{panelData}}
     <section class="panel-header">
       <h2 class="panel-title">{{panelData.Name}}</h2>
       <div class="panel-desc">

@@ -17,7 +17,7 @@ export default class ManagerStore {
 
   @Mutation
   public setAllProducts(state: any, allProducts: any[]) {
-    const res = allProducts.filter(v => ({
+    const res = allProducts.map(v => ({
       Name: v.Name,
       Nickname: `${v.Trader.Nickname}-#${v.Trader.AccountIndex}`,
       ProductCount: v.Trader.Summary.ProductCount,
@@ -26,6 +26,7 @@ export default class ManagerStore {
       DaysLeft: v.DaysLeft, // 剩余时间
       FollowerCount: v.FollowerCount, // 参与人数
     }));
+    console.log(res);
     state.allProducts = res;
   }
 
