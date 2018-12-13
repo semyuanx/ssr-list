@@ -1,17 +1,40 @@
 <template>
-  <div class="tag-container" :class="{active:active,border:border}">
+  <div
+    class="tag-container"
+    :class="{active:active,border:border,closed:closed}"
+    @click="handleClick"
+  >
     <slot>不限</slot>
+    <i
+      class="fm-fonticon icon-close_24px"
+      v-if="closed"
+      @click.stop="handleClose"
+    ></i>
   </div>
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop } from 'vue-property-decorator';
+import {
+  Component, Vue, Prop, Emit,
+} from 'vue-property-decorator';
 
 @Component
 export default class FilterTag extends Vue {
   @Prop({ default: false }) active!: boolean;
 
   @Prop({ default: false }) border!: boolean;
+
+  @Prop({ default: false }) closed!: boolean;
+
+  @Emit('close')
+  public handleClose() {
+    console.log('关闭');
+  }
+
+  @Emit()
+  public handleClick() {
+    console.log('点击了');
+  }
 }
 </script>
 
@@ -19,23 +42,36 @@ export default class FilterTag extends Vue {
 @theme-color: #ff6200;
 .tag-container {
   font-size: 12px;
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
   border-radius: 12px;
   height: 24px;
   line-height: 24px;
   box-sizing: border-box;
   padding-left: 10px;
   padding-right: 10px;
-  border:1px solid transparent;
+  border: 1px solid transparent;
   margin-right: 10px;
   margin-bottom: 10px;
   cursor: pointer;
-  &.border{
+  &.border {
     border-color: #e6e6e6;
   }
-  &.active {
+  &.active,
+  &.closed {
     color: @theme-color;
     border-color: @theme-color;
+  }
+  &.closed {
+    .fm-fonticon {
+      width: 16px;
+      height: 16px;
+      font-size: 16px;
+      line-height: 16px;
+      color: #767676;
+      margin-right: -8px;
+    }
   }
 }
 </style>

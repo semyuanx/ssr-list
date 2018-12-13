@@ -6,7 +6,6 @@
       :gutter="20"
     >
       <fm-col></fm-col>
-      <div></div>
       <fm-col
         v-for="(item,index) in allProducts"
         class="panel-wrapper"
