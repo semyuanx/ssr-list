@@ -59,10 +59,11 @@
           <span class="sub-info-value">{{incomeDistribution}}</span>
         </li>
       </ul>
-      <button
+      <a
         class="submit-button"
-        @click="handleCommit"
-      >立即参与</button>
+        :href="submitUrl"
+        target="_blank"
+      >立即参与</a>
     </section>
     <img
       src="./safe.png"
@@ -74,6 +75,7 @@
 import {
   Vue, Watch, Prop, Component,
 } from 'vue-property-decorator';
+import { API_PREFIX_V2 } from '@/constant/api';
 
 interface Context {
   Name?: string;
@@ -82,6 +84,8 @@ interface Context {
   TakeProfitRatio: number;
   UserID: number;
   Profit:string;
+  BrokerID:number;
+  AccountIndex:number;
 }
 
 @Component
@@ -98,6 +102,10 @@ export default class Panel extends Vue {
     return this.panelData.FollowerCount + 1;
   }
 
+  get submitUrl():string {
+    return `${API_PREFIX_V2}/user/${this.panelData.UserID}/trade-account/exhibition?index=${this.panelData.AccountIndex}`;
+  }
+
   get incomeDistribution():string {
     return (
       `${(this.panelData.StopLossRatio * 10 - this.panelData.TakeProfitRatio * 10)} : ${this.panelData.TakeProfitRatio * 10}`
@@ -111,8 +119,6 @@ export default class Panel extends Vue {
   get ProfitArr():string[] {
     return this.panelData.Profit.split('.');
   }
-
-  handleCommit() {}
 }
 </script>
 <style lang="less" scoped>
@@ -227,6 +233,10 @@ export default class Panel extends Vue {
   }
   .submit-button {
     width: 100%;
+    display: inline-flex;
+    text-decoration: none;
+    justify-content: center;
+    align-items: center;
     font-size: 14rem / @base-font;
     height: 36rem / @base-font;
     border-radius: 36rem / @base-font;
@@ -234,7 +244,6 @@ export default class Panel extends Vue {
     color: @theme-color;
     background-color: #fff;
     margin-bottom: 40rem / @base-font;
-    outline: none;
     &:hover{
       color:#fff;
       background-color: #FF7100;
