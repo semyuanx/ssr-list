@@ -1,6 +1,9 @@
 <template>
   <div class="manager-container">
-    <Navbar @change="handleChange"></Navbar>
+    <Navbar
+      @change="handleChange"
+      :currentTag="params.status"
+    ></Navbar>
     <fm-row
       class="manager-list"
       :gutter="20"
@@ -14,7 +17,10 @@
         :sm="12"
         :lg="8"
       >
-        <Panel width="100%" :panelData="item"></Panel>
+        <Panel
+          width="100%"
+          :panelData="item"
+        ></Panel>
       </fm-col>
     </fm-row>
   </div>
@@ -44,15 +50,27 @@ export default class Manager extends Vue {
   @ManagerStore.Action
   getAllProductsAsync: any;
 
-  mounted() {
+  public params:Object = {
+    status: 'InProcess',
+    profitRatio: '',
+    followerMaxRisk: '',
+    expectDays: '',
+    minFollowBalance: '',
+    roi: '',
+    pageSize: '',
+    pageIndex: '1',
+  };
+
+  created() {
     console.log('====================================');
     console.log(this.allProducts);
-    this.getAllProductsAsync();
+    this.getAllProductsAsync(this.params);
     console.log('====================================');
   }
 
-  handleChange() {
-    console.log('切换成功了');
+  handleChange(index:string) {
+    this.params.status = index;
+    this.getAllProductsAsync(this.params);
   }
 }
 </script>

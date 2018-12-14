@@ -7,12 +7,18 @@
     <section class="panel-header">
       <h2 class="panel-title">{{panelData.Name}}</h2>
       <div class="panel-desc">
-        <div class="avatar-circle">博海</div>
+        <div class="avatar-circle">
+          <img
+            :onerror="errorUrl"
+            :src="avatarSrc"
+            alt=""
+          >
+        </div>
         <div class="desc-info">
-          <p class="info-main">{{panelData.Nickname}} KVBmini-#6</p>
+          <p class="info-main">{{panelData.Nickname}}</p>
           <p class="info-sub">
-            <span>历史发起{{panelData.ProductCount}}</span>
-            <span>平均收益率{{panelData.AverageROI}}</span>
+            <span>历史发起 {{panelData.ProductCount}}</span>
+            <span>平均收益率 {{panelData.AverageROI}}</span>
           </p>
         </div>
       </div>
@@ -20,30 +26,38 @@
     <section class="panel-body">
       <ul class="income">
         <li>
-          <span class="income-value">$630.38</span>
+          <span class="income-value">
+            <span>$</span>
+            <span>{{ProfitArr[0]}}</span>
+            <span>.</span>
+            <span class="income-value-float">{{ProfitArr[1]}}</span>
+          </span>
           <span class="income-label">当前产品收益</span>
         </li>
         <li>
-          <span class="income-value">3.08%</span>
+          <span class="income-value">
+            <span>{{panelData.ROI.slice(0,-1)}}</span>
+            <span class="income-value-percent">%</span>
+          </span>
           <span class="income-label">当前收益率</span>
         </li>
       </ul>
       <ul class="sub-info">
         <li>
           <span class="sub-info-label">产品资金</span>
-          <span class="sub-info-value">$20438.75</span>
+          <span class="sub-info-value">${{panelData.Balance}}</span>
         </li>
         <li>
           <span class="sub-info-label">剩余时间</span>
-          <span class="sub-info-value">63天</span>
+          <span class="sub-info-value">{{panelData.DaysLeft}}天</span>
         </li>
         <li>
           <span class="sub-info-label">参与人数</span>
-          <span class="sub-info-value">4人</span>
+          <span class="sub-info-value">{{joinCount}}人</span>
         </li>
         <li>
           <span class="sub-info-label">收益分配</span>
-          <span class="sub-info-value">2:8</span>
+          <span class="sub-info-value">{{incomeDistribution}}</span>
         </li>
       </ul>
       <button
@@ -64,13 +78,40 @@ import {
 
 interface Context {
   Name?: string;
+  FollowerCount: number;
+  StopLossRatio: number;
+  TakeProfitRatio: number;
+  UserID: number;
+  Profit:string;
 }
 
 @Component
 export default class Panel extends Vue {
+  private baseSrc: string = '//www.followme.com/Avata/';
+
+  private errorUrl: string = 'this.src=\'//cdn.followme.com/images/default_avata.png\';';
+
   @Prop() private width!: string;
 
   @Prop({ default: () => {} }) private panelData!: Context;
+
+  get joinCount() {
+    return this.panelData.FollowerCount + 1;
+  }
+
+  get incomeDistribution() {
+    return (
+      `${(this.panelData.StopLossRatio * 10 - this.panelData.TakeProfitRatio * 10)} : ${this.panelData.TakeProfitRatio * 10}`
+    );
+  }
+
+  get avatarSrc() {
+    return `${this.baseSrc}${this.panelData.UserID}`;
+  }
+
+  get ProfitArr() {
+    return this.panelData.Profit.split('.');
+  }
 
   handleCommit() {}
 }
@@ -82,12 +123,16 @@ export default class Panel extends Vue {
 .width(@value) {
   width: unit(@value / @base-font, rem);
 }
+.height(@value) {
+  height: unit(@value / @base-font, rem);
+}
 .panel-container {
   font-size: 12rem / @base-font;
   position: relative;
   background-color: #fff;
   overflow: hidden;
   .width(380);
+  .height(440);
   .panel-header {
     border-bottom: 1px solid @border-color;
     padding: 15rem / @base-font 35rem / @base-font;
@@ -109,9 +154,14 @@ export default class Panel extends Vue {
       text-align: center;
       color: #fff;
       border-radius: 50%;
-      background-color: @theme-color;
+      overflow: hidden;
+      // background-color: @theme-color;
       font-size: 14rem / @base-font;
       margin-right: 10rem / @base-font;
+      img {
+        width: 100%;
+        height: 100%;
+      }
     }
 
     .desc-info {
@@ -142,9 +192,12 @@ export default class Panel extends Vue {
       @value-color: #01aa6d;
       .income-value {
         color: @value-color;
-        font-size: 30rem / @base-font;
+        font-size: 34rem / @base-font;
         font-weight: bold;
         display: block;
+        .income-value-float,.income-value-percent{
+          font-size: 20rem/@base-font;
+        }
       }
       .income-label {
         font-size: 14rem / @base-font;

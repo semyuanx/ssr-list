@@ -3,12 +3,12 @@
     <ul class="navbar-item navbar-left">
       <li
         class="navbar-left-item"
-        :class="{active:currentTag=== index}"
+        :class="{active:currentTag=== item.value}"
         v-for="(item,index) in tags"
         :key="index"
-        @click="handleClick(index)"
+        @click="handleClick(item.value)"
       >
-        <a href="javascript:;">{{item}}</a>
+        <a href="javascript:;">{{item.name}}</a>
       </li>
     </ul>
     <ul class="navbar-item navbar-right">
@@ -34,14 +34,17 @@ import {
 
 @Component
 export default class Navbar extends Vue {
-  public currentTag: number = 0;
+  @Prop({ default: 'InProcess' })
+  public currentTag!: string;
 
-  public tags: Array<string> = ['进行中', '已结束'];
+  public tags: Array<any> = [
+    { name: '进行中', value: 'InProcess' },
+    { name: '已结束', value: 'Settled' },
+  ];
 
   @Emit('change')
-  handleClick(index: number) {
+  handleClick(index: string) {
     console.log(index);
-    this.currentTag = index;
   }
 }
 </script>
