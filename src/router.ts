@@ -23,7 +23,7 @@ export default function createRouter() {
         component: () => import(/* webpackChunkName: "about" */ './pages/Rank.vue'),
       },
       {
-        path: '/invest-manager',
+        path: '/invest',
         name: 'investManager',
         // route level code-splitting
         // this generates a separate chunk (about.[hash].js) for this route

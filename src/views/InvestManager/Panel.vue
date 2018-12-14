@@ -26,8 +26,7 @@
     <section class="panel-body">
       <ul class="income">
         <li>
-          <span class="income-value">
-            <span>$</span>
+          <span class="income-value" :class="{deficit:panelData.Profit.slice(0,1) === '-'}">
             <span>{{ProfitArr[0]}}</span>
             <span>.</span>
             <span class="income-value-float">{{ProfitArr[1]}}</span>
@@ -35,7 +34,7 @@
           <span class="income-label">当前产品收益</span>
         </li>
         <li>
-          <span class="income-value">
+          <span class="income-value" :class="{deficit:panelData.Profit.slice(0,1) === '-'}">
             <span>{{panelData.ROI.slice(0,-1)}}</span>
             <span class="income-value-percent">%</span>
           </span>
@@ -195,6 +194,9 @@ export default class Panel extends Vue {
         font-size: 34rem / @base-font;
         font-weight: bold;
         display: block;
+        &.deficit{
+          color:#a6a6a6;
+        }
         .income-value-float,.income-value-percent{
           font-size: 20rem/@base-font;
         }
@@ -232,6 +234,11 @@ export default class Panel extends Vue {
     color: @theme-color;
     background-color: #fff;
     margin-bottom: 40rem / @base-font;
+    outline: none;
+    &:hover{
+      color:#fff;
+      background-color: #FF7100;
+    }
   }
   .safe-img {
     position: absolute;

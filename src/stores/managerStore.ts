@@ -25,7 +25,7 @@ export default class ManagerStore {
       Nickname: `${v.Trader.Nickname} ${v.Trader.Broker}-#${v.Trader.AccountIndex}`, // 副标题
       ProductCount: v.Trader.Summary.ProductCount, // 历史发起
       AverageROI: numeral(v.Trader.Summary.AverageROI).format('0%'), // 平均收益率
-      Profit: numeral(v.Profit).format('0.00'), // 当前产品收益
+      Profit: numeral(v.Profit).format('$0.00'), // 当前产品收益
       ROI: numeral(v.ROI).format('0.00%'), // 当前收益率
       Balance: numeral(v.Balance).format('0.00'), // 产品资金
       DaysLeft: v.DaysLeft, // 剩余时间
