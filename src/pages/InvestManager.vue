@@ -62,10 +62,7 @@ export default class Manager extends Vue {
   };
 
   created() {
-    console.log('====================================');
-    console.log(this.allProducts);
     this.getAllProductsAsync(this.params);
-    console.log('====================================');
   }
 
   handleChange(index:string) {

@@ -94,21 +94,21 @@ export default class Panel extends Vue {
 
   @Prop({ default: () => {} }) private panelData!: Context;
 
-  get joinCount() {
+  get joinCount():number {
     return this.panelData.FollowerCount + 1;
   }
 
-  get incomeDistribution() {
+  get incomeDistribution():string {
     return (
       `${(this.panelData.StopLossRatio * 10 - this.panelData.TakeProfitRatio * 10)} : ${this.panelData.TakeProfitRatio * 10}`
     );
   }
 
-  get avatarSrc() {
+  get avatarSrc():string {
     return `${this.baseSrc}${this.panelData.UserID}`;
   }
 
-  get ProfitArr() {
+  get ProfitArr():string[] {
     return this.panelData.Profit.split('.');
   }
 
