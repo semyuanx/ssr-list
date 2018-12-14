@@ -1,12 +1,14 @@
 <template>
   <div class="manager-container">
-    <Navbar @change="handleChange"></Navbar>
+    <Navbar
+      @change="handleChange"
+      :currentTag="params.status"
+    ></Navbar>
     <fm-row
       class="manager-list"
       :gutter="20"
     >
       <fm-col></fm-col>
-      <div></div>
       <fm-col
         v-for="(item,index) in allProducts"
         class="panel-wrapper"
@@ -15,7 +17,10 @@
         :sm="12"
         :lg="8"
       >
-        <Panel width="100%" :panelData="item"></Panel>
+        <Panel
+          width="100%"
+          :panelData="item"
+        ></Panel>
       </fm-col>
     </fm-row>
   </div>
@@ -45,15 +50,24 @@ export default class Manager extends Vue {
   @ManagerStore.Action
   getAllProductsAsync: any;
 
-  mounted() {
-    console.log('====================================');
-    console.log(this.allProducts);
-    this.getAllProductsAsync();
-    console.log('====================================');
+  public params:Object = {
+    status: 'InProcess',
+    profitRatio: '',
+    followerMaxRisk: '',
+    expectDays: '',
+    minFollowBalance: '',
+    roi: '',
+    pageSize: '',
+    pageIndex: '1',
+  };
+
+  created() {
+    this.getAllProductsAsync(this.params);
   }
 
-  handleChange() {
-    console.log('切换成功了');
+  handleChange(index:string) {
+    this.params.status = index;
+    this.getAllProductsAsync(this.params);
   }
 }
 </script>
