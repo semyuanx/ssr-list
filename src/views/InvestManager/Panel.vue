@@ -17,8 +17,8 @@
         <div class="desc-info">
           <p class="info-main">{{panelData.Nickname}}</p>
           <p class="info-sub">
-            <span>历史发起 {{panelData.ProductCount}}</span>
-            <span>平均收益率 {{panelData.AverageROI}}</span>
+            <span>{{$t('history')}} {{panelData.ProductCount}}</span>
+            <span>{{$t('AverageROI')}} {{panelData.AverageROI}}</span>
           </p>
         </div>
       </div>
@@ -31,31 +31,31 @@
             <span>.</span>
             <span class="income-value-float">{{ProfitArr[1]}}</span>
           </span>
-          <span class="income-label">当前产品收益</span>
+          <span class="income-label">{{$t('currentRevenue')}}</span>
         </li>
         <li>
           <span class="income-value" :class="{deficit:panelData.Profit.slice(0,1) === '-'}">
             <span>{{panelData.ROI.slice(0,-1)}}</span>
             <span class="income-value-percent">%</span>
           </span>
-          <span class="income-label">当前收益率</span>
+          <span class="income-label">{{$t('ROI')}}</span>
         </li>
       </ul>
       <ul class="sub-info">
         <li>
-          <span class="sub-info-label">产品资金</span>
+          <span class="sub-info-label">{{$t('Balance')}}</span>
           <span class="sub-info-value">${{panelData.Balance}}</span>
         </li>
         <li>
-          <span class="sub-info-label">剩余时间</span>
-          <span class="sub-info-value">{{panelData.DaysLeft}}天</span>
+          <span class="sub-info-label">{{$t('daysLeft')}}</span>
+          <span class="sub-info-value">{{panelData.DaysLeft}} {{$t('day')}}</span>
         </li>
         <li>
-          <span class="sub-info-label">参与人数</span>
-          <span class="sub-info-value">{{joinCount}}人</span>
+          <span class="sub-info-label">{{$t('joinCount')}}</span>
+          <span class="sub-info-value">{{joinCount}} {{$t('person')}}</span>
         </li>
         <li>
-          <span class="sub-info-label">收益分配</span>
+          <span class="sub-info-label">{{$t('incomeDistribution')}}</span>
           <span class="sub-info-value">{{incomeDistribution}}</span>
         </li>
       </ul>
@@ -63,7 +63,7 @@
         class="submit-button"
         :href="submitUrl"
         target="_blank"
-      >立即参与</a>
+      >{{$t('gotoJoin')}}</a>
     </section>
     <img
       src="./safe.png"
@@ -76,6 +76,9 @@ import {
   Vue, Watch, Prop, Component,
 } from 'vue-property-decorator';
 import { API_PREFIX_V2 } from '@/constant/api';
+import zhCN from '@/i18n/zh-CN/views/InvestManager/Panel';
+import zhTW from '@/i18n/zh-TW/views/InvestManager/Panel';
+import enUS from '@/i18n/en-US/views/InvestManager/Panel';
 
 interface Context {
   Name?: string;
@@ -88,7 +91,15 @@ interface Context {
   AccountIndex:number;
 }
 
-@Component
+@Component({
+  i18n: {
+    messages: {
+      'zh-CN': zhCN,
+      'zh-TW': zhTW,
+      'en-US': enUS,
+    },
+  },
+})
 export default class Panel extends Vue {
   private baseSrc: string = '//www.followme.com/Avata/';
 
