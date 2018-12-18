@@ -9,8 +9,8 @@
         <filter-tag
           :border="true"
           :active="true"
-        >PTA会员</filter-tag>
-        <filter-tag :border="true">免费订阅</filter-tag>
+        >{{$t('PTA')}}</filter-tag>
+        <filter-tag :border="true">{{$t('freeSubscription')}}</filter-tag>
       </section>
       <div class="divide-line"></div>
       <section
@@ -40,13 +40,13 @@
               v-if="citem.type === 'interval'"
             >
               <input
-                placeholder="请输入"
+                :placeholder="$t('placeholder')"
                 type="text"
                 class="interval-input start-input"
               >
               <span class="interval-span">-</span>
               <input
-                placeholder="请输入"
+                :placeholder="$t('placeholder')"
                 type="text"
                 class="interval-input end-input"
               >
@@ -62,8 +62,8 @@
       </section>
     </article>
     <section class="button-groups">
-      <button class="button button-text">重置</button>
-      <button class="button button-primary">筛选</button>
+      <button class="button button-text">{{$t('reset')}}</button>
+      <button class="button button-primary">{{$t('filter')}}</button>
     </section>
   </div>
 </template>
@@ -71,6 +71,9 @@
 <script lang="ts">
 import { Component, Vue, Prop } from 'vue-property-decorator';
 import FilterTag from './FilterTag.vue';
+import zhCN from '@/i18n/zh-CN/components/filter-popover/FilterPopover';
+import zhTW from '@/i18n/zh-TW/components/filter-popover/FilterPopover';
+import enUS from '@/i18n/en-US/components/filter-popover/FilterPopover';
 
 export interface FilterType {
   name: string;
@@ -197,6 +200,13 @@ const defaultData: LabelObj[] = [
 @Component({
   components: {
     FilterTag,
+  },
+  i18n: {
+    messages: {
+      'zh-CN': zhCN,
+      'zh-TW': zhTW,
+      'en-US': enUS,
+    },
   },
 })
 export default class FilterPopover extends Vue {
