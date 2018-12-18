@@ -9,8 +9,8 @@
         <filter-tag
           :border="true"
           :active="true"
-        >PTA会员</filter-tag>
-        <filter-tag :border="true">免费订阅</filter-tag>
+        >{{$t('PTA')}}</filter-tag>
+        <filter-tag :border="true">{{$t('freeSubscription')}}</filter-tag>
       </section>
       <div class="divide-line"></div>
       <section
@@ -40,13 +40,13 @@
               v-if="citem.type === 'interval'"
             >
               <input
-                placeholder="请输入"
+                :placeholder="$t('placeholder')"
                 type="text"
                 class="interval-input start-input"
               >
               <span class="interval-span">-</span>
               <input
-                placeholder="请输入"
+                :placeholder="$t('placeholder')"
                 type="text"
                 class="interval-input end-input"
               >
@@ -62,32 +62,35 @@
       </section>
     </article>
     <section class="button-groups">
-      <button class="button button-text">重置</button>
-      <button class="button button-primary">筛选</button>
+      <button class="button button-text">{{$t('reset')}}</button>
+      <button class="button button-primary">{{$t('filter')}}</button>
     </section>
   </div>
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop } from 'vue-property-decorator';
+import {
+  Component, Vue, Prop, Emit,
+} from 'vue-property-decorator';
 import FilterTag from './FilterTag.vue';
+import zhCN from '@/i18n/zh-CN/components/filter-popover/FilterPopover';
+import zhTW from '@/i18n/zh-TW/components/filter-popover/FilterPopover';
+import enUS from '@/i18n/en-US/components/filter-popover/FilterPopover';
 
-export interface FilterType {
-  name: string;
-  value: string | number;
-}
 export interface FilterMode {
   mode?: string;
+  name?: string;
+  value?: string | number;
   start?: string | number;
   end?: string | number;
-  type: string;
+  type?: string;
 }
 
 export interface LabelObj {
   label: string;
   value: string;
   desc: string;
-  filter: [FilterType[] | FilterMode[]];
+  filter: FilterMode[];
 }
 
 const defaultParams = {
@@ -198,6 +201,13 @@ const defaultData: LabelObj[] = [
   components: {
     FilterTag,
   },
+  i18n: {
+    messages: {
+      'zh-CN': zhCN,
+      'zh-TW': zhTW,
+      'en-US': enUS,
+    },
+  },
 })
 export default class FilterPopover extends Vue {
   // label的宽度
@@ -215,11 +225,10 @@ export default class FilterPopover extends Vue {
   // 过滤条件的字段格式
   @Prop({ default: () => defaultData }) labelObj!: LabelObj[];
 
-  public show:boolean = false;
+  @Prop({ default: false }) show!:boolean;
 
-  handleColse() {
-    this.show = false;
-  }
+  @Emit('close')
+  handleColse(e:MouseEvent) {}
 }
 </script>
 

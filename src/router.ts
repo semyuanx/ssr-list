@@ -38,6 +38,22 @@ export default function createRouter() {
         // which is lazy-loaded when the route is visited.
         component: () => import(/* webpackChunkName: "about" */ './pages/test.vue'),
       },
+      {
+        path: '/filter',
+        name: 'filter',
+        // route level code-splitting
+        // this generates a separate chunk (about.[hash].js) for this route
+        // which is lazy-loaded when the route is visited.
+        component: () => import(/* webpackChunkName: "about" */ './components/mobile-filter/FilterSetting.vue'),
+      },
+      {
+        path: '/filter-list',
+        name: 'filterList',
+        // route level code-splitting
+        // this generates a separate chunk (about.[hash].js) for this route
+        // which is lazy-loaded when the route is visited.
+        component: () => import(/* webpackChunkName: "about" */ './components/mobile-filter/FilterList.vue'),
+      },
     ],
   });
 }
