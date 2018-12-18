@@ -137,6 +137,10 @@ export default class FilterSetting extends Vue {
   background-color: #fff;
   padding: 0 16px;
   padding-bottom: 100px;
+  .filter-button-container {
+    margin-right: 10px;
+    margin-bottom: 10px;
+  }
 }
 .filter-normal-item {
   padding: 20px 0 10px;

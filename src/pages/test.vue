@@ -1,7 +1,6 @@
 <template>
   <div>
-    <filter-popover ref="popover">
-
+    <filter-popover ref="popover" :show="true">
       <template slot="broker">
         <filter-tag
           :border="true"
@@ -10,10 +9,6 @@
         <span><i class="fm-fonticon icon-plus_24px"></i>添加</span>
       </template>
     </filter-popover>
-
-    <div class="mobile">
-      <filter-button>PTA会员</filter-button>
-    </div>
   </div>
 </template>
 
@@ -30,9 +25,7 @@ import FilterButton from '@/components/mobile-filter/FilterButton.vue';
   },
 })
 export default class Test extends Vue {
-  mounted() {
-    this.$refs.popover.show = true;
-  }
+
 }
 </script>
 

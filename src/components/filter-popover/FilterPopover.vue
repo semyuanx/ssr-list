@@ -69,28 +69,28 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop } from 'vue-property-decorator';
+import {
+  Component, Vue, Prop, Emit,
+} from 'vue-property-decorator';
 import FilterTag from './FilterTag.vue';
 import zhCN from '@/i18n/zh-CN/components/filter-popover/FilterPopover';
 import zhTW from '@/i18n/zh-TW/components/filter-popover/FilterPopover';
 import enUS from '@/i18n/en-US/components/filter-popover/FilterPopover';
 
-export interface FilterType {
-  name: string;
-  value: string | number;
-}
 export interface FilterMode {
   mode?: string;
+  name?: string;
+  value?: string | number;
   start?: string | number;
   end?: string | number;
-  type: string;
+  type?: string;
 }
 
 export interface LabelObj {
   label: string;
   value: string;
   desc: string;
-  filter: [FilterType[] | FilterMode[]];
+  filter: FilterMode[];
 }
 
 const defaultParams = {
@@ -225,11 +225,10 @@ export default class FilterPopover extends Vue {
   // 过滤条件的字段格式
   @Prop({ default: () => defaultData }) labelObj!: LabelObj[];
 
-  public show:boolean = false;
+  @Prop({ default: false }) show!:boolean;
 
-  handleColse() {
-    this.show = false;
-  }
+  @Emit('close')
+  handleColse(e:MouseEvent) {}
 }
 </script>
 

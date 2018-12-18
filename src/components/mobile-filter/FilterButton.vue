@@ -36,8 +36,6 @@ export default class FilterButton extends Vue {
 <style lang="less" scoped>
 .filter-button-container {
   display: inline-flex;
-  margin-right: 10px;
-  margin-bottom: 10px;
   .btn {
     outline: none;
     height: 26px;
