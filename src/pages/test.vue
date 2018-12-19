@@ -1,6 +1,9 @@
 <template>
   <div>
-    <filter-popover ref="popover" :show="true">
+    <filter-popover
+      ref="popover"
+      :show="true"
+    >
       <template slot="broker">
         <filter-tag
           :border="true"
@@ -24,9 +27,7 @@ import FilterButton from '@/components/mobile-filter/FilterButton.vue';
     FilterButton,
   },
 })
-export default class Test extends Vue {
-
-}
+export default class Test extends Vue {}
 </script>
 
 <style lang="less">
