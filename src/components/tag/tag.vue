@@ -35,10 +35,8 @@ export default class Tag extends Vue {
   render(h: CreateElement): VNode {
     return (
       <div onClick={this.tagClick} class="tag-container">
-        <slot name="content">
-          <span class={this.type === 1 ? 'tag-msg' : 'tag-desc'}>{this.msg || ''}</span>
-          <span class="tag-desc">{this.desc || ''}</span>
-        </slot>
+        <span class={this.type === 1 ? 'tag-msg' : 'tag-desc'}>{this.msg || ''}</span>
+        <span class="tag-desc">{this.desc || ''}</span>
       </div>
     );
   }
@@ -46,6 +44,9 @@ export default class Tag extends Vue {
 </script>
 <style lang="less" scoped>
 .tag-container {
+  overflow: hidden;
+  text-overflow:ellipsis;
+  white-space: nowrap;
   cursor: pointer;
   display: inline-block;
   flex: 1;
