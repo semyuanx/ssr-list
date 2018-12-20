@@ -15,13 +15,13 @@
       <li class="navbar-right-item">
         <a href="javascript:;">
           <i class="fm-fonticon icon-plus_24px"></i>
-          <span>创建MAM账户</span>
+          <span>{{$t('createAccount')}}</span>
         </a>
       </li>
       <li class="navbar-right-item">
         <a href="javascript:;">
           <i class="fm-fonticon  icon-flag_24px"></i>
-          <span>自主发起产品</span>
+          <span>{{$t('launchedProduct')}}</span>
         </a>
       </li>
     </ul>
@@ -31,10 +31,25 @@
 import {
   Vue, Prop, Component, Emit,
 } from 'vue-property-decorator';
+import zhCN from '@/i18n/zh-CN/views/InvestManager/Navbar';
+import zhTW from '@/i18n/zh-TW/views/InvestManager/Navbar';
+import enUS from '@/i18n/en-US/views/InvestManager/Navbar';
 
-@Component
+@Component({
+  i18n: {
+    messages: {
+      'zh-CN': zhCN,
+      'zh-TW': zhTW,
+      'en-US': enUS,
+    },
+  },
+})
 export default class Navbar extends Vue {
-  @Prop({ default: 'InProcess' })
+  @Prop({
+    type: String,
+    default: 'InProcess',
+    validator: value => ['InProcess', 'Settled'].indexOf(value) !== -1,
+  })
   public currentTag!: string;
 
   public tags: Array<any> = [
@@ -53,7 +68,9 @@ export default class Navbar extends Vue {
 @media screen and (max-width: 880px) {
   @base-font: 20;
 }
-.height(@value) { height:unit(@value / @base-font,rem)}
+.height(@value) {
+  height: unit(@value / @base-font, rem);
+}
 .navbar {
   background-color: #fff;
   .height(60);
@@ -61,15 +78,15 @@ export default class Navbar extends Vue {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  font-size: 16rem/@base-font;
+  font-size: 16rem / @base-font;
   font-family: MicrosoftYaHei;
   color: rgba(51, 51, 51, 1);
-  padding: 0 26rem/@base-font;
+  padding: 0 26rem / @base-font;
   white-space: nowrap;
   @media screen and (max-width: 880px) {
-  padding: 0 10rem/@base-font;
-  font-size: 12rem/@base-font;
-}
+    padding: 0 10rem / @base-font;
+    font-size: 12rem / @base-font;
+  }
   &-item {
     display: inline-flex;
     align-items: center;
@@ -81,7 +98,7 @@ export default class Navbar extends Vue {
         text-decoration: none;
       }
       & + li {
-        margin-left: 20rem/@base-font;
+        margin-left: 20rem / @base-font;
       }
     }
   }
@@ -94,7 +111,7 @@ export default class Navbar extends Vue {
       display: inline-flex;
       align-items: center;
       position: relative;
-      padding: 0 5rem/@base-font;
+      padding: 0 5rem / @base-font;
       height: 100%;
       &.active {
         &:after {
@@ -116,6 +133,4 @@ export default class Navbar extends Vue {
     }
   }
 }
-
-
 </style>

@@ -21,6 +21,8 @@ export default class ManagerStore {
       ID: v.ID,
       Type: v.Trader.Type,
       UserID: v.Trader.UserID,
+      AccountIndex: v.Trader.AccountIndex,
+      BrokerID: v.Trader.BrokerID,
       Name: v.Name, // 标题
       Nickname: `${v.Trader.Nickname} ${v.Trader.Broker}-#${v.Trader.AccountIndex}`, // 副标题
       ProductCount: v.Trader.Summary.ProductCount, // 历史发起

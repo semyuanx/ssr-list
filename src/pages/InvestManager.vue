@@ -34,6 +34,16 @@ import FmRow from '@/components/grid/Row.vue';
 import { namespace } from 'vuex-class';
 
 const ManagerStore = namespace('ManagerStore');
+export interface Params {
+    status: string,
+    profitRatio: string,
+    followerMaxRisk: string,
+    expectDays: string,
+    minFollowBalance: string,
+    roi: string,
+    pageSize: string | number,
+    pageIndex: string | number,
+}
 
 @Component({
   components: {
@@ -50,7 +60,7 @@ export default class Manager extends Vue {
   @ManagerStore.Action
   getAllProductsAsync: any;
 
-  public params:Object = {
+  public params:Params = {
     status: 'InProcess',
     profitRatio: '',
     followerMaxRisk: '',

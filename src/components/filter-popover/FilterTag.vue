@@ -4,7 +4,7 @@
     :class="{active:active,border:border,closed:closed}"
     @click="handleClick"
   >
-    <slot>不限</slot>
+    <slot>{{$t('unlimited')}}</slot>
     <i
       class="fm-fonticon icon-close_24px"
       v-if="closed"
@@ -18,7 +18,19 @@ import {
   Component, Vue, Prop, Emit,
 } from 'vue-property-decorator';
 
-@Component
+import zhCN from '@/i18n/zh-CN/components/filter-popover/FilterTag';
+import zhTW from '@/i18n/zh-TW/components/filter-popover/FilterTag';
+import enUS from '@/i18n/en-US/components/filter-popover/FilterTag';
+
+@Component({
+  i18n: {
+    messages: {
+      'zh-CN': zhCN,
+      'zh-TW': zhTW,
+      'en-US': enUS,
+    },
+  },
+})
 export default class FilterTag extends Vue {
   @Prop({ default: false }) active!: boolean;
 
