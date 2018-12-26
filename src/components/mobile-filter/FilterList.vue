@@ -14,7 +14,8 @@
     </section>
     <section class="filter-result-container">
       <v2-table
-        :data="list2"
+        class="mobile-rank-table"
+        :data="data"
         :loading="loading"
         :default-sort='{prop: "date", order: "descending"}'
         @sort-change="handleSortChange"
@@ -46,9 +47,9 @@
           sortable
         >
           <template slot-scope="scope">
-            <p class="rateOfReturn up">
-              <span class="rateValue">{{scope.row.rate}}</span>
-              <span class="ratePercent">%</span>
+            <p class="rateOfReturn">
+              <span :class="scope.row.ROI >= 0 ? 'rateValue up' : 'rateValue'">{{scope.row.ROI | percentFormat}}</span>
+              <!-- <span class="ratePercent">%</span> -->
             </p>
           </template>
         </v2-table-column>
@@ -59,7 +60,7 @@
           align="right"
         >
           <template slot-scope="scope">
-            <p class="orderCount">{{scope.row.count}}</p>
+            <p class="orderCount">{{scope.row.Subscribers}}</p>
           </template>
         </v2-table-column>
         <v2-table-column
@@ -70,7 +71,7 @@
             <filter-button
               :border="true"
               class="filter-button"
-            >{{scope.row.price}}</filter-button>
+            >{{scope.row.price || '$9.99'}}</filter-button>
           </template>
         </v2-table-column>
       </v2-table>
@@ -79,12 +80,16 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
+import { Component, Vue, Prop } from 'vue-property-decorator';
 import FilterButton from './FilterButton.vue';
+import { percentFormat } from '@/utils/format';
 
 @Component({
   components: {
     FilterButton,
+  },
+  filters: {
+    percentFormat: (val: number) => percentFormat(val),
   },
 })
 export default class FilterList extends Vue {
@@ -92,35 +97,21 @@ export default class FilterList extends Vue {
 
   loading: boolean = false;
 
-  list2: any = [
-    {
-      name: '来士大夫稍等',
-      rate: '188.82',
-      count: 2012,
-      price: '$229.99',
-    },
-    {
-      name: '是大法官',
-      rate: '1884.82',
-      count: 22,
-      price: '$9.99',
-    },
-    {
-      name: '搜索',
-      rate: '188.82',
-      count: 20312,
-      price: '$99.99',
-    },
-  ];
+
+  @Prop({
+    type: Array,
+    default: () => [],
+  })
+  data: any;
 
   handleSortChange({ prop, order }: any) {
     // Customize your sorting method. Maybe it will get data from server.
     this.loading = true;
-    const list = [].concat(this.list2);
-    setTimeout(() => {
-      this.loading = false;
-      this.list2 = [].concat(list);
-    }, 2000);
+    // const list = [].concat(this.data);
+    // setTimeout(() => {
+    //   this.loading = false;
+    //   this.data = [].concat(list);
+    // }, 2000);
   }
 }
 </script>
@@ -144,6 +135,20 @@ export default class FilterList extends Vue {
   box-sizing: border-box;
   .v2-table {
     width: 100%;
+  }
+  .mobile-rank-table {
+    .rateOfReturn {
+      font-size: 18px;
+      display: flex;
+      align-items: baseline;
+      justify-content: flex-end;
+      .up {
+        color: #00aa6d;
+      }
+      .ratePercent {
+        font-size: 12px;
+      }
+    }
   }
 }
 .filter-selected-container {
@@ -195,18 +200,7 @@ export default class FilterList extends Vue {
   }
 }
 
-.rateOfReturn {
-  font-size: 18px;
-  display: flex;
-  align-items: baseline;
-  justify-content: flex-end;
-  &.up {
-    color: #00aa6d;
-  }
-  .ratePercent {
-    font-size: 12px;
-  }
-}
+
 .orderCount {
   font-size: 18px;
 }

@@ -106,20 +106,20 @@ const defaultParams = {
 };
 
 const defaultData: LabelObj[] = [
-  {
-    label: '账户评级',
-    value: 'accountRate',
-    desc: '备注介绍',
-    filter: [
-      { name: '不限', value: '' },
-      { name: 'S', value: 'S' },
-      { name: 'A+', value: 'A+' },
-      { name: 'A', value: 'A' },
-      { name: 'A-', value: 'A-' },
-      { name: 'B', value: 'B' },
-      { name: 'C', value: 'C' },
-    ],
-  },
+  // {
+  //   label: '账户评级',
+  //   value: 'accountRate',
+  //   desc: '备注介绍',
+  //   filter: [
+  //     { name: '不限', value: '' },
+  //     { name: 'S', value: 'S' },
+  //     { name: 'A+', value: 'A+' },
+  //     { name: 'A', value: 'A' },
+  //     { name: 'A-', value: 'A-' },
+  //     { name: 'B', value: 'B' },
+  //     { name: 'C', value: 'C' },
+  //   ],
+  // },
   {
     label: '交易能力值',
     value: 'tradeAbility',

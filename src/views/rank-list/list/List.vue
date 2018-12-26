@@ -2,15 +2,29 @@
 <div class="list-container">
   <div class="list-table">
     <v2-table class="rank-table"
-      :data="lists"
+      :data="data"
       :row-class-name="getRowClassName"
       @sort-change="handleSortChange">
-      <v2-table-column label="交易员" prop="name" width="236px">
+      <v2-table-column label="交易员" prop="Account" width="236px">
         <template slot-scope="scope">
-          <div v-if="!dateIsLoading" class="custom-display-row-line">{{scope.row.name}}</div>
+          <div v-if="!dateIsLoading" class="custom-display-row-line">
+            <div class="trader-container-row">
+              <div class="loading-first avatar">
+                <img :src="base+'/Avata/'+scope.row.Account.Account" />
+              </div>
+              <div class="loading-first trader-info">
+                <div class="info-1">用户名称 #{{scope.row.Account.BrokerID}}</div>
+                <div class="info-2">
+                  Fxpro
+                </div>
+              </div>
+            </div>
+          </div>
           <div v-if="dateIsLoading" class="custom-display-row-loading-1">
             <div class="trader-container-row">
-              <div class="loading-first loading-avatar"></div>
+              <div class="loading-first loading-avatar">
+                <img :src="base+'/Avata/'+scope.row.Account.Account" />
+              </div>
               <div class="loading-first loading-info">
                 <div class="info-1"></div>
                 <div class="info-2"></div>
@@ -19,41 +33,41 @@
           </div>
         </template>
       </v2-table-column>
-      <v2-table-column label="交易能力值" prop="date" sortable>
+      <v2-table-column label="交易能力值" prop="Score" sortable>
         <template slot-scope="scope">
-          <div v-if="!dateIsLoading" class="custom-display-row-line">{{scope.row.date}}</div>
+          <div v-if="!dateIsLoading" class="custom-display-row-line">{{scope.row.Score | numberFormatOneParams}}</div>
           <div v-if="dateIsLoading" class="custom-display-row-loading"></div>
         </template>
       </v2-table-column>
-      <v2-table-column label="收益率" prop="address" width="150" sortable>
+      <v2-table-column label="收益率" prop="ROI" width="150" sortable>
         <template slot-scope="scope">
-          <div v-if="!dateIsLoading" class="custom-display-row-line special-rate">
-            {{scope.row.name}}
+          <div v-if="!dateIsLoading" :class="`custom-display-row-line `">
+            <span :class="scope.row.ROI >= 0 ? 'special-rate' : ''">{{scope.row.ROI | percentFormat}}</span>
           </div>
           <div v-if="dateIsLoading" class="custom-display-row-loading"></div>
         </template>
       </v2-table-column>
-      <v2-table-column label="最大回撤" prop="birthDay" sortable>
+      <v2-table-column label="最大回撤" prop="MaxRetracement" sortable>
         <template slot-scope="scope">
-          <div v-if="!dateIsLoading" class="custom-display-row-line">{{scope.row.name}}</div>
+          <div v-if="!dateIsLoading" class="custom-display-row-line">{{scope.row.MaxRetracement | percentFormat}}</div>
           <div v-if="dateIsLoading" class="custom-display-row-loading"></div>
         </template>
       </v2-table-column>
-      <v2-table-column label="交易周期" prop="songs" sortable>
+      <v2-table-column label="交易周期" prop="Weeks" sortable>
         <template slot-scope="scope">
-          <div v-if="!dateIsLoading" class="custom-display-row-line">{{scope.row.name}}</div>
+          <div v-if="!dateIsLoading" class="custom-display-row-line">{{scope.row.Weeks || 0}}周</div>
           <div v-if="dateIsLoading" class="custom-display-row-loading"></div>
         </template>
       </v2-table-column>
-      <v2-table-column label="擅长品种" prop="province" sortable>
+      <v2-table-column label="擅长品种" prop="ExpSymbol" sortable>
         <template slot-scope="scope">
-          <div v-if="!dateIsLoading" class="custom-display-row-line">{{scope.row.name}}</div>
+          <div v-if="!dateIsLoading" class="custom-display-row-line">{{scope.row.ExpSymbol}}</div>
           <div v-if="dateIsLoading" class="custom-display-row-loading"></div>
         </template>
       </v2-table-column>
-      <v2-table-column label="订阅人数" prop="city" sortable>
+      <v2-table-column label="订阅人数" prop="Subscribers" sortable>
         <template slot-scope="scope">
-          <div v-if="!dateIsLoading" class="custom-display-row-line">{{scope.row.name}}</div>
+          <div v-if="!dateIsLoading" class="custom-display-row-line">{{scope.row.Subscribers}}</div>
           <div v-if="dateIsLoading" class="custom-display-row-loading"></div>
         </template>
       </v2-table-column>
@@ -64,9 +78,10 @@
         </template>
       </v2-table-column>
       <v2-table-column label="订阅" prop="age">
+        <!-- eslint-disable-next-line -->
         <template slot-scope="scope">
-          <div v-if="!dateIsLoading" class="custom-display-row-sub">
-            <span class="sub-row-btn">{{scope.row.age}}</span>
+          <div @click="handleSub" v-if="!dateIsLoading" class="custom-display-row-sub">
+            <span class="sub-row-btn">订阅</span>
           </div>
           <div v-if="dateIsLoading" class="custom-display-row-loading"></div>
         </template>
@@ -82,17 +97,28 @@
 </div>
 </template>
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
+import { Component, Vue, Prop } from 'vue-property-decorator';
 import { namespace } from 'vuex-class';
 import SvgIcon from '@/components/svg/index.ts';
+import { numberFormat, percentFormat } from '@/utils/format';
 
 @Component({
   components: {
     SvgIcon,
   },
+  filters: {
+    numberFormatOneParams: (val: number) => numberFormat(val, 1),
+    percentFormat: (val: number) => percentFormat(val),
+  },
 })
 export default class List extends Vue {
-  isLoading: boolean = true;
+  isLoading: boolean = false;
+
+  @Prop({
+    type: Array,
+    default: () => [],
+  })
+  data: any;
 
   getRowClassName({ row, rowIndex }: any) {
     if (rowIndex % 2 === 0) {
@@ -105,64 +131,13 @@ export default class List extends Vue {
     return this.isLoading;
   }
 
-
   mounted() {
     // setTimeout(() => this.isLoading = false, 5000);
   }
 
-  lists: Array<any> = [] || [
-    {},
-    {},
-    {},
-    {},
-    {},
-    {},
-  ] || [
-    {
-      name: 'hellokitty1',
-      date: 'date',
-      address: 'date',
-      birthDay: 'date',
-      songs: 'date',
-      province: 'hellokitty1',
-      city: 'hellokitty1',
-      country: 'hellokitty1',
-      age: '$0.99/月',
-    },
-    {
-      name: 'hellokitty12',
-      date: 'date',
-      address: 'date',
-      birthDay: 'date',
-      songs: 'date',
-      province: 'hellokitty1',
-      city: 'hellokitty1',
-      country: 'hellokitty1',
-      age: 'hellokitty1',
-    },
-    {
-      name: 'hellokitty13',
-      date: 'date',
-      address: 'date',
-      birthDay: 'date',
-      songs: 'date',
-      province: 'hellokitty1',
-      city: 'hellokitty1',
-      country: 'hellokitty1',
-      age: '$0.99/月',
-    },
-    {
-      name: 'hellokitty14',
-      date: 'date',
-      address: 'date',
-      birthDay: 'date',
-      songs: 'date',
-      province: 'hellokitty1',
-      city: 'hellokitty1',
-      country: 'hellokitty1',
-      age: '$0.99/月',
-    },
-  ];
+  handleSub() {
+    console.log('to subsribe');
+  }
 
   handleSortChange(e:any) {
     console.log(e);
@@ -212,11 +187,34 @@ export default class List extends Vue {
         font-weight:500;
         color:rgba(51,51,51,1);
         line-height:21px;
+        .trader-container-row {
+          display: flex;
+          flex-direction: row;
+          .avatar {
+            margin-left: 20px;
+            width:40px;
+            height:40px;
+            border-radius: 20px;
+            overflow: hidden;
+          }
+          .trader-info {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            text-align: left;
+            padding-left: 4px;
+          }
+        }
       }
       .custom-display-row-sub {
         font-size:14px;
         font-family:MicrosoftYaHei;
         color:rgba(255,98,0,1);
+        .sub-row-btn {
+          background: transparent;
+          transition: background-color .5s ease-in,
+                      color .5s ease-in;
+        }
       }
       .custom-display-row-loading {
         height:14px;

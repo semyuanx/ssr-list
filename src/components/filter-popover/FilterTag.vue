@@ -43,7 +43,7 @@ export default class FilterTag extends Vue {
     console.log('关闭');
   }
 
-  @Emit()
+  @Emit('selected')
   public handleClick() {
     console.log('点击了');
   }
@@ -64,7 +64,7 @@ export default class FilterTag extends Vue {
   padding-left: 10px;
   padding-right: 10px;
   border: 1px solid transparent;
-  margin-right: 10px;
+  // margin-right: 10px;
   margin-bottom: 10px;
   cursor: pointer;
   &.border {

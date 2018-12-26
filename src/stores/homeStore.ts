@@ -2,24 +2,22 @@ import {
   State, Repository, Action, Getter, Mutation, Set,
 } from '@/utils/store-class-annotation';
 import { Commit, ActionTree } from 'vuex';
-import { getLoginStatus } from '@/service/home';
+import { getCustomConfig } from '@/service/home';
 
 @Repository('HomeStore')
 export default class HomeStore {
-  @State(true)
-  public isLogin: boolean = false;
+  @State([])
+  public configs: Array<any> = [];
 
-  @Set('isLogin')
-  public setLoginStatus(): any | null {
-
-  }
+  @Set('configs')
+  public setConfig(): any | null { }
 
   @Action
-  public getLoginInfo(context: { commit: Commit }, payload: any): any {
-    getLoginStatus().then((res: any) => {
-      console.log(res, 'getLoginStatus');
-      if (res) {
-        context.commit('setLoginStatus', res.isLogin);
+  public getCustomConfig(context: { commit: Commit }, payload: any): any {
+    getCustomConfig().then((res: any) => {
+      console.log(res, 'getCustomConfig');
+      if (res && res.cfgs) {
+        context.commit('setConfig', res.cfgs || []);
       }
     }).catch(() => {});
   }

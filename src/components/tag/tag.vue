@@ -44,6 +44,7 @@ export default class Tag extends Vue {
 </script>
 <style lang="less" scoped>
 .tag-container {
+  max-width: 260px;
   overflow: hidden;
   text-overflow:ellipsis;
   white-space: nowrap;

@@ -1,4 +1,4 @@
-import Vue from 'vue';
+import Vue, { CreateElement } from 'vue';
 import App from './App.vue';
 import createRouter from './router';
 import createStore from './stores';
@@ -7,6 +7,8 @@ import './registerServiceWorker';
 import fmui from '@fmfe/fm-vue-ui';
 import '@fmfe/fm-vue-ui/lib/theme-default/index.css';
 import fmcomponents from 'fmcomponents/dist/fmcomponents';
+
+import envMixin from './mixin/envMixin.vue';
 
 import 'v2-table/dist/index.css';
 import 'beautify-scrollbar/dist/index.css';
@@ -46,6 +48,7 @@ Vue.use(fmcomponents, {
 });
 
 Vue.use(fmui);
+Vue.mixin(envMixin);
 
 const i18n = createI18n();
 const store = createStore();
@@ -56,7 +59,7 @@ const app = new Vue({
   i18n,
   router,
   store,
-  render: h => h(App),
+  render: (h: CreateElement) => h(App),
 });
 
 app.$mount('#app');

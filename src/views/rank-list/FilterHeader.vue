@@ -21,6 +21,7 @@
         <div @click="emitFilter" class="filter-content">
           <i class="icon-filtrate_24px"></i><span>筛选器</span>
         </div>
+        <div class="filter-pop"><FilterPopover :show="isShow" /></div>
       </div>
     </div>
   </div>
@@ -29,17 +30,20 @@
 import { Component, Vue } from 'vue-property-decorator';
 import { namespace } from 'vuex-class';
 import FmTag from '@/components/tag/tag.vue'; // @ is an alias to /src
-
+import FilterPopover from '@/components/filter-popover/FilterPopover.vue';
 
 // const HomeStore = namespace('HomeStore');
 
 @Component({
   components: {
-    FmTag,
+    FmTag, FilterPopover,
   },
 })
 export default class FilterHeader extends Vue {
+  isShow: boolean = true;
+
   emitFilter() {
+    this.isShow = !this.isShow;
     this.$emit('filter-click');
   }
 
@@ -84,6 +88,21 @@ export default class FilterHeader extends Vue {
       color:rgba(51,51,51,1);
       line-height:19px;
       cursor: pointer;
+      position: relative;
+
+      .filter-content {
+        position: relative;
+        >i {
+          vertical-align: middle;
+        }
+      }
+
+      .filter-pop {
+        position: absolute;
+        top: 85%;
+        right: 0;
+        z-index: 100;
+      }
     }
   }
 }

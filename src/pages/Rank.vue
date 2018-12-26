@@ -15,7 +15,7 @@ import { namespace } from 'vuex-class';
 import FilterHeader from '@/views/rank-list/FilterHeader.vue';
 import List from '@/views/rank-list/List.vue';
 
-// const HomeStore = namespace('HomeStore');
+const RankStore = namespace('RankStore');
 
 @Component({
   components: {
@@ -24,8 +24,13 @@ import List from '@/views/rank-list/List.vue';
   },
 })
 export default class RankList extends Vue {
-  mounted() {
+  @RankStore.Action
+  getRankList: any;
 
+  mounted() {
+    this.getRankList({
+      a: 123,
+    });
   }
 }
 </script>

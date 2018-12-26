@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "@fmfe/fm-vue-ui": "^2.0.60",
+    "@types/node": "^10.12.18",
     "axios": "^0.18.0",
     "beautify-scrollbar": "^1.0.8",
     "chai": "^4.1.2",
@@ -37,6 +38,7 @@
   "devDependencies": {
     "@types/chai": "^4.1.0",
     "@types/mocha": "^5.2.4",
+    "@types/numeral": "0.0.25",
     "@vue/cli-plugin-babel": "^3.2.0",
     "@vue/cli-plugin-e2e-nightwatch": "^3.2.0",
     "@vue/cli-plugin-eslint": "^3.2.0",

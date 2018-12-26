@@ -1,18 +1,20 @@
 <template>
 <div class="main-list-container">
   <div class="fm-show-pc">
-    <FmList />
+    <FmList :data="rankList" />
   </div>
   <div class="fm-show-mobile">
-    <MobileList />
+    <MobileList :data="rankList" />
   </div>
 </div>
 </template>
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
+import { Component, Vue, Watch } from 'vue-property-decorator';
 import { namespace } from 'vuex-class';
 import FmList from './list/List.vue';
 import MobileList from './list/ListMobile.vue';
+
+const RankStore = namespace('RankStore');
 
 @Component({
   components: {
@@ -22,6 +24,21 @@ import MobileList from './list/ListMobile.vue';
 })
 export default class List extends Vue {
   name: string = 'response-list';
+
+  @RankStore.State
+  rankList: any;
+
+  @RankStore.State
+  rankTotal: any;
+
+  @Watch('rankList')
+  public rankListChange() {
+    console.log('rank changed', this.rankTotal, this.rankList);
+  }
+
+  mounted() {
+    // console.log('rank', this.rankTotal, this.rankList)
+  }
 }
 </script>
 <style lang="less" scoped>
