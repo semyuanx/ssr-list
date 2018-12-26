@@ -39,9 +39,6 @@ const HomeStore = namespace('HomeStore');
   },
 })
 export default class Home extends Vue {
-  @HomeStore.State
-  public isLogin: any;
-
   @HomeStore.Action
   getCustomConfig: any;
 
