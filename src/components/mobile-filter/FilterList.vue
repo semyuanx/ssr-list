@@ -1,17 +1,5 @@
 <template>
   <div class="filter-list-container">
-    <section class="filter-selected-container">
-      <div>
-        <filter-button class="filter-button">收益率 >10%</filter-button>
-        <filter-button class="filter-button">最大回测 >10%</filter-button>
-      </div>
-      <router-link
-        to="/filter"
-        class="filter-link"
-      >
-        <span>筛选</span>
-      </router-link>
-    </section>
     <section class="filter-result-container">
       <v2-table
         class="mobile-rank-table"
@@ -81,13 +69,9 @@
 
 <script lang="ts">
 import { Component, Vue, Prop } from 'vue-property-decorator';
-import FilterButton from './FilterButton.vue';
 import { percentFormat } from '@/utils/format';
 
 @Component({
-  components: {
-    FilterButton,
-  },
   filters: {
     percentFormat: (val: number) => percentFormat(val),
   },
@@ -151,18 +135,7 @@ export default class FilterList extends Vue {
     }
   }
 }
-.filter-selected-container {
-  border-bottom: 1px solid #ebeef5;
-  padding: 0 15px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  .filter-button {
-    margin-right: 10px;
-    margin-bottom: 6px;
-    margin-top: 6px;
-  }
-}
+
 
 .rate-span {
   width: 14px;
