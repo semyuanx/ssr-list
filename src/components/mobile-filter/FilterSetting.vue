@@ -5,7 +5,7 @@
       <filter-button>免费订阅</filter-button>
     </div>
     <fm-collapse accordion>
-      <fm-collapse-item
+      <!-- <fm-collapse-item
         title="评级"
         :icon-classes="iconClasses"
       >
@@ -16,7 +16,7 @@
           <filter-button>A-</filter-button>
           <filter-button>B</filter-button>
         </section>
-      </fm-collapse-item>
+      </fm-collapse-item> -->
       <fm-collapse-item
         title="活跃度"
         :icon-classes="iconClasses"

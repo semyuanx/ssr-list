@@ -10,10 +10,10 @@
           <div v-if="!dateIsLoading" class="custom-display-row-line">
             <div class="trader-container-row">
               <div class="loading-first avatar">
-                <img :src="base+'/Avata/'+scope.row.Account.Account" />
+                <img :src="base+'/Avata/'+ (scope.row.Account && scope.row.Account.Account)" />
               </div>
               <div class="loading-first trader-info">
-                <div class="info-1">用户名称 #{{scope.row.Account.BrokerID}}</div>
+                <div class="info-1">用户名称 #{{scope.row.Account && scope.row.Account.BrokerID}}</div>
                 <div class="info-2">
                   Fxpro
                 </div>
@@ -23,7 +23,7 @@
           <div v-if="dateIsLoading" class="custom-display-row-loading-1">
             <div class="trader-container-row">
               <div class="loading-first loading-avatar">
-                <img :src="base+'/Avata/'+scope.row.Account.Account" />
+                <img :src="base+'/Avata/'+(scope.row.Account && scope.row.Account.Account)" />
               </div>
               <div class="loading-first loading-info">
                 <div class="info-1"></div>

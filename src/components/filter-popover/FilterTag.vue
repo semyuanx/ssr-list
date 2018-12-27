@@ -66,6 +66,7 @@ export default class FilterTag extends Vue {
   border: 1px solid transparent;
   // margin-right: 10px;
   margin-bottom: 10px;
+  user-select: none;
   cursor: pointer;
   &.border {
     border-color: #e6e6e6;

@@ -1,7 +1,7 @@
 <template>
   <div class="rank-container">
     <div>
-      <FilterHeader />
+      <FilterHeader/>
     </div>
     <div>
       <List />
@@ -27,10 +27,11 @@ export default class RankList extends Vue {
   @RankStore.Action
   getRankList: any;
 
+  @RankStore.State
+  rankParams:any;
+
   mounted() {
-    this.getRankList({
-      a: 123,
-    });
+    this.getRankList(this.rankParams);
   }
 }
 </script>
