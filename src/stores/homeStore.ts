@@ -32,7 +32,6 @@ export default class HomeStore {
   @Action
   public getCustomConfig(context: { commit: Commit }, payload: any): any {
     getCustomConfig().then((res: any) => {
-      console.log(res, 'getCustomConfig');
       if (res && res.cfgs) {
         const data: Array<any> = Array.isArray(res.cfgs) ? res.cfgs.sort((a: any, b: any) => (a.RankIndex - b.RankIndex > 0 ? 1 : -1)) : [];
 
