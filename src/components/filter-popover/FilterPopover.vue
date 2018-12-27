@@ -101,84 +101,6 @@ import zhCN from '@/i18n/zh-CN/components/filter-popover/FilterPopover';
 import zhTW from '@/i18n/zh-TW/components/filter-popover/FilterPopover';
 import enUS from '@/i18n/en-US/components/filter-popover/FilterPopover';
 
-const defaultParams = {
-  Score: '',
-  Roi: '',
-  Retracement: '',
-  Weeks: '',
-  Equity: '',
-  brokerId: '',
-};
-
-const defaultData: any[] = [
-  {
-    label: '交易能力值',
-    desc: '备注介绍',
-    value: 'Score',
-    filter: [
-      { name: '不限', value: '' },
-      { name: '60-70', value: '60-70' },
-      { name: '71-80', value: '71-80' },
-      { name: '81-90', value: '81-90' },
-      { name: '>90', value: '90-0' },
-      {
-        mode: 'input',
-        start: '',
-        end: '',
-        type: 'interval',
-      },
-    ],
-  },
-  {
-    label: '账户净值',
-    value: 'Equity',
-    desc: '备注介绍',
-    filter: [
-      { name: '不限', value: '' },
-      { name: '小于 $5000', value: '0-5000' },
-      { name: '$5000 - $20000', value: '5000-20000' },
-      { name: '$20000 - $50000', value: '20000-50000' },
-      {
-        mode: 'input',
-        start: '',
-        end: '',
-        type: 'interval',
-      },
-    ],
-  },
-  {
-    label: '交易周期',
-    value: 'Weeks',
-    desc: '备注介绍',
-    filter: [
-      { name: '不限', value: '' },
-      { name: '小于13周', value: '0-13' },
-      { name: '13-26周', value: '13-26' },
-      { name: '26-52周', value: '26-52' },
-      { name: '52周以上', value: '52-0' },
-    ],
-  },
-  {
-    label: '最大回撤比例',
-    value: 'Retracement',
-    desc: '备注介绍',
-    filter: [{ name: '不限', value: '' }],
-  },
-  {
-    label: '收益率',
-    value: 'Roi',
-    desc: '备注介绍',
-    filter: [{ name: '不限', value: '' }],
-  },
-  {
-    label: '经纪商',
-    value: 'brokerId',
-    desc: '备注介绍',
-    hasAdd: true,
-    filter: [{ name: '全部', value: '' }],
-  },
-];
-
 @Component({
   components: {
     FilterTag,
@@ -212,10 +134,81 @@ export default class FilterPopover extends Vue {
       expSymbol: '',
       brokerId: '',
     }),
-  }) params!: any;
+  })
+  params!: any;
 
   // 过滤条件的字段格式
-  @Prop({ default: () => defaultData }) labelObj!: any[];
+  @Prop({
+    default: () => [
+      {
+        label: '交易能力值',
+        desc: '备注介绍',
+        value: 'Score',
+        filter: [
+          { name: '不限', value: '' },
+          { name: '60-70', value: '60-70' },
+          { name: '71-80', value: '71-80' },
+          { name: '81-90', value: '81-90' },
+          { name: '>90', value: '90-0' },
+          {
+            mode: 'input',
+            start: '',
+            end: '',
+            type: 'interval',
+          },
+        ],
+      },
+      {
+        label: '账户净值',
+        value: 'Equity',
+        desc: '备注介绍',
+        filter: [
+          { name: '不限', value: '' },
+          { name: '小于 $5000', value: '0-5000' },
+          { name: '$5000 - $20000', value: '5000-20000' },
+          { name: '$20000 - $50000', value: '20000-50000' },
+          {
+            mode: 'input',
+            start: '',
+            end: '',
+            type: 'interval',
+          },
+        ],
+      },
+      {
+        label: '交易周期',
+        value: 'Weeks',
+        desc: '备注介绍',
+        filter: [
+          { name: '不限', value: '' },
+          { name: '小于13周', value: '0-13' },
+          { name: '13-26周', value: '13-26' },
+          { name: '26-52周', value: '26-52' },
+          { name: '52周以上', value: '52-0' },
+        ],
+      },
+      {
+        label: '最大回撤比例',
+        value: 'Retracement',
+        desc: '备注介绍',
+        filter: [{ name: '不限', value: '' }],
+      },
+      {
+        label: '收益率',
+        value: 'Roi',
+        desc: '备注介绍',
+        filter: [{ name: '不限', value: '' }],
+      },
+      {
+        label: '经纪商',
+        value: 'brokerId',
+        desc: '备注介绍',
+        hasAdd: true,
+        filter: [{ name: '全部', value: '' }],
+      },
+    ],
+  })
+  labelObj!: any[];
 
   @Prop({ default: false }) show!: boolean;
 
@@ -227,8 +220,10 @@ export default class FilterPopover extends Vue {
     return this.params;
   }
 
-  public rangeHandler(key: string, value: string) {
-    this.$set(this.params, key, value);
+  public rangeHandler(key: string, citem: any) {
+    this.$set(this.params, key, citem.value);
+    citem.start = '';
+    citem.end = '';
   }
 
   public inputHandler(key: string, start: number, end: number) {
@@ -239,7 +234,6 @@ export default class FilterPopover extends Vue {
     const value = `${start || 0}-${end || 0}`;
     this.$set(this.params, key, value);
   }
-
 
   @Emit('reset')
   reset() {

@@ -1,87 +1,91 @@
 <template>
-  <div class="filter-header">
-    <div class="header-content">
-      <div class="header-fitler-title"><span>筛选条件：</span></div>
-      <div class="header-tag-lists">
-        <div
-          :key="i"
-          v-for="i in Array(10).fill(0)"
-          class="header-tag-item"
-        >
-          <FmTag
-            msg="账户评级"
-            desc="A"
-          />
-        </div>
-
-        <div class="header-tag-item">
-          <FmTag
-            msg="账户评级"
-            desc="XAU/USD,XAU/USD,XAU/USD,XAU/USD,XAU/USD…"
-          />
-        </div>
-        <div class="header-tag-item">
-          <FmTag
-            msg="账户评级"
-            desc="XAU/USD,XAU/USD,XAU/USD,XAU/USD,XAU/USD…"
-          />
-        </div>
-        <div class="header-tag-item">
-          <FmTag
-            type="2"
-            msg="PTA"
-            desc="会员"
-          />
-        </div>
-      </div>
-      <div class="header-filter">
-        <div
-          @click="emitFilter"
-          class="filter-content"
-        >
-          <i class="icon-filtrate_24px"></i><span>筛选器</span>
-        </div>
-        <div class="filter-pop">
-          <filter-popover
-            @close="closeFilter"
-            :show="isShow"
-            @filter="handleFilter"
-            @reset="handleReset"
+  <div>
+    <div class="filter-header fm-show-pc">
+      <div class="header-content">
+        <div class="header-fitler-title"><span>筛选条件：</span></div>
+        <div class="header-tag-lists">
+          <div
+            :key="i"
+            v-for="i in Array(10).fill(0)"
+            class="header-tag-item"
           >
+            <FmTag
+              msg="账户评级"
+              desc="A"
+            />
+          </div>
 
-            <template slot="brokerId">
-              <filter-tag
-                :border="true"
-                :closed="true"
-                v-for="(item,index) in checkbox"
-                class="has-close-tag"
-                @close="handleCloseTag(index)"
-                :key="item"
-              >{{item}}</filter-tag>
-              <button
-                class="add-button"
-                @click="addBorker=!addBorker"
-              ><i class="fm-fonticon icon-plus_24px"></i>添加</button>
-              <check-box-group
-                v-model="checkbox"
-                class="borkersDialog"
-                v-show="addBorker && isShow"
-              >
-                <ul>
-                  <li
-                    v-for="(item,index) in borkers"
-                    :key="index"
-                  >
-                    <check-box :val="item">{{item}}</check-box>
-                  </li>
-                </ul>
-              </check-box-group>
-            </template>
-          </filter-popover>
+          <div class="header-tag-item">
+            <FmTag
+              msg="账户评级"
+              desc="XAU/USD,XAU/USD,XAU/USD,XAU/USD,XAU/USD…"
+            />
+          </div>
+          <div class="header-tag-item">
+            <FmTag
+              msg="账户评级"
+              desc="XAU/USD,XAU/USD,XAU/USD,XAU/USD,XAU/USD…"
+            />
+          </div>
+          <div class="header-tag-item">
+            <FmTag
+              type="2"
+              msg="PTA"
+              desc="会员"
+            />
+          </div>
+        </div>
+        <div class="header-filter">
+          <div
+            @click="emitFilter"
+            class="filter-content"
+          >
+            <i class="icon-filtrate_24px"></i><span>筛选器</span>
+          </div>
+          <div class="filter-pop">
+            <filter-popover
+              @close="closeFilter"
+              :show="isShow"
+              @filter="handleFilter"
+              @reset="handleReset"
+            >
 
+              <template slot="brokerId">
+                <filter-tag
+                  :border="true"
+                  :closed="true"
+                  v-for="(item,index) in checkbox"
+                  class="has-close-tag"
+                  @close="handleCloseTag(index)"
+                  :key="item"
+                >{{item}}</filter-tag>
+                <button
+                  class="add-button"
+                  @click="addBorker=!addBorker"
+                ><i class="fm-fonticon icon-plus_24px"></i>添加</button>
+                <check-box-group
+                  v-model="checkbox"
+                  class="borkersDialog"
+                  v-show="addBorker && isShow"
+                >
+                  <ul>
+                    <li
+                      v-for="(item,index) in borkers"
+                      :key="index"
+                    >
+                      <check-box :val="item">{{item}}</check-box>
+                    </li>
+                  </ul>
+                </check-box-group>
+              </template>
+            </filter-popover>
+
+          </div>
         </div>
       </div>
     </div>
+    <mobile-filter-header clas="fm-show-moblie"  @filter="handleFilter"
+              @reset="handleReset"/>
   </div>
 </template>
 <script lang="ts">
@@ -92,6 +96,7 @@ import FilterPopover from '@/components/filter-popover/FilterPopover.vue';
 import FilterTag from '@/components/filter-popover/FilterTag.vue';
 import CheckBoxGroup from '@/components/check-box/CheckBoxGroup.vue';
 import CheckBox from '@/components/check-box/CheckBox.vue';
+import MobileFilterHeader from '@/components/mobile-filter/FilterHeader.vue';
 
 const RankStore = namespace('RankStore');
 
@@ -104,6 +109,7 @@ const RankStore = namespace('RankStore');
     FilterTag,
     CheckBoxGroup,
     CheckBox,
+    MobileFilterHeader,
   },
 })
 export default class FilterHeader extends Vue {
