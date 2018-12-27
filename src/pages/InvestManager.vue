@@ -44,12 +44,7 @@ import InfiniteScroll from '@/components/infinite-scroll/InfiniteScroll.vue';
 
 const ManagerStore = namespace('ManagerStore');
 export interface Params {
-  status:string,
-  profitRatio: string;
-  followerMaxRisk: string;
-  expectDays: string;
-  minFollowBalance: string;
-  roi: string;
+  status:string;
   pageSize: number;
   pageIndex: number;
 }
@@ -71,18 +66,13 @@ export default class Manager extends Vue {
   public settledProducts: any;
 
   @ManagerStore.State
-  total:number;
+  public total:any;
 
   @ManagerStore.Action
   getProductsAsync: any;
 
   public params: Params = {
     status: 'InProcess',
-    profitRatio: '',
-    followerMaxRisk: '',
-    expectDays: '',
-    minFollowBalance: '',
-    roi: '',
     pageSize: 10,
     pageIndex: 1,
   };

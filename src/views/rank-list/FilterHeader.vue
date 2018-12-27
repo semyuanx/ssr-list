@@ -21,7 +21,7 @@
         <div @click="emitFilter" class="filter-content">
           <i class="icon-filtrate_24px"></i><span>筛选器</span>
         </div>
-        <div class="filter-pop"><FilterPopover :show="isShow" /></div>
+        <div class="filter-pop"><FilterPopover @close="closeFilter" :show="isShow" /></div>
       </div>
     </div>
   </div>
@@ -41,6 +41,10 @@ import FilterPopover from '@/components/filter-popover/FilterPopover.vue';
 })
 export default class FilterHeader extends Vue {
   isShow: boolean = true;
+
+  closeFilter() {
+    this.isShow = false;
+  }
 
   emitFilter() {
     this.isShow = !this.isShow;

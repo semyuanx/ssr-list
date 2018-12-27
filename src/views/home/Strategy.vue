@@ -1,7 +1,7 @@
 <template>
   <div class="strategy-container">
     <div class="header">
-      <LineHeader rightIconDirection='left' rightTitle="筛选器" subTitle="成为交易员" title="精选策略" />
+      <LineHeader @rightClick="toRankList" rightIconDirection='left' rightTitle="筛选器" subTitle="成为交易员" title="精选策略" />
     </div>
     <div class="lists">
       <div class="list-item">
@@ -23,6 +23,9 @@
 import { Component, Vue } from 'vue-property-decorator';
 import LineHeader from './LineHeader.vue'; // @ is an alias to /src
 import FmCard from '@/components/card/Card.vue'; // @ is an alias to /src
+import { namespace } from 'vuex-class';
+
+const HomeStore = namespace('HomeStore');
 
 @Component({
   components: {
@@ -32,6 +35,14 @@ import FmCard from '@/components/card/Card.vue'; // @ is an alias to /src
 })
 export default class Home extends Vue {
   public name: string = 'fm-strategy';
+
+  @HomeStore.State
+  configs: any;
+
+  toRankList() {
+    console.log(this.configs);
+    this.$router.push({ name: 'rankList' });
+  }
 }
 </script>
 <style lang="less" scoped>

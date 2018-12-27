@@ -19,6 +19,7 @@ export default class ManagerStore {
 
   @State() public total: number = 0;
 
+
   @Mutation
   public setInProcessProducts(state: any, products: any[]) {
     const res = products.map(v => ({
@@ -82,6 +83,7 @@ export default class ManagerStore {
     }
     if (data.items) {
       const type = `set${params.status || 'InProcess'}Products`;
+
       commit(type, data.items);
     }
     return data;
