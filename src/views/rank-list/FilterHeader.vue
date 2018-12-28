@@ -3,17 +3,10 @@
     <div class="header-content">
       <div class="header-fitler-title"><span>筛选条件：</span></div>
       <div class="header-tag-lists">
-        <div :key="i" v-for="i in Array(10).fill(0)" class="header-tag-item">
+        <div :key="index" v-for="(i, index) in Array(10).fill(0)" class="header-tag-item">
           <FmTag msg="账户评级" desc="A" />
         </div>
-
-        <div class="header-tag-item">
-          <FmTag msg="账户评级" desc="XAU/USD,XAU/USD,XAU/USD,XAU/USD,XAU/USD…" />
-        </div>
-        <div class="header-tag-item">
-          <FmTag msg="账户评级" desc="XAU/USD,XAU/USD,XAU/USD,XAU/USD,XAU/USD…" />
-        </div>
-        <div class="header-tag-item">
+        <div key="24" class="header-tag-item">
           <FmTag type="2" msg="PTA" desc="会员" />
         </div>
       </div>
@@ -40,7 +33,7 @@ import FilterPopover from '@/components/filter-popover/FilterPopover.vue';
   },
 })
 export default class FilterHeader extends Vue {
-  isShow: boolean = true;
+  isShow: boolean = false;
 
   closeFilter() {
     this.isShow = false;
