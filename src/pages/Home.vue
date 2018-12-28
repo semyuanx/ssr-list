@@ -18,7 +18,7 @@
     <router-link
       class="super-filter-button"
       :to="{name:'rankList',query:$route.query}"
-      @click.stop.prevent="openWebView({name:'rankList',query:$route.query})"
+      @click.prevent.stop.native="openWebView({name:'rankList',query:$route.query})"
     ><i class="icon-filtrate_24px"></i> 高级筛选</router-link>
   </div>
 </template>
@@ -47,6 +47,8 @@ const HomeStore = namespace('HomeStore');
 export default class Home extends Vue {
   @HomeStore.Action
   getCustomConfig: any;
+
+  openWebView:any = openWebView;
 
   mounted() {
     this.getCustomConfig();
