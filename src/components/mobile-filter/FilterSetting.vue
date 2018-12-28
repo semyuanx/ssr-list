@@ -45,7 +45,20 @@
                 @blur="inputHandler(item.value,citem.start,citem.end)"
               >
             </div>
+            <template v-if="item.hasAdd">
+              <filter-button
+                :closed="true"
+                v-for="broker in checkedBrokers"
+                :key='broker'
+                @close="handleDel(broker)"
+              >{{brokersList.find(v=>v.BrokerId == broker).Broker}}</filter-button>
+            </template>
+            <filter-plus
+              v-if="item.hasAdd"
+              @add="handleAdd"
+            />
           </div>
+
         </section>
       </fm-collapse-item>
 
@@ -62,7 +75,7 @@
     </fm-collapse>
     <filter-submit
       @reset="handleSeset"
-      @submit="handleSubmit"
+      @submit="handleSubmit(params)"
     />
   </div>
 </template>
@@ -71,12 +84,15 @@
 import {
   Component, Vue, Prop, Emit,
 } from 'vue-property-decorator';
+import { namespace } from 'vuex-class';
 import FilterButton from './FilterButton.vue';
 import FilterSubmit from './FilterSubmit.vue';
 import FilterPlus from './FilterPlus.vue';
 import zhCN from '@/i18n/zh-CN/components/filter-popover/FilterPopover';
 import zhTW from '@/i18n/zh-TW/components/filter-popover/FilterPopover';
 import enUS from '@/i18n/en-US/components/filter-popover/FilterPopover';
+
+const RankStore = namespace('RankStore');
 
 @Component({
   components: {
@@ -95,6 +111,24 @@ import enUS from '@/i18n/en-US/components/filter-popover/FilterPopover';
 export default class FilterSetting extends Vue {
   private iconClasses: string =
     'edit-icon edit-hover-icon edit-icon-active edit-hover-icon-active icon-up_24px';
+
+  @RankStore.Mutation
+  setRankParams: any;
+
+  @RankStore.State
+  checkedBrokers: any;
+
+  @RankStore.Mutation
+  setCheckedBrokers: any;
+
+  @RankStore.State
+  brokersList: any;
+
+  @Emit('filter')
+  handleSubmit(value: object) {
+    this.refactor(value);
+    this.$router.replace({ name: 'rankList' });
+  }
 
   // 过滤条件的字段格式
   @Prop({
@@ -144,19 +178,49 @@ export default class FilterSetting extends Vue {
           { name: '13-26周', value: '13-26' },
           { name: '26-52周', value: '26-52' },
           { name: '52周以上', value: '52-0' },
+          {
+            mode: 'input',
+            start: '',
+            end: '',
+            type: 'interval',
+          },
         ],
       },
       {
         label: '最大回撤比例',
         value: 'Retracement',
         desc: '备注介绍',
-        filter: [{ name: '不限', value: '' }],
+        filter: [
+          { name: '不限', value: '' },
+          { name: '小于10%', value: '0-13' },
+          { name: '10%-20%', value: '10-20' },
+          { name: '20%-30%', value: '20-30' },
+          { name: '30%以上', value: '30-0' },
+          {
+            mode: 'input',
+            start: '',
+            end: '',
+            type: 'interval',
+          },
+        ],
       },
       {
         label: '收益率',
         value: 'Roi',
         desc: '备注介绍',
-        filter: [{ name: '不限', value: '' }],
+        filter: [
+          { name: '不限', value: '' },
+          { name: '小于10%', value: '0-13' },
+          { name: '10%-20%', value: '10-20' },
+          { name: '20%-30%', value: '20-30' },
+          { name: '30%以上', value: '30-0' },
+          {
+            mode: 'input',
+            start: '',
+            end: '',
+            type: 'interval',
+          },
+        ],
       },
       {
         label: '经纪商',
@@ -183,11 +247,6 @@ export default class FilterSetting extends Vue {
   })
   params!: any;
 
-  @Emit('filter')
-  handleSubmit() {
-    return this.params;
-  }
-
   @Emit('reset')
   handleSeset() {
     this.params = {
@@ -199,13 +258,22 @@ export default class FilterSetting extends Vue {
       expSymbol: '',
       brokerId: '',
     };
+    this.labelObj.forEach((v):void => {
+      v.filter.forEach((val: any):void => {
+        if (val.start) {
+          val.start = '';
+        }
+        if (val.end) {
+          val.end = '';
+        }
+      });
+    });
+    this.checkedBrokers = [];
     return this.params;
   }
 
   touchHandler(key: string, citem: any) {
     this.$set(this.params, key, citem.value);
-    citem.start = '';
-    citem.end = '';
   }
 
   public inputHandler(key: string, start: number, end: number) {
@@ -215,6 +283,34 @@ export default class FilterSetting extends Vue {
     }
     const value = `${start || 0}-${end || 0}`;
     this.$set(this.params, key, value);
+  }
+
+  handleAdd() {
+    this.$router.push({ name: 'addressBook' });
+  }
+
+  handleDel(item: string) {
+    console.log('点到了', item);
+    const checked = this.checkedBrokers.filter((v: string) => v !== item);
+    console.log(checked);
+    this.setCheckedBrokers(checked);
+  }
+
+  refactor(obj: any) {
+    const tempObj = {
+      maxScore: obj.Score.split('-')[1],
+      minScore: obj.Score.split('-')[0],
+      minRoi: obj.Roi.split('-')[0],
+      maxRoi: obj.Roi.split('-')[1],
+      maxRetracement: obj.Retracement.split('-')[1],
+      minRetracement: obj.Retracement.split('-')[0],
+      maxWeeks: obj.Weeks.split('-')[1],
+      minWeeks: obj.Weeks.split('-')[0],
+      maxEquity: obj.Equity.split('-')[1],
+      minEquity: obj.Equity.split('-')[0],
+      brokerId: this.checkedBrokers.join(','),
+    };
+    this.setRankParams(tempObj);
   }
 }
 </script>

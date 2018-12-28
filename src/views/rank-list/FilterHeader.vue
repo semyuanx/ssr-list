@@ -6,34 +6,21 @@
         <div class="header-tag-lists">
           <div
             :key="index"
-            v-for="(i, index) in Array(10).fill(0)"
+            v-for="(params,index) in rankParams"
             class="header-tag-item"
           >
             <FmTag
               msg="账户评级"
-              desc="A"
+              :desc="params"
             />
           </div>
-
-          <div class="header-tag-item">
-            <FmTag
-              msg="账户评级"
-              desc="XAU/USD,XAU/USD,XAU/USD,XAU/USD,XAU/USD…"
-            />
-          </div>
-          <div class="header-tag-item">
-            <FmTag
-              msg="账户评级"
-              desc="XAU/USD,XAU/USD,XAU/USD,XAU/USD,XAU/USD…"
-            />
-          </div>
-          <div class="header-tag-item">
+          <!-- <div class="header-tag-item">
             <FmTag
               type="2"
               msg="PTA"
               desc="会员"
             />
-          </div>
+          </div> -->
         </div>
         <div class="header-filter">
           <div
@@ -54,26 +41,26 @@
                 <filter-tag
                   :border="true"
                   :closed="true"
-                  v-for="(item,index) in checkbox"
+                  v-for="item in checkedBrokers"
                   class="has-close-tag"
-                  @close="handleCloseTag(index)"
+                  @close="handleCloseTag(item)"
                   :key="item"
-                >{{item}}</filter-tag>
+                >{{brokersList.find(v=>v.BrokerId === item) && brokersList.find(v=>v.BrokerId === item).Broker}}</filter-tag>
                 <button
                   class="add-button"
                   @click="addBorker=!addBorker"
                 ><i class="fm-fonticon icon-plus_24px"></i>添加</button>
                 <check-box-group
-                  v-model="checkbox"
+                  v-model="checked"
                   class="borkersDialog"
                   v-show="addBorker && isShow"
                 >
                   <ul>
                     <li
-                      v-for="(item,index) in borkers"
+                      v-for="(item,index) in brokersList"
                       :key="index"
                     >
-                      <check-box :val="item">{{item}}</check-box>
+                      <check-box :val="item.BrokerId">{{item.Broker}}</check-box>
                     </li>
                   </ul>
                 </check-box-group>
@@ -84,12 +71,16 @@
         </div>
       </div>
     </div>
-    <mobile-filter-header clas="fm-show-moblie"  @filter="handleFilter"
-              @reset="handleReset"/>
+    <div class="fm-show-mobile">
+      <mobile-filter-header />
+    </div>
+
   </div>
 </template>
 <script lang="ts">
-import { Component, Vue, Watch } from 'vue-property-decorator';
+import {
+  Component, Vue, Watch, Emit,
+} from 'vue-property-decorator';
 import { namespace } from 'vuex-class';
 import FmTag from '@/components/tag/tag.vue'; // @ is an alias to /src
 import FilterPopover from '@/components/filter-popover/FilterPopover.vue';
@@ -97,6 +88,7 @@ import FilterTag from '@/components/filter-popover/FilterTag.vue';
 import CheckBoxGroup from '@/components/check-box/CheckBoxGroup.vue';
 import CheckBox from '@/components/check-box/CheckBox.vue';
 import MobileFilterHeader from '@/components/mobile-filter/FilterHeader.vue';
+import { rankList, brokersList } from '@/api/home';
 
 const RankStore = namespace('RankStore');
 
@@ -117,15 +109,25 @@ export default class FilterHeader extends Vue {
 
   addBorker: boolean = false;
 
-  checkbox: any[] = [];
+  private checked:any = [];
 
-  borkers: any[] = ['USD/JPY', 'XAU/USD'];
+  @RankStore.State
+  brokersList: any;
+
+  @RankStore.Action
+  getBrokersList: any;
 
   @RankStore.State
   rankParams: any;
 
   @RankStore.Mutation
   setRankParams: any;
+
+  @RankStore.State
+  checkedBrokers: any;
+
+  @RankStore.Mutation
+  setCheckedBrokers: any;
 
   closeFilter() {
     this.isShow = false;
@@ -137,13 +139,15 @@ export default class FilterHeader extends Vue {
     this.$emit('filter-click');
   }
 
+  @Emit('filter')
   handleFilter(value: object) {
     this.isShow = false;
     this.refactor(value);
   }
 
   handleReset(value: object) {
-    this.checkbox = [];
+    this.setCheckedBrokers([]);
+    this.checked = [];
     this.refactor(value);
   }
 
@@ -159,16 +163,25 @@ export default class FilterHeader extends Vue {
       minWeeks: obj.Weeks.split('-')[0],
       maxEquity: obj.Equity.split('-')[1],
       minEquity: obj.Equity.split('-')[0],
-      brokerId: this.checkbox.join(','),
+      brokerId: this.checkedBrokers.join(','),
     };
     this.setRankParams(tempObj);
   }
 
-  handleCloseTag(index: number) {
-    this.checkbox.splice(index, 1);
+  handleCloseTag(item:string) {
+    const checked = this.checkedBrokers.filter((v: any) => v !== item);
+    this.setCheckedBrokers(checked);
   }
 
-  mounted() {}
+  @Watch('checked', { deep: true })
+  sync(val:any) {
+    this.setCheckedBrokers(val);
+  }
+
+  mounted() {
+    this.checked = this.checkedBrokers;
+    this.getBrokersList();
+  }
 }
 </script>
 <style lang="less" scoped>

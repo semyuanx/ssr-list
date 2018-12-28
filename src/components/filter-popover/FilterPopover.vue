@@ -44,7 +44,7 @@
             <filter-tag
               :active="params[item.value] == citem.value"
               v-if="!citem.type"
-              @selected="rangeHandler(item.value,citem.value)"
+              @selected="rangeHandler(item.value,citem)"
             >{{citem.name}}</filter-tag>
             <div
               class="interval-container"
@@ -185,19 +185,49 @@ export default class FilterPopover extends Vue {
           { name: '13-26周', value: '13-26' },
           { name: '26-52周', value: '26-52' },
           { name: '52周以上', value: '52-0' },
+          {
+            mode: 'input',
+            start: '',
+            end: '',
+            type: 'interval',
+          },
         ],
       },
       {
         label: '最大回撤比例',
         value: 'Retracement',
         desc: '备注介绍',
-        filter: [{ name: '不限', value: '' }],
+        filter: [
+          { name: '不限', value: '' },
+          { name: '小于10%', value: '0-13' },
+          { name: '10%-20%', value: '10-20' },
+          { name: '20%-30%', value: '20-30' },
+          { name: '30%以上', value: '30-0' },
+          {
+            mode: 'input',
+            start: '',
+            end: '',
+            type: 'interval',
+          },
+        ],
       },
       {
         label: '收益率',
         value: 'Roi',
         desc: '备注介绍',
-        filter: [{ name: '不限', value: '' }],
+        filter: [
+          { name: '不限', value: '' },
+          { name: '小于10%', value: '0-13' },
+          { name: '10%-20%', value: '10-20' },
+          { name: '20%-30%', value: '20-30' },
+          { name: '30%以上', value: '30-0' },
+          {
+            mode: 'input',
+            start: '',
+            end: '',
+            type: 'interval',
+          },
+        ],
       },
       {
         label: '经纪商',
@@ -222,8 +252,6 @@ export default class FilterPopover extends Vue {
 
   public rangeHandler(key: string, citem: any) {
     this.$set(this.params, key, citem.value);
-    citem.start = '';
-    citem.end = '';
   }
 
   public inputHandler(key: string, start: number, end: number) {
@@ -246,6 +274,16 @@ export default class FilterPopover extends Vue {
       expSymbol: '',
       brokerId: '',
     };
+    this.labelObj.forEach((v: any) => {
+      v.filter.forEach((val: any) => {
+        if (val.start) {
+          val.start = '';
+        }
+        if (val.end) {
+          val.end = '';
+        }
+      });
+    });
     return this.params;
   }
 }

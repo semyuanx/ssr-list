@@ -9,7 +9,7 @@ import { Component, Vue, Emit } from 'vue-property-decorator';
 
 @Component
 export default class FilterPlus extends Vue {
-  @Emit()
+  @Emit('add')
   handleAdd() {}
 }
 </script>
