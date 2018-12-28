@@ -6,7 +6,9 @@ import { sync } from 'vuex-router-sync';
 import './registerServiceWorker';
 import fmui from '@fmfe/fm-vue-ui';
 import '@fmfe/fm-vue-ui/lib/theme-default/index.css';
-import fmcomponents from 'fmcomponents/dist/fmcomponents';
+// import fmcomponents from 'fmcomponents/dist/fmcomponents';
+import { setDomain } from 'fmcomponents/src/utils/domain';
+import { getLogStatus } from 'fmcomponents/src/net/logStatus';
 
 import envMixin from './mixin/envMixin.vue';
 
@@ -39,13 +41,22 @@ Vue.use(injectEnv, {
   locale: (window as any).FMLang || 'zh-CN',
 });
 
-Vue.use(fmcomponents, {
+Vue.prototype.$getLogStatus = getLogStatus;
+setDomain({
   API: process.env.VUE_APP_FM_API,
   BASE: process.env.VUE_APP_FM_BASE,
   AuthURL: process.env.VUE_APP_FM_AUTH,
   ENV: process.env.NODE_ENV,
   TRADE: process.env.VUE_APP_FM_TRADE,
 });
+
+// Vue.use(fmcomponents, {
+//   API: process.env.VUE_APP_FM_API,
+//   BASE: process.env.VUE_APP_FM_BASE,
+//   AuthURL: process.env.VUE_APP_FM_AUTH,
+//   ENV: process.env.NODE_ENV,
+//   TRADE: process.env.VUE_APP_FM_TRADE,
+// });
 
 Vue.use(fmui);
 Vue.mixin(envMixin);

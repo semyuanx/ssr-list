@@ -2,7 +2,13 @@ import {
   State, Repository, Action, Getter, Mutation, Set,
 } from '@/utils/store-class-annotation';
 import { Commit, ActionTree } from 'vuex';
-import { getRankList, getBrokersList } from '@/service/home';
+import {
+  getRankList,
+  getRelations,
+  addOrCancelAttentionService,
+  checkCanFollowService,
+  getBrokersList,
+} from '@/service/home';
 
 @Repository('RankStore')
 export default class RankStore {
@@ -52,6 +58,11 @@ export default class RankStore {
   }
 
   @Action
+  public getRelations(context: { commit: Commit }, payload: any): any {
+    return getRelations(payload).then((res: any) => res);
+  }
+
+  @Action
   public getBrokersList(context: { commit: Commit }, payload: any): any {
     getBrokersList(payload)
       .then((res: any) => {
@@ -59,5 +70,15 @@ export default class RankStore {
         context.commit('setBrokersList', res.brokers || []);
       })
       .catch(() => {});
+  }
+
+  @Action
+  public addOrCancelAttention(context: { commit: Commit }, data?: any, params?: any): any {
+    return addOrCancelAttentionService(data, params).then((res: any) => res);
+  }
+
+  @Action
+  public checkCanFollow(context: { commit: Commit }, data?: any, params?: any): any {
+    return checkCanFollowService(data, params).then((res: any) => res);
   }
 }

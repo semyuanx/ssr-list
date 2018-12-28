@@ -10,10 +10,10 @@
           <div v-if="!dateIsLoading" class="custom-display-row-line">
             <div class="trader-container-row">
               <div class="loading-first avatar">
-                <img :src="base+'/Avata/'+ (scope.row.Account && scope.row.Account.Account)" />
+                <img :src="base+'/Avata/'+scope.row.MT4Account.Account" />
               </div>
               <div class="loading-first trader-info">
-                <div class="info-1">用户名称 #{{scope.row.Account && scope.row.Account.BrokerID}}</div>
+                <div class="info-1">{{scope.row.NickName}} #{{scope.row.MT4Account.BrokerID}}</div>
                 <div class="info-2">
                   Fxpro
                 </div>
@@ -23,7 +23,7 @@
           <div v-if="dateIsLoading" class="custom-display-row-loading-1">
             <div class="trader-container-row">
               <div class="loading-first loading-avatar">
-                <img :src="base+'/Avata/'+(scope.row.Account && scope.row.Account.Account)" />
+                <img :src="base+'/Avata/'+scope.row.MT4Account.Account" />
               </div>
               <div class="loading-first loading-info">
                 <div class="info-1"></div>
@@ -99,8 +99,15 @@
 <script lang="ts">
 import { Component, Vue, Prop } from 'vue-property-decorator';
 import { namespace } from 'vuex-class';
+
+import { loadAuth } from 'fmcomponents/src/utils';
+import { getLoginStatus } from 'fmcomponents';
+import FollowBox from 'fmcomponents/src/components/follow';
+
 import SvgIcon from '@/components/svg/index.ts';
 import { numberFormat, percentFormat } from '@/utils/format';
+
+const RankStore = namespace('RankStore');
 
 @Component({
   components: {
@@ -135,8 +142,122 @@ export default class List extends Vue {
     // setTimeout(() => this.isLoading = false, 5000);
   }
 
-  handleSub() {
+  @RankStore.Action
+  getRelations: any;
+
+  @RankStore.Action
+  addOrCancelAttention: any;
+
+  @RankStore.Action
+  checkCanFollow: any;
+
+  attentionList:any = [];
+
+  followList:any = [];
+
+  selfPwdChanged:any = [];
+
+  regetSub() {
+    this.getRelations().then((res: any) => {
+      this.followList = res.follows;
+      this.attentionList = res.attentions;
+    }).catch((err: any) => {
+      console.log('获取登录用户的跟随列表和关注列表失败', err);
+    });
+  }
+
+  checkIfNotice(list: any) {
+    const params = {
+      toUserId: list.UserID,
+    };
+    if (list && Array.isArray(this.attentionList)
+    ) {
+      const isAttendion = this.attentionList.find(i => i === list.UserID);
+      if (!isAttendion) {
+        this.addOrCancelAttention(params).then((res: any) => {
+          this.regetSub();
+        }).catch((err: any) => {
+          this.regetSub();
+        });
+      }
+    }
+  }
+
+  showFollowCard(_this: any, list: any) {
+    FollowBox.show({
+      traderid: list.UserID,
+      tradername: list.NickName,
+      traderindex: list.AccountIndex,
+      brokerid: list.BrokerID,
+    }, (result: any) => {
+      console.log(result);
+      if (result.code === 'SUCCESS' || result.code === 0) {
+        _this.getFollowAndAttention();
+      } else {
+        //
+      }
+    });
+  }
+
+  // 获取登录用户的跟随列表和关注列表
+  getFollowAndAttention() {
+    getLoginStatus().then((user: any) => {
+      if (user.islogin) {
+        this.getRelations().then((res: any) => {
+          this.followList = res.follows;
+          this.attentionList = res.attentions;
+        }).catch((err: any) => {
+          console.log('获取登录用户的跟随列表和关注列表失败', err);
+        });
+      }
+    });
+  }
+
+  checkTraderCanFollow(trader: any) {
+    return this.checkCanFollow({ userId: trader.UserID, accountIndex: trader.AccountIndex }).then((res: any) => res && res.isFollow);
+  }
+
+  handleSub(list: any) {
     console.log('to subsribe');
+
+    const uaindex = `${list.UserID}_${list.AccountIndex}`;
+    if (this.selfPwdChanged.indexOf(uaindex) > -1) return;
+    getLoginStatus().then((user: any) => {
+      if (user.islogin) {
+        // follow
+        this.checkIfNotice(list);
+        return this.checkTraderCanFollow(list).then((tres: any) => {
+          if (tres) {
+            this.showFollowCard(this, list);
+            return true;
+          }
+          if (this.selfPwdChanged.indexOf(uaindex) === -1) {
+            this.selfPwdChanged.push(uaindex);
+          }
+          this.$fmdialog({
+            type: 'failure',
+            showClose: true,
+            message: '当前交易员最近有修改密码行为导致交易信号中断，已经被限制跟随',
+            duration: 3000,
+            confirmBtnText: '确定',
+            onConfirm: () => {
+
+            },
+          });
+          return true;
+        });
+      }
+      loadAuth();
+      return true;
+    }).catch((err: any) => {
+      this.$fmdialog({
+        type: 'failure',
+        showClose: true,
+        message: '网络请求失败， 请重试!',
+        duration: 4000,
+        confirmBtnText: '确定',
+      });
+    });
   }
 
   handleSortChange(e:any) {

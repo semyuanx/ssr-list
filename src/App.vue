@@ -4,7 +4,6 @@
       <!--顶部导航栏-->
       <FMNav
         :baseStrings="baseStrings"
-        @blogPosted="onBlogPosted"
       ></FMNav>
     </div>
     <div class="fm-content-container">
@@ -19,8 +18,9 @@
 </template>
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import FMNav from 'fmcomponents/lib/nav2';
-import FMFooter from 'fmcomponents/lib/footer';
+import FMNav from 'fmcomponents/src/components/nav2';
+import FMFooter from 'fmcomponents/src/components/footer';
+import { getDomain } from 'fmcomponents/src/utils/domain';
 
 import 'minireset.css';
 import 'fmcomponents/src/styles/global.css';
@@ -42,6 +42,10 @@ import '@/theme/main.less';
 })
 export default class App extends Vue {
   public isShow: boolean = true;
+
+  get baseStrings() {
+    return getDomain();
+  }
 
   private resize() {
     const this$ = this;
