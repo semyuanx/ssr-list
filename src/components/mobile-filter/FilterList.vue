@@ -70,10 +70,14 @@
 <script lang="ts">
 import { Component, Vue, Prop } from 'vue-property-decorator';
 import { percentFormat } from '@/utils/format';
+import FilterButton from './FilterButton.vue';
 
 @Component({
   filters: {
     percentFormat: (val: number) => percentFormat(val),
+  },
+  components: {
+    FilterButton,
   },
 })
 export default class FilterList extends Vue {

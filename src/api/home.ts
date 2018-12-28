@@ -6,7 +6,9 @@ export const login = () => `${API_PREFIX_V1}/auth/signin-status`;
 export const rankList = () => `${API_PREFIX_V2}/trade/rank/prime`;
 export const customConfig = () => `${API_PREFIX_V2}/trade/rank/custom-config`;
 export const customRankList = () => `${API_PREFIX_V2}/trade/rank/custom`;
+export const brokersList = () => `${API_PREFIX_V2}/trade/search-brokers?name=FX`;
+
 
 export default {
-  login, rankList, customConfig, customRankList,
+  login, rankList, customConfig, customRankList, brokersList,
 };

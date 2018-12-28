@@ -1,7 +1,7 @@
 <template>
   <div class="rank-container">
     <div>
-      <FilterHeader/>
+      <FilterHeader @filter="handleFilter" />
     </div>
     <div>
       <List />
@@ -28,7 +28,11 @@ export default class RankList extends Vue {
   getRankList: any;
 
   @RankStore.State
-  rankParams:any;
+  rankParams: any;
+
+  handleFilter() {
+    this.getRankList(this.rankParams);
+  }
 
   mounted() {
     this.getRankList(this.rankParams);
@@ -37,6 +41,5 @@ export default class RankList extends Vue {
 </script>
 <style lang="less" scoped>
 .rank-container {
-
 }
 </style>

@@ -1,8 +1,7 @@
 <template>
   <section class="filter-selected-container">
     <div>
-      <filter-button class="filter-button">收益率 >10%</filter-button>
-      <filter-button class="filter-button">最大回测 >10%</filter-button>
+      <filter-button class="filter-button"></filter-button>
     </div>
     <router-link
       to="/filter"
