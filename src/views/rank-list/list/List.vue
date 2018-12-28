@@ -1,11 +1,11 @@
 <template>
 <div class="list-container">
   <div class="list-table">
-    <v2-table class="rank-table"
+    <el-table class="rank-table"
       :data="data"
       :row-class-name="getRowClassName"
       @sort-change="handleSortChange">
-      <v2-table-column label="交易员" prop="Account" width="236px">
+      <el-table-column label="交易员" prop="Account" width="236px">
         <template slot-scope="scope">
           <div v-if="!dateIsLoading" class="custom-display-row-line">
             <div class="trader-container-row">
@@ -15,7 +15,7 @@
               <div class="loading-first trader-info">
                 <div class="info-1">{{scope.row.NickName}} #{{scope.row.MT4Account.BrokerID}}</div>
                 <div class="info-2">
-                  Fxpro
+                  {{scope.row.BrokerName || ''}}
                 </div>
               </div>
             </div>
@@ -32,67 +32,80 @@
             </div>
           </div>
         </template>
-      </v2-table-column>
-      <v2-table-column label="交易能力值" prop="Score" sortable>
+      </el-table-column>
+      <el-table-column label="交易能力值" prop="Score" sortable>
         <template slot-scope="scope">
           <div v-if="!dateIsLoading" class="custom-display-row-line">{{scope.row.Score | numberFormatOneParams}}</div>
           <div v-if="dateIsLoading" class="custom-display-row-loading"></div>
         </template>
-      </v2-table-column>
-      <v2-table-column label="收益率" prop="ROI" width="150" sortable>
+      </el-table-column>
+      <el-table-column label="收益率" prop="ROI" width="150" sortable>
         <template slot-scope="scope">
           <div v-if="!dateIsLoading" :class="`custom-display-row-line `">
             <span :class="scope.row.ROI >= 0 ? 'special-rate' : ''">{{scope.row.ROI | percentFormat}}</span>
           </div>
           <div v-if="dateIsLoading" class="custom-display-row-loading"></div>
         </template>
-      </v2-table-column>
-      <v2-table-column label="最大回撤" prop="MaxRetracement" sortable>
+      </el-table-column>
+      <el-table-column label="最大回撤" prop="MaxRetracement" sortable>
         <template slot-scope="scope">
           <div v-if="!dateIsLoading" class="custom-display-row-line">{{scope.row.MaxRetracement | percentFormat}}</div>
           <div v-if="dateIsLoading" class="custom-display-row-loading"></div>
         </template>
-      </v2-table-column>
-      <v2-table-column label="交易周期" prop="Weeks" sortable>
+      </el-table-column>
+      <el-table-column label="交易周期" prop="Weeks" sortable>
         <template slot-scope="scope">
           <div v-if="!dateIsLoading" class="custom-display-row-line">{{scope.row.Weeks || 0}}周</div>
           <div v-if="dateIsLoading" class="custom-display-row-loading"></div>
         </template>
-      </v2-table-column>
-      <v2-table-column label="擅长品种" prop="ExpSymbol" sortable>
+      </el-table-column>
+      <el-table-column label="擅长品种" prop="ExpSymbol" sortable>
         <template slot-scope="scope">
           <div v-if="!dateIsLoading" class="custom-display-row-line">{{scope.row.ExpSymbol}}</div>
           <div v-if="dateIsLoading" class="custom-display-row-loading"></div>
         </template>
-      </v2-table-column>
-      <v2-table-column label="订阅人数" prop="Subscribers" sortable>
+      </el-table-column>
+      <el-table-column label="订阅人数" prop="Subscribers" sortable>
         <template slot-scope="scope">
           <div v-if="!dateIsLoading" class="custom-display-row-line">{{scope.row.Subscribers}}</div>
           <div v-if="dateIsLoading" class="custom-display-row-loading"></div>
         </template>
-      </v2-table-column>
-      <v2-table-column label="走势图" prop="country">
+      </el-table-column>
+      <el-table-column label="走势图" prop="TrendChart" align="center">
         <template slot-scope="scope">
-          <div v-if="!dateIsLoading" class="custom-display-row-line">{{scope.row.name}}</div>
-          <div v-if="dateIsLoading" class="custom-display-row-loading"></div>
-        </template>
-      </v2-table-column>
-      <v2-table-column label="订阅" prop="age">
-        <!-- eslint-disable-next-line -->
-        <template slot-scope="scope">
-          <div @click="handleSub" v-if="!dateIsLoading" class="custom-display-row-sub">
-            <span class="sub-row-btn">订阅</span>
+          <div v-if="!dateIsLoading" class="custom-display-row-line">
+
+            <div class="chartbox">
+                <Chart v-if="scope.row.TrendChart && scope.row.TrendChart.length>0 "
+                        :small-chart-y="getChartData(scope.row.TrendChart.slice(scope.row.TrendChart.length - 10), 'yAxis')"
+                        :big-chart-y="getChartData(scope.row.TrendChart, 'yAxis')"
+                        :small-chart-x="getChartData(scope.row.TrendChart.slice(scope.row.TrendChart.length - 10), 'xAxis')"
+                        :big-chart-x="getChartData(scope.row.TrendChart, 'xAxis')"></Chart>
+                <img v-else
+                      :src="cdn + '/images/NoData-Report.jpg'"
+                      style="display:block;width:100%;" :alt="'暂无数据'">
+            </div>
+
           </div>
           <div v-if="dateIsLoading" class="custom-display-row-loading"></div>
         </template>
-      </v2-table-column>
+      </el-table-column>
+      <el-table-column label="订阅" prop="Price" align="center">
+        <!-- eslint-disable-next-line -->
+        <template slot-scope="scope">
+          <div @click="handleSub(scope.row)" v-if="!dateIsLoading" class="custom-display-row-sub">
+            <span class="sub-row-btn">{{scope.row.Price ? `$${scope.row.Price}/月` : '免费订阅' }}</span>
+          </div>
+          <div v-if="dateIsLoading" class="custom-display-row-loading"></div>
+        </template>
+      </el-table-column>
       <template slot="empty">
         <div class="empty-table">
           <div class="empty-image"><SvgIcon width="218" height="218" name="no-data" /></div>
           <div class="empty-text"><span>没有找到相关内容，请您换个条件试试吧~</span></div>
         </div>
       </template>
-    </v2-table>
+    </el-table>
   </div>
 </div>
 </template>
@@ -104,14 +117,21 @@ import { loadAuth } from 'fmcomponents/src/utils';
 import { getLoginStatus } from 'fmcomponents';
 import FollowBox from 'fmcomponents/src/components/follow';
 
+import Chart from '@/components/chart/index.vue';
+
 import SvgIcon from '@/components/svg/index.ts';
 import { numberFormat, percentFormat } from '@/utils/format';
+import { getChartData } from '@/utils/util';
+import { Table, TableColumn } from 'element-ui';
 
 const RankStore = namespace('RankStore');
 
 @Component({
   components: {
     SvgIcon,
+    Chart,
+    [Table.name]: Table,
+    [TableColumn.name]: TableColumn,
   },
   filters: {
     numberFormatOneParams: (val: number) => numberFormat(val, 1),
@@ -127,6 +147,10 @@ export default class List extends Vue {
   })
   data: any;
 
+  log(msg: any) {
+    console.log(msg);
+  }
+
   getRowClassName({ row, rowIndex }: any) {
     if (rowIndex % 2 === 0) {
       return 'default-row odd-row';
@@ -136,6 +160,10 @@ export default class List extends Vue {
 
   public get dateIsLoading() {
     return this.isLoading;
+  }
+
+  getChartData(moneyList: Array<any>, type?: string) {
+    return getChartData(moneyList, type);
   }
 
   mounted() {
@@ -218,7 +246,7 @@ export default class List extends Vue {
   }
 
   handleSub(list: any) {
-    console.log('to subsribe');
+    // console.log('to subsribe', list);
 
     const uaindex = `${list.UserID}_${list.AccountIndex}`;
     if (this.selfPwdChanged.indexOf(uaindex) > -1) return;
@@ -282,22 +310,13 @@ export default class List extends Vue {
           box-shadow:0px 0px 30px 0px rgba(0,0,0,0.1);
           .custom-display-row-sub {
             .sub-row-btn {
-              display: inline-block;
-              cursor: pointer;
-              width:100px;
-              height:30px;
               background:rgba(255,98,0,1);
-              border-radius:20px;
-              // border:2px solid rgba(255,98,0,1);
-              font-size:14px;
-              font-family:MicrosoftYaHei;
-              color:rgba(255,255,255,1);
-              line-height:30px;
+              color: #ffffff;
             }
           }
         }
       }
-      :global(.v2-table__empty-data) {
+      :global(.el-table__empty-data) {
         height: auto;
       }
 
@@ -332,9 +351,18 @@ export default class List extends Vue {
         font-family:MicrosoftYaHei;
         color:rgba(255,98,0,1);
         .sub-row-btn {
+          display: inline-block;
+          cursor: pointer;
+          width:100px;
+          height:30px;
+          border-radius:20px;
+          font-size:14px;
+          font-family:MicrosoftYaHei;
+          color:rgba(255,98,0,1);
+          line-height:30px;
           background: transparent;
-          transition: background-color .5s ease-in,
-                      color .5s ease-in;
+          transition: all .3s ease-in;
+          text-align: center;
         }
       }
       .custom-display-row-loading {
