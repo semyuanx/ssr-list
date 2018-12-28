@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <div>
+    <div v-if="!isApp" class="fm-content-header">
       <!--顶部导航栏-->
       <FMNav
         :baseStrings="baseStrings"
@@ -33,6 +33,7 @@ import 'fmcomponents/src/styles/icon.less';
 import 'fmcomponents/src/styles/arrow.less';
 
 import '@/theme/main.less';
+
 
 @Component({
   components: {
@@ -107,7 +108,7 @@ export default class App extends Vue {
 }
 </script>
 <style lang="less">
-  .fm-content-container {
+  .fm-content-header+.fm-content-container {
     margin-top: 50px;
     width: 100%;
     .router-container {

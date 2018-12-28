@@ -17,7 +17,8 @@
     </div>
     <router-link
       class="super-filter-button"
-      :to="{name:'rankList'}"
+      :to="{name:'rankList',query:$route.query}"
+      @click.stop.prevent="openWebView({name:'rankList',query:$route.query})"
     ><i class="icon-filtrate_24px"></i> 高级筛选</router-link>
   </div>
 </template>
@@ -30,6 +31,7 @@ import InvestProfessor from '@/views/home/InvestProfessor.vue'; // @ is an alias
 import DangerKeep from '@/views/home/DangerKeep.vue'; // @ is an alias to /src
 import TradeMaster from '@/views/home/TradeMaster.vue'; // @ is an alias to /src
 import { namespace, Action } from 'vuex-class';
+import { openWebView } from '@/utils/native';
 
 const HomeStore = namespace('HomeStore');
 
