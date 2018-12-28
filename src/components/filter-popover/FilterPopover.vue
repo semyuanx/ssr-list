@@ -1,16 +1,26 @@
 <template>
-  <div class="filter-popover-container" v-if="show">
+  <div
+    class="filter-popover-container"
+    v-if="show"
+  >
     <section class="filter-header">
       <span class="filter-title">{{title}}</span>
-      <i class="fm-fonticon icon-close_24px filter-close" @click="handleColse"></i>
+      <i
+        class="fm-fonticon icon-close_24px filter-close"
+        @click="handleColse"
+      ></i>
     </section>
     <article class="filter-popover-body">
       <section class="filter-section">
         <filter-tag
+          class="base-filters"
           :border="true"
           :active="true"
         >{{$t('PTA')}}</filter-tag>
-        <filter-tag :border="true">{{$t('freeSubscription')}}</filter-tag>
+        <filter-tag
+          :border="true"
+          class="base-filters"
+        >{{$t('freeSubscription')}}</filter-tag>
       </section>
       <div class="divide-line"></div>
       <section
@@ -32,8 +42,9 @@
             :key="inx"
           >
             <filter-tag
-              :active="params[item.value] === citem.value"
+              :active="params[item.value] == citem.value"
               v-if="!citem.type"
+              @selected="rangeHandler(item.value,citem.value)"
             >{{citem.name}}</filter-tag>
             <div
               class="interval-container"
@@ -43,15 +54,22 @@
                 :placeholder="$t('placeholder')"
                 type="text"
                 class="interval-input start-input"
+                :class="{'active-input': citem.start}"
+                v-model.lazy.number.trim="citem.start"
+                @blur="inputHandler(item.value,citem.start,citem.end)"
               >
               <span class="interval-span">-</span>
               <input
                 :placeholder="$t('placeholder')"
                 type="text"
                 class="interval-input end-input"
+                :class="{'active-input': citem.end}"
+                v-model.lazy.number.trim="citem.end"
+                @blur="inputHandler(item.value,citem.start,citem.end)"
               >
             </div>
             <slot :name="item.value"></slot>
+
           </li>
 
         </ul>
@@ -62,8 +80,14 @@
       </section>
     </article>
     <section class="button-groups">
-      <button class="button button-text">{{$t('reset')}}</button>
-      <button class="button button-primary">{{$t('filter')}}</button>
+      <button
+        class="button button-text"
+        @click="reset"
+      >{{$t('reset')}}</button>
+      <button
+        class="button button-primary"
+        @click="handleFilter"
+      >{{$t('filter')}}</button>
     </section>
   </div>
 </template>
@@ -76,126 +100,6 @@ import FilterTag from './FilterTag.vue';
 import zhCN from '@/i18n/zh-CN/components/filter-popover/FilterPopover';
 import zhTW from '@/i18n/zh-TW/components/filter-popover/FilterPopover';
 import enUS from '@/i18n/en-US/components/filter-popover/FilterPopover';
-
-export interface FilterMode {
-  mode?: string;
-  name?: string;
-  value?: string | number;
-  start?: string | number;
-  end?: string | number;
-  type?: string;
-}
-
-export interface LabelObj {
-  label: string;
-  value: string;
-  desc: string;
-  filter: FilterMode[];
-}
-
-const defaultParams = {
-  accountRate: '',
-  tradeAbility: '',
-  subscribeCount: '',
-  accountEquity: '',
-  tradeCycle: '',
-  retraceRatio: '',
-  returnRate: '',
-  tradeVariety: '',
-  broker: '',
-};
-
-const defaultData: LabelObj[] = [
-  // {
-  //   label: '账户评级',
-  //   value: 'accountRate',
-  //   desc: '备注介绍',
-  //   filter: [
-  //     { name: '不限', value: '' },
-  //     { name: 'S', value: 'S' },
-  //     { name: 'A+', value: 'A+' },
-  //     { name: 'A', value: 'A' },
-  //     { name: 'A-', value: 'A-' },
-  //     { name: 'B', value: 'B' },
-  //     { name: 'C', value: 'C' },
-  //   ],
-  // },
-  {
-    label: '交易能力值',
-    value: 'tradeAbility',
-    desc: '备注介绍',
-    filter: [
-      { name: '不限', value: '' },
-      { name: '60-70', value: '1' },
-      { name: '71-80', value: '1' },
-      { name: '81-90', value: '1' },
-      { name: '>90', value: '1' },
-      {
-        mode: 'input',
-        start: '',
-        end: '',
-        type: 'interval',
-      },
-    ],
-  },
-  {
-    label: '订阅人数',
-    value: 'subscribeCount',
-    desc: '备注介绍',
-    filter: [
-      { name: '不限', value: '' },
-      { name: '小于50人', value: '1' },
-      { name: '50-100人', value: '2' },
-      { name: '100-300人', value: '3' },
-      { name: '300人以上', value: '4' },
-      { name: '300人以上', value: '5' },
-      {
-        mode: 'input',
-        start: '',
-        end: '',
-        type: 'interval',
-      },
-    ],
-  },
-  {
-    label: '账户净值',
-    value: 'accountEquity',
-    desc: '备注介绍',
-    filter: [{ name: '不限', value: '' }],
-  },
-  {
-    label: '交易周期',
-    value: 'tradeCycle',
-    desc: '备注介绍',
-    filter: [{ name: '不限', value: '' }],
-  },
-  {
-    label: '最大回撤比例',
-    value: 'retraceRatio',
-    desc: '备注介绍',
-    filter: [{ name: '不限', value: '' }],
-  },
-  {
-    label: '收益率',
-    value: 'returnRate',
-    desc: '备注介绍',
-    filter: [{ name: '不限', value: '' }],
-  },
-  {
-    label: '交易品种',
-    value: 'tradeVariety',
-    desc: '备注介绍',
-    filter: [{ name: '全部', value: '' }],
-  },
-  {
-    label: '经纪商',
-    value: 'broker',
-    desc: '备注介绍',
-    filter: [
-      { name: '全部', value: '' },
-    ],
-  },
-];
 
 @Component({
   components: {
@@ -220,15 +124,130 @@ export default class FilterPopover extends Vue {
   @Prop({ default: () => [1, 4, 6] }) divided!: number[];
 
   // 过滤条件的当前过滤字段
-  @Prop({ default: () => defaultParams }) params!: object;
+  @Prop({
+    default: () => ({
+      Score: '',
+      Roi: '',
+      Retracement: '',
+      Weeks: '',
+      Equity: '',
+      expSymbol: '',
+      brokerId: '',
+    }),
+  })
+  params!: any;
 
   // 过滤条件的字段格式
-  @Prop({ default: () => defaultData }) labelObj!: LabelObj[];
+  @Prop({
+    default: () => [
+      {
+        label: '交易能力值',
+        desc: '备注介绍',
+        value: 'Score',
+        filter: [
+          { name: '不限', value: '' },
+          { name: '60-70', value: '60-70' },
+          { name: '71-80', value: '71-80' },
+          { name: '81-90', value: '81-90' },
+          { name: '>90', value: '90-0' },
+          {
+            mode: 'input',
+            start: '',
+            end: '',
+            type: 'interval',
+          },
+        ],
+      },
+      {
+        label: '账户净值',
+        value: 'Equity',
+        desc: '备注介绍',
+        filter: [
+          { name: '不限', value: '' },
+          { name: '小于 $5000', value: '0-5000' },
+          { name: '$5000 - $20000', value: '5000-20000' },
+          { name: '$20000 - $50000', value: '20000-50000' },
+          {
+            mode: 'input',
+            start: '',
+            end: '',
+            type: 'interval',
+          },
+        ],
+      },
+      {
+        label: '交易周期',
+        value: 'Weeks',
+        desc: '备注介绍',
+        filter: [
+          { name: '不限', value: '' },
+          { name: '小于13周', value: '0-13' },
+          { name: '13-26周', value: '13-26' },
+          { name: '26-52周', value: '26-52' },
+          { name: '52周以上', value: '52-0' },
+        ],
+      },
+      {
+        label: '最大回撤比例',
+        value: 'Retracement',
+        desc: '备注介绍',
+        filter: [{ name: '不限', value: '' }],
+      },
+      {
+        label: '收益率',
+        value: 'Roi',
+        desc: '备注介绍',
+        filter: [{ name: '不限', value: '' }],
+      },
+      {
+        label: '经纪商',
+        value: 'brokerId',
+        desc: '备注介绍',
+        hasAdd: true,
+        filter: [{ name: '全部', value: '' }],
+      },
+    ],
+  })
+  labelObj!: any[];
 
-  @Prop({ default: false }) show!:boolean;
+  @Prop({ default: false }) show!: boolean;
 
   @Emit('close')
-  handleColse(e:MouseEvent) {}
+  handleColse(e: MouseEvent) {}
+
+  @Emit('filter')
+  handleFilter() {
+    return this.params;
+  }
+
+  public rangeHandler(key: string, citem: any) {
+    this.$set(this.params, key, citem.value);
+    citem.start = '';
+    citem.end = '';
+  }
+
+  public inputHandler(key: string, start: number, end: number) {
+    if (!start && !end) {
+      this.$set(this.params, key, '');
+      return;
+    }
+    const value = `${start || 0}-${end || 0}`;
+    this.$set(this.params, key, value);
+  }
+
+  @Emit('reset')
+  reset() {
+    this.params = {
+      Score: '',
+      Roi: '',
+      Retracement: '',
+      Weeks: '',
+      Equity: '',
+      expSymbol: '',
+      brokerId: '',
+    };
+    return this.params;
+  }
 }
 </script>
 

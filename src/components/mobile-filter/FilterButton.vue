@@ -3,6 +3,7 @@
     <button
       class="btn normal-btn"
       :class="{'border-btn':border,'active-btn':active,'closed-btn':closed}"
+      @click.stop="handleClick"
     >
       <slot>不限</slot>
       <i
@@ -27,8 +28,11 @@ export default class FilterButton extends Vue {
 
   @Prop({ default: false }) closed!: boolean;
 
-  @Emit()
+  @Emit('close')
   handleClose() {}
+
+  @Emit('touch')
+  handleClick() {}
 }
 </script>
 

@@ -8,31 +8,36 @@ import {
 
 @Repository('RankStore')
 export default class RankStore {
-    @State([])
-    public rankList: Array<any> = [];
+  @State({})
+  public rankParams: object = {};
 
-    @State(0)
-    public rankTotal: number = 0;
+  @State([])
+  public rankList: Array<any> = [];
 
-    @Set('rankList')
-    public setRankList: any;
+  @State(0)
+  public rankTotal: number = 0;
 
-    @Set('rankTotal')
-    public setRankTotal: any;
+  @Set('rankList') public setRankList: any;
 
-    @Action
-    public getRankList(context: { commit: Commit }, payload: any): any {
-      getRankList(payload).then((res: any) => {
+  @Set('rankTotal') public setRankTotal: any;
+
+  @Set('rankParams')
+  public setRankParams(): any | null {}
+
+  @Action
+  public getRankList(context: { commit: Commit }, payload: any): any {
+    getRankList(payload)
+      .then((res: any) => {
         console.log(res, 'getRankList');
         context.commit('setRankList', res.List || []);
         context.commit('setRankTotal', res.TotalCount || 0);
       }).catch(() => {});
-    }
+  }
 
     @Action
-    public getRelations(context: { commit: Commit }, payload: any): any {
-      return getRelations(payload).then((res: any) => res);
-    }
+  public getRelations(context: { commit: Commit }, payload: any): any {
+    return getRelations(payload).then((res: any) => res);
+  }
 
     @Action
     public addOrCancelAttention(context: { commit: Commit }, data?: any, params?: any): any {

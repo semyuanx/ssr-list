@@ -6,97 +6,50 @@
     </div>
     <fm-collapse accordion>
       <fm-collapse-item
-        title="评级"
+        :title="item.label"
         :icon-classes="iconClasses"
+        v-for="(item,index) in labelObj"
+        :key="index"
+        :ref="'list_'+index"
       >
         <section class="filter-item-section">
-          <filter-button>S</filter-button>
-          <filter-button>A+</filter-button>
-          <filter-button>A</filter-button>
-          <filter-button>A-</filter-button>
-          <filter-button>B</filter-button>
-        </section>
-      </fm-collapse-item>
-      <fm-collapse-item
-        title="活跃度"
-        :icon-classes="iconClasses"
-      >
-        <section class="filter-item-section">
-          <filter-button>近1月有交易</filter-button>
-          <filter-button>近3月有交易</filter-button>
-          <filter-button>近6月有交易</filter-button>
-          <filter-button>近1月有交易</filter-button>
-          <filter-button>近3月有交易</filter-button>
-          <filter-button>近6月有交易</filter-button>
-        </section>
-      </fm-collapse-item>
-      <fm-collapse-item
-        title="收益"
-        :icon-classes="iconClasses"
-      >
-        <section class="filter-item-section">
-          <filter-button></filter-button>
-          <filter-button>>$0</filter-button>
-          <filter-button>>$1000</filter-button>
-          <filter-button>>$5000</filter-button>
+          <div
+            v-for="(citem,idx) in item.filter"
+            :key="idx"
+          >
+            <filter-button
+              v-if="!citem.type"
+              :active="params[item.value] == citem.value"
+              @touch="touchHandler(item.value,citem)"
+            >{{citem.name}}</filter-button>
 
+            <div
+              class="interval-container"
+              v-if="citem.type === 'interval'"
+            >
+              <input
+                placeholder="最小值"
+                type="text"
+                class="interval-input start-input"
+                :class="{'active-input': citem.start}"
+                v-model.lazy.number.trim="citem.start"
+                @blur="inputHandler(item.value,citem.start,citem.end)"
+              >
+              <span class="interval-span">-</span>
+              <input
+                placeholder="最大值"
+                type="text"
+                class="interval-input end-input"
+                :class="{'active-input': citem.end}"
+                v-model.lazy.number.trim="citem.end"
+                @blur="inputHandler(item.value,citem.start,citem.end)"
+              >
+            </div>
+          </div>
         </section>
       </fm-collapse-item>
-      <fm-collapse-item
-        title="最大回撤"
-        :icon-classes="iconClasses"
-      >
-        <section class="filter-item-section">
-          <filter-button></filter-button>
-          <filter-button> ≤30% </filter-button>
-          <filter-button> ≤50% </filter-button>
-          <filter-button> >50% </filter-button>
-          <filter-button>>$5000</filter-button>
 
-        </section>
-      </fm-collapse-item>
-      <fm-collapse-item
-        title="账户净值"
-        :icon-classes="iconClasses"
-      >
-        <section class="filter-item-section">
-          <filter-button></filter-button>
-          <filter-button> ≤10% </filter-button>
-          <filter-button> ≤20% </filter-button>
-          <filter-button> ≤30% </filter-button>
-          <filter-button> ≤50% </filter-button>
-          <filter-button> >50% </filter-button>
-          <filter-button>>$5000</filter-button>
-
-        </section>
-      </fm-collapse-item>
-      <fm-collapse-item
-        title="交易周期"
-        :icon-classes="iconClasses"
-      >
-        <section class="filter-item-section">
-          <filter-button></filter-button>
-        </section>
-      </fm-collapse-item>
-      <fm-collapse-item
-        title="交易能力值"
-        :icon-classes="iconClasses"
-      >
-        <section class="filter-item-section">
-          <filter-button></filter-button>
-        </section>
-      </fm-collapse-item>
-      <fm-collapse-item
-        title="交易品种"
-        :icon-classes="iconClasses"
-      >
-        <section class="filter-item-section">
-          <filter-button>全部</filter-button>
-          <filter-button :closed="true">USD/JPY</filter-button>
-          <filter-plus />
-        </section>
-      </fm-collapse-item>
-      <fm-collapse-item
+      <!-- <fm-collapse-item
         title="经纪商"
         :icon-classes="iconClasses"
       >
@@ -105,9 +58,12 @@
           <filter-button :closed="true">FxPro浦汇</filter-button>
           <filter-plus />
         </section>
-      </fm-collapse-item>
+      </fm-collapse-item> -->
     </fm-collapse>
-    <filter-submit />
+    <filter-submit
+      @reset="handleSeset"
+      @submit="handleSubmit"
+    />
   </div>
 </template>
 
@@ -118,6 +74,9 @@ import {
 import FilterButton from './FilterButton.vue';
 import FilterSubmit from './FilterSubmit.vue';
 import FilterPlus from './FilterPlus.vue';
+import zhCN from '@/i18n/zh-CN/components/filter-popover/FilterPopover';
+import zhTW from '@/i18n/zh-TW/components/filter-popover/FilterPopover';
+import enUS from '@/i18n/en-US/components/filter-popover/FilterPopover';
 
 @Component({
   components: {
@@ -125,10 +84,138 @@ import FilterPlus from './FilterPlus.vue';
     FilterSubmit,
     FilterPlus,
   },
+  i18n: {
+    messages: {
+      'zh-CN': zhCN,
+      'zh-TW': zhTW,
+      'en-US': enUS,
+    },
+  },
 })
 export default class FilterSetting extends Vue {
   private iconClasses: string =
     'edit-icon edit-hover-icon edit-icon-active edit-hover-icon-active icon-up_24px';
+
+  // 过滤条件的字段格式
+  @Prop({
+    default: () => [
+      {
+        label: '交易能力值',
+        desc: '备注介绍',
+        value: 'Score',
+        filter: [
+          { name: '不限', value: '' },
+          { name: '60-70', value: '60-70' },
+          { name: '71-80', value: '71-80' },
+          { name: '81-90', value: '81-90' },
+          { name: '>90', value: '90-0' },
+          {
+            mode: 'input',
+            start: '',
+            end: '',
+            type: 'interval',
+          },
+        ],
+      },
+      {
+        label: '账户净值',
+        value: 'Equity',
+        desc: '备注介绍',
+        filter: [
+          { name: '不限', value: '' },
+          { name: '小于 $5000', value: '0-5000' },
+          { name: '$5000 - $20000', value: '5000-20000' },
+          { name: '$20000 - $50000', value: '20000-50000' },
+          {
+            mode: 'input',
+            start: '',
+            end: '',
+            type: 'interval',
+          },
+        ],
+      },
+      {
+        label: '交易周期',
+        value: 'Weeks',
+        desc: '备注介绍',
+        filter: [
+          { name: '不限', value: '' },
+          { name: '小于13周', value: '0-13' },
+          { name: '13-26周', value: '13-26' },
+          { name: '26-52周', value: '26-52' },
+          { name: '52周以上', value: '52-0' },
+        ],
+      },
+      {
+        label: '最大回撤比例',
+        value: 'Retracement',
+        desc: '备注介绍',
+        filter: [{ name: '不限', value: '' }],
+      },
+      {
+        label: '收益率',
+        value: 'Roi',
+        desc: '备注介绍',
+        filter: [{ name: '不限', value: '' }],
+      },
+      {
+        label: '经纪商',
+        value: 'brokerId',
+        desc: '备注介绍',
+        hasAdd: true,
+        filter: [{ name: '全部', value: '' }],
+      },
+    ],
+  })
+  labelObj!: any[];
+
+  // 过滤条件的当前过滤字段
+  @Prop({
+    default: () => ({
+      Score: '',
+      Roi: '',
+      Retracement: '',
+      Weeks: '',
+      Equity: '',
+      expSymbol: '',
+      brokerId: '',
+    }),
+  })
+  params!: any;
+
+  @Emit('filter')
+  handleSubmit() {
+    return this.params;
+  }
+
+  @Emit('reset')
+  handleSeset() {
+    this.params = {
+      Score: '',
+      Roi: '',
+      Retracement: '',
+      Weeks: '',
+      Equity: '',
+      expSymbol: '',
+      brokerId: '',
+    };
+    return this.params;
+  }
+
+  touchHandler(key: string, citem: any) {
+    this.$set(this.params, key, citem.value);
+    citem.start = '';
+    citem.end = '';
+  }
+
+  public inputHandler(key: string, start: number, end: number) {
+    if (!start && !end) {
+      this.$set(this.params, key, '');
+      return;
+    }
+    const value = `${start || 0}-${end || 0}`;
+    this.$set(this.params, key, value);
+  }
 }
 </script>
 
@@ -145,6 +232,31 @@ export default class FilterSetting extends Vue {
 .filter-normal-item {
   padding: 20px 0 10px;
   border-bottom: 1px solid #edeff4;
+}
+
+.interval-input {
+  outline: none;
+  border: none;
+  width: 80px;
+  height: 26px;
+  border-radius: 2px;
+  background-color: #f6f6f6;
+  text-align: center;
+  padding: 0 10px;
+  &.active-input {
+    background-color: #fff7f2;
+    border: 1px solid #fff7f2;
+    color: #ff6200;
+  }
+}
+.interval-span {
+  color: #b5b5b5;
+  height: 26px;
+  line-height: 26px;
+  width: 20px;
+  display: inline-block;
+  text-align: center;
+  margin: 0 6px;
 }
 </style>
 
