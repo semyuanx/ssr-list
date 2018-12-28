@@ -96,10 +96,13 @@
 import {
   Component, Vue, Prop, Emit,
 } from 'vue-property-decorator';
+import { namespace } from 'vuex-class';
 import FilterTag from './FilterTag.vue';
 import zhCN from '@/i18n/zh-CN/components/filter-popover/FilterPopover';
 import zhTW from '@/i18n/zh-TW/components/filter-popover/FilterPopover';
 import enUS from '@/i18n/en-US/components/filter-popover/FilterPopover';
+
+const RankStore = namespace('RankStore');
 
 @Component({
   components: {
@@ -247,8 +250,15 @@ export default class FilterPopover extends Vue {
 
   @Emit('filter')
   handleFilter() {
+    this.refactorRes(this.params);
     return this.params;
   }
+
+  @RankStore.State
+  filterRes: any;
+
+  @RankStore.Mutation
+  setFilterRes: any;
 
   public rangeHandler(key: string, citem: any) {
     this.$set(this.params, key, citem.value);
@@ -285,6 +295,17 @@ export default class FilterPopover extends Vue {
       });
     });
     return this.params;
+  }
+
+  refactorRes(res: any) {
+    const result = this.labelObj.map((v) => {
+      const r = v.filter.find((val:any) => val.value === res[v.value]) && v.filter.find((val:any) => val.value === res[v.value]).name;
+      return {
+        label: v.label,
+        val: r,
+      };
+    });
+    this.setFilterRes(result);
   }
 }
 </script>

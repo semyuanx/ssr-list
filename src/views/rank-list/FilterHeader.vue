@@ -6,12 +6,12 @@
         <div class="header-tag-lists">
           <div
             :key="index"
-            v-for="(params,index) in rankParams"
+            v-for="(params,index) in filterRes.filter(v=>v.val)"
             class="header-tag-item"
           >
             <FmTag
-              msg="账户评级"
-              :desc="params"
+              :msg="params.label"
+              :desc="params.val"
             />
           </div>
           <!-- <div class="header-tag-item">
@@ -31,6 +31,7 @@
           </div>
           <div class="filter-pop">
             <filter-popover
+            ref="filterPopover"
               @close="closeFilter"
               :show="isShow"
               @filter="handleFilter"
@@ -129,6 +130,12 @@ export default class FilterHeader extends Vue {
   @RankStore.Mutation
   setCheckedBrokers: any;
 
+  @RankStore.Mutation
+  setFilterRes: any;
+
+  @RankStore.State
+  filterRes: any;
+
   closeFilter() {
     this.isShow = false;
   }
@@ -144,6 +151,7 @@ export default class FilterHeader extends Vue {
     this.isShow = false;
     this.refactor(value);
   }
+
 
   handleReset(value: object) {
     this.setCheckedBrokers([]);
@@ -180,7 +188,9 @@ export default class FilterHeader extends Vue {
 
   mounted() {
     this.checked = this.checkedBrokers;
-    this.getBrokersList();
+    this.getBrokersList({
+      commonlyused: 1,
+    });
   }
 }
 </script>

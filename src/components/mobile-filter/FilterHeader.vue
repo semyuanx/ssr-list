@@ -1,13 +1,20 @@
 <template>
   <section class="filter-selected-container">
     <div>
-      <filter-button class="filter-button"></filter-button>
+      <filter-button
+        class="filter-button"
+        v-for="(item,index) in result"
+        :key="index"
+      >
+        <span>{{item.label}}</span>&nbsp;
+        <span> {{item.val}}</span>
+      </filter-button>
     </div>
     <router-link
       to="/filter"
       class="filter-link"
     >
-      <span>筛选</span>
+      <i class="icon-filtrate_24px"></i> <span>筛选</span>
     </router-link>
   </section>
 </template>
@@ -15,23 +22,34 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 import FilterButton from './FilterButton.vue';
+import { namespace } from 'vuex-class';
+
+const RankStore = namespace('RankStore');
 
 @Component({
   components: {
     FilterButton,
   },
 })
-export default class FilterHeader extends Vue {}
+export default class FilterHeader extends Vue {
+  @RankStore.State
+  filterRes: any;
+
+  get result() {
+    return this.filterRes.filter((v: any) => v.val).slice(0, 2);
+  }
+}
 </script>
 
 <style lang="less" scoped>
-@theme-color:#ff6200;
+@theme-color: #ff6200;
 .filter-selected-container {
   border-bottom: 1px solid #ebeef5;
   padding: 0 15px;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  min-height: 38px;
 
   font-family: PingFang-SC-Medium;
   color: #333;
