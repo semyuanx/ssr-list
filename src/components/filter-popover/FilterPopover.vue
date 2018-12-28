@@ -42,7 +42,7 @@
             :key="inx"
           >
             <filter-tag
-              :active="params[item.value] == citem.value"
+              :active="rankParams[item.value] == citem.value"
               v-if="!citem.type"
               @selected="rangeHandler(item.value,citem)"
             >{{citem.name}}</filter-tag>
@@ -94,7 +94,7 @@
 
 <script lang="ts">
 import {
-  Component, Vue, Prop, Emit,
+  Component, Vue, Prop, Emit, Watch,
 } from 'vue-property-decorator';
 import { namespace } from 'vuex-class';
 import FilterTag from './FilterTag.vue';
@@ -126,19 +126,7 @@ export default class FilterPopover extends Vue {
   // 要插入分割线的索引位置，从0开始
   @Prop({ default: () => [1, 4, 6] }) divided!: number[];
 
-  // 过滤条件的当前过滤字段
-  @Prop({
-    default: () => ({
-      Score: '',
-      Roi: '',
-      Retracement: '',
-      Weeks: '',
-      Equity: '',
-      expSymbol: '',
-      brokerId: '',
-    }),
-  })
-  params!: any;
+  @Prop({ default: false }) show!: boolean;
 
   // 过滤条件的字段格式
   @Prop({
@@ -243,16 +231,11 @@ export default class FilterPopover extends Vue {
   })
   labelObj!: any[];
 
-  @Prop({ default: false }) show!: boolean;
+  @RankStore.State
+  rankParams: any;
 
-  @Emit('close')
-  handleColse(e: MouseEvent) {}
-
-  @Emit('filter')
-  handleFilter() {
-    this.refactorRes(this.params);
-    return this.params;
-  }
+  @RankStore.Mutation
+  setRankParams: any;
 
   @RankStore.State
   filterRes: any;
@@ -260,30 +243,17 @@ export default class FilterPopover extends Vue {
   @RankStore.Mutation
   setFilterRes: any;
 
-  public rangeHandler(key: string, citem: any) {
-    this.$set(this.params, key, citem.value);
-  }
+  @Emit('close')
+  handleColse(e: MouseEvent) {}
 
-  public inputHandler(key: string, start: number, end: number) {
-    if (!start && !end) {
-      this.$set(this.params, key, '');
-      return;
-    }
-    const value = `${start || 0}-${end || 0}`;
-    this.$set(this.params, key, value);
+  @Emit('filter')
+  handleFilter() {
+    this.refactorRes(this.rankParams);
+    this.setRankParams(this.rankParams);
   }
 
   @Emit('reset')
   reset() {
-    this.params = {
-      Score: '',
-      Roi: '',
-      Retracement: '',
-      Weeks: '',
-      Equity: '',
-      expSymbol: '',
-      brokerId: '',
-    };
     this.labelObj.forEach((v: any) => {
       v.filter.forEach((val: any) => {
         if (val.start) {
@@ -294,15 +264,42 @@ export default class FilterPopover extends Vue {
         }
       });
     });
-    return this.params;
+    this.setRankParams({
+      Score: '',
+      Roi: '',
+      Retracement: '',
+      Weeks: '',
+      Equity: '',
+      expSymbol: '',
+      brokerId: '',
+    });
   }
 
-  refactorRes(res: any) {
+  private rangeHandler(key: string, citem: any) {
+    const params = Object.assign({}, this.rankParams);
+    params[key] = citem.value;
+    this.setRankParams(params);
+  }
+
+  private inputHandler(key: string, start: number, end: number) {
+    const params = Object.assign({}, this.rankParams);
+    if (!start && !end) {
+      params[key] = '';
+    } else {
+      const value = `${start || 0}-${end || 0}`;
+      params[key] = value;
+    }
+    this.setRankParams(params);
+  }
+
+  private refactorRes(res: any) {
     const result = this.labelObj.map((v) => {
-      const r = v.filter.find((val:any) => val.value === res[v.value]) && v.filter.find((val:any) => val.value === res[v.value]).name;
+      const r = v.filter.find((val: any) => val.value === res[v.value])
+        && v.filter.find((val: any) => val.value === res[v.value]).name;
       return {
         label: v.label,
         val: r,
+        id: res[v.value],
       };
     });
     this.setFilterRes(result);

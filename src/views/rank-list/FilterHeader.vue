@@ -31,7 +31,7 @@
           </div>
           <div class="filter-pop">
             <filter-popover
-            ref="filterPopover"
+              ref="filterPopover"
               @close="closeFilter"
               :show="isShow"
               @filter="handleFilter"
@@ -106,11 +106,13 @@ const RankStore = namespace('RankStore');
   },
 })
 export default class FilterHeader extends Vue {
+  private params: object = {};
+
   isShow: boolean = false;
 
   addBorker: boolean = false;
 
-  private checked:any = [];
+  private checked: any = [];
 
   @RankStore.State
   brokersList: any;
@@ -149,40 +151,20 @@ export default class FilterHeader extends Vue {
   @Emit('filter')
   handleFilter(value: object) {
     this.isShow = false;
-    this.refactor(value);
   }
-
 
   handleReset(value: object) {
     this.setCheckedBrokers([]);
     this.checked = [];
-    this.refactor(value);
   }
 
-  refactor(obj: any) {
-    const tempObj = {
-      maxScore: obj.Score.split('-')[1],
-      minScore: obj.Score.split('-')[0],
-      minRoi: obj.Roi.split('-')[0],
-      maxRoi: obj.Roi.split('-')[1],
-      maxRetracement: obj.Retracement.split('-')[1],
-      minRetracement: obj.Retracement.split('-')[0],
-      maxWeeks: obj.Weeks.split('-')[1],
-      minWeeks: obj.Weeks.split('-')[0],
-      maxEquity: obj.Equity.split('-')[1],
-      minEquity: obj.Equity.split('-')[0],
-      brokerId: this.checkedBrokers.join(','),
-    };
-    this.setRankParams(tempObj);
-  }
-
-  handleCloseTag(item:string) {
+  handleCloseTag(item: string) {
     const checked = this.checkedBrokers.filter((v: any) => v !== item);
     this.setCheckedBrokers(checked);
   }
 
   @Watch('checked', { deep: true })
-  sync(val:any) {
+  sync(val: any) {
     this.setCheckedBrokers(val);
   }
 

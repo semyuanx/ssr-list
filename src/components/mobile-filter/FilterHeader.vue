@@ -36,7 +36,7 @@ export default class FilterHeader extends Vue {
   filterRes: any;
 
   get result() {
-    return this.filterRes.filter((v: any) => v.val).slice(0, 2);
+    return this.filterRes.filter((v: any) => v.id).slice(0, 2);
   }
 }
 </script>
