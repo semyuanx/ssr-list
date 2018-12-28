@@ -5,8 +5,8 @@
         <div class="header-fitler-title"><span>筛选条件：</span></div>
         <div class="header-tag-lists">
           <div
-            :key="i"
-            v-for="i in Array(10).fill(0)"
+            :key="index"
+            v-for="(i, index) in Array(10).fill(0)"
             class="header-tag-item"
           >
             <FmTag

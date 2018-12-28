@@ -53,6 +53,8 @@ import LittleCard from '@/components/little-card/card.vue'; // @ is an alias to 
 })
 export default class Index extends Vue {
   public name: string = 'fm-invest-danger';
+
+  rightTitle: string = '';
 }
 </script>
 <style lang="less" scoped>
