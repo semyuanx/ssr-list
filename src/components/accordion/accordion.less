@@ -1,0 +1,115 @@
+@css-prefix: fm;
+@line-color: #ececec;
+// 单行文本溢出显示省略号
+// -----------------------------------------------------------------------------
+.text-overflow(@align: justify) {
+    word-wrap: normal;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    text-align: @align;
+}
+
+// 多行文本溢出显示省略号
+// -----------------------------------------------------------------------------
+.line-clamp(@line: 2, @line-height: 0.38rem) {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: @line;
+    -webkit-box-orient: vertical;
+    word-break: break-all;
+    text-overflow: ellipsis;
+    line-height: @line-height;
+    max-height: @line-height * @line + 0.2rem;
+}
+
+// 三角形箭头
+// -----------------------------------------------------------------------------
+// @deg:  45deg - right
+//       135deg - down
+//       -45deg - up
+//      -135deg - left
+// ------------------------------------------------------------------------
+.arrow(@color: #DDD, @width: 0.2rem, @border-width: 2px, @deg: 45deg) {
+    content: "";
+    display: inline-block;
+    width: @width;
+    height: @width;
+    border-style: solid;
+    border-color: @color;
+    border-width: @border-width @border-width 0 0;
+    -webkit-transform: rotate(@deg);
+    transform: rotate(@deg);
+}
+
+.bottom-line(@color, @zindex: 0) {
+    height: 1px;
+    position: absolute;
+    z-index: @zindex;
+    bottom: 0;
+    left: 0;
+    content: '';
+    width: 100%;
+    background-image: linear-gradient(0deg, @color 50%, transparent 50%);
+}
+
+.@{css-prefix} {
+    &-accordion {
+        background-color: #fff;
+    }
+    &-accordion-head {
+        display: flex;
+        align-items: center;
+        position: relative;
+        user-select: none;
+        padding: 0 0.24rem;
+        overflow: hidden;
+        &:after {
+            .bottom-line(@line-color);
+        }
+        &-content {
+            flex: 1;
+            display: flex;
+            align-items: center;
+        }
+        &-arrow {
+            overflow: hidden;
+            height: 100%;
+            min-height: 1rem;
+            display: flex;
+            align-items: center;
+            &:after {
+                content: "";
+                width: 0;
+                height: 0;
+                border-left: 5px solid transparent;
+                border-right: 5px solid transparent;
+                border-bottom: 7px solid #a0a0a0;
+                display: block;
+                transition: transform 0.1s linear;
+                transform: rotate(-180deg);
+            }
+            &.@{css-prefix}-accordion-rotated:after {
+                transform: rotate(0deg);
+            }
+        }
+    }
+    &-accordion-title {
+        min-height: 1rem;
+        display: flex;
+        align-items: center;
+        font-size: 0.28rem;
+        color: #444;
+        &-full {
+            flex: 1;
+        }
+    }
+    &-accordion-content {
+        position: relative;
+        overflow: hidden;
+        transition: height 0.1s linear;
+        &:after {
+            .bottom-line(@line-color);
+        }
+    }
+}

@@ -7,9 +7,13 @@ import {
 } from 'lib-app-base/packages/native-lib';
 
 const native = createNativeBridge({
-  downloadUrl: '',
-  onCallSuccess() {},
-  onCallError() {},
+  downloadUrl: 'https://www.followme.com/download/index.html',
+  onCallSuccess() {
+    // alert('success');
+  },
+  onCallError() {
+    // alert('err');
+  },
 });
 
 export { isNativeFuncExist, getNativeFnList };
@@ -19,11 +23,11 @@ export { isNativeFuncExist, getNativeFnList };
  * 关闭 webview 页面，原生都是返回到打开 webview 之前的页面
  * version 3.2
  */
-export const closeWebView = ():any => {
+export const closeWebView = (): any => {
   if (isNativeFuncExist('closeWebView')) {
     return native('closeWebView', {});
   }
-  return this.$router.go(-1);
+  return window.app.$router.go(-1);
 };
 
 /**
@@ -32,12 +36,14 @@ export const closeWebView = ():any => {
  * params.path 打开的页面地址
  */
 export const openWebView = (location: Location) => {
+  // alert(111);
   if (isNativeFuncExist('openWebView')) {
-    const route = this.$router.resolve(location);
+    // alert(2222);
+    const route = window.app.$router.resolve(location);
     const path = route.route.fullPath.replace(/^\//, '');
     return native('openWebView', { path });
   }
-  return this.$router.push(location);
+  return window.app.$router.push(location);
 };
 /**
  * 同步 APP 状态，由 H5 主动向APP端要求状态同步，再由APP端调用 window.app.syncAppState({ ... }); 方法

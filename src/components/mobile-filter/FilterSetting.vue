@@ -4,13 +4,13 @@
       <filter-button>PTA会员</filter-button>
       <filter-button>免费订阅</filter-button>
     </div>
-    <fm-collapse accordion>
-      <fm-collapse-item
+
+    <Accordion accordion>
+      <AccordionItem
+        open
         :title="item.label"
-        :icon-classes="iconClasses"
         v-for="(item,index) in labelObj"
         :key="index"
-        :ref="'list_'+index"
       >
         <section class="filter-item-section">
           <div
@@ -60,19 +60,9 @@
           </div>
 
         </section>
-      </fm-collapse-item>
+      </AccordionItem>
 
-      <!-- <fm-collapse-item
-        title="经纪商"
-        :icon-classes="iconClasses"
-      >
-        <section class="filter-item-section">
-          <filter-button>全部</filter-button>
-          <filter-button :closed="true">FxPro浦汇</filter-button>
-          <filter-plus />
-        </section>
-      </fm-collapse-item> -->
-    </fm-collapse>
+    </Accordion>
     <filter-submit
       @reset="handleSeset"
       @submit="handleSubmit(params)"
@@ -87,6 +77,7 @@ import {
 import { namespace } from 'vuex-class';
 import FilterButton from './FilterButton.vue';
 import FilterSubmit from './FilterSubmit.vue';
+import { Accordion, AccordionItem } from '@/components/accordion';
 import FilterPlus from './FilterPlus.vue';
 import zhCN from '@/i18n/zh-CN/components/filter-popover/FilterPopover';
 import zhTW from '@/i18n/zh-TW/components/filter-popover/FilterPopover';
@@ -99,6 +90,8 @@ const RankStore = namespace('RankStore');
     FilterButton,
     FilterSubmit,
     FilterPlus,
+    Accordion,
+    AccordionItem,
   },
   i18n: {
     messages: {
@@ -136,7 +129,8 @@ export default class FilterSetting extends Vue {
 
   refactorRes(res: any) {
     const result = this.labelObj.map((v) => {
-      const r = v.filter.find((val:any) => val.value === res[v.value]) && v.filter.find((val:any) => val.value === res[v.value]).name;
+      const r = v.filter.find((val: any) => val.value === res[v.value])
+        && v.filter.find((val: any) => val.value === res[v.value]).name;
       return {
         label: v.label,
         val: r,
@@ -377,20 +371,32 @@ export default class FilterSetting extends Vue {
 </style>
 
 <style lang="less">
-.edit-icon:before {
-  content: "\e926";
-}
-.edit-icon-active:before {
-  content: "\e927";
-}
 .filter-setting-wrap {
   font-family: PingFang-SC-Medium;
-  .fm-collapse-item {
-    border: none;
-    border-bottom: 1px solid #edeff4;
-    border-radius: 0;
-  }
-  .fm-collapse-item-header {
+  // .fm-collapse-item {
+  //   border: none;
+  //   border-bottom: 1px solid #edeff4;
+  //   border-radius: 0;
+  // }
+  // .fm-collapse-item-header {
+  //   border: none;
+  //   background-color: #fff;
+  //   height: 60px;
+  //   display: flex;
+  //   align-items: center;
+  //   font-size: 14px;
+  //   font-weight: 500;
+  //   padding-left: 0;
+  //   padding-right: 0;
+  //   span.fm-collapse-item-act {
+  //     right: 0;
+  //   }
+  //   .fm-collapse-item-title {
+  //     font-size: 14px;
+  //     color: #333;
+  //   }
+  // }
+  .fm-accordion-title {
     border: none;
     background-color: #fff;
     height: 60px;
@@ -400,18 +406,14 @@ export default class FilterSetting extends Vue {
     font-weight: 500;
     padding-left: 0;
     padding-right: 0;
-    span.fm-collapse-item-act {
-      right: 0;
-    }
-    .fm-collapse-item-title {
-      font-size: 14px;
-      color: #333;
-    }
+    color: #333;
   }
+
   .filter-item-section {
     display: flex;
     align-items: center;
     flex-wrap: wrap;
+    padding-top:5px;
     padding-bottom: 10px;
   }
 }
