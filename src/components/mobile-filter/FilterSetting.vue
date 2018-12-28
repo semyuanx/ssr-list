@@ -124,10 +124,26 @@ export default class FilterSetting extends Vue {
   @RankStore.State
   brokersList: any;
 
+  @RankStore.Mutation
+  setFilterRes: any;
+
   @Emit('filter')
   handleSubmit(value: object) {
     this.refactor(value);
+    this.refactorRes(value);
     this.$router.replace({ name: 'rankList' });
+  }
+
+  refactorRes(res: any) {
+    const result = this.labelObj.map((v) => {
+      const r = v.filter.find((val:any) => val.value === res[v.value]) && v.filter.find((val:any) => val.value === res[v.value]).name;
+      return {
+        label: v.label,
+        val: r,
+      };
+    });
+
+    this.setFilterRes(result);
   }
 
   // 过滤条件的字段格式
@@ -258,16 +274,20 @@ export default class FilterSetting extends Vue {
       expSymbol: '',
       brokerId: '',
     };
-    this.labelObj.forEach((v):void => {
-      v.filter.forEach((val: any):void => {
-        if (val.start) {
-          val.start = '';
-        }
-        if (val.end) {
-          val.end = '';
-        }
-      });
-    });
+    this.labelObj.forEach(
+      (v): void => {
+        v.filter.forEach(
+          (val: any): void => {
+            if (val.start) {
+              val.start = '';
+            }
+            if (val.end) {
+              val.end = '';
+            }
+          },
+        );
+      },
+    );
     this.checkedBrokers = [];
     return this.params;
   }

@@ -2682,7 +2682,7 @@ commander@^2.12.1, commander@^2.14.1, commander@^2.18.0, commander@^2.9.0:
 
 commitizen@^3.0.5:
   version "3.0.5"
-  resolved "http://registry.npm.taobao.org/commitizen/download/commitizen-3.0.5.tgz#607e07a6d3f2aa201b91a51607dc4d337c84a0ea"
+  resolved "https://registry.yarnpkg.com/commitizen/-/commitizen-3.0.5.tgz#607e07a6d3f2aa201b91a51607dc4d337c84a0ea"
   integrity sha512-WB9sz7qudArOsW1ninU8YGLNoXLQ5lJBZf538iQ7i96SXAkqVMZdmPtSyN4WFPM5PjQR7rWxDa+hzfGIJfrXUg==
   dependencies:
     cachedir "2.1.0"

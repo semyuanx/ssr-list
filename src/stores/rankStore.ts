@@ -27,6 +27,11 @@ export default class RankStore {
   @State([])
   public checkedBrokers: any[] = [];
 
+  @State([])
+  public filterRes:any[] =[];
+
+  @Set('filterRes') public setFilterRes: any;
+
   @Set('checkedBrokers') public setCheckedBrokers: any;
 
   @Set('rankList') public setRankList: any;

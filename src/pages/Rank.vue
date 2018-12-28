@@ -15,6 +15,8 @@ import { namespace } from 'vuex-class';
 import FilterHeader from '@/views/rank-list/FilterHeader.vue';
 import List from '@/views/rank-list/List.vue';
 
+// import { openWebView } from '@src/utils/native';
+
 const RankStore = namespace('RankStore');
 
 @Component({
