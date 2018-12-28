@@ -15,6 +15,10 @@
     <div class="invest">
       <TradeMaster />
     </div>
+    <router-link
+      class="super-filter-button"
+      :to="{name:'rankList'}"
+    ><i class="icon-filtrate_24px"></i> 高级筛选</router-link>
   </div>
 </template>
 
@@ -48,10 +52,29 @@ export default class Home extends Vue {
 }
 </script>
 <style lang="less" scoped>
-  .home {
-    padding-top: 40px;
-    .invest {
-      margin-top: 40px;
-    }
+.home {
+  padding-top: 40px;
+  .invest {
+    margin-top: 40px;
   }
+}
+
+.super-filter-button {
+  outline: none;
+  text-decoration: none;
+  display: inline-block;
+  width: 110px;
+  height: 38px;
+  line-height: 38px;
+  text-align: center;
+  border-radius: 18px;
+  background-color: #474856;
+  font-size: 14px;
+  color: #fff;
+  position: fixed;
+  z-index: 100;
+  bottom: 40px;
+  left: 50%;
+  margin-left: -55px;
+}
 </style>

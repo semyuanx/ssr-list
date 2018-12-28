@@ -21,10 +21,6 @@
               <span class="main-paragraph-order">#5</span>
             </p>
             <p class="sub-paragraph">
-              <span
-                class="rate-span"
-                :style="{background:rateColor}"
-              >A</span>
               <span>logo</span>
             </p>
           </template>
