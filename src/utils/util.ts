@@ -23,3 +23,38 @@ export function getScrollview(el: any): Window | any {
   }
   return window;
 }
+
+
+export const calcTime = function calcTime(timestamp: number): any|null {
+  if (!timestamp) return null;
+  const date = new Date(timestamp * 1000);
+  const time = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
+  return time;
+};
+
+export const getChartData = function getChartData(moneyList: Array<any>, type?: string): any|null {
+  if (!moneyList) return null;
+  const array = moneyList;
+  const value: Array<any> = [];
+  array.forEach((element) => {
+    if (type === 'xAxis') {
+      value.push(element.TotalMoney);
+    } else {
+      const date = new Date(element.Date * 1000);
+      const year = date.getFullYear();
+      const month = (date.getMonth() + 1) < 10 ? `0${date.getMonth() + 1}` : (date.getMonth() + 1);
+      const day = (date.getDate() < 10 ? `0${date.getDate()}` : date.getDate());
+      const dataStr = `${year}${month}${day}`;
+      value.push(dataStr);
+    }
+  });
+  return value;
+};
+
+export const animate = function animate(fn: any) {
+  if (typeof window !== 'undefined') {
+    if (typeof fn !== 'function') return;
+    const requestAnimation = window.requestAnimationFrame || (window as any).mozRequestAnimationFrame || ((cb: any) => setTimeout(cb, 16));
+    requestAnimation(fn);
+  }
+};

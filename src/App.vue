@@ -2,9 +2,7 @@
   <div id="app">
     <div v-if="!isApp" class="fm-content-header">
       <!--顶部导航栏-->
-      <FMNav
-        :baseStrings="baseStrings"
-      ></FMNav>
+      <FMNav />
     </div>
     <div class="fm-content-container">
       <div class="router-container">
@@ -12,7 +10,7 @@
       </div>
     </div>
     <div class="page-footer" v-show="isShow">
-      <FMFooter :base-strings="baseStrings"></FMFooter>
+      <FMFooter />
     </div>
   </div>
 </template>
@@ -20,17 +18,8 @@
 import { Component, Vue } from 'vue-property-decorator';
 import FMNav from 'fmcomponents/src/components/nav2';
 import FMFooter from 'fmcomponents/src/components/footer';
-import { getDomain } from 'fmcomponents/src/utils/domain';
 
 import 'minireset.css';
-import 'fmcomponents/src/styles/global.css';
-import 'fmcomponents/lib/nav2-main.css';
-import 'fmcomponents/lib/footer-main.css';
-import 'fmcomponents/lib/sidebar-main.css';
-
-import 'fmcomponents/src/styles/btn.less';
-import 'fmcomponents/src/styles/icon.less';
-import 'fmcomponents/src/styles/arrow.less';
 
 import '@/theme/main.less';
 
@@ -43,10 +32,6 @@ import '@/theme/main.less';
 })
 export default class App extends Vue {
   public isShow: boolean = true;
-
-  get baseStrings() {
-    return getDomain();
-  }
 
   private resize() {
     const this$ = this;
