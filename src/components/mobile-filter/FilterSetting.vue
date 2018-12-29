@@ -77,7 +77,7 @@ import {
 import { namespace } from 'vuex-class';
 import FilterButton from './FilterButton.vue';
 import FilterSubmit from './FilterSubmit.vue';
-import { Accordion, AccordionItem } from '@/components/accordion';
+import { Accordion, AccordionItem } from '@/components/accordion/index';
 import FilterPlus from './FilterPlus.vue';
 import zhCN from '@/i18n/zh-CN/components/filter-popover/FilterPopover';
 import zhTW from '@/i18n/zh-TW/components/filter-popover/FilterPopover';

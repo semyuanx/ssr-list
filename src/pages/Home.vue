@@ -1,22 +1,10 @@
 <template>
   <div class="home">
-    <div class="strategy">
-      <FmStrategy />
-    </div>
-    <div class="invest">
-      <FmInvestManager />
-    </div>
-    <div class="invest">
-      <InvestProfessor />
-    </div>
-    <div class="invest">
-      <DangerKeep />
-    </div>
-    <div class="invest">
-      <TradeMaster />
+    <div>
+      <MainView />
     </div>
     <router-link
-      class="super-filter-button"
+      class="super-filter-button fm-show-mobile"
       :to="{name:'rankList',query:$route.query}"
       @click.prevent.stop.native="openWebView({name:'rankList',query:$route.query})"
     ><i class="icon-filtrate_24px"></i> 高级筛选</router-link>
@@ -25,23 +13,16 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import FmStrategy from '@/views/home/Strategy.vue'; // @ is an alias to /src
-import FmInvestManager from '@/views/home/InvestManager.vue'; // @ is an alias to /src
-import InvestProfessor from '@/views/home/InvestProfessor.vue'; // @ is an alias to /src
-import DangerKeep from '@/views/home/DangerKeep.vue'; // @ is an alias to /src
-import TradeMaster from '@/views/home/TradeMaster.vue'; // @ is an alias to /src
 import { namespace, Action } from 'vuex-class';
+
 import { openWebView } from '@/utils/native';
+import MainView from '@/views/home/mainView.vue';
 
 const HomeStore = namespace('HomeStore');
 
 @Component({
   components: {
-    FmStrategy,
-    FmInvestManager,
-    InvestProfessor,
-    DangerKeep,
-    TradeMaster,
+    MainView,
   },
 })
 export default class Home extends Vue {
@@ -58,6 +39,7 @@ export default class Home extends Vue {
 <style lang="less" scoped>
 .home {
   padding-top: 40px;
+  min-width: 320px;
   .invest {
     margin-top: 40px;
   }
