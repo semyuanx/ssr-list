@@ -2,9 +2,62 @@
   <div class="filter-list-container">
     <section class="filter-result-container">
 
-      <SimpleTable :header="header" :data="data">
+      <el-table
+        class="mobile-rank-table"
+        :data="data"
+        :default-sort = "{prop: 'ROI', order: 'descending'}"
+      >
+        <el-table-column
+          align="left"
+          label="基本信息"
+          prop="name"
+        >
+          <template slot-scope="scope">
+            <p class="main-paragraph">
+              <span class="main-paragraph-name">{{scope.row.name}}</span>
+              <span class="main-paragraph-order">#5</span>
+            </p>
+            <p class="sub-paragraph">
+              <span>logo</span>
+            </p>
+          </template>
+        </el-table-column>
+        <el-table-column
+          align="right"
+          label="收益率"
+          prop="ROI"
+          sortable
+        >
+          <template slot-scope="scope">
+            <p class="rateOfReturn">
+              <span :class="scope.row.ROI >= 0 ? 'rateValue up' : 'rateValue'">{{scope.row.ROI | percentFormat}}</span>
+              <!-- <span class="ratePercent">%</span> -->
+            </p>
+          </template>
+        </el-table-column>
+        <el-table-column
+          align="right"
+          label="订阅人数"
+          prop="Subscribers"
+          sortable
+        >
+          <template slot-scope="scope">
+            <p class="orderCount">{{scope.row.Subscribers}}</p>
+          </template>
+        </el-table-column>
+        <el-table-column
+          align="right"
+          label=""
+        >
+          <template slot-scope="scope">
+            <filter-button
+              :border="true"
+              class="filter-button"
+            >{{scope.row.price || '$9.99'}}</filter-button>
+          </template>
+        </el-table-column>
 
-      </SimpleTable>
+      </el-table>
     </section>
   </div>
 </template>
@@ -13,7 +66,7 @@
 import { Component, Vue, Prop } from 'vue-property-decorator';
 import { percentFormat } from '@/utils/format';
 import FilterButton from './FilterButton.vue';
-import SimpleTable from '@/components/simple-table/index.vue';
+import { Table, TableColumn } from 'element-ui';
 
 @Component({
   filters: {
@@ -21,19 +74,12 @@ import SimpleTable from '@/components/simple-table/index.vue';
   },
   components: {
     FilterButton,
-    SimpleTable,
+    [Table.name]: Table,
+    [TableColumn.name]: TableColumn,
   },
 })
 export default class FilterList extends Vue {
   rateColor: string = '#F09D58';
-
-  header: Array<any> = [
-    { label: '基本信息', prop: 'a', align: '' },
-    { label: '收益率', prop: 'b', align: 'right' },
-    { label: '订阅人数', prop: 'c', align: 'right' },
-    { label: '', prop: 'd', align: 'right' },
-  ];
-
 
   @Prop({
     type: Array,
@@ -79,7 +125,6 @@ export default class FilterList extends Vue {
   }
 }
 
-
 .rate-span {
   width: 14px;
   height: 14px;
@@ -115,7 +160,6 @@ export default class FilterList extends Vue {
     max-width: 80px;
   }
 }
-
 
 .orderCount {
   font-size: 18px;

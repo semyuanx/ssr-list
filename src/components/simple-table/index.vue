@@ -1,10 +1,21 @@
 <template>
-  <div class="simple-table-container" >
-    <el-table class="rank-table"
+  <div class="simple-table-container">
+    <el-table
+      class="rank-table"
       :stripe="false"
       :border="false"
-      :data="data" >
-      <el-table-column :key="i.prop" v-for="i of header" :align="i.align || null" :label="i.label" :prop="i.prop" />
+      :data="data"
+    >
+      <el-table-column
+        :key="i.prop"
+        v-for="i of header"
+        :align="i.align || null"
+        :label="i.label"
+        :prop="i.prop"
+      >
+
+
+      </el-table-column>
       <!-- <el-table-column label="预期收益率" prop="b" />
       <el-table-column label="剩余名额" prop="c" /> -->
     </el-table>
@@ -42,5 +53,5 @@ export default class SimpleTable extends Vue {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="less">
-  @import url(./index.less);
+@import url(./index.less);
 </style>
