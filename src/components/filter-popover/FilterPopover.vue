@@ -44,7 +44,7 @@
             <filter-tag
               :active="rankParams[item.value] == citem.value"
               v-if="!citem.type"
-              @selected="rangeHandler(item.value,citem)"
+              @selected="rangeHandler(item,citem)"
             >{{citem.name}}</filter-tag>
             <div
               class="interval-container"
@@ -237,18 +237,11 @@ export default class FilterPopover extends Vue {
   @RankStore.Mutation
   setRankParams: any;
 
-  @RankStore.State
-  filterRes: any;
-
-  @RankStore.Mutation
-  setFilterRes: any;
-
   @Emit('close')
   handleColse(e: MouseEvent) {}
 
   @Emit('filter')
   handleFilter() {
-    this.refactorRes(this.rankParams);
     this.setRankParams(this.rankParams);
   }
 
@@ -275,7 +268,13 @@ export default class FilterPopover extends Vue {
     });
   }
 
-  private rangeHandler(key: string, citem: any) {
+  private rangeHandler(item: any, citem: any) {
+    const key: string = item.value;
+    if (item.filter) {
+      const len: number = item.filter.length;
+      item.filter[len - 1].start = '';
+      item.filter[len - 1].end = '';
+    }
     const params = Object.assign({}, this.rankParams);
     params[key] = citem.value;
     this.setRankParams(params);
@@ -290,19 +289,6 @@ export default class FilterPopover extends Vue {
       params[key] = value;
     }
     this.setRankParams(params);
-  }
-
-  private refactorRes(res: any) {
-    const result = this.labelObj.map((v) => {
-      const r = v.filter.find((val: any) => val.value === res[v.value])
-        && v.filter.find((val: any) => val.value === res[v.value]).name;
-      return {
-        label: v.label,
-        val: r,
-        id: res[v.value],
-      };
-    });
-    this.setFilterRes(result);
   }
 }
 </script>

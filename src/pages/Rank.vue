@@ -33,8 +33,57 @@ export default class RankList extends Vue {
   @RankStore.State
   checkedBrokers: any;
 
+  @RankStore.Mutation
+  setFilterRes: any;
+
   handleFilter() {
+    this.filterResult();
     this.getRankList(this.refactor());
+  }
+
+  public filterResult() {
+    console.log(111);
+    this.setFilterRes([
+      {
+        label: '交易能力值',
+        val: this.refactorWord('', this.rankParams.Score),
+      },
+      {
+        label: '账户净值',
+        val: this.refactorWord('$', this.rankParams.Equity),
+      },
+      {
+        label: '交易周期',
+        val: this.refactorWord('周', this.rankParams.Weeks),
+      },
+      {
+        label: '最大回撤比例',
+        val: this.refactorWord('%', this.rankParams.Retracement),
+      },
+      { label: '收益率', val: this.refactorWord('%', this.rankParams.Roi) },
+      { label: '经纪商', val: this.rankParams.brokerId },
+    ]);
+  }
+
+  private refactorWord(unit: string, val: any) {
+    if (!val) {
+      return '不限';
+    }
+    const arr: string[] = val.split('-');
+    if (arr[0] === '0') {
+      return `< ${this.unitLocation(unit, arr[1])}`;
+    }
+    if (arr[1] === '0') {
+      return `> ${this.unitLocation(unit, arr[0])}`;
+    }
+    return `${this.unitLocation(unit, arr[0])}-${this.unitLocation(
+      unit,
+      arr[1],
+    )}`;
+  }
+
+  private unitLocation(unit: string, val: string) {
+    return unit === '$' ? unit + val : val + unit;
   }
 
   mounted() {

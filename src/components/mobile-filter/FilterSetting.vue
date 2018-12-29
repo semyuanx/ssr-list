@@ -21,7 +21,7 @@
             <filter-button
               v-if="!citem.type"
               :active="rankParams[item.value] == citem.value"
-              @touch="touchHandler(item.value,citem)"
+              @touch="touchHandler(item,citem)"
             >{{citem.name}}</filter-button>
 
             <div
@@ -221,7 +221,7 @@ export default class FilterSetting extends Vue {
 
   @Emit('filter')
   handleSubmit() {
-    this.refactorRes(this.rankParams);
+    this.filterResult();
     this.$router.replace({ name: 'rankList' });
   }
 
@@ -253,7 +253,13 @@ export default class FilterSetting extends Vue {
     this.setCheckedBrokers([]);
   }
 
-  private touchHandler(key: string, citem: any) {
+  private touchHandler(item: any, citem: any) {
+    const key: string = item.value;
+    if (item.filter) {
+      const len: number = item.filter.length;
+      item.filter[len - 1].start = '';
+      item.filter[len - 1].end = '';
+    }
     const params = Object.assign({}, this.rankParams);
     params[key] = citem.value;
     this.setRankParams(params);
@@ -279,17 +285,48 @@ export default class FilterSetting extends Vue {
     this.setCheckedBrokers(checked);
   }
 
-  refactorRes(res: any) {
-    const result = this.labelObj.map((v) => {
-      const r = v.filter.find((val: any) => val.value === res[v.value])
-        && v.filter.find((val: any) => val.value === res[v.value]).name;
-      return {
-        label: v.label,
-        val: r,
-        id: res[v.value],
-      };
-    });
-    this.setFilterRes(result);
+  public filterResult() {
+    this.setFilterRes([
+      {
+        label: '交易能力值',
+        val: this.refactorWord('', this.rankParams.Score),
+      },
+      {
+        label: '账户净值',
+        val: this.refactorWord('$', this.rankParams.Equity),
+      },
+      {
+        label: '交易周期',
+        val: this.refactorWord('周', this.rankParams.Weeks),
+      },
+      {
+        label: '最大回撤比例',
+        val: this.refactorWord('%', this.rankParams.Retracement),
+      },
+      { label: '收益率', val: this.refactorWord('%', this.rankParams.Roi) },
+      { label: '经纪商', val: this.rankParams.brokerId },
+    ]);
+  }
+
+  private refactorWord(unit: string, val: any): string {
+    if (!val) {
+      return '不限';
+    }
+    const arr: string[] = val.split('-');
+    if (arr[0] === '0') {
+      return `< ${this.unitLocation(unit, arr[1])}`;
+    }
+    if (arr[1] === '0') {
+      return `> ${this.unitLocation(unit, arr[0])}`;
+    }
+    return `${this.unitLocation(unit, arr[0])}-${this.unitLocation(
+      unit,
+      arr[1],
+    )}`;
+  }
+
+  private unitLocation(unit: string, val: string) {
+    return unit === '$' ? unit + val : val + unit;
   }
 }
 </script>

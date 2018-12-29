@@ -132,9 +132,6 @@ export default class FilterHeader extends Vue {
   @RankStore.Mutation
   setCheckedBrokers: any;
 
-  @RankStore.Mutation
-  setFilterRes: any;
-
   @RankStore.State
   filterRes: any;
 
