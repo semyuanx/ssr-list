@@ -27,6 +27,9 @@ import InvestProfessor from '@/views/home/InvestProfessor.vue'; // @ is an alias
 import DangerKeep from '@/views/home/DangerKeep.vue'; // @ is an alias to /src
 import TradeMaster from '@/views/home/TradeMaster.vue'; // @ is an alias to /src
 import { namespace, Action } from 'vuex-class';
+
+const HomeStore = namespace('HomeStore');
+
 @Component({
   components: {
     FmStrategy,
@@ -37,7 +40,8 @@ import { namespace, Action } from 'vuex-class';
   },
 })
 export default class mainView extends Vue {
-
+    @HomeStore.State
+    configs: any;
 }
 </script>
 <style lang="less" scoped>

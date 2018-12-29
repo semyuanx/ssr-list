@@ -40,7 +40,7 @@ export default class HomeStore {
             try {
               const resp: Promise<any> = await getCustomRankList({ rankIndex: element.RankIndex });
               console.log(resp, 'resp');
-              return { element, data: resp };
+              return { ...element, listData: resp };
             } catch (e) {
               return { element };
             }
