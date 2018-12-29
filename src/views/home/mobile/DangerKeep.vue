@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="header">
-      <LineHead title="投资管家" subTitle="交易周期>12周、最大回撤<30%" />
+      <LineHead title="风控能力" subTitle="交易周期>12周、最大回撤<30%" />
     </div>
     <div class="content">
       <SimpleTable :header="header" :data="data" />
