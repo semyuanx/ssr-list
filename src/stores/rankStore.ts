@@ -13,7 +13,15 @@ import {
 @Repository('RankStore')
 export default class RankStore {
   @State({})
-  public rankParams: object = {};
+  public rankParams: object = {
+    Score: '',
+    Roi: '',
+    Retracement: '',
+    Weeks: '',
+    Equity: '',
+    expSymbol: '',
+    brokerId: '',
+  };
 
   @State([])
   public rankList: Array<any> = [];
@@ -21,14 +29,17 @@ export default class RankStore {
   @State(0)
   public rankTotal: number = 0;
 
+  // 经纪商列表
   @State([])
   public brokersList: any[] = [];
 
+  // 已经勾选的经纪商
   @State([])
   public checkedBrokers: any[] = [];
 
+  // 过滤结果数据
   @State([])
-  public filterRes:any[] =[];
+  public filterRes: any[] = [];
 
   @Set('filterRes') public setFilterRes: any;
 
