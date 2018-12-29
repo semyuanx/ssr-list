@@ -1,27 +1,38 @@
 <template>
-    <div>
-        <div class="fm-accordion-head">
-            <div class="fm-accordion-head-content">
-                <slot name="icon"></slot>
-                <div @click="toggle" class="fm-accordion-title" :class="!$slots.icon && !$slots.txt ? 'fm-accordion-title-full' : ''">
-                    <span v-if="$slots.title"><slot name="title"></slot></span>
-                    <span v-else>{{title}}</span>
-                </div>
-                <slot name="txt"></slot>
-            </div>
-            <div class="fm-accordion-head-arrow" @click.stop="toggle" :class="show ? 'fm-accordion-rotated' : ''"></div>
+  <div>
+    <div class="fm-accordion-head">
+      <div class="fm-accordion-head-content">
+        <slot name="icon"></slot>
+        <div
+          @click="toggle"
+          class="fm-accordion-title"
+          :class="!$slots.icon && !$slots.txt ? 'fm-accordion-title-full' : ''"
+        >
+          <span v-if="$slots.title">
+            <slot name="title"></slot>
+          </span>
+          <span v-else>{{title}}</span>
         </div>
-        <div class="fm-accordion-content" :style="styleHeight">
-            <div ref="content">
-                <slot></slot>
-            </div>
-        </div>
+        <slot name="txt"></slot>
+      </div>
+      <div
+        class="fm-accordion-head-arrow"
+        @click.stop="toggle"
+        :class="show ? 'fm-accordion-rotated' : ''"
+      ></div>
     </div>
+    <div
+      class="fm-accordion-content"
+      :style="styleHeight"
+    >
+      <div ref="content">
+        <slot></slot>
+      </div>
+    </div>
+  </div>
 </template>
 
-<script type="text/babel">
-
-/* eslint-disable */
+<script>
 export default {
   name: 'fm-accordion-item',
   data() {
@@ -44,13 +55,17 @@ export default {
   },
   watch: {
     open(val) {
-      val ? this.$parent.open(this._uid) : this.closeItem();
+      if (val) {
+        this.$parent.open(this._uid); // eslint-disable-line
+      } else {
+        this.closeItem();
+      }
     },
   },
   methods: {
     toggle() {
       if (!this.auto) return;
-      this.$parent.open(this._uid);
+      this.$parent.open(this._uid); // eslint-disable-line
     },
     openItem() {
       this.$parent.opening = true;
@@ -75,7 +90,7 @@ export default {
   },
   mounted() {
     this.$nextTick(() => {
-      this.open && this.openItem();
+      if (this.open) this.openItem();
     });
   },
 };
