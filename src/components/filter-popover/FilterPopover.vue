@@ -42,7 +42,7 @@
             :key="inx"
           >
             <filter-tag
-              :active="rankParams[item.value] == citem.value"
+              :active="(rankParams[item.value]|| '') == citem.value"
               v-if="!citem.type"
               @selected="rangeHandler(item,citem)"
             >{{citem.name}}</filter-tag>

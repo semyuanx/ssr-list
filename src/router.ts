@@ -47,16 +47,8 @@ export default function createRouter() {
         component: () => import(/* webpackChunkName: "about" */ './views/rank-list/mobileList/Filter.vue'),
       },
       {
-        path: '/filter-list',
-        name: 'filterList',
-        // route level code-splitting
-        // this generates a separate chunk (about.[hash].js) for this route
-        // which is lazy-loaded when the route is visited.
-        component: () => import(/* webpackChunkName: "about" */ './components/mobile-filter/FilterList.vue'),
-      },
-      {
         path: '/book',
-        name: 'addressBook',
+        name: 'book',
         // route level code-splitting
         // this generates a separate chunk (about.[hash].js) for this route
         // which is lazy-loaded when the route is visited.

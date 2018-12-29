@@ -11,8 +11,9 @@
       </filter-button>
     </div>
     <router-link
-      to="/filter"
+      :to="{name:'filter',query:$route.query}"
       class="filter-link"
+      @click.prevent.stop.native="openWebView({name:'filter',query:$route.query})"
     >
       <i class="icon-filtrate_24px"></i> <span>筛选</span>
     </router-link>
@@ -22,6 +23,7 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 import FilterButton from './FilterButton.vue';
+import { openWebView } from '@/utils/native';
 import { namespace } from 'vuex-class';
 
 const RankStore = namespace('RankStore');
@@ -32,6 +34,8 @@ const RankStore = namespace('RankStore');
   },
 })
 export default class FilterHeader extends Vue {
+  openWebView: any = openWebView;
+
   @RankStore.State
   filterRes: any;
 

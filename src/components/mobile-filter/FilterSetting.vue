@@ -20,7 +20,7 @@
           >
             <filter-button
               v-if="!citem.type"
-              :active="rankParams[item.value] == citem.value"
+              :active="(rankParams[item.value]|| '') == citem.value"
               @touch="touchHandler(item,citem)"
             >{{citem.name}}</filter-button>
 
@@ -78,9 +78,12 @@ import FilterButton from './FilterButton.vue';
 import FilterSubmit from './FilterSubmit.vue';
 import { Accordion, AccordionItem } from '@/components/accordion';
 import FilterPlus from './FilterPlus.vue';
+import { closeWebView } from '@/utils/native';
+
 import zhCN from '@/i18n/zh-CN/components/filter-popover/FilterPopover';
 import zhTW from '@/i18n/zh-TW/components/filter-popover/FilterPopover';
 import enUS from '@/i18n/en-US/components/filter-popover/FilterPopover';
+
 
 const RankStore = namespace('RankStore');
 
@@ -101,6 +104,8 @@ const RankStore = namespace('RankStore');
   },
 })
 export default class FilterSetting extends Vue {
+  closeWebView:any = closeWebView;
+
   // 过滤条件的字段格式
   @Prop({
     default: () => [
@@ -222,7 +227,7 @@ export default class FilterSetting extends Vue {
   @Emit('filter')
   handleSubmit() {
     this.filterResult();
-    this.$router.replace({ name: 'rankList' });
+    this.closeWebView();
   }
 
   @Emit('reset')
@@ -277,7 +282,7 @@ export default class FilterSetting extends Vue {
   }
 
   handleAdd() {
-    this.$router.push({ name: 'addressBook' });
+    this.$router.push({ name: 'book' });
   }
 
   handleDel(item: string) {
