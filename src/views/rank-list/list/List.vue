@@ -123,7 +123,7 @@ import { Table, TableColumn } from 'element-ui';
 
 const RankStore = namespace('RankStore');
 
-@Component({
+@Component(({
   components: {
     SvgIcon,
     Chart,
@@ -134,7 +134,7 @@ const RankStore = namespace('RankStore');
     numberFormatOneParams: (val: number) => numberFormat(val, 1),
     percentFormat: (val: number) => percentFormat(val),
   },
-})
+} as any))
 export default class List extends Vue {
   isLoading: boolean = false;
 
