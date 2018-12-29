@@ -1,7 +1,7 @@
 <template>
     <div>
-        <div class="strategy">
-            <FmStrategy />
+        <div v-if="configs && configs.length" class="strategy">
+            <FmStrategy :data="configs[0]" />
         </div>
         <div class="invest">
             <FmInvestManager />
