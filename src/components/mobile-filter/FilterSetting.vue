@@ -76,7 +76,8 @@ import {
 import { namespace } from 'vuex-class';
 import FilterButton from './FilterButton.vue';
 import FilterSubmit from './FilterSubmit.vue';
-import { Accordion, AccordionItem } from '@/components/accordion';
+import Accordion from '@/components/accordion/accordion.vue';
+import AccordionItem from '@/components/accordion/accordion-item.vue';
 import FilterPlus from './FilterPlus.vue';
 import { closeWebView } from '@/utils/native';
 
