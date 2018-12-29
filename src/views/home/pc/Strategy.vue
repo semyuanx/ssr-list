@@ -21,7 +21,9 @@
   </div>
 </template>
 <script lang="ts">
-import { Component, Vue, Prop } from 'vue-property-decorator';
+import {
+  Component, Vue, Prop, Watch,
+} from 'vue-property-decorator';
 import LineHeader from './LineHeader.vue'; // @ is an alias to /src
 import FmCard from '@/components/card/Card.vue'; // @ is an alias to /src
 
@@ -36,6 +38,13 @@ export default class Home extends Vue {
 
   @Prop()
   data: any
+
+  cardData: any = {};
+
+  @Watch('data')
+  dataChange(newData: any) {
+
+  }
 
   toRankList() {
     this.$router.push({ name: 'rankList' });
