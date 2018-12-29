@@ -1,19 +1,16 @@
 <template>
   <div class="filter-list-container">
     <section class="filter-result-container">
-      <v2-table
+
+      <el-table
         class="mobile-rank-table"
         :data="data"
-        :loading="loading"
-        :default-sort='{prop: "date", order: "descending"}'
-        @sort-change="handleSortChange"
-        :cell-height="55"
-        :col-height="33"
+        :default-sort = "{prop: 'ROI', order: 'descending'}"
       >
-        <!-- <div slot="loading">custom loading component</div> -->
-        <v2-table-column
-          label="基本信息"
+        <el-table-column
           align="left"
+          label="基本信息"
+          prop="name"
         >
           <template slot-scope="scope">
             <p class="main-paragraph">
@@ -24,10 +21,11 @@
               <span>logo</span>
             </p>
           </template>
-        </v2-table-column>
-        <v2-table-column
-          label="收益率"
+        </el-table-column>
+        <el-table-column
           align="right"
+          label="收益率"
+          prop="ROI"
           sortable
         >
           <template slot-scope="scope">
@@ -36,20 +34,20 @@
               <!-- <span class="ratePercent">%</span> -->
             </p>
           </template>
-        </v2-table-column>
-        <v2-table-column
-          label="订阅人数"
-          sortable
-          :width="75"
+        </el-table-column>
+        <el-table-column
           align="right"
+          label="订阅人数"
+          prop="Subscribers"
+          sortable
         >
           <template slot-scope="scope">
             <p class="orderCount">{{scope.row.Subscribers}}</p>
           </template>
-        </v2-table-column>
-        <v2-table-column
-          label=""
+        </el-table-column>
+        <el-table-column
           align="right"
+          label=""
         >
           <template slot-scope="scope">
             <filter-button
@@ -57,8 +55,9 @@
               class="filter-button"
             >{{scope.row.price || '$9.99'}}</filter-button>
           </template>
-        </v2-table-column>
-      </v2-table>
+        </el-table-column>
+
+      </el-table>
     </section>
   </div>
 </template>
@@ -67,6 +66,7 @@
 import { Component, Vue, Prop } from 'vue-property-decorator';
 import { percentFormat } from '@/utils/format';
 import FilterButton from './FilterButton.vue';
+import { Table, TableColumn } from 'element-ui';
 
 @Component({
   filters: {
@@ -74,29 +74,18 @@ import FilterButton from './FilterButton.vue';
   },
   components: {
     FilterButton,
+    [Table.name]: Table,
+    [TableColumn.name]: TableColumn,
   },
 })
 export default class FilterList extends Vue {
   rateColor: string = '#F09D58';
-
-  loading: boolean = false;
-
 
   @Prop({
     type: Array,
     default: () => [],
   })
   data: any;
-
-  handleSortChange({ prop, order }: any) {
-    // Customize your sorting method. Maybe it will get data from server.
-    this.loading = true;
-    // const list = [].concat(this.data);
-    // setTimeout(() => {
-    //   this.loading = false;
-    //   this.data = [].concat(list);
-    // }, 2000);
-  }
 }
 </script>
 
@@ -136,7 +125,6 @@ export default class FilterList extends Vue {
   }
 }
 
-
 .rate-span {
   width: 14px;
   height: 14px;
@@ -172,7 +160,6 @@ export default class FilterList extends Vue {
     max-width: 80px;
   }
 }
-
 
 .orderCount {
   font-size: 18px;
