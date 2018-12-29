@@ -172,7 +172,7 @@ export default {
         },
         series: [{
           name: 'John',
-          data: that.smallChartX,
+          data: smallChartX,
           events: {
             click() {
               that.show = true;
