@@ -1,42 +1,47 @@
 <template>
   <div class="invest-container">
     <div class="header">
-      <LineHead title="投资管家"/>
+      <LineHead :title="data.RankName" :subTitle="data.RankText"/>
     </div>
     <div class="content">
-      <SimpleTable :header="header" :data="data" />
+      <SimpleTable
+        :header="initHeader"
+        :data="data.listData.List"
+      />
     </div>
   </div>
 </template>
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
+import { Component, Vue, Prop } from 'vue-property-decorator';
 import LineHead from '@/components/line-head/index.vue'; // @ is an alias to /src
 import SimpleTable from '@/components/simple-table/index.vue'; // @ is an alias to /src
+import propMaps from '@/constant/propMap';
 
 @Component({
   components: {
-    LineHead, SimpleTable,
+    LineHead,
+    SimpleTable,
   },
 })
 export default class Index extends Vue {
   public name: string = 'fm-invest-manager-mobile';
 
-  header: Array<any> = [
-    { label: '产品名称', prop: 'a', align: '' },
-    { label: '预期收益率', prop: 'b', align: 'right' },
-    { label: '剩余名额', prop: 'c', align: 'right' },
-  ];
+  propMaps: any = propMaps;
 
-  data: any = [
-    { a: '量化交易5号', b: '98.20', c: '2名' },
-    { a: '量化交易5号', b: '98.20', c: '2名' },
-    { a: '量化交易5号', b: '98.20', c: '2名' },
-    { a: '量化交易5号', b: '98.20', c: '2名' },
-  ];
+  @Prop()
+  data: any;
+
+  get initHeader() {
+    const keys = Object.keys(this.data.HideConfig)
+      .filter(v => this.data.HideConfig[v])
+      .slice(0, 3);
+    console.log(keys, '-------', this.data);
+    const res = keys.map(v => ({ label: this.propMaps[v], prop: v, align: 'right' }));
+    return [...res];
+  }
 }
 </script>
 <style lang="less" scoped>
 .invest-container {
-
 }
 </style>

@@ -1,10 +1,10 @@
 <template>
   <div class="header">
     <div class="fm-show-pc">
-      <Strategy />
+      <Strategy :data="data" />
     </div>
     <div class="fm-show-mobile">
-      <Strategy />
+      <Strategy :data="data" />
     </div>
   </div>
 </template>
@@ -19,7 +19,8 @@ import StrategyMobile from '@/views/home/mobile/Strategy.vue';
   },
 })
 export default class Index extends Vue {
-
+  @Prop()
+  data: any;
 }
 </script>
 <style lang="less" scoped>
