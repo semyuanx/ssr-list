@@ -30,7 +30,7 @@
             >
               <input
                 placeholder="最小值"
-                type="text"
+                type="number"
                 class="interval-input start-input"
                 :class="{'active-input': citem.start}"
                 v-model.lazy.number.trim="citem.start"
@@ -39,7 +39,7 @@
               <span class="interval-span">-</span>
               <input
                 placeholder="最大值"
-                type="text"
+                type="number"
                 class="interval-input end-input"
                 :class="{'active-input': citem.end}"
                 v-model.lazy.number.trim="citem.end"
