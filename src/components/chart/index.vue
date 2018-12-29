@@ -23,7 +23,7 @@
     </div>
 </template>
 <script>
-import { animate } from '@/utils/util';
+import { animate, getChartData } from '@/utils/util';
 
 const Highcharts = require('highcharts');
 
@@ -35,10 +35,33 @@ export default {
       show: false,
     };
   },
-  props: ['smallChartY', 'smallChartX', 'bigChartY', 'bigChartX'],
+  props: ['chartData', 'smallChartYExt', 'smallChartXExt', 'bigChartYExt', 'bigChartXExt'],
+  computed: {
+    smallChartY() {
+      const smallY = !this.smallChartYExt ? null : getChartData(this.smallChartYExt.slice(this.smallChartYExt.length - 10), 'yAxis');
+      return smallY;
+    },
+    smallChartX() {
+      const smallX = !this.smallChartXExt ? null : getChartData(this.smallChartXExt.slice(this.smallChartXExt.length - 10), 'xAxis');
+      return smallX;
+    },
+    bigChartY() {
+      const bigY = !this.bigChartYExt ? null : getChartData(this.bigChartYExt, 'yAxis');
+      return bigY;
+    },
+    bigChartX() {
+      const bigY = !this.bigChartXExt ? null : getChartData(this.bigChartXExt, 'xAxis');
+      return bigY;
+    },
+  },
   methods: {
     init() {
       const that = this;
+      const bigChartX = !this.chartData ? null : getChartData(this.chartData, 'xAxis');
+      const bigChartY = !this.chartData ? null : getChartData(this.chartData, 'yAxis');
+      const smallChartY = !this.chartData ? null : getChartData(this.chartData.slice(this.chartData.length - 10), 'yAxis');
+      const smallChartX = !this.chartData ? null : getChartData(this.chartData.slice(this.chartData.length - 10), 'xAxis');
+
       that.target = Highcharts.chart(this.$el.querySelector('.small-chart-box'), {
         chart: {
           type: 'areaspline',
@@ -48,7 +71,12 @@ export default {
             click() {
               that.show = true;
               that.$nextTick(() => {
-                that.fetchBigChart();
+                that.fetchBigChart(
+                  smallChartX,
+                  smallChartY,
+                  bigChartX,
+                  bigChartY,
+                );
               });
             },
           },
@@ -73,7 +101,7 @@ export default {
           tickInterval: 1,
           lineColor: '#cccccc',
           gridLineColor: '#f0f0f0',
-          categories: that.smallChartY,
+          categories: smallChartY,
         },
         yAxis: {
           gridLineWidth: 0,
@@ -149,14 +177,24 @@ export default {
             click() {
               that.show = true;
               that.$nextTick(() => {
-                that.fetchBigChart();
+                that.fetchBigChart(
+                  smallChartX,
+                  smallChartY,
+                  bigChartX,
+                  bigChartY,
+                );
               });
             },
           },
         }],
       });
     },
-    fetchBigChart() {
+    fetchBigChart(
+      smallChartX,
+      smallChartY,
+      bigChartX,
+      bigChartY,
+    ) {
       const that = this;
       this.bigTarget = Highcharts.chart(this.$el.querySelector('.big-chart'), {
         chart: {
@@ -175,8 +213,10 @@ export default {
           lineColor: '#cccccc',
           tickColor: '#cccccc',
           gridLineColor: '#f0f0f0',
-          categories: that.bigChartY,
-          tickInterval: Math.ceil(that.bigChartY.length / 7),
+          categories: bigChartY,
+          //   categories: that.bigChartY,
+          tickInterval: Math.ceil(bigChartY.length / 7),
+        //   tickInterval: Math.ceil(that.bigChartY.length / 7),
         },
         yAxis: {
           gridLineWidth: 1,
@@ -258,7 +298,7 @@ export default {
         },
         series: [{
           name: '总收益',
-          data: that.bigChartX,
+          data: bigChartX, // || that.bigChartX,
         }],
       });
     },
@@ -278,6 +318,14 @@ export default {
   },
   watch: {
     smallChartX: {
+      handler(a, b) {
+        animate(() => {
+          this.init();
+        });
+      },
+      deep: true,
+    },
+    chartData: {
       handler(a, b) {
         animate(() => {
           this.init();
