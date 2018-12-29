@@ -5,7 +5,7 @@
       :data="data"
       :row-class-name="getRowClassName"
       @sort-change="handleSortChange">
-      <el-table-column label="交易员" prop="Account" width="236px">
+      <el-table-column label="交易员" prop="Account" min-width="210px">
         <template slot-scope="scope">
           <div v-if="!dateIsLoading" class="custom-display-row-line">
             <div class="trader-container-row">
@@ -33,13 +33,13 @@
           </div>
         </template>
       </el-table-column>
-      <el-table-column label="交易能力值" prop="Score" sortable>
+      <el-table-column label="交易能力值" prop="Score" sortable min-width="116px">
         <template slot-scope="scope">
           <div v-if="!dateIsLoading" class="custom-display-row-line">{{scope.row.Score | numberFormatOneParams}}</div>
           <div v-if="dateIsLoading" class="custom-display-row-loading"></div>
         </template>
       </el-table-column>
-      <el-table-column label="收益率" prop="ROI" width="150" sortable>
+      <el-table-column label="收益率" prop="ROI" min-width="100px" sortable>
         <template slot-scope="scope">
           <div v-if="!dateIsLoading" :class="`custom-display-row-line `">
             <span :class="scope.row.ROI >= 0 ? 'special-rate' : ''">{{scope.row.ROI | percentFormat}}</span>
@@ -47,25 +47,25 @@
           <div v-if="dateIsLoading" class="custom-display-row-loading"></div>
         </template>
       </el-table-column>
-      <el-table-column label="最大回撤" prop="MaxRetracement" sortable>
+      <el-table-column label="最大回撤" prop="MaxRetracement" sortable min-width="100px">
         <template slot-scope="scope">
           <div v-if="!dateIsLoading" class="custom-display-row-line">{{scope.row.MaxRetracement | percentFormat}}</div>
           <div v-if="dateIsLoading" class="custom-display-row-loading"></div>
         </template>
       </el-table-column>
-      <el-table-column label="交易周期" prop="Weeks" sortable>
+      <el-table-column label="交易周期" prop="Weeks" sortable min-width="100px">
         <template slot-scope="scope">
           <div v-if="!dateIsLoading" class="custom-display-row-line">{{scope.row.Weeks || 0}}周</div>
           <div v-if="dateIsLoading" class="custom-display-row-loading"></div>
         </template>
       </el-table-column>
-      <el-table-column label="擅长品种" prop="ExpSymbol" sortable>
+      <el-table-column label="擅长品种" prop="ExpSymbol" sortable min-width="100px">
         <template slot-scope="scope">
           <div v-if="!dateIsLoading" class="custom-display-row-line">{{scope.row.ExpSymbol}}</div>
           <div v-if="dateIsLoading" class="custom-display-row-loading"></div>
         </template>
       </el-table-column>
-      <el-table-column label="订阅人数" prop="Subscribers" sortable>
+      <el-table-column label="订阅人数" prop="Subscribers" sortable min-width="100px">
         <template slot-scope="scope">
           <div v-if="!dateIsLoading" class="custom-display-row-line">{{scope.row.Subscribers}}</div>
           <div v-if="dateIsLoading" class="custom-display-row-loading"></div>
@@ -77,10 +77,8 @@
 
             <div class="chartbox">
                 <Chart v-if="scope.row.TrendChart && scope.row.TrendChart.length>0 "
-                        :small-chart-y="getChartData(scope.row.TrendChart.slice(scope.row.TrendChart.length - 10), 'yAxis')"
-                        :big-chart-y="getChartData(scope.row.TrendChart, 'yAxis')"
-                        :small-chart-x="getChartData(scope.row.TrendChart.slice(scope.row.TrendChart.length - 10), 'xAxis')"
-                        :big-chart-x="getChartData(scope.row.TrendChart, 'xAxis')"></Chart>
+                        :chart-data="scope.row.TrendChart"
+                        ></Chart>
                 <img v-else
                       :src="cdn + '/images/NoData-Report.jpg'"
                       style="display:block;width:100%;" :alt="'暂无数据'">
@@ -121,7 +119,6 @@ import Chart from '@/components/chart/index.vue';
 
 import SvgIcon from '@/components/svg/index.ts';
 import { numberFormat, percentFormat } from '@/utils/format';
-import { getChartData } from '@/utils/util';
 import { Table, TableColumn } from 'element-ui';
 
 const RankStore = namespace('RankStore');
@@ -160,10 +157,6 @@ export default class List extends Vue {
 
   public get dateIsLoading() {
     return this.isLoading;
-  }
-
-  getChartData(moneyList: Array<any>, type?: string) {
-    return getChartData(moneyList, type);
   }
 
   mounted() {
