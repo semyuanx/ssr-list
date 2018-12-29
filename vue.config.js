@@ -32,6 +32,7 @@ module.exports = {
     const types = ['vue-modules', 'vue', 'normal-modules', 'normal'];
     types.forEach(type => addStyleResource(config.module.rule('less').oneOf(type)));
     svgLoader(config);
+    config.resolve.extensions.add('.vue').add('.js');
   },
   css: {
     loaderOptions: {

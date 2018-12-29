@@ -4,8 +4,8 @@
     </div>
 </template>
 
-<script type="text/babel">
-/* eslint-disable */
+<script>
+// /* eslint-disable */
 export default {
   name: 'fm-accordion',
   data() {
@@ -24,11 +24,12 @@ export default {
       if (this.opening) return;
 
       this.$children.forEach((item) => {
+        // eslint-disable-next-line
         if (item._uid === uid) {
-          item.show ? item.closeItem() : item.openItem();
-        } else {
-          !this.accordion && item.closeItem();
-        }
+          if (item.show) {
+            item.closeItem();
+          } else { item.openItem(); }
+        } else if (!this.accordion) item.closeItem();
       });
     },
   },
