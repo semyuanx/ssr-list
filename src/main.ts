@@ -62,4 +62,12 @@ const app = new Vue({
   render: (h: CreateElement) => h(App),
 });
 
+declare global {
+  interface Window {
+    app: Vue;
+  }
+}
+
+window.app = app;
+
 app.$mount('#app');
