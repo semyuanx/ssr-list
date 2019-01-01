@@ -3,10 +3,10 @@
         <div v-if="configs && configs.length" class="strategy">
             <FmStrategy :data="configs[0]" />
         </div>
-        <div class="invest">
-            <FmInvestManager />
+        <div class="invest" v-for="(item,index) in configs.slice(1)" :key="index">
+            <InvestPanel :data="item"/>
         </div>
-        <div class="invest">
+        <!-- <div class="invest">
             <InvestProfessor />
         </div>
         <div class="invest">
@@ -14,7 +14,7 @@
         </div>
         <div class="invest">
             <TradeMaster />
-        </div>
+        </div> -->
     </div>
 </template>
 
@@ -22,10 +22,10 @@
 import { Component, Vue } from 'vue-property-decorator';
 
 import FmStrategy from '@/views/home/Strategy.vue'; // @ is an alias to /src
-import FmInvestManager from '@/views/home/InvestManager.vue'; // @ is an alias to /src
-import InvestProfessor from '@/views/home/InvestProfessor.vue'; // @ is an alias to /src
-import DangerKeep from '@/views/home/DangerKeep.vue'; // @ is an alias to /src
-import TradeMaster from '@/views/home/TradeMaster.vue'; // @ is an alias to /src
+import InvestPanel from '@/views/home/InvestManager.vue'; // @ is an alias to /src
+// import InvestProfessor from '@/views/home/InvestProfessor.vue'; // @ is an alias to /src
+// import DangerKeep from '@/views/home/DangerKeep.vue'; // @ is an alias to /src
+// import TradeMaster from '@/views/home/TradeMaster.vue'; // @ is an alias to /src
 import { namespace, Action } from 'vuex-class';
 
 const HomeStore = namespace('HomeStore');
@@ -33,10 +33,7 @@ const HomeStore = namespace('HomeStore');
 @Component({
   components: {
     FmStrategy,
-    FmInvestManager,
-    InvestProfessor,
-    DangerKeep,
-    TradeMaster,
+    InvestPanel,
   },
 })
 export default class mainView extends Vue {

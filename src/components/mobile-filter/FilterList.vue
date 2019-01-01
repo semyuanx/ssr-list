@@ -103,6 +103,9 @@ export default class FilterList extends Vue {
     font-size: 14px;
   }
 }
+.filter-button{
+  margin:2px 0;
+}
 .filter-result-container {
   padding: 0 15px;
   box-sizing: border-box;

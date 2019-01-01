@@ -1,10 +1,10 @@
 <template>
   <div class="header">
     <div class="fm-show-pc">
-      <InvestManager />
+      <InvestManager :data="data"/>
     </div>
     <div class="fm-show-mobile">
-      <InvestManagerMobile />
+      <InvestManagerMobile :data="data"/>
     </div>
   </div>
 </template>
@@ -20,7 +20,8 @@ import InvestManagerMobile from '@/views/home/mobile/InvestManagerMobile.vue';
   },
 })
 export default class Index extends Vue {
-
+@Prop()
+data:any
 }
 </script>
 <style lang="less" scoped>

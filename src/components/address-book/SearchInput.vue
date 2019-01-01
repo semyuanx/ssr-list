@@ -8,17 +8,23 @@
       <input
         type="search"
         id='search'
-        placeholder='搜索'
+        :placeholder="placeholder"
       />
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
+import { Component, Vue, Prop } from 'vue-property-decorator';
 
 @Component
-export default class SearchInput extends Vue {}
+export default class SearchInput extends Vue {
+  @Prop({
+    type: String,
+    default: '',
+  })
+  placeholder!: string;
+}
 </script>
 
 <style lang="less" scoped>
@@ -36,7 +42,7 @@ export default class SearchInput extends Vue {}
   justify-content: center;
   align-items: center;
   .search-input {
-    flex:1;
+    flex: 1;
     width: 100%;
     height: 34px;
     background-color: #f2f2f2;
@@ -47,14 +53,14 @@ export default class SearchInput extends Vue {}
     align-items: center;
     font-size: 14px;
     padding: 0 10px;
-    .icon-search_24px{
+    .icon-search_24px {
       font-size: 18px;
-      color:#999;
+      color: #999;
     }
-    #search{
+    #search {
       flex: 1;
       outline: none;
-      border:none;
+      border: none;
       background-color: transparent;
     }
   }

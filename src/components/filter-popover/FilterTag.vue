@@ -40,12 +40,10 @@ export default class FilterTag extends Vue {
 
   @Emit('close')
   public handleClose() {
-    console.log('关闭');
   }
 
   @Emit('selected')
   public handleClick() {
-    console.log('点击了');
   }
 }
 </script>
