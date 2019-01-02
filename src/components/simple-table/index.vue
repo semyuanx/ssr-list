@@ -8,13 +8,19 @@
     >
       <el-table-column
         :key="i.prop"
-        v-for="i of header"
+        v-for="(i,index) of header"
         :align="i.align || null"
         :label="i.label"
         :prop="i.prop"
       >
-
-
+        <template slot-scope="scope">
+          <slot
+            :row="scope.row"
+            v-if="index===0"
+          >
+          </slot>
+          <span v-else>{{scope.row[i.prop]}}</span>
+        </template>
       </el-table-column>
       <!-- <el-table-column label="预期收益率" prop="b" />
       <el-table-column label="剩余名额" prop="c" /> -->

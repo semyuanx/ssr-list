@@ -3,7 +3,7 @@
         <div v-if="strategytData" class="strategy">
             <FmStrategy :data="strategytData" :header="strategytDataHeader" />
         </div>
-        <div class="invest" v-for="(item,index) in configs.slice(1)" :key="index">
+        <div class="invest" v-for="(item,index) in investData" :key="index">
             <InvestPanel :data="item"/>
         </div>
         <!-- <div class="invest">

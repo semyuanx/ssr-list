@@ -26,7 +26,7 @@
     <section class="panel-body">
       <ul class="income">
         <li>
-          <span class="income-value" :class="{deficit:panelData.Profit.slice(0,1) === '-'}">
+          <span class="income-value" :class="{deficit:isDeficit}">
             <span>{{ProfitArr[0]}}</span>
             <span>.</span>
             <span class="income-value-float">{{ProfitArr[1]}}</span>
@@ -34,7 +34,7 @@
           <span class="income-label">{{$t('currentRevenue')}}</span>
         </li>
         <li>
-          <span class="income-value" :class="{deficit:panelData.Profit.slice(0,1) === '-'}">
+          <span class="income-value" :class="{deficit:isDeficit}">
             <span>{{panelData.ROI.slice(0,-1)}}</span>
             <span class="income-value-percent">%</span>
           </span>
@@ -129,6 +129,10 @@ export default class Panel extends Vue {
 
   get ProfitArr():string[] {
     return this.panelData.Profit.split('.');
+  }
+
+  get isDeficit():boolean {
+    return this.panelData.Profit.slice(0, 1) === '-';
   }
 }
 </script>
