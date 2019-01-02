@@ -4,7 +4,7 @@
     <FmList :data="rankList" />
   </div>
   <div class="fm-show-mobile">
-    <MobileList :data="rankList" />
+    <MobileList :data="rankList" @sortChange="sortChange"/>
   </div>
 </div>
 </template>
@@ -34,6 +34,10 @@ export default class List extends Vue {
   @Watch('rankList')
   public rankListChange() {
     console.log('rank changed', this.rankTotal, this.rankList);
+  }
+
+  sortChange({ prop, order }:any) {
+    this.$emit('sortChange', { prop, order });
   }
 
   mounted() {

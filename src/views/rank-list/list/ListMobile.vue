@@ -1,7 +1,7 @@
 <template>
 <div class="list-container">
   <div class="list-body">
-    <MobileFilterList :data="data" />
+    <MobileFilterList :data="data" @sortChange="sortChange"/>
   </div>
 </div>
 </template>
@@ -36,8 +36,8 @@ export default class List extends Vue {
     // setTimeout(() => this.isLoading = false, 5000);
   }
 
-  handleSortChange(e:any) {
-    console.log(e);
+  sortChange({ prop, order }:any) {
+    this.$emit('sortChange', { prop, order });
   }
 }
 </script>

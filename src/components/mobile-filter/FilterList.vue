@@ -1,11 +1,10 @@
 <template>
   <div class="filter-list-container">
     <section class="filter-result-container">
-
       <el-table
         class="mobile-rank-table"
         :data="data"
-        :default-sort = "{prop: 'ROI', order: 'descending'}"
+        @sort-change="sortChange"
       >
         <el-table-column
           align="left"
@@ -14,19 +13,19 @@
         >
           <template slot-scope="scope">
             <p class="main-paragraph">
-              <span class="main-paragraph-name">{{scope.row.name}}</span>
-              <span class="main-paragraph-order">#5</span>
+              <span class="main-paragraph-name">{{scope.row.NickName}}</span>
+              <span class="main-paragraph-order">#{{scope.row.AccountIndex}}</span>
             </p>
-            <p class="sub-paragraph">
+            <!-- <p class="sub-paragraph">
               <span>logo</span>
-            </p>
+            </p> -->
           </template>
         </el-table-column>
         <el-table-column
           align="right"
           label="收益率"
           prop="ROI"
-          sortable
+          sortable="custom"
         >
           <template slot-scope="scope">
             <p class="rateOfReturn">
@@ -39,7 +38,7 @@
           align="right"
           label="订阅人数"
           prop="Subscribers"
-          sortable
+          sortable="custom"
         >
           <template slot-scope="scope">
             <p class="orderCount">{{scope.row.Subscribers}}</p>
@@ -86,6 +85,10 @@ export default class FilterList extends Vue {
     default: () => [],
   })
   data: any;
+
+  sortChange({ column, prop, order }:any) {
+    this.$emit('sortChange', { prop, order });
+  }
 }
 </script>
 
@@ -103,8 +106,8 @@ export default class FilterList extends Vue {
     font-size: 14px;
   }
 }
-.filter-button{
-  margin:2px 0;
+.filter-button {
+  margin: 2px 0;
 }
 .filter-result-container {
   padding: 0 15px;

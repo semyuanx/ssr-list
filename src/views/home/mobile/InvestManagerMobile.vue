@@ -67,12 +67,12 @@ export default class Index extends Vue {
   }
 
   get refactorData() {
-    return this.data.listData.List.map((v: any) => {
-      v.ROI = numeral(v.ROI).format('0.00%');
-      v.Profit = numeral(v.Profit).format('$0.00');
-      v.Score = numeral(v.Score).format('0.000');
-      return v;
-    });
+    return this.data.listData.List.map((v: any) => ({
+      ...v,
+      ROI: numeral(v.ROI).format('0.00%'),
+      Profit: numeral(v.Profit).format('$0.00'),
+      Score: numeral(v.Score).format('0.000'),
+    }));
   }
 
   avatarSrc(UserID: string): string {
