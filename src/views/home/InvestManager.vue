@@ -13,6 +13,7 @@ import { Component, Vue, Prop } from 'vue-property-decorator';
 import InvestManager from '@/views/home/pc/InvestManager.vue';
 import InvestManagerMobile from '@/views/home/mobile/InvestManagerMobile.vue';
 import mapKey from '@/constant/propMap';
+import { propFormat } from '@/utils/format';
 
 @Component({
   components: {
@@ -23,6 +24,11 @@ import mapKey from '@/constant/propMap';
 export default class Index extends Vue {
   @Prop()
   data:any;
+
+  formatVal(val: string|number, type: string): string | number {
+    console.log(type);
+    return propFormat(val, type);
+  }
 
   get configData() {
     const config:any = this.data;
@@ -49,7 +55,8 @@ export default class Index extends Vue {
         name: item.NickName,
         index: item.AccountIndex,
         brokerName: item.BrokerName,
-        data: showData.map((it: any) => ({ prop: (mapKey as any)[it], val: item[it] })),
+        price: item.Price,
+        data: showData.map((it: any) => ({ prop: (mapKey as any)[it], val: this.formatVal(item[it], it) })),
       }));
       return newConfig.slice(0, 4);
     }

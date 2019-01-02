@@ -138,9 +138,14 @@ export default class FmLittleCard extends Vue {
         justify-content: flex-end;
         align-items: center;
         .subscribe-btn {
+          cursor: pointer;
+          line-height:19px;
+          padding: 6px 14px;
+          border-radius:20px;
           font-size:14px;
           font-family:MicrosoftYaHei;
           color:rgba(255,98,0,1);
+          transition: all .3s ease-in-out;
         }
       }
     }
@@ -152,14 +157,8 @@ export default class FmLittleCard extends Vue {
       .card-body {
         .sub-btn {
           .subscribe-btn {
-              cursor: pointer;
               background:rgba(255,98,0,1);
-              border-radius:20px;
-              font-size:14px;
-              font-family:MicrosoftYaHei;
               color:rgba(255,255,255,1);
-              line-height:19px;
-              padding: 6px 14px;
             }
         }
       }

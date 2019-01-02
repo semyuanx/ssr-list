@@ -30,7 +30,7 @@
           </template>
           <template v-else>
             <div :key="item.avatar + item.index" v-for="item in data" class="list-item">
-              <LineCard />
+              <LineCard :data="item" />
             </div>
           </template>
 

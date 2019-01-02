@@ -1,20 +1,47 @@
 <template>
   <div class="line-card-content">
-    <div class="line-content left-line">
+    <div class="card-header">
+      <div class="card-header-left">
+        <div class="card-avatar">
+          <img :alt="data.name || '头像'" :src="data.avatar" />
+        </div>
+      </div>
+      <div class="card-header-right">
+        <div class="name">
+          <span>{{data.name}} #{{data.index}}</span>
+        </div>
+        <div class="broker">
+          <span>{{data.brokerName}}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- <div class="line-content left-line">
       <div><span>量化交易5号</span></div>
       <div class="danger-rate"><span>风险<1%</span></div>
-    </div>
+    </div> -->
     <div class="line-content right-line">
-      <div class="right-line-container line-rate">
+      <div
+        :key="i.val" v-for="i in data.data"
+        class="right-line-container line-rate"
+      >
+        <div><span class="rate-val">{{i && i.val || ''}}</span></div>
+        <div><span class="common-font">{{i && i.prop || ''}}</span></div>
+      </div>
+      <!-- <div class="right-line-container line-rate">
         <div><span class="rate-val">89.78%</span></div>
         <div><span class="common-font">预期收益率</span></div>
+      </div> -->
+      <!-- <div class="right-line-container line-leave">
+        <div><span class="leave-val">1</span></div>
+        <div><span class="common-font">剩余名额</span></div>
       </div>
       <div class="right-line-container line-leave">
         <div><span class="leave-val">1</span></div>
         <div><span class="common-font">剩余名额</span></div>
-      </div>
+      </div> -->
       <div class="right-line-container line-join">
-        <span>立即参与</span>
+        <span class="subscribe-btn">{{data.price ? `$${data.price}/月` : '免费订阅'}}</span>
       </div>
     </div>
   </div>
@@ -25,6 +52,11 @@ import { Component, Prop, Vue } from 'vue-property-decorator';
 @Component
 export default class FmLittleCard extends Vue {
   public name: string = 'fm-little-card';
+
+  @Prop({
+    default: () => {},
+  })
+  data: any;
 }
 </script>
 <style lang="less" scoped>
@@ -48,8 +80,44 @@ export default class FmLittleCard extends Vue {
     .line-content {
       display: flex;
     }
+
+    .card-header {
+      .flex-row();
+      flex: 2;
+      .card-header-left {
+        width:50px;
+        height:50px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        .card-avatar {
+          width:40px;
+          height:40px;
+          border-radius: 20px;
+          >img {
+            max-width: 100%;
+            max-width: 100%;
+            border-radius: 50%;
+          }
+        }
+      }
+      .card-header-right {
+        flex: 1;
+        font-size:12px;
+        color:rgba(153,153,153,1);
+        .flex-column();
+        >div {
+          flex: 1;
+        }
+        .name {
+          font-size:16px;
+          color:rgba(51,51,51,1);
+        }
+      }
+    }
+
     .left-line {
-      flex: 4;
+      flex: 2;
       .flex-column();
       font-size:20px;
       font-family:MicrosoftYaHei;
@@ -101,12 +169,37 @@ export default class FmLittleCard extends Vue {
         font-family:MicrosoftYaHei;
         color:rgba(255,98,0,1);
         line-height:19px;
+        .subscribe-btn {
+          line-height:19px;
+          text-align: center;
+          padding: 6px 14px;
+          border-radius: 20px;
+          cursor: pointer;
+          font-size:14px;
+          font-family:MicrosoftYaHei;
+          color:rgba(255,98,0,1);
+          transition: all .3s ease-in-out;
+        }
       }
     }
     .common-font {
       font-size:12px;
       font-family:MicrosoftYaHei;
       color:rgba(153,153,153,1);
+    }
+
+    &:hover {
+      box-shadow:0px 0px 30px 0px rgba(0,0,0,0.1);
+      background:rgba(255,255,255,1);
+      z-index: 10;
+      .right-line {
+        .line-join {
+          .subscribe-btn {
+              background-color:rgba(255,98,0,1);
+              color:rgba(255,255,255,1);
+            }
+        }
+      }
     }
   }
 </style>

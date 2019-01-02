@@ -468,7 +468,7 @@ export default class List extends Vue {
         .sub-row-btn {
           display: inline-block;
           cursor: pointer;
-          width: 100px;
+          width: 80px;
           height: 30px;
           border-radius: 20px;
           font-size: 14px;
@@ -478,6 +478,7 @@ export default class List extends Vue {
           background: transparent;
           transition: all 0.3s ease-in;
           text-align: center;
+          overflow: hidden;
         }
       }
       .custom-display-row-loading {
