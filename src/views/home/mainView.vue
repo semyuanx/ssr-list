@@ -96,6 +96,10 @@ export default class mainView extends Vue {
       }
       return null;
     }
+
+    public get investData() {
+      return this.configs.slice(1);
+    }
 }
 </script>
 <style lang="less" scoped>
