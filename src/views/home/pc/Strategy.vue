@@ -1,22 +1,12 @@
 <template>
   <div class="strategy-container">
-    <div class="header">
-      <LineHeader @rightClick="toRankList" rightIconDirection='left' rightTitle="筛选器" subTitle="成为交易员" :title="data.RankName || ''" />
+    <div class="header" v-if="header">
+      <LineHeader @rightClick="toRankList" rightIconDirection='left' rightTitle="筛选器" subTitle="成为交易员" :title="header.title || ''" />
     </div>
     <div class="lists">
-      <div :key="item.AccountIndex + item.BrokerName" v-for="item in data.listData.List" class="list-item">
+      <div :key="item.index + item.brokerName" v-for="item in data" class="list-item">
         <FmCard :data="item" />
       </div>
-
-      <!-- <div class="list-item">
-        <FmCard />
-      </div>
-      <div class="list-item">
-        <FmCard />
-      </div>
-      <div class="list-item">
-        <FmCard />
-      </div> -->
     </div>
   </div>
 </template>
@@ -39,11 +29,12 @@ export default class Home extends Vue {
   @Prop()
   data: any
 
-  cardData: any = {};
+  @Prop({ default: () => {} })
+  header: any;
 
-  @Watch('data')
-  dataChange(newData: any) {
-
+  @Watch('header')
+  c() {
+    console.log(this.header, 'hhhhh');
   }
 
   toRankList() {

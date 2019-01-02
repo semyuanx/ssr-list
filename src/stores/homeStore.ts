@@ -31,6 +31,19 @@ export default class HomeStore {
 
   @Action
   public getCustomConfig(context: { commit: Commit }, payload: any): any {
+    const key = 'home-page-config';
+    if (typeof localStorage !== 'undefined') {
+      const cacheData = localStorage.getItem(key);
+      try {
+        if (cacheData) {
+          const result = JSON.parse(cacheData);
+          context.commit('setConfig', result);
+        }
+      } catch (e) {
+        console.log(e);
+      }
+    }
+
     getCustomConfig().then((res: any) => {
       if (res && res.cfgs) {
         const data: Array<any> = Array.isArray(res.cfgs) ? res.cfgs.sort((a: any, b: any) => (a.RankIndex - b.RankIndex > 0 ? 1 : -1)) : [];
@@ -51,6 +64,15 @@ export default class HomeStore {
 
         Promise.all(dPromise).then((result: any) => {
           console.log(result, 'result');
+
+          if (result && typeof localStorage !== 'undefined') {
+            try {
+              localStorage.setItem(key, JSON.stringify(result));
+            } catch (e) {
+              console.log(e);
+            }
+          }
+
           context.commit('setConfig', result);
         });
       }
