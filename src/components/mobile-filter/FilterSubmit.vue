@@ -7,7 +7,7 @@
     <button
       class="btn confirm-btn"
       @click.stop.prevent="submit"
-      @keyup.enter="submit"
+      @keyup.enter.stop.prevent="submit"
     >确定</button>
   </div>
 </template>
