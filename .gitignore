@@ -23,7 +23,7 @@ yarn-error.log*
 *.sln
 *.sw*
 
-*.js text eol=lf
-*.ts text eol=lf
-*.tsx text eol=lf
-*.vue text eol=lf
+*.js text eol=crlf
+*.ts text eol=crlf
+*.tsx text eol=crlf
+*.vue text eol=crlf
