@@ -87,7 +87,6 @@ export default class mainView extends Vue {
     public get strategytDataHeader() {
       if (this.configs && this.configs.length) {
         const config:any = this.configs[0];
-        console.log(config, 'config');
 
         return {
           title: config.RankName,
@@ -98,7 +97,9 @@ export default class mainView extends Vue {
     }
 
     public get investData() {
-      return this.configs.slice(1);
+      const filters = [2, 3, '2', '3'];
+      return this.configs.slice(1)
+        .filter((i: any) => i && !filters.includes(i.RankIndex));
     }
 }
 </script>

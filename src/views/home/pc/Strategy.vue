@@ -3,9 +3,11 @@
     <div class="header" v-if="header">
       <LineHeader @rightClick="toRankList" rightIconDirection='left' rightTitle="筛选器" subTitle="成为交易员" :title="header.title || ''" />
     </div>
-    <div class="lists">
-      <div :key="item.index + item.brokerName" v-for="item in data" class="list-item">
-        <FmCard :data="item" />
+    <div class="lists-container">
+      <div class="lists">
+        <div :key="item.index + item.brokerName" v-for="item in data" class="list-item">
+          <FmCard :data="item" />
+        </div>
       </div>
     </div>
   </div>
@@ -32,11 +34,6 @@ export default class Home extends Vue {
   @Prop({ default: () => {} })
   header: any;
 
-  @Watch('header')
-  c() {
-    console.log(this.header, 'hhhhh');
-  }
-
   toRankList() {
     this.$router.push({ name: 'rankList' });
   }
@@ -44,19 +41,23 @@ export default class Home extends Vue {
 </script>
 <style lang="less" scoped>
 .strategy-container {
-  .lists {
-    display: flex;
-    flex-direction: row;
+  .lists-container {
     width: 100%;
-    overflow: auto;
-    .list-item {
-      margin-right: 20px;
-    }
-    &::-webkit-scrollbar {
-      height: 8px;
-    }
-    &::-webkit-scrollbar-track {
-      width: 0;
+    overflow: hidden;
+    .lists {
+      display: flex;
+      flex-direction: row;
+      width: 100%;
+      overflow: auto;
+      .list-item {
+        margin-right: 20px;
+      }
+      &::-webkit-scrollbar {
+        height: 8px;
+      }
+      &::-webkit-scrollbar-track {
+        width: 0;
+      }
     }
   }
 }
