@@ -4,7 +4,7 @@
       <FilterHeader @filter="handleFilter" />
     </div>
     <div>
-      <List />
+      <List @sortChange="sortChange" />
     </div>
   </div>
 </template>
@@ -41,8 +41,16 @@ export default class RankList extends Vue {
     this.getRankList(this.refactor());
   }
 
+  sortChange({ prop, order }: any) {
+    this.getRankList(
+      this.refactor({
+        orderby: prop,
+        order,
+      }),
+    );
+  }
+
   public filterResult() {
-    console.log(111);
     this.setFilterRes([
       {
         label: '交易能力值',
@@ -90,7 +98,7 @@ export default class RankList extends Vue {
     this.getRankList(this.refactor());
   }
 
-  private refactor() {
+  private refactor(params: any = {}) {
     const obj: any = Object.assign({}, this.rankParams);
     return {
       maxScore: obj.Score && obj.Score.split('-')[1],
@@ -104,6 +112,7 @@ export default class RankList extends Vue {
       maxEquity: obj.Equity && obj.Equity.split('-')[1],
       minEquity: obj.Equity && obj.Equity.split('-')[0],
       brokerId: this.checkedBrokers.join(','),
+      ...params,
     };
   }
 }
