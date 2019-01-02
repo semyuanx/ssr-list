@@ -79,7 +79,6 @@ import FilterSubmit from './FilterSubmit.vue';
 import Accordion from '@/components/accordion/accordion.vue';
 import AccordionItem from '@/components/accordion/accordion-item.vue';
 import FilterPlus from './FilterPlus.vue';
-import { closeWebView } from '@/utils/native';
 
 import zhCN from '@/i18n/zh-CN/components/filter-popover/FilterPopover';
 import zhTW from '@/i18n/zh-TW/components/filter-popover/FilterPopover';
@@ -105,8 +104,6 @@ const RankStore = namespace('RankStore');
   },
 })
 export default class FilterSetting extends Vue {
-  closeWebView:any = closeWebView;
-
   // 过滤条件的字段格式
   @Prop({
     default: () => [
@@ -231,7 +228,7 @@ export default class FilterSetting extends Vue {
   @Emit('filter')
   handleSubmit() {
     this.filterResult();
-    this.closeWebView();
+    this.$router.go(-1);
   }
 
   @Emit('reset')

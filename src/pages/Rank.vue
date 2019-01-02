@@ -96,7 +96,6 @@ export default class RankList extends Vue {
 
   @Watch('rankParams', { deep: true })
   handleRefresh() {
-    alert(111);
     this.getRankList(this.refactor());
   }
 
