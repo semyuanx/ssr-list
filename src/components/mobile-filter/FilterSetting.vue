@@ -52,7 +52,7 @@
                 v-for="broker in checkedBrokers"
                 :key='broker'
                 @close="handleDel(broker)"
-              >{{brokersList.find(v=>v.BrokerId == broker).Broker}}</filter-button>
+              >{{brokersList && brokersList.find(v=>v.BrokerId == broker).Broker}}</filter-button>
             </template>
             <filter-plus
               v-if="item.hasAdd"
@@ -224,6 +224,9 @@ export default class FilterSetting extends Vue {
 
   @RankStore.Mutation
   setFilterRes: any;
+
+  @RankStore.State
+  brokersList: any;
 
   @Emit('filter')
   handleSubmit() {
