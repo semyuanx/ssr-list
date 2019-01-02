@@ -9,7 +9,7 @@
   </div>
 </template>
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
+import { Component, Vue, Watch } from 'vue-property-decorator';
 import { namespace } from 'vuex-class';
 
 import FilterHeader from '@/views/rank-list/FilterHeader.vue';
@@ -92,6 +92,12 @@ export default class RankList extends Vue {
 
   private unitLocation(unit: string, val: string) {
     return unit === '$' ? unit + val : val + unit;
+  }
+
+  @Watch('rankParams', { deep: true })
+  handleRefresh() {
+    alert(111);
+    this.getRankList(this.refactor());
   }
 
   mounted() {
