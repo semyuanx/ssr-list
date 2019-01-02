@@ -8,6 +8,7 @@
       <h2 class="panel-title">{{panelData.Name}}</h2>
       <div class="panel-desc">
         <div class="avatar-circle">
+          <!-- {{avatarSrc}} -->
           <img
             :onerror="errorUrl"
             :src="avatarSrc"
@@ -101,8 +102,6 @@ interface Context {
   },
 })
 export default class Panel extends Vue {
-  private baseSrc: string = '//www.followme.com/Avata/';
-
   private errorUrl: string = 'this.src=\'//cdn.followme.com/images/default_avata.png\';';
 
   @Prop() private width!: string;
@@ -124,7 +123,7 @@ export default class Panel extends Vue {
   }
 
   get avatarSrc():string {
-    return `${this.baseSrc}${this.panelData.UserID}`;
+    return `${this.base}/avata/${this.panelData.UserID}`;
   }
 
   get ProfitArr():string[] {

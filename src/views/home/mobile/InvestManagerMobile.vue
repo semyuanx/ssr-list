@@ -42,8 +42,6 @@ const numeral = require('numeral');
 export default class Index extends Vue {
   public name: string = 'fm-invest-manager-mobile';
 
-  private baseSrc: string = '//www.followme.com/Avata/';
-
   propMaps: any = propMaps;
 
   @Prop()
@@ -76,7 +74,7 @@ export default class Index extends Vue {
   }
 
   avatarSrc(UserID: string): string {
-    return `${this.baseSrc}${UserID}`;
+    return `${this.base}/avata/${UserID}`;
   }
 }
 </script>
