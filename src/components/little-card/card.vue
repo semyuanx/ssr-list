@@ -2,30 +2,34 @@
   <div class="card-content">
     <div class="card-header">
       <div class="card-header-left">
-        <div class="card-avatar">头像</div>
+        <div class="card-avatar">
+          <img :src="data.avatar" />
+        </div>
       </div>
       <div class="card-header-right">
         <div class="name">
-          <span>黄晓伟黄晓伟黄晓 #6</span>
+          <span>{{data.name}} #{{data.index}}</span>
         </div>
         <div class="broker">
-          <span>Fxpro</span>
+          <span>{{data.brokerName}}</span>
         </div>
       </div>
     </div>
     <div class="card-body">
       <div class="num-container">
         <div class="num-same num">
-          <div class="num-left"><span>89.78%</span></div>
-          <div class="num-right"><span>458</span></div>
+          <div :key="i.val" v-for="i in data.data" class="num-left"><span>{{i && i.val || ''}}</span></div>
+          <!-- <div class="num-left"><span>89.78%</span></div> -->
+          <!-- <div class="num-right"><span>458</span></div> -->
         </div>
         <div class="num-same desc">
-          <div><span>收益率</span></div>
-          <div><span>订阅人数</span></div>
+          <div :key="i.prop" v-for="i in data.data"><span>{{i && i.prop || ''}}</span></div>
+          <!-- <div><span>收益率</span></div>
+          <div><span>订阅人数</span></div> -->
         </div>
       </div>
       <div class="sub-btn">
-        <span class="subscribe-btn">$0.99/月</span>
+        <span class="subscribe-btn">{{data.price ? `$${data.price}/月` : '免费订阅'}}</span>
       </div>
     </div>
   </div>
@@ -36,6 +40,11 @@ import { Component, Prop, Vue } from 'vue-property-decorator';
 @Component
 export default class FmLittleCard extends Vue {
   public name: string = 'fm-little-card';
+
+  @Prop({
+    default: () => {},
+  })
+  data: any;
 }
 </script>
 <style lang="less" scoped>
@@ -67,7 +76,12 @@ export default class FmLittleCard extends Vue {
           width:40px;
           height:40px;
           border-radius: 20px;
-          border: 1px solid pink;
+          // border: 1px solid pink;
+          >img {
+            max-width: 100%;
+            max-width: 100%;
+            border-radius: 50%;
+          }
         }
       }
       .card-header-right {
@@ -100,6 +114,7 @@ export default class FmLittleCard extends Vue {
           color: #1FBB95;
           >div {
             flex: 1;
+            overflow: hidden;
           }
           .num-left {
 

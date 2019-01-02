@@ -24,12 +24,12 @@
       <div class="right">
         <div :class="dataLength > 3 ? 'right-lists right-wrap' : 'right-lists'">
           <template v-if="dataLength > 3">
-            <div :key="item" v-for="item in data" class="little-list-item">
-                <LittleCard />
+            <div :key="item.avatar + item.index" v-for="item in data" class="little-list-item">
+                <LittleCard :data="item" />
             </div>
           </template>
           <template v-else>
-            <div :key="item" v-for="item in data" class="list-item">
+            <div :key="item.avatar + item.index" v-for="item in data" class="list-item">
               <LineCard />
             </div>
           </template>
@@ -65,6 +65,11 @@ export default class Index extends Vue {
 
   @Prop({ default: () => {} })
   description: any;
+
+  @Watch('data')
+  change() {
+    console.log(this.data, 'dddddd');
+  }
 
   get dataLength() {
     return Array.isArray(this.data) ? this.data.length : 0;
