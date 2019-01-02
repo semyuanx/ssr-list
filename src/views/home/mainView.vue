@@ -3,7 +3,7 @@
         <div v-if="configs && configs.length" class="strategy">
             <FmStrategy :data="configs[0]" />
         </div>
-        <div class="invest" v-for="(item,index) in configs.slice(1)" :key="index">
+        <div class="invest" v-for="(item,index) in investData" :key="index">
             <InvestPanel :data="item"/>
         </div>
         <!-- <div class="invest">
@@ -39,6 +39,10 @@ const HomeStore = namespace('HomeStore');
 export default class mainView extends Vue {
     @HomeStore.State
     configs: any;
+
+    get investData() {
+      return this.configs.slice(1);
+    }
 }
 </script>
 <style lang="less" scoped>

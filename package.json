@@ -20,7 +20,7 @@
     "element-ui": "^2.4.11",
     "fmcomponents": "git+ssh://git@gitlab.followme.com/Frontend/fmcomponents.git#production",
     "highcharts": "^7.0.1",
-    "lib-app-base": "git+ssh://git@gitlab.followme.com:Frontend/lib-app-base.git",
+    "lib-app-base": "git+ssh://git@gitlab.followme.com:Frontend/lib-app-base.git#dev",
     "lib-message": "git+ssh://git@gitlab.followme.com:Frontend/lib-message.git#master",
     "minireset.css": "^0.0.3",
     "numeral": "^2.0.6",

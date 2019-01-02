@@ -36,11 +36,9 @@ export const closeWebView = (): any => {
  * params.path 打开的页面地址
  */
 export const openWebView = (location: Location) => {
-  // alert(111);
   if (isNativeFuncExist('openWebView')) {
-    // alert(2222);
     const route = window.app.$router.resolve(location);
-    const path = route.route.fullPath.replace(/^\//, '');
+    const path = `http://${window.location.host}${route.route.fullPath}`;
     return native('openWebView', { path });
   }
   return window.app.$router.push(location);
