@@ -17,6 +17,9 @@ export default function createRouter() {
       {
         path: '/rank-list',
         name: 'rankList',
+        meta: {
+          title: '筛选器',
+        },
         // route level code-splitting
         // this generates a separate chunk (about.[hash].js) for this route
         // which is lazy-loaded when the route is visited.
@@ -25,6 +28,9 @@ export default function createRouter() {
       {
         path: '/invest',
         name: 'investManager',
+        meta: {
+          title: '投资管家',
+        },
         // route level code-splitting
         // this generates a separate chunk (about.[hash].js) for this route
         // which is lazy-loaded when the route is visited.
@@ -41,6 +47,9 @@ export default function createRouter() {
       {
         path: '/filter',
         name: 'filter',
+        meta: {
+          title: '筛选设置',
+        },
         // route level code-splitting
         // this generates a separate chunk (about.[hash].js) for this route
         // which is lazy-loaded when the route is visited.
@@ -49,6 +58,9 @@ export default function createRouter() {
       {
         path: '/book',
         name: 'book',
+        meta: {
+          title: '经纪商选择',
+        },
         // route level code-splitting
         // this generates a separate chunk (about.[hash].js) for this route
         // which is lazy-loaded when the route is visited.
