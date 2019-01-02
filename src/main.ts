@@ -9,6 +9,7 @@ import '@fmfe/fm-vue-ui/lib/theme-default/index.css';
 import fmcomponents from 'fmcomponents';
 
 import envMixin from './mixin/envMixin.vue';
+import { isWebview } from './utils/device';
 
 import 'v2-table/dist/index.css';
 import 'beautify-scrollbar/dist/index.css';
@@ -53,13 +54,22 @@ Vue.mixin(envMixin);
 const i18n = createI18n();
 const store = createStore();
 const router = createRouter();
+router.beforeEach((to, from, next) => {
+  window.document.title = to.meta.title || 'Followme';
+  next();
+});
+const isAppVisit = isWebview(window.location && window.location.search);
 
 sync(store, router);
 const app = new Vue({
   i18n,
   router,
   store,
-  render: (h: CreateElement) => h(App),
+  render: (h: CreateElement) => h(App, {
+    props: {
+      isAppVisit,
+    },
+  }),
 });
 
 declare global {

@@ -12,6 +12,7 @@
     </div>
     <router-link
       :to="{name:'filter'}"
+      :event="[]"
       class="filter-link"
       @click.prevent.stop.native="openWebView({name:'filter'})"
     >

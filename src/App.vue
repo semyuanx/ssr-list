@@ -1,8 +1,9 @@
 <template>
   <div id="app">
-    <div v-if="!isApp" class="fm-content-header">
+
+    <div v-if="!isAppVisit" class="fm-content-header">
       <!--顶部导航栏-->
-      <FMNav />
+      <FMNav :test='isAppVisit'/>
     </div>
     <div class="fm-content-container">
       <div class="router-container">
@@ -15,7 +16,7 @@
   </div>
 </template>
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
+import { Component, Vue, Prop } from 'vue-property-decorator';
 import FMNav from 'fmcomponents/src/components/nav2';
 import FMFooter from 'fmcomponents/src/components/footer';
 
@@ -31,6 +32,9 @@ import '@/theme/main.less';
   },
 })
 export default class App extends Vue {
+  // 是否是从APP访问
+  @Prop({ type: Boolean, default: true }) isAppVisit!: boolean;
+
   public isShow: boolean = true;
 
   private resize() {

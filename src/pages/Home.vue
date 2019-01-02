@@ -6,6 +6,7 @@
     <router-link
       class="super-filter-button fm-show-mobile"
       :to="{name:'rankList'}"
+      :event="[]"
       @click.prevent.stop.native="openWebView({name:'rankList'})"
     ><i class="icon-filtrate_24px"></i> 高级筛选</router-link>
 
@@ -39,7 +40,7 @@ export default class Home extends Vue {
 </script>
 <style lang="less" scoped>
 .home {
-  padding-top: 40px;
+  padding-top: 10px;
   min-width: 320px;
   .invest {
     margin-top: 40px;
