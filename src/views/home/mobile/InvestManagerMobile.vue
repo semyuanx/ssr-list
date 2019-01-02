@@ -12,14 +12,17 @@
         :data="refactorData"
       >
         <template slot-scope="slotProps">
-          <div class="avatar">
-            <img
-              :onerror="errorUrl"
-              :src="avatarSrc(slotProps.row.UserID)"
-              alt=""
-            >
+          <div class="slot-container">
+            <div class="avatar">
+              <img
+                :onerror="errorUrl"
+                :src="avatarSrc(slotProps.row.UserID)"
+                alt=""
+              >
+            </div>
+            <span class="name-span">{{ slotProps.row.NickName}}</span>
+            <span class="index-span">#{{ slotProps.row.AccountIndex}}</span>
           </div>
-          <span>{{ slotProps.row.NickName}}</span>
         </template>
       </SimpleTable>
     </div>
@@ -95,6 +98,24 @@ export default class Index extends Vue {
   img {
     width: 100%;
     height: 100%;
+  }
+}
+
+.slot-container {
+  max-width: 100%;
+  display: inline-flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  .name-span {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    flex:1;
+  }
+  .index-span{
+    white-space: nowrap;
+    color:#C0C0C0;
+    width: 20px;
   }
 }
 </style>
