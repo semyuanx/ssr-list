@@ -2,24 +2,26 @@
   <div class="card-contain">
     <div class="user">
       <div class="avatar-con">
-        <div class="avatar"></div>
+        <div class="avatar">
+          <img v-if="data.avatar" :src="data.avatar" />
+        </div>
       </div>
       <div class="user-name">
-        <span>黄晓伟 #5</span>
+        <span>{{data.name}} #{{data.index}}</span>
         <div class="broker">
-          <span class="broker">KVB昆仑国际</span>
+          <span class="broker">{{data.brokerName}}</span>
         </div>
       </div>
     </div>
     <div class="bottom">
       <div class="price">
         <div class="price-line num-val">
-          <div class="num-percent">3,464.67%</div>
-          <div class="sub-num">890</div>
+          <div class="num-percent">{{data.data.length ? data.data[0].val : ''}}</div>
+          <div class="sub-num">{{data.data.length >1 ? data.data[1].val : ''}}</div>
         </div>
         <div class="price-line desc">
-          <div>收益率</div>
-          <div>订阅人数</div>
+          <div>{{data.data.length ? data.data[0].prop : ''}}</div>
+          <div>{{data.data.length >1 ? data.data[1].prop : ''}}</div>
         </div>
       </div>
       <div class="sub">
@@ -36,11 +38,18 @@
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
 
+export interface dataType {
+  avatar: string;
+}
+
 @Component
 export default class FmCard extends Vue {
   public name: string = 'fm-card';
 
-  @Prop() private title!: string;
+  @Prop({
+    default: () => {},
+  })
+  private data!: any;
 
   @Prop() private rightMsg!: string;
 }

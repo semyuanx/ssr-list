@@ -9,7 +9,7 @@
       >
         <el-table-column
           label="交易员"
-          prop="Account"
+          prop="UserID"
           min-width="210px"
         >
           <template slot-scope="scope">
@@ -19,7 +19,7 @@
             >
               <div class="trader-container-row">
                 <div class="loading-first avatar">
-                  <img :src="base+'/Avata/'+scope.row.MT4Account.Account" />
+                  <img :src="base+'/Avata/'+scope.row.UserID" />
                 </div>
                 <div class="loading-first trader-info">
                   <div class="info-1">{{scope.row.NickName}} #{{scope.row.MT4Account.BrokerID}}</div>
@@ -36,7 +36,7 @@
             >
               <div class="trader-container-row">
                 <div class="loading-first loading-avatar">
-                  <img :src="base+'/Avata/'+scope.row.MT4Account.Account" />
+                  <img :src="base+'/Avata/'+scope.row.UserID" />
                 </div>
                 <div class="loading-first loading-info">
                   <div class="info-1"></div>
