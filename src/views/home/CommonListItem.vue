@@ -1,7 +1,7 @@
 <template>
   <div class="header">
     <div class="fm-show-pc">
-      <InvestManager v-if="configData" :data="configData" :description="description" />
+      <InvestManager :subscribe="subscribe" v-if="configData" :data="configData" :description="description" />
     </div>
     <div class="fm-show-mobile">
       <InvestManagerMobile :data="data"/>
@@ -25,8 +25,10 @@ export default class Index extends Vue {
   @Prop()
   data:any;
 
+  @Prop()
+  subscribe: any;
+
   formatVal(val: string|number, type: string): string | number {
-    console.log(type);
     return propFormat(val, type);
   }
 
@@ -56,6 +58,7 @@ export default class Index extends Vue {
         index: item.AccountIndex,
         brokerName: item.BrokerName,
         price: item.Price,
+        item,
         data: showData.map((it: any) => ({ prop: (mapKey as any)[it], val: this.formatVal(item[it], it) })),
       }));
       return newConfig.slice(0, 4);

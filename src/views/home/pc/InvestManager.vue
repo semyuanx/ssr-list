@@ -18,19 +18,19 @@
       <div class="left" :style="`background-image: url(${description.background})`">
         <div><span>{{ description.textTitle }}</span></div>
         <div>
-          <button class="sub-right-now">立即订阅</button>
+          <button @click="toRankList" class="sub-right-now">立即订阅</button>
         </div>
       </div>
       <div class="right">
         <div :class="dataLength > 3 ? 'right-lists right-wrap' : 'right-lists'">
           <template v-if="dataLength > 3">
             <div :key="item.avatar + item.index" v-for="item in data" class="little-list-item">
-                <LittleCard :data="item" />
+                <LittleCard @subscribe="handleSub" :data="item" />
             </div>
           </template>
           <template v-else>
             <div :key="item.avatar + item.index" v-for="item in data" class="list-item">
-              <LineCard :data="item" />
+              <LineCard @subscribe="handleSub" :data="item" />
             </div>
           </template>
 
@@ -46,6 +46,8 @@
 import {
   Component, Vue, Prop, Watch,
 } from 'vue-property-decorator';
+import { namespace } from 'vuex-class';
+
 import LineHeader from './LineHeader.vue'; // @ is an alias to /src
 import LineCard from '@/components/line-card/card.vue'; // @ is an alias to /src
 import LittleCard from '@/components/little-card/card.vue'; // @ is an alias to /src
@@ -60,19 +62,25 @@ import LittleCard from '@/components/little-card/card.vue'; // @ is an alias to 
 export default class Index extends Vue {
   public name: string = 'fm-invest-manager';
 
+  @Prop()
+  subscribe: any;
+
   @Prop({ default: () => [] })
   data: any;
 
   @Prop({ default: () => {} })
   description: any;
 
-  @Watch('data')
-  change() {
-    console.log(this.data, 'dddddd');
-  }
-
   get dataLength() {
     return Array.isArray(this.data) ? this.data.length : 0;
+  }
+
+  toRankList() {
+    this.$router.push({ name: 'rankList' });
+  }
+
+  handleSub(item: any) {
+    this.subscribe(item);
   }
 }
 </script>

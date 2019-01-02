@@ -29,7 +29,7 @@
         </div>
       </div>
       <div class="sub-btn">
-        <span class="subscribe-btn">{{data.price ? `$${data.price}/月` : '免费订阅'}}</span>
+        <span @click="sub" class="subscribe-btn">{{data.price ? `$${data.price}/月` : '免费订阅'}}</span>
       </div>
     </div>
   </div>
@@ -45,6 +45,11 @@ export default class FmLittleCard extends Vue {
     default: () => {},
   })
   data: any;
+
+  sub() {
+    console.log('sub');
+    this.$emit('subscribe', this.data);
+  }
 }
 </script>
 <style lang="less" scoped>

@@ -23,6 +23,9 @@ export default class RankStore {
     brokerId: '',
   };
 
+  @State(false)
+  public rankListLoading: boolean = false;
+
   @State([])
   public rankList: Array<any> = [];
 
@@ -40,6 +43,8 @@ export default class RankStore {
   // 过滤结果数据
   @State([])
   public filterRes: any[] = [];
+
+  @Set('rankListLoading') public setRankLoading: any;
 
   @Set('filterRes') public setFilterRes: any;
 
@@ -64,13 +69,19 @@ export default class RankStore {
 
   @Action
   public getRankList(context: { commit: Commit }, payload: any): any {
+    context.commit('setRankLoading', true);
     getRankList(payload)
       .then((res: any) => {
         console.log(res, 'getRankList');
         context.commit('setRankList', res.List || []);
         context.commit('setRankTotal', res.TotalCount || 0);
       })
-      .catch(() => {});
+      .then(() => {
+        context.commit('setRankLoading', false);
+      })
+      .catch(() => {
+        context.commit('setRankLoading', false);
+      });
   }
 
   @Action

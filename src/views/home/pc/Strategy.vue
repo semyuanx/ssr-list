@@ -6,7 +6,7 @@
     <div class="lists-container">
       <div class="lists">
         <div :key="item.index + item.brokerName" v-for="item in data" class="list-item">
-          <FmCard :data="item" />
+          <FmCard @subscribe="handleSub" :data="item" />
         </div>
       </div>
     </div>
@@ -29,10 +29,21 @@ export default class Home extends Vue {
   public name: string = 'fm-strategy';
 
   @Prop()
+  subscribe: any;
+
+  @Prop()
   data: any
 
   @Prop({ default: () => {} })
   header: any;
+
+  handleSub(item: any) {
+    if (this.subscribe) {
+      this.subscribe(item);
+    } else {
+      console.log('mobile');
+    }
+  }
 
   toRankList() {
     this.$router.push({ name: 'rankList' });

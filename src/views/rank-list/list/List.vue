@@ -3,7 +3,7 @@
     <div class="list-table">
       <el-table
         class="rank-table"
-        :data="data"
+        :data="dataList"
         :row-class-name="getRowClassName"
         @sort-change="handleSortChange"
       >
@@ -22,7 +22,7 @@
                   <img :src="base+'/Avata/'+scope.row.UserID" />
                 </div>
                 <div class="loading-first trader-info">
-                  <div class="info-1">{{scope.row.NickName}} #{{scope.row.MT4Account.BrokerID}}</div>
+                  <div class="info-1">{{scope.row.NickName}} #{{scope.row.AccountIndex}}</div>
                   <div class="info-2">
                     {{scope.row.BrokerName || ''}}
                   </div>
@@ -248,11 +248,21 @@ const RankStore = namespace('RankStore');
 export default class List extends Vue {
   isLoading: boolean = false;
 
+  @RankStore.State
+  rankListLoading: any;
+
   @Prop({
     type: Array,
     default: () => [],
   })
   data: any;
+
+  get dataList() {
+    if (this.rankListLoading) {
+      return Array(10).fill({});
+    }
+    return this.data;
+  }
 
   log(msg: any) {
     console.log(msg);
@@ -266,7 +276,7 @@ export default class List extends Vue {
   }
 
   public get dateIsLoading() {
-    return this.isLoading;
+    return this.rankListLoading;
   }
 
   mounted() {
@@ -420,6 +430,10 @@ export default class List extends Vue {
       }
       :global(.default-row) {
         height: 80px;
+        :global(.cell) {
+          padding-right: 0;
+          padding-left: 0;
+        }
         &:hover {
           background: rgba(255, 255, 255, 1);
           box-shadow: 0px 0px 30px 0px rgba(0, 0, 0, 0.1);
