@@ -5,9 +5,10 @@
     </div>
     <router-link
       class="super-filter-button fm-show-mobile"
-      :to="{name:'rankList',query:$route.query}"
-      @click.prevent.stop.native="openWebView({name:'rankList',query:$route.query})"
+      :to="{name:'rankList'}"
+      @click.prevent.stop.native="openWebView({name:'rankList'})"
     ><i class="icon-filtrate_24px"></i> 高级筛选</router-link>
+
   </div>
 </template>
 

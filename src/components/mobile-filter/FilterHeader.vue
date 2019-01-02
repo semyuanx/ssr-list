@@ -11,9 +11,9 @@
       </filter-button>
     </div>
     <router-link
-      :to="{name:'filter',query:$route.query}"
+      :to="{name:'filter'}"
       class="filter-link"
-      @click.prevent.stop.native="openWebView({name:'filter',query:$route.query})"
+      @click.prevent.stop.native="openWebView({name:'filter'})"
     >
       <i class="icon-filtrate_24px"></i> <span>筛选</span>
     </router-link>
