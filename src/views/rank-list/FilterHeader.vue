@@ -29,6 +29,7 @@
           >
             <i class="icon-filtrate_24px"></i><span>筛选器</span>
           </div>
+          <div class="filter-pop-container">
           <div class="filter-pop">
             <filter-popover
               ref="filterPopover"
@@ -68,6 +69,7 @@
               </template>
             </filter-popover>
 
+          </div>
           </div>
         </div>
       </div>
@@ -221,6 +223,8 @@ export default class FilterHeader extends Vue {
       line-height: 19px;
       cursor: pointer;
       position: relative;
+      flex-direction: column;
+      justify-content: center;
 
       .filter-content {
         position: relative;
@@ -228,12 +232,18 @@ export default class FilterHeader extends Vue {
           vertical-align: middle;
         }
       }
-
-      .filter-pop {
+      .filter-pop-container {
         position: absolute;
-        top: 85%;
-        right: 0;
-        z-index: 100;
+        width: 100%;
+        height: 1px;
+        // background: red;
+        bottom: 0;
+        .filter-pop {
+          position: absolute;
+          top: 8px;
+          right: 0;
+          z-index: 100;
+        }
       }
     }
   }
