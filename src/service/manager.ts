@@ -5,4 +5,4 @@ export const getAllProducts = (params?: object): any => get(panelsList(), {
   params,
 });
 
-export const a = 12;
+export const none = () => {};

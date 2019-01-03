@@ -1,18 +1,19 @@
 <template>
   <div class="invest-container">
     <div class="header">
-      <LineHeader
+      <CommonLineHeader
+        @rightClick="toMore"
         subIcon="flag_24px"
         rightIcon="right_24px"
         rightTitle="更多"
-        :subTitle="description.subTitle"
+        :subTitle="description.filterText"
         :title="description.title">
 
         <!-- <template slot="right">
           <span>{{ rightTitle || '' }}</span>
           <i :class="`icon-right_24px`"></i>
         </template> -->
-      </LineHeader>
+      </CommonLineHeader>
     </div>
     <div class="invest-content">
       <div class="left" :style="`background-image: url(${description.background})`">
@@ -48,13 +49,13 @@ import {
 } from 'vue-property-decorator';
 import { namespace } from 'vuex-class';
 
-import LineHeader from './LineHeader.vue'; // @ is an alias to /src
+import CommonLineHeader from './CommonLineHeader.vue'; // @ is an alias to /src
 import LineCard from '@/components/line-card/card.vue'; // @ is an alias to /src
 import LittleCard from '@/components/little-card/card.vue'; // @ is an alias to /src
 
 @Component({
   components: {
-    LineHeader,
+    CommonLineHeader,
     LineCard,
     LittleCard,
   },
@@ -76,6 +77,10 @@ export default class Index extends Vue {
   }
 
   toRankList() {
+    this.$router.push({ name: 'rankList' });
+  }
+
+  toMore() {
     this.$router.push({ name: 'rankList' });
   }
 

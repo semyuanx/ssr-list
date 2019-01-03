@@ -51,23 +51,29 @@ export default class Index extends Vue {
   data: any;
 
   get initHeader() {
-    const firstLine = {
-      label: '交易员',
-      prop: '',
-      align: 'left',
-    };
-    const keys = Object.keys(this.data.HideConfig)
-      .filter(v => this.data.HideConfig[v])
-      .slice(0, 2);
-    const res = keys.map(v => ({
-      label: this.propMaps[v],
-      prop: v,
-      align: 'right',
-    }));
-    return [firstLine, ...res];
+    if (this.data) {
+      const firstLine = {
+        label: '交易员',
+        prop: '',
+        align: 'left',
+      };
+      const keys = Object.keys(this.data.HideConfig ? this.data.HideConfig : {})
+        .filter(v => this.data.HideConfig[v])
+        .slice(0, 2);
+      const res = keys.map(v => ({
+        label: this.propMaps[v],
+        prop: v,
+        align: 'right',
+      }));
+      return [firstLine, ...res];
+    }
+    return [];
   }
 
   get refactorData() {
+    if (!this.data.listData) {
+      return [];
+    }
     return this.data.listData.List.map((v: any) => ({
       ...v,
       ROI: numeral(v.ROI).format('0.00%'),

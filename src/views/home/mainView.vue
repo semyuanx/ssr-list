@@ -76,7 +76,7 @@ export default class mainView extends Vue {
           });
         }
         showData = showData.slice(0, 2);
-        if (Array.isArray(config.listData.List) && config.listData.List.length > 1) {
+        if (config.listData && Array.isArray(config.listData.List) && config.listData.List.length > 1) {
           const newConfig = config.listData.List.map((item: any) => ({
             avatar: `${this.base}/Avata/${item.UserID}`,
             name: item.NickName,

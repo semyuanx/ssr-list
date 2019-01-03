@@ -23,6 +23,9 @@ export default class RankStore {
     brokerId: '',
   };
 
+  @State(1)
+  public pageIndex: number = 1;
+
   @State(false)
   public rankListLoading: boolean = false;
 
@@ -43,6 +46,13 @@ export default class RankStore {
   // 过滤结果数据
   @State([])
   public filterRes: any[] = [];
+
+  // @Set('pageIndex') public setPageIndex: any;
+  @Mutation
+  public setPageIndex(state: any, payload: any[]) {
+    console.log(payload, 'payload');
+    state.pageIndex = payload;
+  }
 
   @Set('rankListLoading') public setRankLoading: any;
 
@@ -68,12 +78,24 @@ export default class RankStore {
   }
 
   @Action
-  public getRankList(context: { commit: Commit }, payload: any): any {
+  public getRankList(context: { commit: Commit, state: any }, payload: any): any {
+    if (context.state.rankListLoading) return;
     context.commit('setRankLoading', true);
-    getRankList(payload)
+    return getRankList(payload)
       .then((res: any) => {
-        console.log(res, 'getRankList');
-        context.commit('setRankList', res.List || []);
+        console.log(res, payload, 'getRankList');
+        const pageIndex = payload.index;
+        let totalList = context.state.rankList;
+        console.log(pageIndex, 'pageIndex', context.state.pageIndex);
+        // if ( pageIndex === 1) {
+        //   totalList = res.List;
+        // } else {
+        //   totalList = totalList.concat(res.List);
+        // }
+        totalList = res.List;
+
+        context.commit('setPageIndex', pageIndex + 1);
+        context.commit('setRankList', totalList || []);
         context.commit('setRankTotal', res.TotalCount || 0);
       })
       .then(() => {
