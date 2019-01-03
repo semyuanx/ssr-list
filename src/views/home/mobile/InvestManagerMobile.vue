@@ -3,7 +3,7 @@
     <div class="header">
       <LineHead
         :title="data.RankName"
-        :subTitle="data.RankText"
+        :subTitle="subTitle"
       />
     </div>
     <div class="content">
@@ -33,6 +33,7 @@ import { Component, Vue, Prop } from 'vue-property-decorator';
 import LineHead from '@/components/line-head/index.vue'; // @ is an alias to /src
 import SimpleTable from '@/components/simple-table/index.vue'; // @ is an alias to /src
 import propMaps from '@/constant/propMap';
+import { percentFormat } from '@/utils/format';
 
 const numeral = require('numeral');
 
@@ -84,6 +85,47 @@ export default class Index extends Vue {
 
   avatarSrc(UserID: string): string {
     return `${this.base}/avata/${UserID}`;
+  }
+
+  get subTitle(): string {
+    function createStr(obj: {Max: 0, Min: 0}, title: string, format: boolean = false) {
+      const { Max, Min } = obj;
+      const max = format ? percentFormat(Max) : Max;
+      const min = format ? percentFormat(Min) : Min;
+      if (Max && Min) return ` ${title} ${min} ~ ${max}`;
+      if (Min) return ` ${title}>${min}`;
+      if (Max) return ` ${title}<${max}`;
+      return '';
+    }
+
+    let title: string = '';
+    const condObject = this.data.CondCfg.CondConfig;
+
+    Object.keys(condObject).forEach((key) => {
+      const value = condObject[key];
+      if (typeof value === 'object') {
+        if (key === 'Roi') { // 注意字段名称和propMaps不一样, Roi和MaxRetracement两个值需要格式化
+          const roi = createStr(value, this.propMaps.ROI, true);
+          if (roi) {
+            title = title.concat(roi);
+          }
+        } else if (key === 'MaxRetracement') {
+          const mr = createStr(value, this.propMaps[key], true);
+          if (mr) {
+            title = title.concat(mr);
+          }
+        } else {
+          const str = createStr(value, this.propMaps[key]);
+          if (str) {
+            title = title.concat(str);
+          }
+        }
+      } else if (key === 'ExpSymbol' && value) {
+        title = title.concat(` ${this.propMaps[key]} ${value}`);
+      }
+    });
+
+    return title;
   }
 }
 </script>
