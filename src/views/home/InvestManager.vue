@@ -1,7 +1,7 @@
 <template>
   <div class="header">
     <div class="fm-show-pc">
-      <InvestManager :subscribe="subscribe" v-if="configData" :data="configData" :description="description" />
+      <InvestManager :subscribe="subscribe" v-if="configData.length > 1" :data="configData" :description="description" />
     </div>
     <div class="fm-show-mobile">
       <CommonMobile :data="mobileConfigData" :description="description" />
