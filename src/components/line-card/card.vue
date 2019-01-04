@@ -91,6 +91,7 @@ export default class FmLittleCard extends Vue {
           width:40px;
           height:40px;
           border-radius: 20px;
+          overflow: hidden;
           >img {
             max-width: 100%;
             max-width: 100%;

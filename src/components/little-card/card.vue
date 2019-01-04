@@ -4,7 +4,7 @@
       <slot name="header">
         <div class="card-header-left">
           <div class="card-avatar">
-            <img :src="data.avatar" />
+            <img alt="头像" :src="data.avatar" />
           </div>
         </div>
         <div class="card-header-right">
@@ -84,6 +84,7 @@ export default class FmLittleCard extends Vue {
           height:40px;
           border-radius: 20px;
           // border: 1px solid pink;
+          overflow: hidden;
           >img {
             max-width: 100%;
             max-width: 100%;
