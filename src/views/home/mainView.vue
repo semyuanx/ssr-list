@@ -47,6 +47,7 @@ const RankStore = namespace('RankStore');
   components: {
     FmStrategy,
     CommonListItem,
+    InvestManager,
   },
 })
 export default class mainView extends Vue {
@@ -124,8 +125,9 @@ export default class mainView extends Vue {
 
     public get investData() {
       const filters = [2, 3, '2', '3'];
-      return this.configs.slice(1)
+      const data = this.configs.slice(1)
         .filter((i: any) => i && !filters.includes(i.RankIndex));
+      return data;
     }
 
 

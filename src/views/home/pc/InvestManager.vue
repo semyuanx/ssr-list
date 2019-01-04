@@ -30,8 +30,13 @@
             </div>
           </template>
           <template v-else>
-            <div :key="item.avatar + item.index" v-for="item in data" class="list-item">
-              <LineCard @subscribe="handleSub" :data="item" />
+            <div :key="item.avatar + item.index" v-for="(item) in data" class="list-item">
+              <LineCard @subscribe="handleSub" :data="item">
+                <div class="prod-desc" slot="left">
+                  <div class="prod-name">{{item.name || ''}}</div>
+                  <div class="prod-danger">{{item.danger || ''}}</div>
+                </div>
+              </LineCard>
             </div>
           </template>
 
@@ -133,6 +138,24 @@ export default class Index extends Vue {
           display: flex;
           flex-direction: row;
           margin-bottom: 1px;
+          .prod-desc {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            font-family:MicrosoftYaHei;
+            .prod-name {
+              font-size:20px;
+              color:rgba(51,51,51,1);
+              line-height:26px;
+              margin-bottom: 5px;
+            }
+            .prod-danger {
+              margin-top: 5px;
+              font-size:12px;
+              color:rgba(31,187,149,1);
+              line-height:16px;
+            }
+          }
         }
         .little-list-item {
           // flex: 1;
