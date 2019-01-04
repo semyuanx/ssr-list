@@ -1,19 +1,21 @@
 <template>
   <div class="line-card-content">
     <div class="card-header">
-      <div class="card-header-left">
-        <div class="card-avatar">
-          <img :alt="data.name || '头像'" :src="data.avatar" />
+      <slot name="left">
+        <div class="card-header-left">
+          <div class="card-avatar">
+            <img :alt="data.name || '头像'" :src="data.avatar" />
+          </div>
         </div>
-      </div>
-      <div class="card-header-right">
-        <div class="name">
-          <span>{{data.name}} #{{data.index}}</span>
+        <div class="card-header-right">
+          <div class="name">
+            <span>{{data.name}} #{{data.index}}</span>
+          </div>
+          <div class="broker">
+            <span>{{data.brokerName}}</span>
+          </div>
         </div>
-        <div class="broker">
-          <span>{{data.brokerName}}</span>
-        </div>
-      </div>
+      </slot>
     </div>
 
     <!-- <div class="line-content left-line">
@@ -40,9 +42,11 @@
         <div><span class="leave-val">1</span></div>
         <div><span class="common-font">剩余名额</span></div>
       </div> -->
-      <div class="right-line-container line-join">
-        <span @click="sub" class="subscribe-btn">{{data.price ? `$${data.price}/月` : '免费订阅'}}</span>
-      </div>
+      <slot name="right">
+        <div class="right-line-container line-join">
+          <span @click="sub" class="subscribe-btn">{{data.price ? `$${data.price}/月` : data.rightText ? data.rightText : '免费订阅'}}</span>
+        </div>
+      </slot>
     </div>
   </div>
 </template>

@@ -52,6 +52,7 @@ export default class RankList extends Vue {
   }
 
   sortChange({ prop, order }: any) {
+    this.resetIndex();
     this.getRankList(
       this.refactor({
         orderby: prop,
@@ -160,8 +161,10 @@ export default class RankList extends Vue {
   loadMore() {
     let scrollTop = 0;
     if (document.documentElement && document.documentElement.scrollTop) {
+      // eslint-disable-next-line
       scrollTop = document.documentElement.scrollTop;
     } else if (document.body) {
+      // eslint-disable-next-line
       scrollTop = document.body.scrollTop;
     }
     let docHeight = document.body.scrollHeight;
@@ -173,9 +176,10 @@ export default class RankList extends Vue {
       windowHeight = document.documentElement.clientHeight;
     }
     if (document.documentElement && document.documentElement.scrollTop) {
+      // eslint-disable-next-line
       scrollTop = document.documentElement.scrollTop;
     } else if (document.body) {
-      // eslint-diable-next-line
+      // eslint-disable-next-line
       scrollTop = document.body.scrollTop;
     }
     // console.log(`scrollTop: ${scrollTop} \r\n docHeight: ${docHeight} \r\n windowHeight: ${windowHeight}`)

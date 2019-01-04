@@ -19,7 +19,7 @@
       <div class="left" :style="`background-image: url(${description.background})`">
         <div><span>{{ description.textTitle }}</span></div>
         <div>
-          <button @click="toRankList" class="sub-right-now">立即参与</button>
+          <button @click="toRankList" class="sub-right-now">立即订阅</button>
         </div>
       </div>
       <div class="right">

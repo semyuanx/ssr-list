@@ -1,7 +1,7 @@
 <template>
   <div class="header">
     <div class="fm-show-pc">
-      <InvestManager :subscribe="subscribe" v-if="configData" :data="configData" :description="description" />
+      <CommonItem :subscribe="subscribe" v-if="configData" :data="configData" :description="description" />
     </div>
     <div class="fm-show-mobile">
       <InvestManagerMobile :data="data"/>
@@ -10,14 +10,14 @@
 </template>
 <script lang="ts">
 import { Component, Vue, Prop } from 'vue-property-decorator';
-import InvestManager from '@/views/home/pc/InvestManager.vue';
+import CommonItem from '@/views/home/pc/CommonItem.vue';
 import InvestManagerMobile from '@/views/home/mobile/InvestManagerMobile.vue';
 import mapKey from '@/constant/propMap';
 import { propFormat } from '@/utils/format';
 
 @Component({
   components: {
-    InvestManager,
+    CommonItem,
     InvestManagerMobile,
   },
 })

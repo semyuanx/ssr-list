@@ -3,14 +3,21 @@ import {
 } from '@/utils/store-class-annotation';
 import { Commit, ActionTree } from 'vuex';
 import { getCustomConfig, getCustomRankList } from '@/service/home';
+import { getAllProducts } from '@/service/manager';
 
 @Repository('HomeStore')
 export default class HomeStore {
   @State([])
   public configs: Array<any> = [];
 
+  @State([])
+  public progressProducts: Array<any> = [];
+
   @Set('configs')
   public setConfig(): any | null { }
+
+  @Set('progressProducts')
+  public setProgressProducts(): any | null { }
 
   // async retry(tryTime: number = 3) {
   //   const toGet = async (index: number) => {
@@ -77,5 +84,22 @@ export default class HomeStore {
         });
       }
     }).catch(() => {});
+  }
+
+
+  @Action
+  public async getProductsAsync(context: any, params: any) {
+    const { commit } = context;
+    let data: any = {};
+    try {
+      data = await getAllProducts(params);
+    } catch (e) {
+      console.log(e);
+    }
+    if (data.items) {
+      console.log(data, 'progressProducts');
+      commit('setProgressProducts', data.items);
+    }
+    return data;
   }
 }
