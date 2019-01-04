@@ -1,7 +1,7 @@
 <template>
 <div class="main-list-container">
   <div class="fm-show-pc">
-    <FmList :data="rankList" />
+    <FmList :data="rankList" :getData="getData" />
   </div>
   <div class="fm-show-mobile">
     <MobileList :data="rankList" @sortChange="sortChange"/>
@@ -9,7 +9,9 @@
 </div>
 </template>
 <script lang="ts">
-import { Component, Vue, Watch } from 'vue-property-decorator';
+import {
+  Component, Vue, Watch, Prop,
+} from 'vue-property-decorator';
 import { namespace } from 'vuex-class';
 import FmList from './list/List.vue';
 import MobileList from './list/ListMobile.vue';
@@ -30,6 +32,9 @@ export default class List extends Vue {
 
   @RankStore.State
   rankTotal: any;
+
+  @Prop()
+  getData: any;
 
   @Watch('rankList')
   public rankListChange() {

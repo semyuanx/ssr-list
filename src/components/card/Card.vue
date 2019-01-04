@@ -20,14 +20,15 @@
           <div class="sub-num">{{data.data.length >1 ? data.data[1].val : ''}}</div>
         </div>
         <div class="price-line desc">
-          <div>{{data.data.length ? data.data[0].prop : ''}}</div>
-          <div>{{data.data.length >1 ? data.data[1].prop : ''}}</div>
+          <div :key="i.prop + i.val" v-for="i in data.data">{{i && i.prop || ''}}</div>
+          <!-- <div>{{data.data.length ? data.data[0].prop : ''}}</div>
+          <div>{{data.data.length >1 ? data.data[1].prop : ''}}</div> -->
         </div>
       </div>
       <div class="sub">
-        <div class="subscibe-content">
+        <div @click="sub" class="subscibe-content">
           <span>
-            $0.99/月
+            {{data.price ? `$${data.price}/月` : '免费订阅'}}
           </span>
         </div>
       </div>
@@ -52,6 +53,10 @@ export default class FmCard extends Vue {
   private data!: any;
 
   @Prop() private rightMsg!: string;
+
+  sub() {
+    this.$emit('subscribe', this.data);
+  }
 }
 </script>
 

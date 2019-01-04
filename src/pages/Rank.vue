@@ -4,13 +4,14 @@
       <FilterHeader @filter="handleFilter" />
     </div>
     <div>
-      <List @sortChange="sortChange" />
+      <List :getData="getData" @sortChange="sortChange" />
     </div>
   </div>
 </template>
 <script lang="ts">
 import { Component, Vue, Watch } from 'vue-property-decorator';
 import { namespace } from 'vuex-class';
+import throttle from 'lodash.throttle';
 
 import FilterHeader from '@/views/rank-list/FilterHeader.vue';
 import List from '@/views/rank-list/List.vue';
@@ -24,11 +25,20 @@ const RankStore = namespace('RankStore');
   },
 })
 export default class RankList extends Vue {
+  @RankStore.State
+  rankListLoading: any;
+
   @RankStore.Action
   getRankList: any;
 
   @RankStore.State
   rankParams: any;
+
+  @RankStore.State
+  pageIndex: any;
+
+  @RankStore.Mutation
+  setPageIndex: any;
 
   @RankStore.State
   checkedBrokers: any;
@@ -96,16 +106,95 @@ export default class RankList extends Vue {
 
   @Watch('rankParams', { deep: true })
   handleRefresh() {
-    this.getRankList(this.refactor());
+    this.resetIndex();
+    // this.getRankList(this.refactor());
+    this.getPageData();
   }
 
+  resetIndex() {
+    // this.index = 1;
+    this.setPageIndex(1);
+  }
+
+  private get index() {
+    return this.pageIndex || 1;
+  }
+
+  getPageData(page: number = 1) {
+    this.getRankList(this.refactor({ index: page }));
+  }
+
+  getData() {
+    return this.getRankList(this.refactor());
+  }
+
+
   mounted() {
-    this.getRankList(this.refactor());
+    // this.getPageData();
+    this.getData();
+    // window.addEventListener('scroll', throttle(this.scrollCb, 200));
+    // window.addEventListener('scroll', this.scrollCb)
+  }
+
+  unmouted() {
+    window.removeEventListener('scroll', throttle(this.scrollCb, 200));
+  }
+
+  isProcess: boolean = false;
+
+  scrollCb() {
+    console.log('scroll');
+    if (this.rankListLoading) {
+      return;
+    }
+    // requestAnimationFrame(() => {
+    this.isProcess = true;
+    this.loadMore();
+    // });
+  }
+
+  throttleHeight = 200;
+
+  preHeight = 0;
+
+  loadMore() {
+    let scrollTop = 0;
+    if (document.documentElement && document.documentElement.scrollTop) {
+      scrollTop = document.documentElement.scrollTop;
+    } else if (document.body) {
+      scrollTop = document.body.scrollTop;
+    }
+    let docHeight = document.body.scrollHeight;
+    if (document.documentElement && document.documentElement.scrollHeight) {
+      docHeight = document.documentElement.scrollHeight;
+    }
+    let windowHeight = document.body.clientHeight;
+    if (document.documentElement && document.documentElement.clientHeight) {
+      windowHeight = document.documentElement.clientHeight;
+    }
+    if (document.documentElement && document.documentElement.scrollTop) {
+      scrollTop = document.documentElement.scrollTop;
+    } else if (document.body) {
+      // eslint-diable-next-line
+      scrollTop = document.body.scrollTop;
+    }
+    // console.log(`scrollTop: ${scrollTop} \r\n docHeight: ${docHeight} \r\n windowHeight: ${windowHeight}`)
+    const allHeight = scrollTop + windowHeight + (this.throttleHeight || 10);
+    if (allHeight > docHeight) {
+      console.log(' can loading ');
+      this.getData();
+    } else {
+      this.isProcess = false;
+    }
+    this.preHeight = allHeight;
   }
 
   private refactor(params: any = {}) {
+    console.log(this.pageIndex, 'this.pageIndex');
     const obj: any = Object.assign({}, this.rankParams);
     return {
+      index: this.index || 1,
+      size: 20,
       maxScore: obj.Score && obj.Score.split('-')[1],
       minScore: obj.Score && obj.Score.split('-')[0],
       minRoi: obj.Roi && obj.Roi.split('-')[0],

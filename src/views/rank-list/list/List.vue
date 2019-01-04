@@ -2,10 +2,12 @@
   <div class="list-container">
     <div class="list-table">
       <el-table
+        ref="rankTable"
         class="rank-table"
-        :data="data"
+        :data="dataList"
         :row-class-name="getRowClassName"
         @sort-change="handleSortChange"
+        current-row-key="UserID"
       >
         <el-table-column
           label="交易员"
@@ -19,10 +21,13 @@
             >
               <div class="trader-container-row">
                 <div class="loading-first avatar">
-                  <img :src="base+'/Avata/'+scope.row.UserID" />
+                  <img
+                  @mouseenter.self="showCard($event,scope.row.UserID+'_'+scope.row.AccountIndex)"
+                  @mouseleave="personCard.hide()"
+                  :src="base+'/Avata/'+scope.row.UserID" />
                 </div>
                 <div class="loading-first trader-info">
-                  <div class="info-1">{{scope.row.NickName}} #{{scope.row.MT4Account.BrokerID}}</div>
+                  <div class="info-1">{{scope.row.NickName}} #{{scope.row.AccountIndex}}</div>
                   <div class="info-2">
                     {{scope.row.BrokerName || ''}}
                   </div>
@@ -213,18 +218,29 @@
             <div class="empty-text"><span>没有找到相关内容，请您换个条件试试吧~</span></div>
           </div>
         </template>
+        <!-- <template slot="append">
+          <div class="loading-container">
+            <div class="loading-lists">
+              <div class=""></div>
+            </div>
+            <div class="loading-lists"></div>
+          </div>
+        </template> -->
+
       </el-table>
     </div>
   </div>
 </template>
 <script lang="ts">
-import { Component, Vue, Prop } from 'vue-property-decorator';
+import {
+  Component, Vue, Prop, Watch,
+} from 'vue-property-decorator';
 import { namespace } from 'vuex-class';
 
 import { loadAuth } from 'fmcomponents/src/utils';
 import { getLoginStatus } from 'fmcomponents';
 import FollowBox from 'fmcomponents/src/components/follow';
-
+import personCard from 'fmcomponents/src/components/personcard';
 import Chart from '@/components/chart/index.vue';
 
 import SvgIcon from '@/components/svg/index.ts';
@@ -248,11 +264,60 @@ const RankStore = namespace('RankStore');
 export default class List extends Vue {
   isLoading: boolean = false;
 
+  @RankStore.State
+  rankListLoading: any;
+
   @Prop({
     type: Array,
     default: () => [],
   })
   data: any;
+
+  @Prop()
+  getData: any;
+
+  personCard: any = personCard;
+
+
+  get dataList() {
+    if (this.rankListLoading) {
+      const data = this.data && this.data.length ? this.data.concat(Array(6).fill(6)) : Array(6).fill(6);
+      return data;
+    }
+
+    return this.data;
+  }
+
+  showCard(e: any, ids: any) {
+    const _this = this;
+    console.log(e, 'e');
+    personCard.show({
+      id: ids,
+      position: {
+        top: e.target.offsetTop,
+        left: e.target.offsetLeft,
+        height: e.target.offsetHeight,
+      },
+      callback(val: any) {
+        return new Promise((res) => {
+          if (res) {
+            console.log('res:', val);
+            if (val.code === 'SUCCESS' || val.code === 0) {
+              _this.getFollowAndAttention();
+            } else {
+              // 失败
+            }
+          }
+        });
+      },
+    });
+  }
+
+  // dataList: any = [];
+  // @Watch('data')
+  // dataChange() {
+  //   this.dataList.push(...this.data)
+  // }
 
   log(msg: any) {
     console.log(msg);
@@ -266,11 +331,43 @@ export default class List extends Vue {
   }
 
   public get dateIsLoading() {
-    return this.isLoading;
+    return this.rankListLoading;
   }
+
+  winHeight: any = 800;
 
   mounted() {
     // setTimeout(() => this.isLoading = false, 5000);
+
+    // this.winHeight = windowHeight;
+
+    let windowHeight = document.body.clientHeight;
+    if (document.documentElement && document.documentElement.clientHeight) {
+      windowHeight = document.documentElement.clientHeight;
+    }
+    const offsetTop = this.$el.offsetTop + 50;
+    console.log();
+    this.winHeight = windowHeight - offsetTop - 300;
+
+    console.log(this.$refs.rankTable);
+    // requestAnimationFrame(() => {
+    //   (this.$refs.rankTable as any).doLayout();
+    // })
+  }
+
+  created() {
+    if (typeof window !== 'undefined') {
+      let windowHeight = document.body.clientHeight;
+      if (document.documentElement && document.documentElement.clientHeight) {
+        windowHeight = document.documentElement.clientHeight;
+      }
+      let footerHeight = 0;
+      const footer = document.querySelector('.page-footer');
+      if (footer) {
+        footerHeight = (footer as any).offsetHeight;
+      }
+      this.winHeight = windowHeight - footerHeight;
+    }
   }
 
   @RankStore.Action
@@ -420,6 +517,10 @@ export default class List extends Vue {
       }
       :global(.default-row) {
         height: 80px;
+        :global(.cell) {
+          padding-right: 0;
+          padding-left: 0;
+        }
         &:hover {
           background: rgba(255, 255, 255, 1);
           box-shadow: 0px 0px 30px 0px rgba(0, 0, 0, 0.1);
@@ -533,6 +634,11 @@ export default class List extends Vue {
           color: rgba(51, 51, 51, 1);
           line-height: 24px;
         }
+      }
+
+
+      .loading-container {
+
       }
     }
   }

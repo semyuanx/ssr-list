@@ -41,7 +41,7 @@
         <div><span class="common-font">剩余名额</span></div>
       </div> -->
       <div class="right-line-container line-join">
-        <span class="subscribe-btn">{{data.price ? `$${data.price}/月` : '免费订阅'}}</span>
+        <span @click="sub" class="subscribe-btn">{{data.price ? `$${data.price}/月` : '免费订阅'}}</span>
       </div>
     </div>
   </div>
@@ -57,6 +57,11 @@ export default class FmLittleCard extends Vue {
     default: () => {},
   })
   data: any;
+
+  sub() {
+    console.log('sub');
+    this.$emit('subscribe', this.data);
+  }
 }
 </script>
 <style lang="less" scoped>
@@ -172,7 +177,7 @@ export default class FmLittleCard extends Vue {
         .subscribe-btn {
           line-height:19px;
           text-align: center;
-          padding: 6px 14px;
+          padding: 6px 8px;
           border-radius: 20px;
           cursor: pointer;
           font-size:14px;

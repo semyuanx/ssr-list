@@ -1,7 +1,7 @@
 <template>
   <div class="header">
     <div class="fm-show-pc">
-      <InvestManager v-if="configData" :data="configData" :description="description" />
+      <InvestManager :subscribe="subscribe" v-if="configData" :data="configData" :description="description" />
     </div>
     <div class="fm-show-mobile">
       <InvestManagerMobile :data="data"/>
@@ -25,8 +25,10 @@ export default class Index extends Vue {
   @Prop()
   data:any;
 
+  @Prop()
+  subscribe: any;
+
   formatVal(val: string|number, type: string): string | number {
-    console.log(type);
     return propFormat(val, type);
   }
 
@@ -44,7 +46,7 @@ export default class Index extends Vue {
       });
     }
 
-    if (Array.isArray(config.listData.List) && config.listData.List.length > 1) {
+    if (config.listData && Array.isArray(config.listData.List) && config.listData.List.length > 1) {
       if (config.listData.List.length > 3) {
         showData = showData.slice(0, 2);
       } else {
@@ -56,6 +58,7 @@ export default class Index extends Vue {
         index: item.AccountIndex,
         brokerName: item.BrokerName,
         price: item.Price,
+        item,
         data: showData.map((it: any) => ({ prop: (mapKey as any)[it], val: this.formatVal(item[it], it) })),
       }));
       return newConfig.slice(0, 4);
@@ -65,11 +68,36 @@ export default class Index extends Vue {
 
   get description() {
     const config:any = this.data;
+    console.log(this.data, 'description');
+    const filters = config && config.CondCfg && config.CondCfg.CondConfig;
+    const info: any = [];
+    if (filters) {
+      Object.keys(filters).filter((i: any) => i !== 'BrokerID').forEach((i: any) => {
+        const filter = filters[i];
+        const prop = `${(mapKey as any)[i]}`;
+        if (filter) {
+          if (Object.prototype.toString.call(filter) === '[object Object]') {
+            if (filter.Min && filter.Max) {
+              info.push(`${this.formatVal(filter.Min, i)} <${prop}< ${this.formatVal(filter.Max, i)}`);
+            } else if (filter.Min) {
+              info.push(`${prop}> ${this.formatVal(filter.Min, i)}`);
+            } else if (filter.Max) {
+              info.push(`${prop}< ${this.formatVal(filter.Max, i)}`);
+            }
+          } else {
+            info.push(`${prop}: ${filter}`);
+          }
+        }
+      });
+    }
+
     return {
+      source: config,
       background: config.ChartID,
       title: config.RankName,
       subTitle: config.ViceTitle,
       textTitle: config.RankText,
+      filterText: info.length ? `上榜条件:${info.join(',')}` : '',
     };
   }
 }

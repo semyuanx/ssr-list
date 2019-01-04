@@ -1,7 +1,7 @@
 <template>
   <div class="header">
     <div class="fm-show-pc">
-      <Strategy :data="data" :header="header" />
+      <Strategy :subscribe="subscribe" :data="data" :header="header" />
     </div>
     <div class="fm-show-mobile">
       <Strategy :data="data" :header="header" />
@@ -24,6 +24,9 @@ export default class Index extends Vue {
 
   @Prop()
   header: any;
+
+  @Prop()
+  subscribe: any;
 }
 </script>
 <style lang="less" scoped>
