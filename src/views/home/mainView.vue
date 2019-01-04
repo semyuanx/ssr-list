@@ -4,20 +4,14 @@
             <FmStrategy :subscribe="handleSub" :data="strategytData" :header="strategytDataHeader" />
         </div>
         <div class="list-item">
-            <InvestManager :subscribe="handleSub" :data="products"/>
+            <InvestManager :subscribe="handleSub" :data="products" />
         </div>
         <div class="list-item" v-for="(item,index) in investData" :key="index">
-            <CommonListItem :subscribe="handleSub" :data="item"/>
-        </div>
-        <!-- <div class="invest">
-            <InvestProfessor />
+            <CommonListItem :subscribe="handleSub" :data="item" />
         </div>
         <div class="invest">
-            <DangerKeep />
+            <TradeMaster :subscribe="handleSub" :data="masterFollowerData" />
         </div>
-        <div class="invest">
-            <TradeMaster />
-        </div> -->
     </div>
 </template>
 
@@ -29,7 +23,7 @@ import CommonListItem from '@/views/home/CommonListItem.vue'; // @ is an alias t
 import InvestManager from '@/views/home/InvestManager.vue'; // @ is an alias to /src
 // import InvestProfessor from '@/views/home/InvestProfessor.vue'; // @ is an alias to /src
 // import DangerKeep from '@/views/home/DangerKeep.vue'; // @ is an alias to /src
-// import TradeMaster from '@/views/home/TradeMaster.vue'; // @ is an alias to /src
+import TradeMaster from '@/views/home/TradeMaster.vue'; // @ is an alias to /src
 import { namespace, Action } from 'vuex-class';
 
 import mapKey from '@/constant/propMap';
@@ -48,6 +42,7 @@ const RankStore = namespace('RankStore');
     FmStrategy,
     CommonListItem,
     InvestManager,
+    TradeMaster,
   },
 })
 export default class mainView extends Vue {
@@ -57,12 +52,18 @@ export default class mainView extends Vue {
     @HomeStore.State
     progressProducts: any;
 
-    get productLength() {
-      return this.progressProducts ? this.progressProducts.length : 0;
-    }
+    @HomeStore.State
+    masterFollower: any;
 
     get products() {
       const data = this.progressProducts.map((i: any) => i);
+      return {
+        data,
+      };
+    }
+
+    get masterFollowerData() {
+      const data = this.masterFollower.map((i: any) => i);
       return {
         data,
       };

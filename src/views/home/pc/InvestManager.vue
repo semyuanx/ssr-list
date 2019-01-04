@@ -19,15 +19,15 @@
       <div class="left" :style="`background-image: url(${description.background})`">
         <div><span>{{ description.textTitle }}</span></div>
         <div>
-          <button @click="toRankList" class="sub-right-now">立即参与</button>
+          <button @click="toRankList" class="sub-right-now">{{description.textBtn || "立即参与"}}</button>
         </div>
       </div>
       <div class="right">
         <div :class="dataLength > 3 ? 'right-lists right-wrap' : 'right-lists'">
           <template v-if="dataLength > 3">
-            <div :key="item.avatar + item.index" v-for="item in data" class="little-list-item">
+            <div :key="item.avatar + item.index" v-for="item in data.data" class="little-list-item">
                 <LittleCard @subscribe="handleSub" :data="item">
-                  <div class="prod-desc" slot="header">
+                  <div v-if="data.needSlot" class="prod-desc" slot="header">
                     <div class="prod-name">{{item.name || ''}}</div>
                     <div class="prod-danger">{{item.danger || ''}}</div>
                   </div>
@@ -35,9 +35,9 @@
             </div>
           </template>
           <template v-else>
-            <div :key="item.avatar + item.index" v-for="(item) in data" class="list-item">
+            <div :key="item.avatar + item.index" v-for="(item) in data.data" class="list-item">
               <LineCard @subscribe="handleSub" :data="item">
-                <div class="prod-desc" slot="left">
+                <div v-if="data.needSlot" class="prod-desc" slot="left">
                   <div class="prod-name">{{item.name || ''}}</div>
                   <div class="prod-danger">{{item.danger || ''}}</div>
                 </div>
@@ -76,14 +76,14 @@ export default class Index extends Vue {
   @Prop()
   subscribe: any;
 
-  @Prop({ default: () => [] })
+  @Prop({ default: () => {} })
   data: any;
 
   @Prop({ default: () => {} })
   description: any;
 
   get dataLength() {
-    return Array.isArray(this.data) ? this.data.length : 0;
+    return this.data && Array.isArray(this.data.data) ? this.data.data.length : 0;
   }
 
   toRankList() {
