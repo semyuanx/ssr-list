@@ -1,7 +1,7 @@
 <template>
   <div class="header">
     <div class="fm-show-pc">
-      <TradeMaster :subscribe="subscribe" v-if="configData.data.length > 1" :data="configData" :description="description" />
+      <InvestManager :subscribe="subscribe" v-if="configData.data.length > 1" :data="configData" :description="description" />
     </div>
     <div class="fm-show-mobile">
       <TradeMasterMobile />
@@ -10,13 +10,13 @@
 </template>
 <script lang="ts">
 import { Component, Vue, Prop } from 'vue-property-decorator';
-import TradeMaster from '@/views/home/pc/InvestManager.vue';
+import InvestManager from '@/views/home/pc/InvestManager.vue';
 import TradeMasterMobile from '@/views/home/mobile/TradeMaster.vue';
 import { moneyFormat, percentFormat } from '@/utils/format';
 
 @Component({
   components: {
-    TradeMaster, TradeMasterMobile,
+    InvestManager, TradeMasterMobile,
   },
 })
 export default class Index extends Vue {
@@ -63,7 +63,7 @@ export default class Index extends Vue {
       title: '跟随大师',
       subTitle: 'ssss',
       textTitle: '获利最多跟随者',
-      filterText: '立即查看',
+      filterText: '',
       textBtn: '立即查看',
     };
   }
