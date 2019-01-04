@@ -2,7 +2,7 @@ import {
   State, Repository, Action, Getter, Mutation, Set,
 } from '@/utils/store-class-annotation';
 import { Commit, ActionTree } from 'vuex';
-import { getCustomConfig, getCustomRankList } from '@/service/home';
+import { getCustomConfig, getCustomRankList, getMasterFollowerService } from '@/service/home';
 import { getAllProducts } from '@/service/manager';
 
 @Repository('HomeStore')
@@ -13,11 +13,18 @@ export default class HomeStore {
   @State([])
   public progressProducts: Array<any> = [];
 
+  @State([])
+
+  public masterFollower: Array<any> = []; // 交易大师
+
   @Set('configs')
   public setConfig(): any | null { }
 
   @Set('progressProducts')
   public setProgressProducts(): any | null { }
+
+  @Set('masterFollower')
+  public setMasterFollower(): any | null { }
 
   // async retry(tryTime: number = 3) {
   //   const toGet = async (index: number) => {
@@ -99,6 +106,22 @@ export default class HomeStore {
     if (data.items) {
       console.log(data, 'progressProducts');
       commit('setProgressProducts', data.items);
+    }
+    return data;
+  }
+
+  @Action
+  public async getMasterFollower(context: any, params: any) {
+    const { commit } = context;
+    let data: any = {};
+    try {
+      data = await getMasterFollowerService(params);
+    } catch (e) {
+      console.log(e);
+    }
+    if (data.items) {
+      console.log(data, 'setMasterFollower');
+      commit('setMasterFollower', data.items);
     }
     return data;
   }
