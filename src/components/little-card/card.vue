@@ -1,19 +1,21 @@
 <template>
   <div class="card-content">
     <div class="card-header">
-      <div class="card-header-left">
-        <div class="card-avatar">
-          <img :src="data.avatar" />
+      <slot name="header">
+        <div class="card-header-left">
+          <div class="card-avatar">
+            <img :src="data.avatar" />
+          </div>
         </div>
-      </div>
-      <div class="card-header-right">
-        <div class="name">
-          <span>{{data.name}} #{{data.index}}</span>
+        <div class="card-header-right">
+          <div class="name">
+            <span>{{data.name}} #{{data.index}}</span>
+          </div>
+          <div class="broker">
+            <span>{{data.brokerName}}</span>
+          </div>
         </div>
-        <div class="broker">
-          <span>{{data.brokerName}}</span>
-        </div>
-      </div>
+      </slot>
     </div>
     <div class="card-body">
       <div class="num-container">
@@ -29,7 +31,7 @@
         </div>
       </div>
       <div class="sub-btn">
-        <span @click="sub" class="subscribe-btn">{{data.price ? `$${data.price}/月` : '免费订阅'}}</span>
+        <span @click="sub" class="subscribe-btn">{{data.price ? `$${data.price}/月` : data.rightBtnText ? data.rightBtnText : '免费订阅'}}</span>
       </div>
     </div>
   </div>

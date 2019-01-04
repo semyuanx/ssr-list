@@ -26,7 +26,12 @@
         <div :class="dataLength > 3 ? 'right-lists right-wrap' : 'right-lists'">
           <template v-if="dataLength > 3">
             <div :key="item.avatar + item.index" v-for="item in data" class="little-list-item">
-                <LittleCard @subscribe="handleSub" :data="item" />
+                <LittleCard @subscribe="handleSub" :data="item">
+                  <div class="prod-desc" slot="header">
+                    <div class="prod-name">{{item.name || ''}}</div>
+                    <div class="prod-danger">{{item.danger || ''}}</div>
+                  </div>
+                </LittleCard>
             </div>
           </template>
           <template v-else>
@@ -138,24 +143,7 @@ export default class Index extends Vue {
           display: flex;
           flex-direction: row;
           margin-bottom: 1px;
-          .prod-desc {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            font-family:MicrosoftYaHei;
-            .prod-name {
-              font-size:20px;
-              color:rgba(51,51,51,1);
-              line-height:26px;
-              margin-bottom: 5px;
-            }
-            .prod-danger {
-              margin-top: 5px;
-              font-size:12px;
-              color:rgba(31,187,149,1);
-              line-height:16px;
-            }
-          }
+
         }
         .little-list-item {
           // flex: 1;
@@ -167,6 +155,24 @@ export default class Index extends Vue {
           }
           &:first-child {
             border-bottom: 1px solid #f5f5f5;
+          }
+        }
+        .prod-desc {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          font-family:MicrosoftYaHei;
+          .prod-name {
+            font-size:20px;
+            color:rgba(51,51,51,1);
+            line-height:26px;
+            margin-bottom: 5px;
+          }
+          .prod-danger {
+            margin-top: 5px;
+            font-size:12px;
+            color:rgba(31,187,149,1);
+            line-height:16px;
           }
         }
       }
