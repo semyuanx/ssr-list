@@ -245,6 +245,7 @@ import Chart from '@/components/chart/index.vue';
 
 import SvgIcon from '@/components/svg/index.ts';
 import { numberFormat, percentFormat } from '@/utils/format';
+import { getElementTop, getElementLeft } from '@/utils/util';
 import { Table, TableColumn } from 'element-ui';
 
 const RankStore = namespace('RankStore');
@@ -291,12 +292,13 @@ export default class List extends Vue {
   showCard(e: any, ids: any) {
     // eslint-disable-next-line
     const _this = this;
-    console.log(e, 'e');
+    const top = getElementTop(e.target);
+    const left = getElementLeft(e.target);
     personCard.show({
       id: ids,
       position: {
-        top: e.target.offsetTop,
-        left: e.target.offsetLeft,
+        top: top || e.target.offsetTop,
+        left: left || e.target.offsetLeft,
         height: e.target.offsetHeight,
       },
       callback(val: any) {
@@ -560,6 +562,17 @@ export default class List extends Vue {
             flex-direction: column;
             text-align: left;
             padding-left: 4px;
+            font-family:MicrosoftYaHei;
+            .info-1 {
+              font-size:14px;
+              color:rgba(51,51,51,1);
+              line-height:19px;
+            }
+            .info-2 {
+              font-size:12px;
+              color:rgba(153,153,153,1);
+              line-height:16px;
+            }
           }
         }
       }

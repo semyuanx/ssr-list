@@ -58,3 +58,37 @@ export const animate = function animate(fn: any) {
     requestAnimation(fn);
   }
 };
+
+export function getElementLeft(element: any, className?: any) {
+  let actualLeft = element.offsetLeft;
+  let current = element.offsetParent;
+
+  while (current !== null) {
+    if (className && typeof className === 'string') {
+      const cls:any = current.className || current.classList.value;
+
+      console.log(actualLeft, 'actualTop');
+      if (cls && cls.indexOf(className) > -1) return actualLeft;
+    }
+    actualLeft += current.offsetLeft;
+    current = current.offsetParent;
+  }
+
+  return actualLeft;
+}
+
+export function getElementTop(element: any, className?: any) {
+  let actualTop = element.offsetTop;
+  let current = element.offsetParent;
+
+  while (current !== null) {
+    if (className && typeof className === 'string') {
+      const cls:any = current.className || current.classList.value;
+      if (cls && cls.indexOf(className) > -1) return actualTop;
+    }
+    actualTop += current.offsetTop;
+    current = current.offsetParent;
+  }
+
+  return actualTop;
+}
