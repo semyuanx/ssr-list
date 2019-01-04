@@ -52,6 +52,7 @@ export default class RankList extends Vue {
   }
 
   sortChange({ prop, order }: any) {
+    this.resetIndex();
     this.getRankList(
       this.refactor({
         orderby: prop,
