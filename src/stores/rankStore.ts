@@ -78,9 +78,10 @@ export default class RankStore {
   }
 
   @Action
-  public getRankList(context: { commit: Commit, state: any }, payload: any): any {
+  public getRankList(context: { commit: Commit, state: any }, payload: any) {
     if (context.state.rankListLoading) return;
     context.commit('setRankLoading', true);
+    // eslint-disable-next-line
     return getRankList(payload)
       .then((res: any) => {
         console.log(res, payload, 'getRankList');

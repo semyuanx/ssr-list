@@ -289,6 +289,7 @@ export default class List extends Vue {
   }
 
   showCard(e: any, ids: any) {
+    // eslint-disable-next-line
     const _this = this;
     console.log(e, 'e');
     personCard.show({

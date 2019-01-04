@@ -21,7 +21,6 @@ import { openWebView } from '@/utils/native';
 import MainView from '@/views/home/mainView.vue';
 
 const HomeStore = namespace('HomeStore');
-const ManagerStore = namespace('ManagerStore');
 
 @Component({
   components: {
@@ -32,14 +31,14 @@ export default class Home extends Vue {
   @HomeStore.Action
   getCustomConfig: any;
 
-  @ManagerStore.Action
+  @HomeStore.Action
   getProductsAsync: any;
 
   openWebView:any = openWebView;
 
   public params: any = {
     status: 'InProcess',
-    pageSize: 10,
+    pageSize: 4,
     pageIndex: 1,
   };
 
