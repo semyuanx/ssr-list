@@ -8,7 +8,7 @@
     </div>
     <div class="content">
       <SimpleTable
-        :header="initHeader"
+        :header="description.header || initHeader"
         :data="refactorData"
       >
         <template slot-scope="slotProps">
@@ -64,11 +64,6 @@ export default class Index extends Vue {
 
   get initHeader() {
     if (this.data) {
-      const firstLine = {
-        label: '产品名称',
-        prop: 'Name',
-        align: 'left',
-      };
       // const keys = Object.keys(this.data.HideConfig ? this.data.HideConfig : {})
       //   .filter(v => this.data.HideConfig[v])
       //   .slice(0, 2);
@@ -78,6 +73,11 @@ export default class Index extends Vue {
       //   align: 'right',
       // }));
       const res: any = [
+        {
+          label: '产品名称',
+          prop: 'Name',
+          align: 'left',
+        },
         {
           label: '产品资金',
           prop: 'Balance',
@@ -89,7 +89,7 @@ export default class Index extends Vue {
           align: 'right',
         },
       ];
-      return [firstLine, ...res];
+      return [...res];
     }
     return [];
   }

@@ -4,19 +4,20 @@
       <InvestManager :subscribe="subscribe" v-if="configData.data.length > 1" :data="configData" :description="description" />
     </div>
     <div class="fm-show-mobile">
-      <TradeMasterMobile />
+      <CommonMobile :data="mobileConfigData" :description="description" />
     </div>
   </div>
 </template>
 <script lang="ts">
 import { Component, Vue, Prop } from 'vue-property-decorator';
 import InvestManager from '@/views/home/pc/InvestManager.vue';
-import TradeMasterMobile from '@/views/home/mobile/TradeMaster.vue';
+// import TradeMasterMobile from '@/views/home/mobile/TradeMaster.vue';
+import CommonMobile from '@/views/home/mobile/CommonMobile.vue';
 import { moneyFormat, percentFormat } from '@/utils/format';
 
 @Component({
   components: {
-    InvestManager, TradeMasterMobile,
+    InvestManager, CommonMobile,
   },
 })
 export default class Index extends Vue {
@@ -25,6 +26,20 @@ export default class Index extends Vue {
 
   @Prop()
   subscribe: any;
+
+  get mobileConfigData() {
+    const config:any = this.data;
+    let data = [];
+    if (Array.isArray(config.data)) {
+      data = config.data.map((i: any) => ({
+        Name: i.Name,
+        danger: `风险<${percentFormat(i.FollowerMaxRisk)}`,
+        Balance: moneyFormat(i.Balance),
+        FollowerCount: i.FollowerCount,
+      }));
+    }
+    return data;
+  }
 
   get configData() {
     const config:any = this.data;
@@ -65,6 +80,7 @@ export default class Index extends Vue {
       textTitle: '获利最多跟随者',
       filterText: '',
       textBtn: '立即查看',
+
     };
   }
 }
