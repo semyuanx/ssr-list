@@ -13,6 +13,9 @@ export const relations = () => `${API_PREFIX_V1}/me/relations`;
 export const addOrCancelAttentionApi = () => `${API_PREFIX_V3}/social/attentions`;
 export const checkCanFollowApi = () => `${API_PREFIX_V1}/trade/check/follow`;
 
+
+export const getMasterFollowerApi = () => `${API_PREFIX_V2}/trade/rank/followers`;
+
 export default {
-  login, rankList, customConfig, customRankList, checkCanFollowApi, brokersList,
+  login, rankList, customConfig, customRankList, checkCanFollowApi, brokersList, getMasterFollowerApi,
 };

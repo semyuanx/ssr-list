@@ -30,21 +30,9 @@
         <div><span class="rate-val">{{i && i.val || ''}}</span></div>
         <div><span class="common-font">{{i && i.prop || ''}}</span></div>
       </div>
-      <!-- <div class="right-line-container line-rate">
-        <div><span class="rate-val">89.78%</span></div>
-        <div><span class="common-font">预期收益率</span></div>
-      </div> -->
-      <!-- <div class="right-line-container line-leave">
-        <div><span class="leave-val">1</span></div>
-        <div><span class="common-font">剩余名额</span></div>
-      </div>
-      <div class="right-line-container line-leave">
-        <div><span class="leave-val">1</span></div>
-        <div><span class="common-font">剩余名额</span></div>
-      </div> -->
       <slot name="right">
         <div class="right-line-container line-join">
-          <span @click="sub" class="subscribe-btn">{{data.price ? `$${data.price}/月` : data.rightText ? data.rightText : '免费订阅'}}</span>
+          <span @click="sub" class="subscribe-btn">{{data.price ? `$${data.price}/月` : data.rightBtnText ? data.rightBtnText : '免费订阅'}}</span>
         </div>
       </slot>
     </div>

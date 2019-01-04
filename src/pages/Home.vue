@@ -34,6 +34,9 @@ export default class Home extends Vue {
   @HomeStore.Action
   getProductsAsync: any;
 
+  @HomeStore.Action
+  getMasterFollower: any;
+
   openWebView:any = openWebView;
 
   public params: any = {
@@ -45,6 +48,13 @@ export default class Home extends Vue {
   mounted() {
     this.getCustomConfig();
     this.getProductsAsync(this.params);
+    this.getMasterFollower({
+      pageSize: 4,
+      pageIndex: 1,
+      time: 1,
+      pageField: 'FollowMoney',
+      pageSort: 'desc',
+    });
   }
 }
 </script>
