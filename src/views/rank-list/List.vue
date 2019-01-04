@@ -1,7 +1,7 @@
 <template>
 <div class="main-list-container">
   <div class="fm-show-pc">
-    <FmList :data="rankList" :getData="getData" />
+    <FmList :data="rankList" :getData="getData" @sortChange="sortChange" />
   </div>
   <div class="fm-show-mobile">
     <MobileList :data="rankList" @sortChange="sortChange"/>

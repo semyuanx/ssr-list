@@ -88,12 +88,12 @@ export default class RankStore {
         const pageIndex = payload.index;
         let totalList = context.state.rankList;
         console.log(pageIndex, 'pageIndex', context.state.pageIndex);
-        // if ( pageIndex === 1) {
-        //   totalList = res.List;
-        // } else {
-        //   totalList = totalList.concat(res.List);
-        // }
-        totalList = res.List;
+        if (pageIndex === 1) {
+          totalList = res.List;
+        } else {
+          totalList = totalList.concat(res.List);
+        }
+        // totalList = res.List;
 
         context.commit('setPageIndex', pageIndex + 1);
         context.commit('setRankList', totalList || []);

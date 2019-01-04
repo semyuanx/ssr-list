@@ -15,8 +15,11 @@ import throttle from 'lodash.throttle';
 
 import FilterHeader from '@/views/rank-list/FilterHeader.vue';
 import List from '@/views/rank-list/List.vue';
+import { getElementTop, animate } from '@/utils/util';
 
 const RankStore = namespace('RankStore');
+
+let isEnterLoad: boolean = false;
 
 @Component({
   components: {
@@ -46,12 +49,22 @@ export default class RankList extends Vue {
   @RankStore.Mutation
   setFilterRes: any;
 
+  params: any = {};
+
+  setParams(params: any) {
+    this.params = { ...this.params, ...params };
+  }
+
   handleFilter() {
     this.filterResult();
-    this.getRankList(this.refactor());
+    this.getData();
   }
 
   sortChange({ prop, order }: any) {
+    this.setParams({
+      orderby: prop,
+      order,
+    });
     this.resetIndex();
     this.getRankList(
       this.refactor({
@@ -108,7 +121,6 @@ export default class RankList extends Vue {
   @Watch('rankParams', { deep: true })
   handleRefresh() {
     this.resetIndex();
-    // this.getRankList(this.refactor());
     this.getPageData();
   }
 
@@ -126,39 +138,36 @@ export default class RankList extends Vue {
   }
 
   getData() {
-    return this.getRankList(this.refactor());
+    const params: any = this.refactor();
+    console.log(params, 'pppppp');
+    return this.getRankList(params);
   }
-
 
   mounted() {
     // this.getPageData();
     this.getData();
-    // window.addEventListener('scroll', throttle(this.scrollCb, 200));
-    // window.addEventListener('scroll', this.scrollCb)
+    window.addEventListener('scroll', () => {
+      if (isEnterLoad || this.rankListLoading) return;
+      isEnterLoad = true;
+      throttle(this.scrollCb, 200)();
+    });
   }
 
   unmouted() {
-    window.removeEventListener('scroll', throttle(this.scrollCb, 200));
+    window.removeEventListener('scroll', () => {
+      if (isEnterLoad || this.rankListLoading) return;
+      isEnterLoad = true;
+      throttle(this.scrollCb, 200)();
+    });
   }
-
-  isProcess: boolean = false;
 
   scrollCb() {
-    console.log('scroll');
-    if (this.rankListLoading) {
-      return;
-    }
-    // requestAnimationFrame(() => {
-    this.isProcess = true;
     this.loadMore();
-    // });
   }
 
-  throttleHeight = 200;
+  throttleHeight = 20;
 
-  preHeight = 0;
-
-  loadMore() {
+  getScrollTop() {
     let scrollTop = 0;
     if (document.documentElement && document.documentElement.scrollTop) {
       // eslint-disable-next-line
@@ -167,30 +176,103 @@ export default class RankList extends Vue {
       // eslint-disable-next-line
       scrollTop = document.body.scrollTop;
     }
-    let docHeight = document.body.scrollHeight;
-    if (document.documentElement && document.documentElement.scrollHeight) {
-      docHeight = document.documentElement.scrollHeight;
-    }
+    return scrollTop;
+  }
+
+  getWinHeight() {
     let windowHeight = document.body.clientHeight;
     if (document.documentElement && document.documentElement.clientHeight) {
       windowHeight = document.documentElement.clientHeight;
     }
-    if (document.documentElement && document.documentElement.scrollTop) {
-      // eslint-disable-next-line
-      scrollTop = document.documentElement.scrollTop;
-    } else if (document.body) {
-      // eslint-disable-next-line
-      scrollTop = document.body.scrollTop;
+    return windowHeight;
+  }
+
+  getDocHeight() {
+    let docHeight = document.body.scrollHeight;
+    if (document.documentElement && document.documentElement.scrollHeight) {
+      docHeight = document.documentElement.scrollHeight;
     }
-    // console.log(`scrollTop: ${scrollTop} \r\n docHeight: ${docHeight} \r\n windowHeight: ${windowHeight}`)
+    return docHeight;
+  }
+
+  getTopNavHeight() {
+    let height = 50;
+    const nav = document.getElementById('#fm-top-nav');
+    if (nav) {
+      height = nav.offsetHeight;
+    }
+    return height;
+  }
+
+  setStyleProp(el: any, val: any, prop: any) {
+    if (el && el[prop] !== val) {
+      el.style[prop] = val;
+    }
+  }
+
+  needFixTableHeader(scrollTop: number) {
+    const el = this.$el;
+    if (el) {
+      const rankTable = el.querySelector('.rank-table');
+      if (rankTable) {
+        const header: any = rankTable.querySelector('.el-table__header-wrapper');
+        if (header) {
+          const top = getElementTop(header);
+          if (scrollTop > top) {
+            const navHeight = this.getTopNavHeight();
+            this.setStyleProp(header, 'fixed', 'position');
+            this.setStyleProp(header, `${navHeight}px`, 'top');
+            this.setStyleProp(header, 200, 'zIndex');
+          } else {
+            this.setStyleProp(header, 'unset', 'position');
+          }
+        }
+      }
+    }
+  }
+
+  computeNeedLoad() {
+    const scrollTop = this.getScrollTop();
+    const windowHeight = this.getWinHeight();
+    const docHeight = this.getDocHeight();
+
+    animate(() => {
+      this.needFixTableHeader(scrollTop);
+    });
+
     const allHeight = scrollTop + windowHeight + (this.throttleHeight || 10);
     if (allHeight > docHeight) {
-      console.log(' can loading ');
-      this.getData();
-    } else {
-      this.isProcess = false;
+      return true;
     }
-    this.preHeight = allHeight;
+    return false;
+  }
+
+  scrollTo(height: number) {
+    if (window.scrollTo) {
+      animate(() => {
+        window.scrollTo(0, height);
+      });
+    }
+  }
+
+  loadMore() {
+    const scrollTop = this.getScrollTop();
+    const windowHeight = this.getWinHeight();
+    const docHeight = this.getDocHeight();
+
+    const needLoad = this.computeNeedLoad();
+    if (needLoad) {
+      this.scrollTo(scrollTop - 100);
+      this.getData().then(() => {
+        const reComputeNeedLoad = this.computeNeedLoad();
+        if (reComputeNeedLoad) {
+          this.scrollTo(scrollTop - 100);
+        }
+        isEnterLoad = false;
+      });
+    } else {
+      isEnterLoad = false;
+    }
   }
 
   private refactor(params: any = {}) {
@@ -210,6 +292,7 @@ export default class RankList extends Vue {
       maxEquity: obj.Equity && obj.Equity.split('-')[1],
       minEquity: obj.Equity && obj.Equity.split('-')[0],
       brokerId: this.checkedBrokers.join(','),
+      ...this.params,
       ...params,
     };
   }

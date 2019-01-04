@@ -16,27 +16,7 @@
         >
           <template slot-scope="scope">
             <div
-              v-if="!dateIsLoading"
-              class="custom-display-row-line"
-            >
-              <div class="trader-container-row">
-                <div class="loading-first avatar">
-                  <img
-                  @mouseenter.self="showCard($event,scope.row.UserID+'_'+scope.row.AccountIndex)"
-                  @mouseleave="personCard.hide()"
-                  :src="base+'/Avata/'+scope.row.UserID" />
-                </div>
-                <div class="loading-first trader-info">
-                  <div class="info-1">{{scope.row.NickName}} #{{scope.row.AccountIndex}}</div>
-                  <div class="info-2">
-                    {{scope.row.BrokerName || ''}}
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div
-              v-if="dateIsLoading"
+              v-if="dateIsLoading && !scope.row.UserID"
               class="custom-display-row-loading-1"
             >
               <div class="trader-container-row">
@@ -49,6 +29,27 @@
                 </div>
               </div>
             </div>
+
+            <div
+              v-else
+              class="custom-display-row-line"
+            >
+              <div class="trader-container-row">
+                <div class="loading-first avatar">
+                  <img
+                  @mouseenter.self="showCard($event, scope.row.UserID+'_'+scope.row.AccountIndex)"
+                  @mouseleave="personCard.hide()"
+                  :src="base+'/Avata/'+scope.row.UserID" />
+                </div>
+                <div class="loading-first trader-info">
+                  <div class="info-1">{{scope.row.NickName}} #{{scope.row.AccountIndex}}</div>
+                  <div class="info-2">
+                    {{scope.row.BrokerName || ''}}
+                  </div>
+                </div>
+              </div>
+            </div>
+
           </template>
         </el-table-column>
         <el-table-column
@@ -59,13 +60,14 @@
         >
           <template slot-scope="scope">
             <div
-              v-if="!dateIsLoading"
-              class="custom-display-row-line"
-            >{{scope.row.Score | numberFormatOneParams}}</div>
-            <div
-              v-if="dateIsLoading"
+              v-if="dateIsLoading && !scope.row.UserID"
               class="custom-display-row-loading"
             ></div>
+            <div
+              v-else
+              class="custom-display-row-line"
+            >{{scope.row.Score | numberFormatOneParams}}</div>
+
           </template>
         </el-table-column>
         <el-table-column
@@ -76,15 +78,16 @@
         >
           <template slot-scope="scope">
             <div
-              v-if="!dateIsLoading"
+              v-if="dateIsLoading && !scope.row.UserID"
+              class="custom-display-row-loading"
+            ></div>
+            <div
+              v-else
               :class="`custom-display-row-line `"
             >
               <span :class="scope.row.ROI >= 0 ? 'special-rate' : ''">{{scope.row.ROI | percentFormat}}</span>
             </div>
-            <div
-              v-if="dateIsLoading"
-              class="custom-display-row-loading"
-            ></div>
+
           </template>
         </el-table-column>
         <el-table-column
@@ -95,13 +98,14 @@
         >
           <template slot-scope="scope">
             <div
-              v-if="!dateIsLoading"
-              class="custom-display-row-line"
-            >{{scope.row.MaxRetracement | percentFormat}}</div>
-            <div
-              v-if="dateIsLoading"
+              v-if="dateIsLoading && !scope.row.UserID"
               class="custom-display-row-loading"
             ></div>
+            <div
+              v-else
+              class="custom-display-row-line"
+            >{{scope.row.MaxRetracement | percentFormat}}</div>
+
           </template>
         </el-table-column>
         <el-table-column
@@ -112,13 +116,14 @@
         >
           <template slot-scope="scope">
             <div
-              v-if="!dateIsLoading"
-              class="custom-display-row-line"
-            >{{scope.row.Weeks || 0}}周</div>
-            <div
-              v-if="dateIsLoading"
+              v-if="dateIsLoading && !scope.row.UserID"
               class="custom-display-row-loading"
             ></div>
+            <div
+              v-else
+              class="custom-display-row-line"
+            >{{scope.row.Weeks || 0}}周</div>
+
           </template>
         </el-table-column>
         <el-table-column
@@ -129,13 +134,14 @@
         >
           <template slot-scope="scope">
             <div
-              v-if="!dateIsLoading"
-              class="custom-display-row-line"
-            >{{scope.row.ExpSymbol}}</div>
-            <div
-              v-if="dateIsLoading"
+              v-if="dateIsLoading && !scope.row.UserID"
               class="custom-display-row-loading"
             ></div>
+            <div
+              v-else
+              class="custom-display-row-line"
+            >{{scope.row.ExpSymbol}}</div>
+
           </template>
         </el-table-column>
         <el-table-column
@@ -146,13 +152,14 @@
         >
           <template slot-scope="scope">
             <div
-              v-if="!dateIsLoading"
-              class="custom-display-row-line"
-            >{{scope.row.Subscribers}}</div>
-            <div
-              v-if="dateIsLoading"
+              v-if="dateIsLoading && !scope.row.UserID"
               class="custom-display-row-loading"
             ></div>
+            <div
+              v-else
+              class="custom-display-row-line"
+            >{{scope.row.Subscribers}}</div>
+
           </template>
         </el-table-column>
         <el-table-column
@@ -162,7 +169,11 @@
         >
           <template slot-scope="scope">
             <div
-              v-if="!dateIsLoading"
+              v-if="dateIsLoading && !scope.row.UserID"
+              class="custom-display-row-loading"
+            ></div>
+            <div
+              v-else
               class="custom-display-row-line"
             >
 
@@ -172,7 +183,7 @@
                   :chart-data="scope.row.TrendChart"
                 ></Chart>
                 <img
-                  v-else
+                  v-if="dateIsLoading && !scope.row.UserID"
                   :src="cdn + '/images/NoData-Report.jpg'"
                   style="display:block;width:100%;"
                   :alt="'暂无数据'"
@@ -180,10 +191,7 @@
               </div>
 
             </div>
-            <div
-              v-if="dateIsLoading"
-              class="custom-display-row-loading"
-            ></div>
+
           </template>
         </el-table-column>
         <el-table-column
@@ -194,16 +202,17 @@
           <!-- eslint-disable-next-line -->
           <template slot-scope="scope">
             <div
+              v-if="dateIsLoading && !scope.row.UserID"
+              class="custom-display-row-loading"
+            ></div>
+            <div
               @click="handleSub(scope.row)"
-              v-if="!dateIsLoading"
+              v-else
               class="custom-display-row-sub"
             >
               <span class="sub-row-btn">{{scope.row.Price ? `$${scope.row.Price}/月` : '免费订阅' }}</span>
             </div>
-            <div
-              v-if="dateIsLoading"
-              class="custom-display-row-loading"
-            ></div>
+
           </template>
         </el-table-column>
         <template slot="empty">
@@ -247,8 +256,11 @@ import SvgIcon from '@/components/svg/index.ts';
 import { numberFormat, percentFormat } from '@/utils/format';
 import { getElementTop, getElementLeft } from '@/utils/util';
 import { Table, TableColumn } from 'element-ui';
+import throttle from 'lodash.throttle';
 
 const RankStore = namespace('RankStore');
+
+const isEnterLoad = false;
 
 @Component(({
   components: {
@@ -274,19 +286,24 @@ export default class List extends Vue {
   })
   data: any;
 
+  data1: any = [];
+
   @Prop()
   getData: any;
 
   personCard: any = personCard;
 
-
   get dataList() {
     if (this.rankListLoading) {
-      const data = this.data && this.data.length ? this.data.concat(Array(6).fill(6)) : Array(6).fill(6);
+      const data = this.data && this.data.length ? this.data.concat(Array(1).fill({})) : Array(10).fill({});
       return data;
     }
 
     return this.data;
+  }
+
+  mounted() {
+
   }
 
   showCard(e: any, ids: any) {
@@ -339,24 +356,6 @@ export default class List extends Vue {
 
   winHeight: any = 800;
 
-  mounted() {
-    // setTimeout(() => this.isLoading = false, 5000);
-
-    // this.winHeight = windowHeight;
-
-    let windowHeight = document.body.clientHeight;
-    if (document.documentElement && document.documentElement.clientHeight) {
-      windowHeight = document.documentElement.clientHeight;
-    }
-    const offsetTop = this.$el.offsetTop + 50;
-    console.log();
-    this.winHeight = windowHeight - offsetTop - 300;
-
-    console.log(this.$refs.rankTable);
-    // requestAnimationFrame(() => {
-    //   (this.$refs.rankTable as any).doLayout();
-    // })
-  }
 
   created() {
     if (typeof window !== 'undefined') {
@@ -503,8 +502,10 @@ export default class List extends Vue {
       });
   }
 
-  handleSortChange(e: any) {
-    console.log(e);
+  handleSortChange({ prop, order }: any) {
+    console.log({ prop, order });
+    // const order: any = {};
+    this.$emit('sortChange', { prop, order });
   }
 }
 </script>
@@ -524,9 +525,13 @@ export default class List extends Vue {
           padding-right: 0;
           padding-left: 0;
         }
+
         &:hover {
-          background: rgba(255, 255, 255, 1);
+          background: rgba(255, 255, 255, 1) !important;
           box-shadow: 0px 0px 30px 0px rgba(0, 0, 0, 0.1);
+          td {
+            background-color: #ffffff !important;
+          }
           .custom-display-row-sub {
             .sub-row-btn {
               background: rgba(255, 98, 0, 1);
@@ -648,11 +653,6 @@ export default class List extends Vue {
           color: rgba(51, 51, 51, 1);
           line-height: 24px;
         }
-      }
-
-
-      .loading-container {
-
       }
     }
   }
