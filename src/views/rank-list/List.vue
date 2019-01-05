@@ -36,10 +36,10 @@ export default class List extends Vue {
   @Prop()
   getData: any;
 
-  @Watch('rankList')
-  public rankListChange() {
-    console.log('rank changed', this.rankTotal, this.rankList);
-  }
+  // @Watch('rankList')
+  // public rankListChange() {
+  //   console.log('rank changed', this.rankTotal, this.rankList);
+  // }
 
   sortChange({ prop, order }:any) {
     this.$emit('sortChange', { prop, order });

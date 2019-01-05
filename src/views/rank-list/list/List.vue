@@ -358,18 +358,7 @@ export default class List extends Vue {
 
 
   created() {
-    if (typeof window !== 'undefined') {
-      let windowHeight = document.body.clientHeight;
-      if (document.documentElement && document.documentElement.clientHeight) {
-        windowHeight = document.documentElement.clientHeight;
-      }
-      let footerHeight = 0;
-      const footer = document.querySelector('.page-footer');
-      if (footer) {
-        footerHeight = (footer as any).offsetHeight;
-      }
-      this.winHeight = windowHeight - footerHeight;
-    }
+
   }
 
   @RankStore.Action

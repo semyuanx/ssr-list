@@ -259,8 +259,16 @@ export default class RankList extends Vue {
 
   tdHeight: number = 50;
 
-  computeTrHeight() {
+  computeTrHeight(n?:number) {
     const tableBody = document.querySelector('.el-table__body');
+    let height = 50;
+    if (tableBody) {
+      const tr = tableBody.querySelector('tr');
+      if (tr) {
+        height = tr.offsetHeight;
+      }
+    }
+    return height * (n || 5);
   }
 
   loadMore() {
@@ -270,7 +278,7 @@ export default class RankList extends Vue {
 
     const needLoad = this.computeNeedLoad();
 
-    const reScroll = scrollTop - 300;
+    const reScroll = scrollTop - this.computeTrHeight(5);
 
     if (needLoad) {
       this.scrollTo(reScroll);
