@@ -1,7 +1,7 @@
 <template>
   <div class="strategy-container">
     <div class="header" v-if="header">
-      <LineHeader @rightClick="toRankList" rightIconDirection='left' rightTitle="筛选器" subTitle="成为交易员" :title="header.title || ''" />
+      <LineHeader @leftClick="leftClick" @rightClick="toRankList" rightIconDirection='left' rightTitle="筛选器" subTitle="成为交易员" :title="header.title || ''" />
     </div>
     <div class="lists-container">
       <div class="lists">
@@ -47,6 +47,10 @@ export default class Home extends Vue {
 
   toRankList() {
     this.$router.push({ name: 'rankList' });
+  }
+
+  leftClick() {
+    this.redirectTo('traderRegister');
   }
 }
 </script>

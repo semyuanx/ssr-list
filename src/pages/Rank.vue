@@ -162,10 +162,12 @@ export default class RankList extends Vue {
   }
 
   scrollCb() {
-    this.loadMore();
+    animate(() => {
+      this.loadMore();
+    });
   }
 
-  throttleHeight = 20;
+  throttleHeight = 50;
 
   getScrollTop() {
     let scrollTop = 0;
@@ -255,18 +257,27 @@ export default class RankList extends Vue {
     }
   }
 
+  tdHeight: number = 50;
+
+  computeTrHeight() {
+    const tableBody = document.querySelector('.el-table__body');
+  }
+
   loadMore() {
     const scrollTop = this.getScrollTop();
     const windowHeight = this.getWinHeight();
     const docHeight = this.getDocHeight();
 
     const needLoad = this.computeNeedLoad();
+
+    const reScroll = scrollTop - 300;
+
     if (needLoad) {
-      this.scrollTo(scrollTop - 100);
+      this.scrollTo(reScroll);
       this.getData().then(() => {
         const reComputeNeedLoad = this.computeNeedLoad();
         if (reComputeNeedLoad) {
-          this.scrollTo(scrollTop - 100);
+          this.scrollTo(reScroll);
         }
         isEnterLoad = false;
       });

@@ -4,7 +4,7 @@
       <template slot="left">
         <div class="content-header">
           <h2 class="h2-titile">{{title || ''}}</h2>
-          <div :style="subTitle ? {} : {background: 'transparent'}" class="flex-center sub-title">
+          <div @click="leftClick" :style="subTitle ? {} : {background: 'transparent'}" class="flex-center sub-title">
             <slot name="left">
             <i :class="`icon-${subIcon}`"></i>
             <span>{{ subTitle || '' }}</span>
@@ -25,7 +25,7 @@
                 <i v-if="rightIconDirection ==='right'"
                   :class="`icon-${rightIcon}`+ ' icon-font'"></i>
               </div>
-              <div @click="rightClick" class="right-click right-small">
+              <div @click="leftClick" class="right-click right-small">
                 <span v-if="subTitle">{{ subTitle || '' }}</span>
                 <i :class="`icon-right_24px`"></i>
               </div>
@@ -86,6 +86,10 @@ export default class Home extends Vue {
     console.log('@click="rightClick"');
     this.$emit('rightClick');
   }
+
+  public leftClick() {
+    this.$emit('leftClick');
+  }
 }
 </script>
 <style lang="less" scoped>
@@ -109,6 +113,7 @@ export default class Home extends Vue {
       font-size:24px;
     }
     .sub-title {
+      cursor: pointer;
       background-color: #fff;
       border-radius: 13px;
       height: 26px;
