@@ -27,7 +27,7 @@
         :key="i.val" v-for="i in data.data"
         class="right-line-container line-rate"
       >
-        <div><span class="rate-val">{{i && i.val || ''}}</span></div>
+        <div><span :class="isNumber(i.val) && i.val > 0 ? 'rate-val green': 'rate-val'">{{i && i.val || ''}}</span></div>
         <div><span class="common-font">{{i && i.prop || ''}}</span></div>
       </div>
       <slot name="right">
@@ -40,7 +40,7 @@
 </template>
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
-
+import { isNumber } from '@/utils/util';
 @Component
 export default class FmLittleCard extends Vue {
   public name: string = 'fm-little-card';
@@ -49,6 +49,10 @@ export default class FmLittleCard extends Vue {
     default: () => {},
   })
   data: any;
+
+  isNumber(str: any) {
+    return isNumber(str);
+  }
 
   sub() {
     console.log('sub');
@@ -146,7 +150,6 @@ export default class FmLittleCard extends Vue {
           font-size:20px;
           font-family:DINOT-Bold;
           font-weight:bold;
-          color:rgba(31,187,149,1);
           line-height:26px;
         }
       }
@@ -198,6 +201,10 @@ export default class FmLittleCard extends Vue {
             }
         }
       }
+    }
+
+    .green {
+      color:rgba(31,187,149,1);
     }
   }
 </style>

@@ -4,7 +4,7 @@
       <InvestManager :subscribe="subscribe" v-if="configData.data.length > 1" :data="configData" :description="description" />
     </div>
     <div class="fm-show-mobile">
-      <CommonMobile :data="mobileConfigData" :description="description" />
+      <CommonMobile v-if="mobileConfigData.length" :data="mobileConfigData" :description="description" />
     </div>
   </div>
 </template>
@@ -27,16 +27,45 @@ export default class Index extends Vue {
   @Prop()
   subscribe: any;
 
+  header: any = [
+    {
+      label: '跟随者',
+      prop: 'Name',
+      align: 'left',
+    },
+    {
+      label: ' 跟随获利',
+      prop: 'FollowMoney',
+      align: 'right',
+    },
+    {
+      label: '收益率',
+      prop: 'Roi',
+      align: 'right',
+    },
+  ];
+
   get mobileConfigData() {
     const config:any = this.data;
     let data = [];
     if (Array.isArray(config.data)) {
-      data = config.data.map((i: any) => ({
-        Name: i.Name,
-        danger: `风险<${percentFormat(i.FollowerMaxRisk)}`,
-        Balance: moneyFormat(i.Balance),
-        FollowerCount: i.FollowerCount,
-      }));
+      data = config.data.map((i: any) => {
+        let brokerName = '';
+        if (Array.isArray(i.AccountList) && i.AccountList.length) {
+          const accountInfo = i.AccountList.find((j: any) => j && j.AccountIndex === i.AccountIndex);
+          if (accountInfo && accountInfo.BrokerName) {
+            brokerName = accountInfo.BrokerName;
+          }
+        }
+        return {
+          brokerName,
+          Name: i.NickName,
+          UserID: i.UserID,
+          AccountIndex: i.AccountIndex,
+          FollowMoney: moneyFormat(i.FollowMoney),
+          Roi: percentFormat(i.Roi),
+        };
+      });
     }
     return data;
   }
@@ -80,7 +109,8 @@ export default class Index extends Vue {
       textTitle: '获利最多跟随者',
       filterText: '',
       textBtn: '立即查看',
-
+      avatar: true,
+      header: this.header,
     };
   }
 }

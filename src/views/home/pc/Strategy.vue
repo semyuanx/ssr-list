@@ -60,6 +60,7 @@ export default class Home extends Vue {
       flex-direction: row;
       width: 100%;
       overflow: auto;
+      -webkit-overflow-scrolling:touch;
       .list-item {
         margin-right: 20px;
       }

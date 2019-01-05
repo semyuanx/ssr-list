@@ -92,3 +92,8 @@ export function getElementTop(element: any, className?: any) {
 
   return actualTop;
 }
+
+export const isNumber = function isNumber(str:any) {
+  // eslint-disable-next-line
+  return !isNaN(parseFloat(str)) && isFinite(str);
+};

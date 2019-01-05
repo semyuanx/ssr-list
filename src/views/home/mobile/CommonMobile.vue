@@ -13,14 +13,20 @@
       >
         <template slot-scope="slotProps">
           <div class="slot-container">
-            <!-- <div class="avatar">
-              <img
-                :onerror="errorUrl"
-                :src="avatarSrc(slotProps.row.UserID)"
-                alt=""
-              >
-            </div> -->
-            <div class="container-left">
+            <div class="avatar-container" v-if="description.avatar">
+              <div class="avatar">
+                <img
+                  :onerror="errorUrl"
+                  :src="avatarSrc(slotProps.row.UserID)"
+                  alt=""
+                >
+              </div>
+              <div class="text-container">
+                <span class="name-span">{{ slotProps.row.Name}}</span>
+                <span class="index-span">#{{ slotProps.row.AccountIndex}}</span>
+              </div>
+            </div>
+            <div v-else class="container-left">
               <div class="name">
                 {{slotProps.row.Name}}
               </div>
@@ -28,8 +34,6 @@
                 {{slotProps.row.danger}}
               </div>
             </div>
-            <!-- <span class="name-span">{{ slotProps.row.Name}}</span>
-            <span class="index-span">#{{ slotProps.row.AccountIndex}}</span> -->
           </div>
         </template>
       </SimpleTable>
@@ -135,6 +139,14 @@ export default class Index extends Vue {
   display: inline-flex;
   flex-wrap: nowrap;
   align-items: center;
+  .avatar-container {
+    display: inline-flex;
+  }
+  .text-container {
+    display: flex;
+    align-items: center;
+    // flex-direction: column;
+  }
   .name-span {
     white-space: nowrap;
     overflow: hidden;
