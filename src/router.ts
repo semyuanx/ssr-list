@@ -79,7 +79,7 @@ export default function createRouter() {
       {
         path: '/dynamic', // 交易动态
         name: 'tradedynamics',
-        component: () => import(/* webpackChunkName: "about" */ './pages/follower/index.vue'),
+        component: () => import(/* webpackChunkName: "about" */ './pages/tradedynamics/index.vue'),
       },
     ],
   });

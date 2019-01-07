@@ -1,0 +1,206 @@
+//colors
+@white: #fff;
+@color_athens_gray_approx: #eaecf1;
+@color_blaze_orange_approx: #ff6200;
+@color_mine_shaft_approx: #333;
+@color_mountain_mist_approx: #999;
+@color_jade_approx: #01aa6f;
+
+//urls
+@url_0: url(//cdn.followme.com/images/zuanshi1101.gif);
+@url_1: url(//cdn.followme.com/images/zhanghui_mun_bg.png);
+
+//@extend-elements
+//original selectors
+//.tradersDynamics_list .link_sourcebox span, .tradersDynamics_list .link_sourcebox img
+.extend_1 {
+	display: inline-block;
+	vertical-align: middle;
+	margin-right: 5px;
+}
+
+
+.tradersDynamics_box {
+	margin-top: 70px;
+	.moveblock {
+		padding: 0 20px;
+		background: @white;
+		.td_listbox_wrap {
+			padding-top: 20px;
+			max-height: 242px;
+			overflow: hidden;
+			margin-bottom: 15px;
+		}
+	}
+	.normaltitle {
+		height: 50px;
+		line-height: 50px;
+		border-bottom: 1px solid @color_athens_gray_approx;
+		span {
+			position: absolute;
+			padding: 0 15px;
+			height: 49px;
+			text-align: center;
+			line-height: 49px;
+			font-weight: bold;
+			font-size: 15px;
+			color: @color_blaze_orange_approx;
+			border-bottom: 2px solid @color_blaze_orange_approx;
+		}
+	}
+	.com_listbox_wrap {
+		min-height: 584px;
+		background: @white;
+		.tradersDynamics_list > li {
+			padding: 20px;
+		}
+	}
+	.tradersDynamics_list {
+		> li {
+			padding: 20px 0;
+			border-bottom: 1px solid @color_athens_gray_approx;
+			font-size: 0;
+			&:last-child {
+				border-bottom: none;
+			}
+			> div {
+				display: inline-block;
+				font-size: 12px;
+				vertical-align: middle;
+			}
+		}
+	}
+	.turn-page {
+		float: none;
+	}
+}
+.tradersDynamics_list {
+	.user_imgbox {
+		position: relative;
+		margin-right: 10px;
+		width: 40px;
+		height: 40px;
+		img {
+			display: block;
+			width: 40px;
+			height: 40px;
+			box-shadow: 0 -1px 0 rgba(0, 0, 0, 0.05), 1px 0 0 rgba(0, 0, 0, 0.05), 0 1px 0 rgba(0, 0, 0, 0.05), -1px 0 0 rgba(0, 0, 0, 0.05);
+			border-radius: 50%;
+		}
+		i {
+			position: absolute;
+			margin: 0;
+			bottom: -2px;
+			right: 0;
+		}
+	}
+	.user_nicknamebox {
+		width: 220px;
+	}
+	.user_nickname {
+		display: inline-block;
+		max-width: 130px;
+		overflow: hidden;
+		vertical-align: middle;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+		color: @color_mine_shaft_approx;
+		font-size: 14px;
+		&:hover {
+			color: @color_blaze_orange_approx;
+		}
+	}
+	.link_sourcebox {
+		width: 110px;
+		color: @color_mountain_mist_approx;
+		span {
+			&:extend(.extend_1);
+		}
+		img {
+			&:extend(.extend_1);
+		}
+	}
+	.buy_waybox {
+		width: 115px;
+		color: @color_mountain_mist_approx;
+		a {
+			margin-left: 5px;
+			color: @color_blaze_orange_approx;
+			max-width: 70px;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+			display: inline-block;
+			vertical-align: middle;
+			&:hover {
+				color: @color_blaze_orange_approx;
+				text-decoration: underline;
+			}
+		}
+		span {
+			display: inline-block;
+			vertical-align: middle;
+		}
+	}
+	.buy_stylebox {
+		width: 140px;
+		color: @color_mountain_mist_approx;
+		span {
+			margin-left: 5px;
+			color: @color_mine_shaft_approx;
+		}
+	}
+	.time_box {
+		float: right;
+		height: 40px;
+		line-height: 40px;
+		color: @color_mountain_mist_approx;
+		i {
+			display: inline-block;
+			position: relative;
+			margin-right: 4px;
+			top: 2px;
+			width: 12px;
+			height: 12px;
+			background-position: -208px 0;
+		}
+	}
+	.close_buyerbox {
+		width: 145px;
+		color: @color_mountain_mist_approx;
+		span {
+			margin-left: 5px;
+			color: @color_mine_shaft_approx;
+		}
+	}
+	.profitNlosebox {
+		position: relative;
+		color: @color_mountain_mist_approx;
+		span {
+			margin-left: 5px;
+			color: @color_mine_shaft_approx;
+			&.yin{
+				color: @color_jade_approx;
+			}
+		}
+	}
+}
+.moveblock .tradersDynamics_list .profitNlosebox {
+	padding: 1px 4px;
+	background-color: @color_jade_approx;
+	color: @white;
+	//Instead of the line below you could use @include border-radius(@radius, @vertical-radius)
+	border-radius: 2px;
+	span {
+		color: @white;
+	}
+	&:before {
+		content: '';
+		position: absolute;
+		left: -38px;
+		top: -1px;
+		width: 30px;
+		height: 19px;
+		background: @url_0 no-repeat;
+	}
+}

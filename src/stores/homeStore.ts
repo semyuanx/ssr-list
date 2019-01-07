@@ -4,6 +4,7 @@ import {
 import { Commit, ActionTree } from 'vuex';
 import {
   getCustomConfig, getCustomRankList, getMasterFollowerService, getRankFollowersService,
+  getRankDynamicsService,
 } from '@/service/home';
 import { getAllProducts } from '@/service/manager';
 
@@ -142,5 +143,22 @@ export default class HomeStore {
     //   // commit('setMasterFollower', data.items);
     // }
     return data;
+  }
+
+  @Action
+  public async getRankDynamics(context: any, params: any) {
+    const { commit } = context;
+    let data: any = {};
+    try {
+      data = await getRankDynamicsService(params);
+    } catch (e) {
+      console.log(e);
+    }
+    console.log(data, 'ddd');
+    // if (data.items) {
+    //   // console.log(data, 'setMasterFollower');
+    //   // commit('setMasterFollower', data.items);
+    // }
+    return { data };
   }
 }

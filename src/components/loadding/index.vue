@@ -19,8 +19,8 @@
 export default {
   data() {
     return {
-      base: this.base,
-      cdn: this.cdn,
+    //   base: this.base,
+    //   cdn: this.cdn,
     };
   },
   props: ['loading', 'nodata', 'keyword'],

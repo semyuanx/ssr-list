@@ -17,6 +17,7 @@ export const checkCanFollowApi = () => `${API_PREFIX_V1}/trade/check/follow`;
 export const getMasterFollowerApi = () => `${API_PREFIX_V2}/trade/rank/followers`;
 
 export const getRankFollowersApi = () => `${API_PREFIX_V2}/trade/rank/followers`;
+export const getRankDynamicsApi = () => `${API_PREFIX_V1}/trade/dynamics`;
 
 export default {
   login,
@@ -27,4 +28,5 @@ export default {
   brokersList,
   getMasterFollowerApi,
   getRankFollowersApi,
+  getRankDynamicsApi,
 };
