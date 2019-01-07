@@ -4,13 +4,11 @@
       <template slot="left">
         <div class="content-header">
           <h2 class="h2-titile">{{title || ''}}</h2>
-          <div :style="subTitle ? {} : {background: 'transparent'}" class="flex-center sub-title">
             <slot name="left">
-            <!-- <i :class="`icon-${subIcon}`"></i> -->
-            <span>{{ subTitle || '' }}</span>
-            <!-- <i :class="`icon-${subRespIcon}`"></i> -->
-            </slot>
+          <div :style="subTitle ? {} : {background: 'transparent'}" class="flex-center sub-title">
+              <span>{{ subTitle || '' }}</span>
           </div>
+            </slot>
         </div>
       </template>
       <template slot="right">

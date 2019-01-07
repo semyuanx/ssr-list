@@ -29,6 +29,9 @@ export default class RankStore {
   @State(false)
   public rankListLoading: boolean = false;
 
+  @State(true)
+  public hasMore: boolean = true;
+
   @State([])
   public rankList: Array<any> = [];
 
@@ -56,6 +59,8 @@ export default class RankStore {
 
   @Set('rankListLoading') public setRankLoading: any;
 
+  @Set('hasMore') public setHasMore: any;
+
   @Set('filterRes') public setFilterRes: any;
 
   @Set('checkedBrokers') public setCheckedBrokers: any;
@@ -80,21 +85,26 @@ export default class RankStore {
   @Action
   public getRankList(context: { commit: Commit, state: any }, payload: any) {
     if (context.state.rankListLoading) return;
+    if (!context.state.hasMore) return;
     context.commit('setRankLoading', true);
     // eslint-disable-next-line
     return getRankList(payload)
       .then((res: any) => {
         console.log(res, payload, 'getRankList');
+        const list = Array.isArray(res.List) ? res.List : [];
         const pageIndex = payload.index;
+        const pageSize = payload.size || 20;
         let totalList = context.state.rankList;
         console.log(pageIndex, 'pageIndex', context.state.pageIndex);
         if (pageIndex === 1) {
-          totalList = res.List;
+          totalList = list;
         } else {
-          totalList = totalList.concat(res.List);
+          totalList = totalList.concat(list);
         }
         // totalList = res.List;
-
+        if (Array.isArray(list) && list.length < pageSize) {
+          context.commit('setHasMore', false);
+        }
         context.commit('setPageIndex', pageIndex + 1);
         context.commit('setRankList', totalList || []);
         context.commit('setRankTotal', res.TotalCount || 0);

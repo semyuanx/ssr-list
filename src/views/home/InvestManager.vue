@@ -1,7 +1,7 @@
 <template>
   <div class="header">
     <div class="fm-show-pc">
-      <InvestManager :subscribe="subscribe" v-if="configData.data.length > 1" :data="configData" :description="description" />
+      <InvestManager @toMore="toMore" :subscribe="subscribe" v-if="configData.data.length > 1" :data="configData" :description="description" />
     </div>
     <div class="fm-show-mobile">
       <CommonMobile :data="mobileConfigData" :description="description" />
@@ -27,6 +27,10 @@ export default class Index extends Vue {
 
   @Prop()
   subscribe: any;
+
+  toMore() {
+    this.$router.push({ name: 'investManager' });
+  }
 
   get mobileConfigData() {
     const config:any = this.data;
@@ -66,9 +70,10 @@ export default class Index extends Vue {
       source: config,
       background: config.ChartID,
       title: '投资管家',
-      subTitle: 'ssss',
+      subTitle: '发起产品',
       textTitle: '零风险跟随',
       filterText: '发起产品',
+      needLeftSlot: true,
     };
   }
 }

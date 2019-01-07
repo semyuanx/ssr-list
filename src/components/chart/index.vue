@@ -100,7 +100,8 @@ export default {
           lineWidth: 0,
           tickInterval: 1,
           lineColor: '#cccccc',
-          gridLineColor: '#f0f0f0',
+          // gridLineColor: '#f0f0f0',
+          gridLineColor: 'transparent',
           categories: smallChartY,
         },
         yAxis: {
@@ -114,7 +115,8 @@ export default {
           },
           tickInterval: 1,
           lineColor: '#cccccc',
-          gridLineColor: '#f0f0f0',
+          // gridLineColor: '#f0f0f0',
+          gridLineColor: 'transparent',
         },
         tooltip: {
           style: {
@@ -209,10 +211,10 @@ export default {
           enabled: true,
         },
         xAxis: {
-          gridLineWidth: 1,
+          // gridLineWidth: 1,
           lineColor: '#cccccc',
           tickColor: '#cccccc',
-          gridLineColor: '#f0f0f0',
+          // gridLineColor: '#f0f0f0',
           categories: bigChartY,
           //   categories: that.bigChartY,
           tickInterval: Math.ceil(bigChartY.length / 7),
@@ -222,7 +224,7 @@ export default {
           gridLineWidth: 1,
           lineColor: '#cccccc',
           tickColor: '#cccccc',
-          gridLineColor: '#f0f0f0',
+          // gridLineColor: '#f0f0f0',
           title: {
             text: null,
           },

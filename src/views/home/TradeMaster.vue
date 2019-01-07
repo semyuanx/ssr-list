@@ -1,7 +1,7 @@
 <template>
   <div class="header">
     <div class="fm-show-pc">
-      <InvestManager :subscribe="subscribe" v-if="configData.data.length > 1" :data="configData" :description="description" />
+      <InvestManager @toMore="toMore" :subscribe="subscribe" v-if="configData.data.length > 1" :data="configData" :description="description" />
     </div>
     <div class="fm-show-mobile">
       <CommonMobile v-if="mobileConfigData.length" :data="mobileConfigData" :description="description" />
@@ -45,6 +45,10 @@ export default class Index extends Vue {
     },
   ];
 
+  toMore() {
+    this.redirectTo('tradeMaster');
+  }
+
   get mobileConfigData() {
     const config:any = this.data;
     let data = [];
@@ -83,6 +87,7 @@ export default class Index extends Vue {
           }
         }
         return {
+          item: i,
           avatar: `${this.base}/Avata/${i.UserID}`,
           name: i.NickName,
           index: i.AccountIndex,

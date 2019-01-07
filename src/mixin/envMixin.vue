@@ -3,6 +3,7 @@
 
 const urlMap = {
   traderRegister: 'https://alibetacreate.followme.com/open/upgrade?type=2',
+  tradeMaster: 'https://alibetawww.followme.com/trading-strategy/follower',
 };
 
 export default {
@@ -22,6 +23,10 @@ export default {
       const url = urlMap[alias];
       if (url) {
         window.location.href = url;
+      } else if (/^https?/.test(alias) || /^\/\//.test(alias)) {
+        window.location.href = alias;
+      } else {
+        window.location.href = this.base + alias;
       }
     },
   },

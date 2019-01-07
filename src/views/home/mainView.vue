@@ -4,13 +4,13 @@
             <FmStrategy :subscribe="handleSub" :data="strategytData" :header="strategytDataHeader" />
         </div>
         <div class="list-item">
-            <InvestManager :subscribe="handleSub" :data="products" />
+            <InvestManager :subscribe="toInvest" :data="products" />
         </div>
         <div class="list-item" v-for="(item,index) in investData" :key="index">
             <CommonListItem :subscribe="handleSub" :data="item" />
         </div>
         <div class="invest">
-            <TradeMaster :subscribe="handleSub" :data="masterFollowerData" />
+            <TradeMaster :subscribe="toPersonal" :data="masterFollowerData" />
         </div>
     </div>
 </template>
@@ -129,6 +129,18 @@ export default class mainView extends Vue {
       const data = this.configs.slice(1)
         .filter((i: any) => i && !filters.includes(i.RankIndex));
       return data;
+    }
+
+    toPersonal(data:any) {
+      console.log(data, 'data');
+      const userId = data.item ? data.item.UserID : data.UserID;
+      const index = data.item ? data.item.AccountIndex : data.index;
+      const url = `/user/${userId}/trade-account/exhibition?index=${index}`;
+      this.redirectTo(url);
+    }
+
+    toInvest() {
+      this.$router.push({ name: 'invest' });
     }
 
 

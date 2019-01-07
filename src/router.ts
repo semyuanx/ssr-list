@@ -4,10 +4,11 @@ import Home from './pages/Home.vue';
 
 Vue.use(Router);
 
+const base = '/trading-strategy';
 export default function createRouter() {
   return new Router({
     mode: 'history',
-    base: process.env.BASE_URL,
+    base: base || process.env.BASE_URL,
     routes: [
       {
         path: '/',
@@ -15,7 +16,7 @@ export default function createRouter() {
         component: Home,
       },
       {
-        path: '/rank-list',
+        path: '/ranking',
         name: 'rankList',
         meta: {
           title: '筛选器',

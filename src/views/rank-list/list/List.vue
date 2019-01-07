@@ -21,7 +21,7 @@
             >
               <div class="trader-container-row">
                 <div class="loading-first loading-avatar">
-                  <img :src="base+'/Avata/'+scope.row.UserID" />
+                  <!-- <img :src="base+'/Avata/'+scope.row.UserID" /> -->
                 </div>
                 <div class="loading-first loading-info">
                   <div class="info-1"></div>
@@ -37,12 +37,17 @@
               <div class="trader-container-row">
                 <div class="loading-first avatar">
                   <img
+                  @click="toUserPage(scope.row)"
                   @mouseenter.self="showCard($event, scope.row.UserID+'_'+scope.row.AccountIndex)"
                   @mouseleave="personCard.hide()"
                   :src="base+'/Avata/'+scope.row.UserID" />
                 </div>
                 <div class="loading-first trader-info">
-                  <div class="info-1">{{scope.row.NickName}} #{{scope.row.AccountIndex}}</div>
+                  <div
+                  @click="toUserPage(scope.row)"
+                  @mouseenter.self="showCard($event, scope.row.UserID+'_'+scope.row.AccountIndex)"
+                  @mouseleave="personCard.hide()"
+                  class="info-1">{{scope.row.NickName}} #{{scope.row.AccountIndex}}</div>
                   <div class="info-2">
                     {{scope.row.BrokerName || ''}}
                   </div>
@@ -227,15 +232,28 @@
             <div class="empty-text"><span>没有找到相关内容，请您换个条件试试吧~</span></div>
           </div>
         </template>
-        <!-- <template slot="append">
-          <div class="loading-container">
+        <template slot="append">
+          <!-- <div class="loading-container"> -->
+          <div v-if="dateIsLoading && this.data && this.data.length" class="loading-container">
             <div class="loading-lists">
-              <div class=""></div>
+              <div
+                class="custom-display-row-loading-1"
+              >
+                <div class="trader-container-row">
+                  <div class="loading-first loading-avatar">
+                  </div>
+                  <div class="loading-first loading-info">
+                    <div class="info-1"></div>
+                    <div class="info-2"></div>
+                  </div>
+                </div>
+              </div>
             </div>
-            <div class="loading-lists"></div>
+             <div
+              class="custom-display-row-loading"
+            ></div>
           </div>
-        </template> -->
-
+        </template>
       </el-table>
     </div>
   </div>
@@ -295,7 +313,7 @@ export default class List extends Vue {
 
   get dataList() {
     if (this.rankListLoading) {
-      const data = this.data && this.data.length ? this.data.concat(Array(1).fill({})) : Array(10).fill({});
+      const data = this.data && this.data.length ? this.data : Array(10).fill({});
       return data;
     }
 
@@ -304,6 +322,12 @@ export default class List extends Vue {
 
   mounted() {
 
+  }
+
+  toUserPage(data: any) {
+    const userId = data.UserID;
+    const index = data.AccountIndex;
+    const url = `user/${userId}/trade-account/exhibition?index=${index}`;
   }
 
   showCard(e: any, ids: any) {
@@ -508,6 +532,12 @@ export default class List extends Vue {
       .even-row {
         background: rgba(255, 255, 255, 1);
       }
+      :global(.descending .sort-caret.descending) {
+        border-top-color: #FF6200;
+      }
+      :global(.ascending .sort-caret.ascending) {
+        border-bottom-color: #FF6200;
+      }
       :global(.default-row) {
         height: 80px;
         :global(.cell) {
@@ -518,7 +548,7 @@ export default class List extends Vue {
         &:hover {
           background: rgba(255, 255, 255, 1) !important;
           box-shadow: 0px 0px 30px 0px rgba(0, 0, 0, 0.1);
-          td {
+          :global(td) {
             background-color: #ffffff !important;
           }
           .custom-display-row-sub {
@@ -549,6 +579,7 @@ export default class List extends Vue {
             height: 40px;
             border-radius: 20px;
             overflow: hidden;
+            cursor: pointer;
           }
           .trader-info {
             flex: 1;
@@ -558,6 +589,7 @@ export default class List extends Vue {
             padding-left: 4px;
             font-family:MicrosoftYaHei;
             .info-1 {
+              cursor: pointer;
               font-size:14px;
               color:rgba(51,51,51,1);
               line-height:19px;
@@ -643,6 +675,53 @@ export default class List extends Vue {
           line-height: 24px;
         }
       }
+    }
+
+    .loading-container {
+        height: 80px;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        .loading-lists {
+          width: 210px;
+          .custom-display-row-loading-1 {
+        animation: animations-loading 2s ease-in-out 0.1s infinite forwards;
+        display: flex;
+        flex-direction: row;
+        .trader-container-row {
+          display: flex;
+          flex-direction: row;
+          margin-left: 20px;
+          .loading-avatar {
+            width: 40px;
+            height: 40px;
+            background: rgba(230, 230, 230, 1);
+            border-radius: 20px;
+          }
+          .loading-info {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            margin-left: 4px;
+            .info-1 {
+              width: 70px;
+              height: 6px;
+              background: rgba(230, 230, 230, 1);
+              margin-bottom: 2px;
+            }
+            .info-2 {
+              width: 70px;
+              height: 6px;
+              margin-top: 2px;
+              background: rgba(230, 230, 230, 1);
+            }
+          }
+        }
+      }
+        }
+        .custom-display-row-loading {
+          flex: 1;
+        }
     }
   }
 }
