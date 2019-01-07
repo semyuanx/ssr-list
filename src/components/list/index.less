@@ -1,0 +1,190 @@
+.list-box {
+    a {
+        text-decoration: none;
+    }
+    ul {
+        li {
+            margin-bottom: 10px;
+            padding: 11px 20px 10px;
+            background: #fff;
+            box-shadow: 0px 1px 2px rgba(0, 0, 0, .07);
+            .left-imgbox {
+                float: left;
+                width: 50px;
+                height: 50px;
+                margin-top: 6px;
+                img{
+                    display: block;
+                    width: 50px;
+                    height: 50px;
+                    border-radius: 50%;
+                    box-shadow: 0 -1px 0 rgba(0, 0, 0, 0.05), 1px 0 0 rgba(0, 0, 0, 0.05), 0 1px 0 rgba(0, 0, 0, 0.05), -1px 0 0 rgba(0, 0, 0, 0.05);
+                }
+            }
+            .center-databox {
+                float: left;
+                margin-left: 10px;
+                padding-top: 3px;
+                width: 880px;
+                .user-msg-box {
+                    float: left;
+                    width: 120px;
+                    margin-top: 5px;
+                    .person {
+                        font-size: 0;
+                        a {
+                            display: inline-block;
+                            max-width: 120px;
+                            text-overflow: ellipsis;
+                            overflow: hidden;
+                            white-space: nowrap;
+                            color: #333;
+                            font-size: 14px;
+                            &:hover {
+                                color: #ff6200;
+                            }
+                        }
+                    }
+                    .mark_icon{
+                        display: inline-block;
+                        margin-left: 3px;
+                        vertical-align: middle;
+                        position: relative;
+                        top: -2px;
+                        img{   
+                            position: relative;
+                            vertical-align: middle;
+                        }
+                    }
+                }
+                .user-data-box {
+                    float: left;
+                    margin-top: 15px;
+                    color: #555;
+                    font-size: 20px;
+                    text-align: center;
+                    .c00aa6d{
+                        color: #00aa6d;
+                    }
+                }
+                .user-introduction{
+                    margin-top: 5px;
+                    color: #aaa;
+                    font-size: 12px;
+                    text-overflow: ellipsis;
+                    overflow: hidden;
+                    white-space: nowrap;
+                }
+            }
+            .right-chartbox {
+                float: left;
+                margin-left: 10px;
+                padding-top: 4px;
+                .chartbox {
+                    float: left;
+                    width: 100px;
+                    height: 60px;
+                }
+                .btn-box {
+                    float: left;
+                    margin-left: 10px;
+                    width: 100px;
+                    text-align: right;
+                    font-size: 0;
+                    &.only-follow{
+                        margin-top: 15px;
+                    }
+                    a {
+                        display: inline-block;
+                        vertical-align: middle;
+                        width: 78px;
+                        height: 24px;
+                        font-size: 14px;
+                        text-align: center;
+                        line-height: 24px;
+                        border: 1px solid transparent;
+                        border-radius: 2px;
+                        &.follow {
+                            border: 1px solid #ff6200;
+                            color: #fff;
+                            background: #ff6200;
+                            margin-bottom: 10px;
+                            &:hover{
+                                opacity: .8;
+                            }
+                        }
+                        &.attation {
+                            border: 1px solid #e1e2e6;
+                            color: #333;
+                            background: #fff;
+                            &:hover{
+                                border-color: #ff6200;
+                                color: #ff6200;
+                            }
+                        }
+                        &.follow-active{
+                            border: 1px solid #555567;
+                            color: #fff;
+                            background: #555567;
+                            &:hover{
+                                opacity: .8;
+                            }
+                        }
+                        &.follow-close{
+                            position: relative;
+                            border: 1px solid #ccc !important;
+                            color: #fff;
+                            background: #ccc !important;
+                            &:hover{
+                                opacity: 1;
+                                &:before,&:after{
+                                    opacity: 1;
+                                    visibility: visible;
+                                }
+                            }
+                            &:before,&:after{
+                                position: absolute;
+                                left: 50%;
+                                opacity: 0;
+                                visibility: hidden;
+                                transition: all .3s ease-in;
+                            }
+                            &:before{
+                                content: "";
+                                margin-left: -4px;
+                                top: 19px;
+                                width: 0;
+                                height: 0;
+                                border-width: 4px;
+                                border-style: solid;
+                                border-color: transparent transparent #565762;
+                            }
+                            &:after{
+                                content: '用户已关闭跟随';
+                                text-align: center;
+                                margin-left: -55px;
+                                top: 27px;
+                                width: 110px;
+                                height: 25px;
+                                line-height: 25px;
+                                font-size: 12px;
+                                color: #fff;
+                                background: #565762;
+                                cursor: text;
+                            }
+                        }
+                        &.attation-active{
+                            border: 1px solid #e1e2e6;
+                            color: #333;
+                            background: #fff;
+                            &:hover{
+                                border-color: #ff6200;
+                                color: #ff6200;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

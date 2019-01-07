@@ -18,6 +18,9 @@ module.exports = {
     'vue/no-parsing-error': [2, {
       'invalid-first-character-of-tag-name': 0,
     }],
+    eqeqeq: 0,
+    'no-underscore-dangle': 0,
+    'no-plusplus': 0,
   },
   parserOptions: {
     parser: 'typescript-eslint-parser',

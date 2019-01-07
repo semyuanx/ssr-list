@@ -2,7 +2,9 @@ import {
   State, Repository, Action, Getter, Mutation, Set,
 } from '@/utils/store-class-annotation';
 import { Commit, ActionTree } from 'vuex';
-import { getCustomConfig, getCustomRankList, getMasterFollowerService } from '@/service/home';
+import {
+  getCustomConfig, getCustomRankList, getMasterFollowerService, getRankFollowersService,
+} from '@/service/home';
 import { getAllProducts } from '@/service/manager';
 
 @Repository('HomeStore')
@@ -123,6 +125,22 @@ export default class HomeStore {
       console.log(data, 'setMasterFollower');
       commit('setMasterFollower', data.items);
     }
+    return data;
+  }
+
+  @Action
+  public async getRankFollowers(context: any, params: any) {
+    const { commit } = context;
+    let data: any = {};
+    try {
+      data = await getRankFollowersService(params);
+    } catch (e) {
+      console.log(e);
+    }
+    // if (data.items) {
+    //   // console.log(data, 'setMasterFollower');
+    //   // commit('setMasterFollower', data.items);
+    // }
     return data;
   }
 }

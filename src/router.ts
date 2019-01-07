@@ -67,6 +67,20 @@ export default function createRouter() {
         // which is lazy-loaded when the route is visited.
         component: () => import(/* webpackChunkName: "about" */ './components/address-book/AddressBook.vue'),
       },
+
+      {
+        path: '/follower', // 跟随大师
+        name: 'follower',
+        meta: {
+          title: '跟随大师',
+        },
+        component: () => import(/* webpackChunkName: "about" */ './pages/Follower.vue'),
+      },
+      {
+        path: '/dynamic', // 交易动态
+        name: 'tradedynamics',
+        component: () => import(/* webpackChunkName: "about" */ './pages/follower/index.vue'),
+      },
     ],
   });
 }

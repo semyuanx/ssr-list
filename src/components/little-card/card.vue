@@ -147,7 +147,7 @@ export default class FmLittleCard extends Vue {
         }
       }
       .sub-btn {
-        flex: 1;
+        // flex: 1;
         .flex-row();
         justify-content: flex-end;
         align-items: center;

@@ -3,7 +3,7 @@ import { get, post } from '@/request';
 import {
   login, rankList, customConfig, customRankList,
   relations, addOrCancelAttentionApi, checkCanFollowApi, brokersList,
-  getMasterFollowerApi,
+  getMasterFollowerApi, getRankFollowersApi,
 } from '@/api/home';
 
 export const getLoginStatus = (params?: object): any => get(login(), {
@@ -24,6 +24,10 @@ export const getBrokersList = (params?: object): any => get(brokersList(), {
 });
 
 export const getMasterFollowerService = (params?: object): any => get(getMasterFollowerApi(), {
+  params,
+});
+
+export const getRankFollowersService = (params?: object): any => get(getRankFollowersApi(), {
   params,
 });
 

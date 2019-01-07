@@ -16,6 +16,15 @@ export const checkCanFollowApi = () => `${API_PREFIX_V1}/trade/check/follow`;
 
 export const getMasterFollowerApi = () => `${API_PREFIX_V2}/trade/rank/followers`;
 
+export const getRankFollowersApi = () => `${API_PREFIX_V2}/trade/rank/followers`;
+
 export default {
-  login, rankList, customConfig, customRankList, checkCanFollowApi, brokersList, getMasterFollowerApi,
+  login,
+  rankList,
+  customConfig,
+  customRankList,
+  checkCanFollowApi,
+  brokersList,
+  getMasterFollowerApi,
+  getRankFollowersApi,
 };

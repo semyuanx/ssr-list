@@ -1,0 +1,45 @@
+.page-box{
+    padding-top: 20px;
+    .turn-page{
+        float: right;
+        margin-bottom: 20px;
+        text-align: right;
+        a{
+            display: inline-block;
+            border: 1px solid #ccc;
+            padding: 5px 10px;
+            margin-left: 5px;
+            cursor: pointer;
+            color: #333;
+            &:hover{
+                border: 1px solid #ff6200;
+                color: #ff6200;
+            }
+            &.pre{
+                border: 1px solid #ccc !important;
+                background: none !important;
+            }
+            &.current {
+                border: 1px solid #ff6200 !important;
+                background-color: #ff6200;
+                color: white !important;
+            }
+            &.next{
+                border: 1px solid #ccc !important;
+                background: none !important;
+                color: #333 !important;
+                &:hover{
+                    border: 1px solid #ff6200 !important;
+                    color: #ff6200 !important;
+                }
+            }
+            &.disabled{
+                color: #999 !important;
+                &:hover{
+                    border: 1px solid #ccc !important;
+                    color: #999 !important;
+                }
+            }
+        }
+    }
+}
