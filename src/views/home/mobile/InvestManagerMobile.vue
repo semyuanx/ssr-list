@@ -99,7 +99,7 @@ export default class Index extends Vue {
     }
 
     let title: string = '';
-    const condObject = this.data.CondCfg.CondConfig;
+    const condObject = this.data.CondCfg ? this.data.CondCfg.CondConfig : {};
 
     Object.keys(condObject).forEach((key) => {
       const value = condObject[key];

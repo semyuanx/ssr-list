@@ -1,83 +1,25 @@
-import Vue, { CreateElement } from 'vue';
-import App from './App.vue';
-import createRouter from './router';
-import createStore from './stores';
-import { sync } from 'vuex-router-sync';
-import './registerServiceWorker';
-import fmui from '@fmfe/fm-vue-ui';
-import '@fmfe/fm-vue-ui/lib/theme-default/index.css';
-import fmcomponents from 'fmcomponents';
-
-import envMixin from './mixin/envMixin.vue';
-import { isWebview } from './utils/device';
-
-import 'v2-table/dist/index.css';
-import 'beautify-scrollbar/dist/index.css';
-import V2Table from 'v2-table';
-
-import createI18n from './i18n';
-
-if (process.env.NODE_ENV !== 'production') {
-  Vue.config.productionTip = false;
-}
-
-Vue.use(V2Table);
-
-const injectEnv: any = {
-  install(vue: any, option: any) {
-    const v: any = vue;
-    v.prototype.$baseStrings = option;
-  },
-};
-Vue.use(injectEnv, {
-  API: process.env.VUE_APP_FM_API,
-  BASE: process.env.VUE_APP_FM_BASE,
-  AuthURL: process.env.VUE_APP_FM_AUTH,
-  ENV: process.env.NODE_ENV,
-  CDN: process.env.VUE_APP_FM_CDN,
-  KAIHU: process.env.VUE_APP_FM_KAIHU,
-  TRADE: process.env.VUE_APP_FM_TRADE,
-  locale: (window as any).Lang || 'zh-CN',
-});
-
-Vue.use(fmcomponents, {
-  API: process.env.VUE_APP_FM_API,
-  BASE: process.env.VUE_APP_FM_BASE,
-  AuthURL: process.env.VUE_APP_FM_AUTH,
-  ENV: process.env.NODE_ENV,
-  TRADE: process.env.VUE_APP_FM_TRADE,
-});
-
-Vue.use(fmui);
-Vue.mixin(envMixin);
-
-const i18n = createI18n();
-const store = createStore();
-const router = createRouter();
-router.beforeEach((to, from, next) => {
-  window.document.title = to.meta.title || 'Followme';
-  next();
-});
-const isAppVisit = isWebview(window.location && window.location.search);
-
-sync(store, router);
-const app = new Vue({
-  i18n,
-  router,
-  store,
-  render: (h: CreateElement) => h(App, {
-    props: {
-      isAppVisit,
-    },
-  }),
-});
+import { createApp } from './app-entry';
 
 declare global {
   interface Window {
-    app: Vue;
+    FM_BASE: string;
+    FM_API: string;
+    FM_TRADE: string;
+    FM_LIVE: string;
+    FM_AUTH: string;
+    FM_CDN: string;
+    FM_KAIHU: string;
   }
 }
 
-window.app = app;
-
-app.$mount('#app');
+createApp({
+  domian: {
+    FM_BASE: window.FM_BASE || process.env.VUE_APP_FM_BASE,
+    FM_API: window.FM_API || process.env.VUE_APP_FM_API,
+    FM_TRADE: window.FM_TRADE || process.env.VUE_APP_FM_TRADE,
+    FM_LIVE: window.FM_LIVE || process.env.VUE_APP_FM_LIVE,
+    FM_AUTH: window.FM_AUTH || process.env.VUE_APP_FM_AUTH,
+    FM_CDN: window.FM_CDN || process.env.VUE_APP_FM_CDN,
+    FM_KAIHU: window.FM_KAIHU || process.env.VUE_APP_FM_KAIHU,
+  },
+});
