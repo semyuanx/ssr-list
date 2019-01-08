@@ -71,13 +71,7 @@ export function createApp(ctx: any) {
     }),
   });
 
-  // declare global {
-  //   interface Window {
-  //     app: Vue;
-  //   }
-  // }
-
-  // window.app = app;
+  (window as any).app = app;
 
   app.$mount('#app');
 }

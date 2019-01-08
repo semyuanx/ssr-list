@@ -9,6 +9,7 @@ declare global {
     FM_AUTH: string;
     FM_CDN: string;
     FM_KAIHU: string;
+    app: any;
   }
 }
 
