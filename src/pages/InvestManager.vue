@@ -6,6 +6,8 @@
     >
     <Navbar
       @change="handleChange"
+      @startMam="startMam"
+      @startProduct="startProduct"
       :currentTag="params.status"
     ></Navbar>
 
@@ -23,7 +25,16 @@
           :sm="12"
           :lg="8"
         >
+          <PanelPending
+            v-if="item.Status === 'Pending'"
+            :accounts="mamAccounts"
+            width="100%"
+            :panelData="item"
+            @fetch-data="fetchData"
+          ></PanelPending>
           <Panel
+            v-else
+            :accounts="mamAccounts"
             width="100%"
             :panelData="item"
           ></Panel>
@@ -36,11 +47,14 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import { Navbar, Panel } from '@/views/InvestManager';
+import { Navbar, Panel, PanelPending } from '@/views/InvestManager';
 import FmCol from '@/components/grid/Col.vue';
 import FmRow from '@/components/grid/Row.vue';
 import { namespace } from 'vuex-class';
 import InfiniteScroll from '@/components/infinite-scroll/InfiniteScroll.vue';
+import { getLoginStatus } from 'fmcomponents';
+import { loadAuth } from 'fmcomponents/src/utils';
+import { openCreateDialog } from 'fmcomponents/src/components/mam';
 
 const ManagerStore = namespace('ManagerStore');
 export interface Params {
@@ -53,6 +67,7 @@ export interface Params {
   components: {
     Navbar,
     Panel,
+    PanelPending,
     FmCol,
     FmRow,
     InfiniteScroll,
@@ -66,10 +81,23 @@ export default class Manager extends Vue {
   public settledProducts: any;
 
   @ManagerStore.State
+  public mamAccounts: any;
+
+  @ManagerStore.State
+  public userInfo: any;
+
+  @ManagerStore.State
   public total:any;
 
   @ManagerStore.Action
   getProductsAsync: any;
+
+  @ManagerStore.Action
+  getAllAccounts: any;
+
+  @ManagerStore.Action
+  getCardInfoAction: any;
+
 
   public params: Params = {
     status: 'InProcess',
@@ -81,15 +109,80 @@ export default class Manager extends Vue {
     return this.params.status === 'Settled' ? this.settledProducts : this.inProcessProducts;
   }
 
-  created() {
+  mounted() {
     this.getProductsAsync(this.params);
+    getLoginStatus().then((res: any) => {
+      if (res.isLogin) {
+        this.getAllAccounts({ checkMAM: true });
+        this.getCardInfoAction();
+      }
+    });
+  }
+
+  startProductSatuation(account: any) {
+    const _this = this;
+    if (account.length <= 0) {
+      this.$fmdialog({
+        message: '您没有可用的MAM交易员账户,请开户后重试',
+        type: 'confirm',
+        callback(flag: any) {
+          if (flag) window.open(`${_this.base}/portalindex/upgrade/index?type=4`);
+        },
+      });
+    } else {
+      // eslint-disable-next-line
+      const freeAccounts = account.filter((account: any) => account.IsMAMFree === true) || [];
+      if (freeAccounts.length <= 0) {
+        this.$fmdialog({
+          message: '您没有可用的MAM交易员账户,请开户后重试',
+          type: 'confirm',
+          callback(flag: any) {
+            if (flag) window.open(`${_this.base}/portalindex/upgrade/index?type=4`);
+          },
+        });
+      } else {
+        openCreateDialog();
+      }
+    }
+  }
+
+  startProduct() {
+    getLoginStatus().then((user: any) => {
+      if (user.islogin) {
+        if (this.userInfo && this.userInfo.RealName && this.userInfo.AccountEmail && this.userInfo.AccountMobile && this.userInfo.IDNO) {
+          this.startProductSatuation(this.mamAccounts);
+        } else {
+          window.location.href = `${this.base}/open/upgrade/newindex?type=4`;
+        }
+      } else {
+        loadAuth();
+      }
+    });
+  }
+
+  startMam() {
+    getLoginStatus().then((user: any) => {
+      if (user.islogin) {
+        window.location.href = `${this.base}/portalindex/upgrade/mam`;
+      } else {
+        loadAuth();
+      }
+    });
+  }
+
+  fetchData() {
+    this.$nextTick(() => {
+      this.getProductsAsync(this.params);
+    });
   }
 
   handleChange(index: string) {
     this.params.pageIndex = 1;
     this.params.status = index;
     (this.$refs.infinitescroll as any).$emit('reInit');
-    this.getProductsAsync(this.params);
+    this.$nextTick(() => {
+      this.getProductsAsync(this.params);
+    });
   }
 
   public async handleList() {

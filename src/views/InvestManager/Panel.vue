@@ -4,7 +4,7 @@
     class="panel-container"
     :style="{width:width}"
   >
-    <section class="panel-header">
+    <section class="panel-header" @click="toPersonalPage">
       <h2 class="panel-title">{{panelData.Name}}</h2>
       <div class="panel-desc">
         <div class="avatar-circle">
@@ -42,29 +42,64 @@
           <span class="income-label">{{$t('ROI')}}</span>
         </li>
       </ul>
+      <div class="message-box"></div>
       <ul class="sub-info">
         <li>
-          <span class="sub-info-label">{{$t('Balance')}}</span>
-          <span class="sub-info-value">${{panelData.Balance}}</span>
+          <template v-if="status === 'Trading'">
+            <span class="sub-info-label">产品资金</span>
+            <span class="sub-info-value">${{panelData.Balance}}</span>
+          </template>
+          <template v-if="status === 'Settled'">
+            <span class="sub-info-label">最终净值</span>
+            <span class="sub-info-value">${{panelData.Equity}}</span>
+          </template>
         </li>
         <li>
+          <template v-if="status === 'Trading'">
+            <span class="sub-info-label">剩余时间</span>
+            <span class="sub-info-value">{{panelData.DaysLeft}} {{$t('day')}}</span>
+          </template>
+          <template v-if="status === 'Settled'">
+            <span class="sub-info-label">参与人数</span>
+            <span class="sub-info-value">{{joinCount}}</span>
+          </template>
+        </li>
+        <!-- <li>
           <span class="sub-info-label">{{$t('daysLeft')}}</span>
           <span class="sub-info-value">{{panelData.DaysLeft}} {{$t('day')}}</span>
+        </li> -->
+        <li>
+          <template v-if="status === 'Trading'">
+            <span class="sub-info-label">参与人数</span>
+            <span class="sub-info-value">{{joinCount}} {{$t('person')}}</span>
+          </template>
+          <template v-if="status === 'Settled'">
+            <span class="sub-info-label">跟随者最终收益</span>
+            <span class="sub-info-value">{{followerProfit}}</span>
+          </template>
         </li>
         <li>
-          <span class="sub-info-label">{{$t('joinCount')}}</span>
-          <span class="sub-info-value">{{joinCount}} {{$t('person')}}</span>
-        </li>
-        <li>
-          <span class="sub-info-label">{{$t('incomeDistribution')}}</span>
-          <span class="sub-info-value">{{incomeDistribution}}</span>
+          <template v-if="status === 'Settled'">
+            <span class="sub-info-label">操作时长</span>
+            <span class="sub-info-value">{{panelData.Days}}</span>
+          </template>
+          <template v-else>
+            <span class="sub-info-label">收益分配</span>
+            <span class="sub-info-value">{{incomeDistribution}} {{$t('day')}}</span>
+          </template>
         </li>
       </ul>
       <a
-        class="submit-button"
+        :class="panelData.Status === 'Pending' ? 'submit-button allways-color' : 'submit-button'"
         :href="submitUrl"
         target="_blank"
-      >{{$t('gotoJoin')}}</a>
+      >{{
+        {
+          'Trading': '查看详情',
+          'Settled': '查看详情',
+          'Pending': '立即参与',
+        }[panelData.Status]
+      }}</a>
     </section>
     <img
       src="./safe.png"
@@ -80,6 +115,7 @@ import { API_PREFIX_V2 } from '@/constant/api';
 import zhCN from '@/i18n/zh-CN/views/InvestManager/Panel';
 import zhTW from '@/i18n/zh-TW/views/InvestManager/Panel';
 import enUS from '@/i18n/en-US/views/InvestManager/Panel';
+import { moneyFormat } from '@/utils/format';
 
 interface Context {
   Name?: string;
@@ -90,6 +126,7 @@ interface Context {
   Profit:string;
   BrokerID:number;
   AccountIndex:number;
+  Status:string;
 }
 
 @Component({
@@ -106,20 +143,36 @@ export default class Panel extends Vue {
 
   @Prop() private width!: string;
 
-  @Prop({ default: () => {} }) private panelData!: Context;
+  @Prop({ default: () => {} }) private panelData?: any;
+
+  toPersonalPage() {
+    const userId = this.panelData.UserID;
+    const index = this.panelData.AccountIndex;
+    const url = `${this.base}/user/${userId}/trade-account/exhibition?index=${index}`;
+    window.open(url, '_blank');
+  }
+
+  get status() {
+    return this.panelData.Status;
+  }
 
   get joinCount():number {
     return this.panelData.FollowerCount + 1;
   }
 
+  get followerProfit() {
+    return moneyFormat(this.panelData.FollowerProfit);
+  }
+
   get submitUrl():string {
-    return `${API_PREFIX_V2}/user/${this.panelData.UserID}/trade-account/exhibition?index=${this.panelData.AccountIndex}`;
+    if (this.panelData.Status === 'Settled') {
+      return `${this.base}/u/id/${this.panelData.Trader.UserID}_${this.panelData.Trader.AccountIndex}?pd=${this.panelData.ID}`;
+    }
+    return `${this.base}/user/${this.panelData.UserID}/trade-account/exhibition?index=${this.panelData.AccountIndex}`;
   }
 
   get incomeDistribution():string {
-    return (
-      `${(this.panelData.StopLossRatio * 10 - this.panelData.TakeProfitRatio * 10)} : ${this.panelData.TakeProfitRatio * 10}`
-    );
+    return this.panelData.TakeProfitRatio === 0.8 ? '2:8' : '5:5';
   }
 
   get avatarSrc():string {
@@ -151,8 +204,9 @@ export default class Panel extends Vue {
   background-color: #fff;
   overflow: hidden;
   .width(380);
-  .height(440);
+  .height(480);
   .panel-header {
+    cursor: pointer;
     border-bottom: 1px solid @border-color;
     padding: 15rem / @base-font 35rem / @base-font;
     .panel-title {
@@ -227,6 +281,9 @@ export default class Panel extends Vue {
         color: #aaaaaa;
       }
     }
+    .message-box {
+      height: 31px;
+    }
     .sub-info {
       display: flex;
       flex-wrap: wrap;
@@ -243,6 +300,13 @@ export default class Panel extends Vue {
           color: #6d6d6d;
         }
       }
+    }
+  }
+  .allways-color {
+    background-color: #ff6200 !important;
+    color: #ffffff !important;
+    &:hover {
+      background-color: #ff7e00 !important;
     }
   }
   .submit-button {

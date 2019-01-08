@@ -24,9 +24,10 @@ export const moneyFormat = function moneyFormat(val: string|number, format: numb
 
   type = `$0.[${type}]`;
   const transformed = v.format(type);
-  return transformed ? transformed.slice(0, transformed.length - 1) : val;
+  // eslint-disable-next-line
+  return transformed ? transformed.includes('.') ? transformed.slice(0, transformed.length - 1) : transformed : val;
 };
-export const percentFormat = function percentFormat(val: string|number, format: number = 2) {
+export const percentFormat = function percentFormat(val: string|number, format: number = 2, simple: boolean = false) {
   if (!val) {
     return '0%';
   }
@@ -35,7 +36,12 @@ export const percentFormat = function percentFormat(val: string|number, format: 
 
   let type = Array(format).fill(0).join('');
 
-  type = `0.${type}%`;
+
+  if (!simple) {
+    type = `0.${type}%`;
+  } else {
+    type = `0.[${type}]%`;
+  }
   const transformed = v.format(type);
   return transformed && transformed.includes('NaN') ? '0%' : transformed;
 };
@@ -61,6 +67,11 @@ export const propFormat = function propFormat(val: string | number, prop: string
     return val;
   }
   return val;
+};
+
+export const timeFormat = function timeFormat(val: any, format = '00:00:00') {
+  if (!val) return format;
+  return numeral(val).format(format);
 };
 
 export const none = () => {};

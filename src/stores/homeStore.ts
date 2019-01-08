@@ -154,7 +154,6 @@ export default class HomeStore {
     } catch (e) {
       console.log(e);
     }
-    console.log(data, 'ddd');
     // if (data.items) {
     //   // console.log(data, 'setMasterFollower');
     //   // commit('setMasterFollower', data.items);

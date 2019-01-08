@@ -12,13 +12,13 @@
       </li>
     </ul>
     <ul class="navbar-item navbar-right">
-      <li class="navbar-right-item">
+      <li class="navbar-right-item" @click="startMam">
         <a href="javascript:;">
-          <i class="fm-fonticon icon-plus_24px"></i>
+          <i class="fm-fonticon icon-user_24px"></i>
           <span>{{$t('createAccount')}}</span>
         </a>
       </li>
-      <li class="navbar-right-item">
+      <li class="navbar-right-item" @click="startProduct">
         <a href="javascript:;">
           <i class="fm-fonticon  icon-flag_24px"></i>
           <span>{{$t('launchedProduct')}}</span>
@@ -61,6 +61,12 @@ export default class Navbar extends Vue {
   handleClick(index: string) {
     console.log(index);
   }
+
+  @Emit('startMam')
+  startMam() {}
+
+  @Emit('startProduct')
+  startProduct() {}
 }
 </script>
 <style lang="less" scoped>
@@ -130,6 +136,9 @@ export default class Navbar extends Vue {
     justify-content: flex-end;
     &-item {
       align-items: center;
+      i,span {
+        color: @default-color;
+      }
     }
   }
 }

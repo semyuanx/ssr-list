@@ -68,7 +68,6 @@ export default class InfiniteScroll extends Vue {
 
   public init() {
     this.scrollview = getScrollview(this.$el);
-    console.log(this.scrollview);
     if (this.scrollTop) {
       if (this.scrollview === window) {
         window.scrollTo(0, 0);
