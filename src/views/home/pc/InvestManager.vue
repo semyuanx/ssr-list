@@ -92,7 +92,8 @@ export default class Index extends Vue {
   }
 
   toRankList() {
-    this.$router.push({ name: 'rankList' });
+    // this.$router.push({ name: 'rankList' });
+    this.$emit('toJoinMore', this.data);
   }
 
   toMore() {

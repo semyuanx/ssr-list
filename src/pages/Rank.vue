@@ -56,6 +56,7 @@ export default class RankList extends Vue {
   }
 
   handleFilter() {
+    this.resetIndex();
     this.filterResult();
     this.getData();
   }

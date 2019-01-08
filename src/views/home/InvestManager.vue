@@ -1,7 +1,7 @@
 <template>
   <div class="header">
     <div class="fm-show-pc">
-      <InvestManager @toMore="toMore" :subscribe="subscribe" v-if="configData.data.length > 1" :data="configData" :description="description" />
+      <InvestManager @toJoinMore="toJoinMore" @toMore="toMore" :subscribe="subscribe" v-if="configData.data.length > 1" :data="configData" :description="description" />
     </div>
     <div class="fm-show-mobile">
       <CommonMobile :data="mobileConfigData" :description="description" />
@@ -25,10 +25,17 @@ export default class Index extends Vue {
   @Prop()
   data:any;
 
-  @Prop()
-  subscribe: any;
+  // @Prop()
+  // subscribe: any;
+  subscribe(item: any) {
+    this.$router.push({ name: 'investManager' });
+  }
 
-  toMore() {
+  toMore(item: any) {
+    this.$router.push({ name: 'investManager' });
+  }
+
+  toJoinMore() {
     this.$router.push({ name: 'investManager' });
   }
 

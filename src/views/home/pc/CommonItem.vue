@@ -80,7 +80,19 @@ export default class Index extends Vue {
     this.$router.push({ name: 'rankList' });
   }
 
+  isObject(val: any) {
+    return Object.prototype.toString.call(val) === '[object Object]';
+  }
+
   toMore() {
+    // console.log(this.data, this.description,'ddd')
+    // const { source } = this.description;
+    // if (source.CondCfg) {
+    //   const condCfg = source.CondCfg;
+    //   if (condCfg) {
+
+    //   }
+    // }
     this.$router.push({ name: 'rankList' });
   }
 

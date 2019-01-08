@@ -1,7 +1,7 @@
 <template>
   <div class="header">
     <div class="fm-show-pc">
-      <InvestManager @toMore="toMore" :subscribe="subscribe" v-if="configData.data.length > 1" :data="configData" :description="description" />
+      <InvestManager  @toJoinMore="toJoinMore" @toMore="toMore" :subscribe="subscribe" v-if="configData.data.length > 1" :data="configData" :description="description" />
     </div>
     <div class="fm-show-mobile">
       <CommonMobile v-if="mobileConfigData.length" :data="mobileConfigData" :description="description" />
@@ -47,6 +47,10 @@ export default class Index extends Vue {
 
   toMore() {
     this.redirectTo('tradeMaster');
+  }
+
+  toJoinMore() {
+    this.$router.push({ name: 'rankList' });
   }
 
   get mobileConfigData() {
