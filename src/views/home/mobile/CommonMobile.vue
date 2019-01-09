@@ -2,6 +2,7 @@
   <div class="invest-container">
     <div class="header">
       <LineHead
+        @rightClick="toMore"
         :title="description.title"
         :subTitle="subTitle"
       />
@@ -41,7 +42,9 @@
   </div>
 </template>
 <script lang="ts">
-import { Component, Vue, Prop } from 'vue-property-decorator';
+import {
+  Component, Vue, Prop, Emit,
+} from 'vue-property-decorator';
 import LineHead from '@/components/line-head/index.vue'; // @ is an alias to /src
 import SimpleTable from '@/components/simple-table/index.vue'; // @ is an alias to /src
 import propMaps from '@/constant/propMap';
@@ -65,6 +68,11 @@ export default class Index extends Vue {
 
   @Prop()
   description: any;
+
+  toMore() {
+    // this.$emit('toMore')
+    // this.
+  }
 
   get initHeader() {
     if (this.data) {

@@ -24,6 +24,7 @@ const svgLoader = (config) => {
 };
 
 module.exports = {
+  baseUrl: '/trading-strategy/',
   devServer: {
     disableHostCheck: true,
   },
@@ -33,6 +34,7 @@ module.exports = {
     types.forEach(type => addStyleResource(config.module.rule('less').oneOf(type)));
     svgLoader(config);
     config.resolve.extensions.add('.vue').add('.js');
+    // config.output.publicPath('/trading-strategy');
   },
   css: {
     loaderOptions: {

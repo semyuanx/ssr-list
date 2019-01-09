@@ -30,6 +30,8 @@ export const closeWebView = (): any => {
   return window.app.$router.go(-1);
 };
 
+export const isApp = () => isNativeFuncExist('openWebView');
+
 /**
  * 在一个新的webview页面打开，比如打开到登录页面: openWebView('login')
  * version 3.2

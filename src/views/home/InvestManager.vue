@@ -74,6 +74,7 @@ export default class Index extends Vue {
     const config:any = this.data;
 
     return {
+      linkUrl: '',
       source: config,
       background: config.ChartID,
       title: '投资管家',

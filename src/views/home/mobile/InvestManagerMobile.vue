@@ -2,6 +2,7 @@
   <div class="invest-container">
     <div class="header">
       <LineHead
+        @rightClick="toRankList"
         :title="data.RankName"
         :subTitle="subTitle"
       />
@@ -50,6 +51,10 @@ export default class Index extends Vue {
 
   @Prop()
   data: any;
+
+  toRankList() {
+    this.$router.push({ path: 'rankList' });
+  }
 
   get initHeader() {
     if (this.data) {

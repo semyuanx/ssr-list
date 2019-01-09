@@ -111,6 +111,7 @@ export default class Index extends Vue {
     const config:any = this.data;
 
     return {
+      linkUrl: '',
       source: config,
       background: config.ChartID,
       title: '跟随大师',
