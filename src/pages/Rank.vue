@@ -61,16 +61,17 @@ export default class RankList extends Vue {
     this.getData();
   }
 
-  sortChange({ prop, order }: any) {
+  sortChange({ prop, order: ord }: any) {
+    const order = ord === 'descending' ? 1 : 0;
     this.setParams({
       orderby: prop,
-      order,
+      isDESC: order,
     });
     this.resetIndex();
     this.getRankList(
       this.refactor({
         orderby: prop,
-        order,
+        isDESC: order,
       }),
     );
   }

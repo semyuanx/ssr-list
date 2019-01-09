@@ -11,7 +11,10 @@ export const numberFormat = function numberFormat(val: string|number, format: nu
 
   type = `0.[${type}]`;
   const transformed = v.format(type);
-  return transformed ? transformed.slice(0, transformed.length - 1) : val;
+  if (transformed) {
+    return transformed.includes('.') ? transformed.slice(0, transformed.length - 1) : transformed;
+  }
+  return val;
 };
 export const moneyFormat = function moneyFormat(val: string|number, format: number = 2) {
   if (!val) {

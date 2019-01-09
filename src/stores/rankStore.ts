@@ -10,6 +10,8 @@ import {
   getBrokersList,
 } from '@/service/home';
 
+const loadingNumber = 0;
+
 @Repository('RankStore')
 export default class RankStore {
   @State({})

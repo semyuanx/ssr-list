@@ -9,18 +9,20 @@ declare global {
     FM_AUTH: string;
     FM_CDN: string;
     FM_KAIHU: string;
+    FM_PUSH: string;
     app: any;
   }
 }
 
 createApp({
   domian: {
-    FM_BASE: window.FM_BASE || process.env.VUE_APP_FM_BASE,
-    FM_API: window.FM_API || process.env.VUE_APP_FM_API,
-    FM_TRADE: window.FM_TRADE || process.env.VUE_APP_FM_TRADE,
-    FM_LIVE: window.FM_LIVE || process.env.VUE_APP_FM_LIVE,
-    FM_AUTH: window.FM_AUTH || process.env.VUE_APP_FM_AUTH,
-    FM_CDN: window.FM_CDN || process.env.VUE_APP_FM_CDN,
-    FM_KAIHU: window.FM_KAIHU || process.env.VUE_APP_FM_KAIHU,
+    BASE: window.FM_BASE || process.env.VUE_APP_FM_BASE,
+    API: window.FM_API || process.env.VUE_APP_FM_API,
+    TRADE: window.FM_TRADE || process.env.VUE_APP_FM_TRADE,
+    LIVE: window.FM_LIVE || process.env.VUE_APP_FM_LIVE,
+    AuthURL: window.FM_AUTH || process.env.VUE_APP_FM_AUTH,
+    CDN: window.FM_CDN || process.env.VUE_APP_FM_CDN,
+    KAIHU: window.FM_KAIHU || process.env.VUE_APP_FM_KAIHU,
+    PUSH: window.FM_PUSH || process.env.VUE_APP_FM_KAIHU,
   },
 });
