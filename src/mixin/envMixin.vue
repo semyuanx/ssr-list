@@ -18,7 +18,7 @@ export default {
     base() {
       return this.$baseStrings.BASE;
     },
-    kh() {
+    kaiHu() {
       return this.$baseStrings.KAIHU;
     },
   },
@@ -36,7 +36,7 @@ export default {
       if (/^https?/.test(url) || /^\/\//.test(url)) {
         console.log('is url');
       } else if (alias === 'traderRegister') {
-        url = this.kh + url;
+        url = this.kaiHu + url;
       } else {
         url = this.base + url;
       }
