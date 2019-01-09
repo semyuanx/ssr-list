@@ -60,7 +60,7 @@
         <el-table-column
           label="交易能力值"
           prop="Score"
-          sortable
+          sortable="custom"
           min-width="116px"
         >
           <template slot-scope="scope">
@@ -79,7 +79,7 @@
           label="收益率"
           prop="ROI"
           min-width="100px"
-          sortable
+          sortable="custom"
         >
           <template slot-scope="scope">
             <div
@@ -98,7 +98,7 @@
         <el-table-column
           label="最大回撤"
           prop="MaxRetracement"
-          sortable
+          sortable="custom"
           min-width="100px"
         >
           <template slot-scope="scope">
@@ -116,7 +116,7 @@
         <el-table-column
           label="交易周期"
           prop="Weeks"
-          sortable
+          sortable="custom"
           min-width="100px"
         >
           <template slot-scope="scope">
@@ -134,7 +134,7 @@
         <el-table-column
           label="擅长品种"
           prop="ExpSymbol"
-          sortable
+          sortable="custom"
           min-width="100px"
         >
           <template slot-scope="scope">
@@ -152,7 +152,7 @@
         <el-table-column
           label="订阅人数"
           prop="Subscribers"
-          sortable
+          sortable="custom"
           min-width="100px"
         >
           <template slot-scope="scope">

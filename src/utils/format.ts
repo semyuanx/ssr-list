@@ -12,6 +12,12 @@ export const numberFormat = function numberFormat(val: string|number, format: nu
   type = `0.[${type}]`;
   const transformed = v.format(type);
   if (transformed) {
+    if (transformed.includes('.')) {
+      const split = transformed.split('.');
+      if (split[1] && split[1].length === format) {
+        return transformed;
+      }
+    }
     return transformed.includes('.') ? transformed.slice(0, transformed.length - 1) : transformed;
   }
   return val;

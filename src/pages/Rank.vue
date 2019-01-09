@@ -61,19 +61,48 @@ export default class RankList extends Vue {
     this.getData();
   }
 
+  sortArr: any = [];
+
+  startQueue: any = false;
+
   sortChange({ prop, order: ord }: any) {
-    const order = ord === 'descending' ? 1 : 0;
-    this.setParams({
+    const order = ord === 'ascending' ? 0 : 1;
+    const params = {
       orderby: prop,
       isDESC: order,
-    });
+    };
+
+    this.sortArr.push(params);
+    if (!this.startQueue) {
+      this.startQueue = true;
+      this.$nextTick(() => {
+        this.getSortData();
+      });
+    }
+  }
+
+  getSortData(param?: any) {
+    let params = param;
+    const len = this.sortArr.length;
+    if (!params) {
+      if (len > 1) {
+        params = this.sortArr[len - 1];
+        this.sortArr = [];
+      } else {
+        params = this.sortArr.shift();
+      }
+    }
+    if (!params) {
+      this.startQueue = false;
+      return;
+    }
     this.resetIndex();
+    this.setParams(params);
     this.getRankList(
-      this.refactor({
-        orderby: prop,
-        isDESC: order,
-      }),
-    );
+      this.refactor(params),
+    ).then(() => {
+      this.getSortData();
+    });
   }
 
   public filterResult() {
