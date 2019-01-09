@@ -6,7 +6,7 @@
     <div class="lists-container">
       <div class="lists">
         <div :key="item.index + item.brokerName" v-for="item in data" class="list-item">
-          <FmCard @subscribe="handleSub" :data="item" />
+          <FmCard @toPersonal="toPersonal" @subscribe="handleSub" :data="item" />
         </div>
       </div>
     </div>
@@ -43,6 +43,10 @@ export default class Home extends Vue {
     } else {
       console.log('mobile');
     }
+  }
+
+  toPersonal(item: any) {
+    this.$emit('toPersonal', item);
   }
 
   toRankList() {

@@ -4,7 +4,7 @@
       <InvestManager  @toJoinMore="toJoinMore" @toMore="toMore" :subscribe="subscribe" v-if="configData.data.length > 1" :data="configData" :description="description" />
     </div>
     <div class="fm-show-mobile">
-      <CommonMobile v-if="mobileConfigData.length" :data="mobileConfigData" :description="description" />
+      <CommonMobile @toMore="toMoreMobile" v-if="mobileConfigData.length" :data="mobileConfigData" :description="description" />
     </div>
   </div>
 </template>
@@ -47,6 +47,10 @@ export default class Index extends Vue {
 
   toMore() {
     this.redirectTo('tradeMaster');
+  }
+
+  toMoreMobile() {
+    this.$router.push({ name: 'follower' });
   }
 
   toJoinMore() {

@@ -70,7 +70,7 @@ export default class Index extends Vue {
   description: any;
 
   toMore() {
-    // this.$emit('toMore')
+    this.$emit('toMore', this.description);
     // this.
   }
 

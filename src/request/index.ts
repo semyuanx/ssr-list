@@ -3,6 +3,8 @@
 import axios, { AxiosResponse, AxiosRequestConfig } from 'axios';
 import dialog from '@fmfe/fm-vue-ui/lib/dialog';
 
+import { getAppInfo, isApp, isNativeFuncExist} from '@/utils/native.ts'
+
 const OPTION_DEFAULT: AxiosRequestConfig = {
   headers: {
     'X-Requested-With': 'XMLHttpRequest',
@@ -52,6 +54,18 @@ export default class Network {
       }
       if (!cookie) {
         this.requestInstance = axios.create({ ...option, withCredentials: true });
+      }
+      if (isApp() && isNativeFuncExist()) {
+        this.requestInstance.interceptors.request.use(async (axiosConfig) => {
+          // APP => 4.1 的获取方式
+          if (isApp() && isNativeFuncExist()) {
+            const data = await getAppInfo();
+            axiosConfig.headers['USER_TOKEN'] = data.USER_TOKEN;
+            axiosConfig.headers['x-sdk-info'] = data.xSDKInfo;
+            axiosConfig.headers['lang'] = data.lang;
+          }
+          return axiosConfig;
+        });
       }
       this.requestInstance.interceptors.request.use(this.onRequestBefore);
       this.requestInstance.interceptors.response.use(this.onResponse);

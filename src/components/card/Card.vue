@@ -1,6 +1,6 @@
 <template>
   <div class="card-contain">
-    <div class="user">
+    <div class="user" @click="toPersonal">
       <div class="avatar-con">
         <div class="avatar">
           <img v-if="data.avatar" :src="data.avatar" />
@@ -56,6 +56,10 @@ export default class FmCard extends Vue {
 
   sub() {
     this.$emit('subscribe', this.data);
+  }
+
+  toPersonal() {
+    this.$emit('toPersonal', this.data);
   }
 }
 </script>

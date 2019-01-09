@@ -2,8 +2,9 @@
 // import { getDomain } from 'fmcomponents/src/utils/domain';
 
 const urlMap = {
-  traderRegister: 'https://alibetacreate.followme.com/open/upgrade?type=2',
-  tradeMaster: 'https://alibetawww.followme.com/trading-strategy/follower',
+  traderRegister: '/open/upgrade?type=2',
+  tradeMaster: '/trading-strategy/follower',
+  personalPage: params => `/user/${params.userId}/trade-account/exhibition?index=${params.index}`,
 };
 
 export default {
@@ -17,16 +18,34 @@ export default {
     base() {
       return this.$baseStrings.BASE;
     },
+    kh() {
+      return this.$baseStrings.KAIHU;
+    },
   },
   methods: {
-    redirectTo(alias) {
-      const url = urlMap[alias];
+    redirectTo(alias, params, newTab = false) {
+      let url = urlMap[alias];
       if (url) {
-        window.location.href = url;
-      } else if (/^https?/.test(alias) || /^\/\//.test(alias)) {
-        window.location.href = alias;
+        if (typeof url === 'function') {
+          url = url(params || {});
+        }
       } else {
-        window.location.href = this.base + alias;
+        url = alias;
+      }
+
+      if (/^https?/.test(url) || /^\/\//.test(url)) {
+        console.log('is url');
+      } else if (alias === 'traderRegister') {
+        url = this.kh + url;
+      } else {
+        url = this.base + url;
+      }
+      if (typeof window !== 'undefined') {
+        if (newTab) {
+          window.open(url, '_blank');
+        } else {
+          window.location.href = url;
+        }
       }
     },
   },

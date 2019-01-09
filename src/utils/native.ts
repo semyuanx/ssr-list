@@ -78,4 +78,35 @@ export interface GetAppInfoData {
 
 export const getAppInfo = (): Promise<GetAppInfoData> => native('401004', {});
 
+
 /** *********** 全局调用原生接口 end ************ */
+
+export interface SubParam {
+  userId: number;
+  accountIndex: number;
+  nickName: string;
+}
+
+export const toSubscribePage = (params: SubParam) => {
+  native('401001', params);
+};
+
+export interface MainPageParam {
+    trader: {
+      Type: string;
+      UserID: number;
+      Nickname: string;
+      AccountIndex: number;
+      Broker: string;
+      BrokerID: number;
+      BrokerName: string;
+      Signature: string;
+      JoinTime: string;
+      JoinBalance: number;
+      Profit: number;
+      CurrentProfit: number;
+  }
+}
+export const toPersonalPage = (params: MainPageParam) => {
+  native('goUserMainPage', params);
+};

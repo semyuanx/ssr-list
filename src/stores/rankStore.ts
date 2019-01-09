@@ -3,6 +3,7 @@ import {
 } from '@/utils/store-class-annotation';
 import { Commit, ActionTree } from 'vuex';
 import {
+  getLoginStatus,
   getRankList,
   getRelations,
   addOrCancelAttentionService,
@@ -116,6 +117,11 @@ export default class RankStore {
       .catch(() => {
         context.commit('setRankLoading', false);
       });
+  }
+
+  @Action
+  public getLoginStatus(context: { commit: Commit }): any {
+    return getLoginStatus().then((res: any) => res);
   }
 
   @Action

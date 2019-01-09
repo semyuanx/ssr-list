@@ -44,10 +44,6 @@ export default class List extends Vue {
   sortChange({ prop, order }:any) {
     this.$emit('sortChange', { prop, order });
   }
-
-  mounted() {
-    // console.log('rank', this.rankTotal, this.rankList)
-  }
 }
 </script>
 <style lang="less" scoped>

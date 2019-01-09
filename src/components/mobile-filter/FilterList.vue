@@ -51,11 +51,16 @@
           <template slot-scope="scope">
             <filter-button
               :border="true"
+              @click="toSubscribe"
               class="filter-button"
             >{{scope.row.price || '$9.99'}}</filter-button>
           </template>
         </el-table-column>
-
+        <div v-if="loading" class="loading-container" slot="append">
+          <img :src="cdn+'/images/loading.gif'"
+                 width="53"
+                 height="10" />
+        </div>
       </el-table>
     </section>
   </div>
@@ -86,6 +91,16 @@ export default class FilterList extends Vue {
   })
   data: any;
 
+  @Prop({
+    type: Array,
+    default: () => false,
+  })
+  loading: any;
+
+  toSubscribe() {
+    this.$emit('subscribe', this.data);
+  }
+
   sortChange({ column, prop, order }:any) {
     this.$emit('sortChange', { prop, order });
   }
@@ -95,6 +110,7 @@ export default class FilterList extends Vue {
 
 <style lang="less" scoped>
 @theme-color: #ff6200;
+
 .filter-list-container {
   font-family: PingFang-SC-Medium;
   color: #333;
@@ -169,5 +185,10 @@ export default class FilterList extends Vue {
 
 .orderCount {
   font-size: 18px;
+}
+.loading-container {
+  margin-top: 20px;
+  padding: 20px;
+  text-align: center;
 }
 </style>

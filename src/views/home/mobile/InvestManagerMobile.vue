@@ -53,7 +53,7 @@ export default class Index extends Vue {
   data: any;
 
   toRankList() {
-    this.$router.push({ path: 'rankList' });
+    this.$router.push({ name: 'rankList' });
   }
 
   get initHeader() {
