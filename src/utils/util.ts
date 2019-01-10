@@ -97,3 +97,22 @@ export const isNumber = function isNumber(str:any) {
   // eslint-disable-next-line
   return !isNaN(parseFloat(str)) && isFinite(str);
 };
+export const toNumber = function toNumber(string:any) {
+  let str = '';
+  try {
+    str = JSON.stringify(string);
+  } catch (e) {
+    console.log(e);
+  }
+  let hash = 0; let i; let
+    chr;
+  if (str.length === 0) return hash;
+  for (i = 0; i < str.length; i++) {
+    chr = str.charCodeAt(i);
+    // eslint-disable-next-line
+    hash = ((hash << 5) - hash) + chr;
+    // eslint-disable-next-line
+    hash |= 0; // Convert to 32bit integer
+  }
+  return hash;
+};

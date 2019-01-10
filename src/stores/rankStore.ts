@@ -1,7 +1,7 @@
 import {
   State, Repository, Action, Getter, Mutation, Set,
 } from '@/utils/store-class-annotation';
-import { Commit, ActionTree } from 'vuex';
+import { Commit } from 'vuex';
 import {
   getLoginStatus,
   getRankList,
@@ -10,6 +10,7 @@ import {
   checkCanFollowService,
   getBrokersList,
 } from '@/service/home';
+import { toNumber } from '@/utils/util';
 
 const loadingNumber = 0;
 
@@ -40,6 +41,9 @@ export default class RankStore {
 
   @State(0)
   public rankTotal: number = 0;
+
+  @State(0)
+  public rankParamHash: any = 0;
 
   // 经纪商列表
   @State([])
@@ -72,6 +76,8 @@ export default class RankStore {
 
   @Set('rankTotal') public setRankTotal: any;
 
+  @Set('rankParamHash') public setRankParamHash: any;
+
   @Set('rankParams')
   public setRankParams(): any | null {}
 
@@ -88,14 +94,24 @@ export default class RankStore {
   @Action
   public getRankList(context: { commit: Commit, state: any }, payload: any) {
     if (context.state.rankListLoading) return;
+    const { state } = context;
+    const hash = toNumber(payload);
+
+    const { rankParamHash, pageIndex: pageIndexState } = state;
+
+    const pageIndex = payload.index;
+    const pageSize = payload.size || 20;
+
+    if (hash === rankParamHash && pageIndexState === pageIndex) {
+      return;
+    }
+
     context.commit('setRankLoading', true);
     // eslint-disable-next-line
     return getRankList(payload)
       .then((res: any) => {
-        console.log(res, payload, 'getRankList');
         const list = Array.isArray(res.List) ? res.List : [];
-        const pageIndex = payload.index;
-        const pageSize = payload.size || 20;
+
         let totalList = context.state.rankList;
         console.log(pageIndex, 'pageIndex', context.state.pageIndex);
         if (pageIndex === 1) {
@@ -107,7 +123,9 @@ export default class RankStore {
         if (Array.isArray(list) && list.length < pageSize) {
           context.commit('setHasMore', false);
         }
-        context.commit('setPageIndex', pageIndex + 1);
+        if (list.length > pageSize - 3) {
+          context.commit('setPageIndex', pageIndex + 1);
+        }
         context.commit('setRankList', totalList || []);
         context.commit('setRankTotal', res.TotalCount || 0);
       })
