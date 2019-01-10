@@ -11,9 +11,6 @@ import fmcomponents from 'fmcomponents';
 import envMixin from './mixin/envMixin.vue';
 import { isWebview } from './utils/device';
 
-import 'v2-table/dist/index.css';
-import 'beautify-scrollbar/dist/index.css';
-import V2Table from 'v2-table';
 
 import createI18n from './i18n';
 
@@ -22,8 +19,6 @@ export function createApp(ctx: any) {
   if (process.env.NODE_ENV !== 'production') {
     Vue.config.productionTip = false;
   }
-
-  Vue.use(V2Table);
 
   const injectEnv: any = {
     install(vue: any, option: any) {
@@ -42,11 +37,8 @@ export function createApp(ctx: any) {
     TRADE: process.env.VUE_APP_FM_TRADE,
     locale: (window as any).Lang || 'zh-CN',
   }, domain);
-
   Vue.use(injectEnv, mainDomain);
-
   Vue.use(fmcomponents, mainDomain);
-
   Vue.use(fmui);
   Vue.mixin(envMixin);
 

@@ -13,9 +13,8 @@ declare global {
     app: any;
   }
 }
-
 createApp({
-  domian: {
+  domain: {
     BASE: window.FM_BASE || process.env.VUE_APP_FM_BASE,
     API: window.FM_API || process.env.VUE_APP_FM_API,
     TRADE: window.FM_TRADE || process.env.VUE_APP_FM_TRADE,
