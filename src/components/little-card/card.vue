@@ -20,7 +20,7 @@
     <div class="card-body">
       <div class="num-container">
         <div class="num-same num">
-          <div :key="i.val" v-for="i in data.data" class="num-left">
+          <div :key="i.val" v-for="i in data.data" class="num-left" :title="i.val">
             <span :class="isNumber(i.val) && i.val > 0 ? 'green': ''">{{i && i.val || ''}}</span>
           </div>
           <!-- <div class="num-left"><span>89.78%</span></div> -->
@@ -126,12 +126,13 @@ export default class FmLittleCard extends Vue {
         }
         .num {
           font-size:20px;
+          margin-bottom: 4px;
           >div {
             flex: 1;
             overflow: hidden;
           }
           .num-left {
-
+            margin-right: 4px;
           }
           .num-right {
             color: #333333;
@@ -139,6 +140,7 @@ export default class FmLittleCard extends Vue {
           }
         }
         .desc {
+          margin-top: 4px;
           >div {
             flex: 1;
             font-size:12px;

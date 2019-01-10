@@ -27,7 +27,7 @@
         :key="i.val" v-for="i in data.data"
         class="right-line-container line-rate"
       >
-        <div><span :class="isNumber(i.val) && i.val > 0 ? 'rate-val green': 'rate-val'">{{i && i.val || ''}}</span></div>
+        <div class=""><span :class="isNumber(i.val) && i.val > 0 ? 'rate-val green': 'rate-val'">{{i && i.val || ''}}</span></div>
         <div><span class="common-font">{{i && i.prop || ''}}</span></div>
       </div>
       <slot name="right">
@@ -186,6 +186,7 @@ export default class FmLittleCard extends Vue {
       }
     }
     .common-font {
+      margin-top: 7px;
       font-size:12px;
       font-family:MicrosoftYaHei;
       color:rgba(153,153,153,1);
