@@ -19,7 +19,7 @@ export default function createRouter() {
         path: '/ranking',
         name: 'rankList',
         meta: {
-          title: '筛选器',
+          title: '排行榜',
         },
         // route level code-splitting
         // this generates a separate chunk (about.[hash].js) for this route
@@ -79,6 +79,9 @@ export default function createRouter() {
       {
         path: '/dynamic', // 交易动态
         name: 'tradedynamics',
+        meta: {
+          title: '交易动态',
+        },
         component: () => import(/* webpackChunkName: "about" */ './pages/tradedynamics/index.vue'),
       },
     ],
