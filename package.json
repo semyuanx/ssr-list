@@ -6,6 +6,7 @@
     "start": "vue-cli-service serve",
     "alibeta": "vue-cli-service serve --mode alibeta",
     "build:beta": "vue-cli-service build --mode=alibeta",
+    "beta": "npm run build:beta",
     "build:prod": "vue-cli-service build --mode=production",
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
