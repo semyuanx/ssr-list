@@ -170,10 +170,12 @@ export default class FmLittleCard extends Vue {
         font-family:MicrosoftYaHei;
         color:rgba(255,98,0,1);
         line-height:19px;
+        align-items: flex-end;
         .subscribe-btn {
+          max-width: 100px;
           line-height:19px;
           text-align: center;
-          padding: 6px 8px;
+          padding: 6px 16px;
           border-radius: 20px;
           cursor: pointer;
           font-size:14px;

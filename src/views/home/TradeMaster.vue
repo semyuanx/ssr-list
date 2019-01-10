@@ -54,7 +54,7 @@ export default class Index extends Vue {
   }
 
   toJoinMore() {
-    this.$router.push({ name: 'rankList' });
+    this.$router.push({ name: 'follower' });
   }
 
   get mobileConfigData() {
