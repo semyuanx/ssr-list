@@ -38,14 +38,14 @@
                 <div class="loading-first avatar">
                   <img
                   @click="toUserPage(scope.row)"
-                  @mouseenter.self="showCard($event, scope.row.UserID+'_'+scope.row.AccountIndex)"
+                  @mouseenter.self="showCard($event, scope.row.UserID)"
                   @mouseleave="personCard.hide()"
                   :src="base+'/Avata/'+scope.row.UserID" />
                 </div>
                 <div class="loading-first trader-info">
                   <div
                   @click="toUserPage(scope.row)"
-                  @mouseenter.self="showCard($event, scope.row.UserID+'_'+scope.row.AccountIndex)"
+                  @mouseenter.self="showCard($event, scope.row.UserID)"
                   @mouseleave="personCard.hide()"
                   class="info-1">{{scope.row.NickName}} #{{scope.row.AccountIndex}}</div>
                   <div class="info-2">

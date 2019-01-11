@@ -11,14 +11,14 @@
       </div>
     </div>
     <div class="page-footer" v-show="isShow">
-      <FMFooter />
+      <FMFooter :show-links="false" />
     </div>
   </div>
 </template>
 <script lang="ts">
 import { Component, Vue, Prop } from 'vue-property-decorator';
 import FMNav from 'fmcomponents/src/components/nav2';
-import FMFooter from 'fmcomponents/src/components/footer';
+import FMFooter from 'fmcomponents/src/components/footer2';
 import eventBus from '@/utils/event';
 import 'minireset.css';
 
@@ -110,6 +110,5 @@ export default class App extends Vue {
   .page-footer {
     padding-top: 20px;
     position: relative;
-    padding-bottom: 146px;
   }
 </style>

@@ -12,7 +12,7 @@
                              class="imgShadow person"
                              data-id="87217_2"
                              :alt="list.NickName"
-                             @mouseenter.self="showCard($event,list.UserID+'_'+list.AccountIndex)"
+                             @mouseenter.self="showCard($event,list.UserID)"
                              @mouseleave="personCard.hide()">
                     </a>
                 </div>
@@ -23,7 +23,7 @@
                                    :href="base+'/user/'+list.UserID+'/trade-account/exhibition?index='+list.AccountIndex"
                                    class="nickname"
                                    title=""
-                                   @mouseenter.self="showCard($event,list.UserID+'_'+list.AccountIndex)"
+                                   @mouseenter.self="showCard($event,list.UserID)"
                                    @mouseleave="personCard.hide()">{{list.NickName}}</a></div>
                             <div style="margin-top:5px;">
                                 <div class="account_pull_box"

@@ -10,17 +10,16 @@
             <FmCard @toPersonal="toPersonal" @subscribe="handleSub" :data="item" />
           </div>
         </div>
-
       </div>
 
-      <!-- <div class="scroll-btn-container fm-show-pc">
+      <div class="scroll-btn-container fm-show-pc">
           <div @click="scrollLeft" class="scroll-btn scroll-left" :style="`left: ${0 - left}px;`">
             <i class="icon-left_24px" />
           </div>
-          <div @click="scrollLeft" class="scroll-btn scroll-right" :style="`right: ${0 - left}px;`">
+          <div @click="scrollRight" class="scroll-btn scroll-right" :style="`right: ${0 - left}px;`">
             <i class="icon-right_24px" />
           </div>
-      </div> -->
+      </div>
     </div>
   </div>
 </template>
@@ -48,6 +47,17 @@ export default class Home extends Vue {
   @Prop()
   data: any
 
+  public get data1() {
+    return this.dataArr;
+  }
+
+  dataArr: any = [];
+
+  @Watch('data')
+  dataChanged() {
+    this.dataArr = [...this.data];
+  }
+
   @Prop({ default: () => {} })
   header: any;
 
@@ -73,11 +83,69 @@ export default class Home extends Vue {
     }
   }
 
+  scrolled: number = 0;
+
   scrollLeft() {
+    this.throttleScrollCompute();
+  }
+
+  scrollRight() {
+    this.throttleScrollCompute(0);
+  }
+
+  throttleScrollCompute(direction: any = 1) {
+    this.$nextTick(() => {
+      this.scrollCompute(direction);
+    });
+  }
+
+  scrollCompute(direction: any = 1) { // 1是left scroll; 0: right scroll
     const el = this.$el;
     if (el) {
+      const listsContainer: any = el.querySelector('.lists-container');
+      const containerWidth = listsContainer.offsetWidth;
       const lists: any = el.querySelector('.lists');
       const width = lists.offsetWidth;
+      if (lists) {
+        const listItem = lists.querySelector('.list-item');
+        if (listItem) {
+          const singleWidth = listItem.offsetWidth;
+          let { scrolled } = this;
+          let shouldScroll: string = '';
+          if (direction === 1) {
+            scrolled += singleWidth;
+          } else {
+            scrolled -= singleWidth;
+          }
+          const listsWidthPx = this.data.length * (singleWidth + 20);
+          const listsWidth = `${listsWidthPx}px`;
+
+          if (scrolled < 0) {
+            const willScrolled = scrolled - containerWidth;
+            if (Math.abs(willScrolled) > listsWidthPx) {
+              scrolled = listsWidthPx - containerWidth;
+              scrolled = 0 - scrolled;
+            } else if (Math.abs(willScrolled) > listsWidthPx + singleWidth) {
+              return;
+            }
+          }
+
+          // if (scrolled)
+          if (direction === 1) {
+            if (this.scrolled === 5) {
+              return;
+            }
+          }
+          if (scrolled > singleWidth / 2) {
+            scrolled = 5;
+          }
+
+          shouldScroll = `${scrolled}px`;
+
+          lists.style = `transform:translateX(${shouldScroll}); width: ${listsWidth}`;
+          this.scrolled = scrolled;
+        }
+      }
     }
   }
 
@@ -141,6 +209,7 @@ export default class Home extends Vue {
       width: 100%;
       overflow: hidden;
       -webkit-overflow-scrolling:touch;
+      transition: all .2s ease-in-out;
       .list-item {
         margin-right: 20px;
       }
