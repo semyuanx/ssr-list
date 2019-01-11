@@ -5,7 +5,7 @@ module.exports = {
     // eslint-disable-next-line
     require('autoprefixer'),
     px2rem({
-      selectorBlackList: [/^html$/, /^\.fm-/, /follow-setup/],
+      selectorBlackList: [/^html$/, /^\.fm-/, /follow-setup/, /fmcomponent/],
       mediaQuery: false,
       rootValue: 24,
       propList: ['*'], // ['font', 'font-size', 'line-height', 'letter-spacing'],

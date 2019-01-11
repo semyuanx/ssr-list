@@ -97,7 +97,8 @@ export default class Index extends Vue {
 
     //   }
     // }
-    this.$router.push({ name: 'rankList' });
+    // this.$router.push({ name: 'rankList' });
+    this.$emit('toMore', this.description);
   }
 
   handleSub(item: any) {

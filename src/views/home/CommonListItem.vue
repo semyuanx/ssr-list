@@ -1,7 +1,7 @@
 <template>
   <div class="header">
     <div class="fm-show-pc">
-      <CommonItem @toPersonal="toPersonalPc" :subscribe="subscribe" v-if="configData" :data="configData" :description="description" />
+      <CommonItem @toMore="toMore" @toPersonal="toPersonalPc" :subscribe="subscribe" v-if="configData" :data="configData" :description="description" />
     </div>
     <div class="fm-show-mobile">
       <InvestManagerMobile @toPersonal="toPersonal" :data="data"/>
@@ -47,6 +47,41 @@ export default class Index extends Vue {
     });
   }
 
+  toMore(data1: any) {
+    console.log(this.data, 'dddddd');
+    const { data } = this;
+    const params: any = {};
+    const condcfg: any = data.CondCfg || {};
+
+    params.orderby = condcfg.OrderByName;
+    params.isDESC = condcfg.OrderBy;
+
+    const configRank = condcfg.CondConfig;
+    if (configRank) {
+      Object.keys(configRank).forEach((i: any) => {
+        const filter: any = configRank[i];
+        if (filter) {
+          if (Object.prototype.toString.call(filter) === '[object Object]') {
+            if (filter) {
+              if (filter.Min) {
+                params[`min${i}`] = filter.Min;
+              }
+              if (filter.Max) {
+                params[`max${i}`] = filter.Max;
+              }
+            }
+          } else if (Array.isArray(filter)) {
+            console.log(' no');
+          } else {
+            params[i] = filter;
+          }
+        }
+      });
+    }
+    console.log(params, 'pppp');
+    this.$router.push({ name: 'rankList', params });
+  }
+
   get configData() {
     const config:any = this.data;
     if (!config) {
@@ -83,7 +118,7 @@ export default class Index extends Vue {
 
   get description() {
     const config:any = this.data;
-    console.log(this.data, 'description');
+    // console.log(this.data, 'description');
     const filters = config && config.CondCfg && config.CondCfg.CondConfig;
     const info: any = [];
     if (filters) {
