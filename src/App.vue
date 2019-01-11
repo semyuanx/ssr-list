@@ -19,7 +19,7 @@
 import { Component, Vue, Prop } from 'vue-property-decorator';
 import FMNav from 'fmcomponents/src/components/nav2';
 import FMFooter from 'fmcomponents/src/components/footer';
-
+import eventBus from '@/utils/event';
 import 'minireset.css';
 
 import '@/theme/main.less';
@@ -79,6 +79,7 @@ export default class App extends Vue {
     this.computeIsShow();
     optimizedResize.add(() => {
       this.computeIsShow();
+      eventBus.$emit('window-resize');
     });
   }
 

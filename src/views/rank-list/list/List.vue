@@ -325,9 +325,8 @@ export default class List extends Vue {
   }
 
   toUserPage(data: any) {
-    const userId = data.UserID;
-    const index = data.AccountIndex;
-    const url = `user/${userId}/trade-account/exhibition?index=${index}`;
+    const { UserID, AccountIndex } = data;
+    this.redirectTo('personalPage', { userId: UserID, index: AccountIndex }, true);
   }
 
   showCard(e: any, ids: any) {
