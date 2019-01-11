@@ -132,11 +132,9 @@ export default class mainView extends Vue {
     }
 
     toPersonal(data:any) {
-      console.log(data, 'data');
       const userId = data.item ? data.item.UserID : data.UserID;
       const index = data.item ? data.item.AccountIndex : data.index;
-      const url = `/user/${userId}/trade-account/exhibition?index=${index}`;
-      this.redirectTo(url);
+      this.redirectTo('personalPage', { userId, index }, true);
     }
 
     toInvest() {
@@ -195,6 +193,7 @@ export default class mainView extends Vue {
         tradername: list.NickName,
         traderindex: list.AccountIndex,
         brokerid: list.BrokerID,
+        traderaccount: list.Account,
       },
       (result: any) => {
         console.log(result);
@@ -231,8 +230,13 @@ export default class mainView extends Vue {
   }
 
   handleSub(item: any) {
-    console.log('to subsribe', item);
     const list: any = item.item;
+    if (!list.BrokerID) {
+      list.BrokerID = list.MT4Account && list.MT4Account.BrokerID;
+    }
+    if (!list.Account) {
+      list.Account = list.MT4Account && list.MT4Account.Account;
+    }
     const uaindex = `${list.UserID}_${list.AccountIndex}`;
     if (this.selfPwdChanged.indexOf(uaindex) > -1) return;
     getLoginStatus()

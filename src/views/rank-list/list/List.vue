@@ -470,9 +470,15 @@ export default class List extends Vue {
     }).then((res: any) => res && res.isFollow);
   }
 
-  handleSub(list: any) {
+  handleSub(list1: any) {
     // console.log('to subsribe', list);
-
+    const list: any = list1;
+    if (!list.BrokerID) {
+      list.BrokerID = list.MT4Account && list.MT4Account.BrokerID;
+    }
+    if (!list.Account) {
+      list.Account = list.MT4Account && list.MT4Account.Account;
+    }
     const uaindex = `${list.UserID}_${list.AccountIndex}`;
     if (this.selfPwdChanged.indexOf(uaindex) > -1) return;
     getLoginStatus()

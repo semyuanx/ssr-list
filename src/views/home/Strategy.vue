@@ -38,7 +38,7 @@ export default class Index extends Vue {
 
   toPersonalPc(item: any) {
     const { UserID, AccountIndex } = item.item;
-    this.redirectTo('personalPage', { userId: UserID, index: AccountIndex });
+    this.redirectTo('personalPage', { userId: UserID, index: AccountIndex }, true);
   }
 
   toPersonal(item: any) {
