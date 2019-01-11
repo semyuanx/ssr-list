@@ -15,6 +15,7 @@ import CommonMobile from '@/views/home/mobile/CommonMobile.vue';
 import mapKey from '@/constant/propMap';
 import { moneyFormat, percentFormat } from '@/utils/format';
 
+const invest = require('@/assets/invest.png');
 @Component({
   components: {
     InvestManager,
@@ -76,7 +77,7 @@ export default class Index extends Vue {
     return {
       linkUrl: '',
       source: config,
-      background: config.ChartID,
+      background: invest,
       title: '投资管家',
       subTitle: '发起产品',
       textTitle: '零风险跟随',

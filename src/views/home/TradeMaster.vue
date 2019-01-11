@@ -16,6 +16,8 @@ import CommonMobile from '@/views/home/mobile/CommonMobile.vue';
 import { moneyFormat, percentFormat } from '@/utils/format';
 import { toLoginPage, toSubscribePage, toPersonalPage } from '@/utils/native';
 
+const followerMaster = require('@/assets/followerMaster.png');
+
 @Component({
   components: {
     InvestManager, CommonMobile,
@@ -132,7 +134,7 @@ export default class Index extends Vue {
     return {
       linkUrl: '',
       source: config,
-      background: config.ChartID,
+      background: followerMaster,
       title: '跟随大师',
       subTitle: 'ssss',
       textTitle: '获利最多跟随者',
