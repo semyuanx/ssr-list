@@ -1,10 +1,10 @@
 <template>
-  <div class="header">
+  <div class="trader-master">
     <div class="fm-show-pc">
-      <InvestManager  @toJoinMore="toJoinMore" @toMore="toMore" :subscribe="subscribe" v-if="configData.data.length > 1" :data="configData" :description="description" />
+      <InvestManager @toPersonal="toPersonalPc" @toJoinMore="toJoinMore" @toMore="toMore" :subscribe="subscribe" v-if="configData.data.length > 1" :data="configData" :description="description" />
     </div>
     <div class="fm-show-mobile">
-      <CommonMobile @toMore="toMoreMobile" v-if="mobileConfigData.length" :data="mobileConfigData" :description="description" />
+      <CommonMobile @toPersonal="toPersonal" @toMore="toMoreMobile" v-if="mobileConfigData.length" :data="mobileConfigData" :description="description" />
     </div>
   </div>
 </template>
@@ -14,6 +14,7 @@ import InvestManager from '@/views/home/pc/InvestManager.vue';
 // import TradeMasterMobile from '@/views/home/mobile/TradeMaster.vue';
 import CommonMobile from '@/views/home/mobile/CommonMobile.vue';
 import { moneyFormat, percentFormat } from '@/utils/format';
+import { toLoginPage, toSubscribePage, toPersonalPage } from '@/utils/native';
 
 @Component({
   components: {
@@ -44,6 +45,20 @@ export default class Index extends Vue {
       align: 'right',
     },
   ];
+
+  toPersonalPc(item: any) {
+    const { UserID, AccountIndex } = item.item;
+    this.redirectTo('personalPage', { userId: UserID, index: AccountIndex }, true);
+  }
+
+  toPersonal(item: any) {
+    const { UserID: userId, AccountIndex: accountIndex } = item;
+    // console.log(item, 'item');
+    toPersonalPage({
+      userId,
+      accountIndex,
+    });
+  }
 
   toMore() {
     this.redirectTo('tradeMaster');
@@ -130,6 +145,10 @@ export default class Index extends Vue {
 }
 </script>
 <style lang="less" scoped>
-
+.trader-master {
+  .fm-show-pc {
+    margin-top: 30px;
+  }
+}
 
 </style>

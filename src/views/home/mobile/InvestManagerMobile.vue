@@ -16,12 +16,13 @@
           <div class="slot-container">
             <div class="avatar">
               <img
+                @click="toPersonal(slotProps.row)"
                 :onerror="errorUrl"
                 :src="avatarSrc(slotProps.row.UserID)"
                 alt=""
               >
             </div>
-            <span class="name-span">{{ slotProps.row.NickName}}</span>
+            <span @click="toPersonal(slotProps.row)" class="name-span">{{ slotProps.row.NickName}}</span>
             <span class="index-span">#{{ slotProps.row.AccountIndex}}</span>
           </div>
         </template>
@@ -54,6 +55,10 @@ export default class Index extends Vue {
 
   toRankList() {
     this.$router.push({ name: 'rankList' });
+  }
+
+  toPersonal(data: any) {
+    this.$emit('toPersonal', data);
   }
 
   get initHeader() {

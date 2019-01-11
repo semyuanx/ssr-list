@@ -38,14 +38,16 @@ export default class Index extends Vue {
 
   toPersonalPc(item: any) {
     const { UserID, AccountIndex } = item.item;
-    console.log(item, 'item');
     this.redirectTo('personalPage', { userId: UserID, index: AccountIndex });
   }
 
   toPersonal(item: any) {
-    const { UserID, AccountIndex } = item.item;
-    console.log(item, 'item');
-    // toPersonalPage()
+    const { UserID: userId, AccountIndex: accountIndex } = item.item;
+    // console.log(item, 'item');
+    toPersonalPage({
+      userId,
+      accountIndex,
+    });
   }
 
   async mobileSubscribe(data: any) {

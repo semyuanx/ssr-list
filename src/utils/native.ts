@@ -92,21 +92,9 @@ export const toSubscribePage = (params: SubParam) => {
 };
 
 export interface MainPageParam {
-    trader: {
-      Type: string;
-      UserID: number;
-      Nickname: string;
-      AccountIndex: number;
-      Broker: string;
-      BrokerID: number;
-      BrokerName: string;
-      Signature: string;
-      JoinTime: string;
-      JoinBalance: number;
-      Profit: number;
-      CurrentProfit: number;
-  }
+  userId: number;
+  accountIndex: number;
 }
 export const toPersonalPage = (params: MainPageParam) => {
-  native('goUserMainPage', params);
+  window.location.href = `followmeapp://followtraders/userdetail?userid=${params.userId}&accountindex=${params.accountIndex}`;
 };

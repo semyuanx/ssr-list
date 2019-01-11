@@ -1,10 +1,10 @@
 <template>
   <div class="header">
     <div class="fm-show-pc">
-      <CommonItem :subscribe="subscribe" v-if="configData" :data="configData" :description="description" />
+      <CommonItem @toPersonal="toPersonalPc" :subscribe="subscribe" v-if="configData" :data="configData" :description="description" />
     </div>
     <div class="fm-show-mobile">
-      <InvestManagerMobile :data="data"/>
+      <InvestManagerMobile @toPersonal="toPersonal" :data="data"/>
     </div>
   </div>
 </template>
@@ -14,6 +14,7 @@ import CommonItem from '@/views/home/pc/CommonItem.vue';
 import InvestManagerMobile from '@/views/home/mobile/InvestManagerMobile.vue';
 import mapKey from '@/constant/propMap';
 import { propFormat } from '@/utils/format';
+import { toLoginPage, toSubscribePage, toPersonalPage } from '@/utils/native';
 
 @Component({
   components: {
@@ -30,6 +31,20 @@ export default class Index extends Vue {
 
   formatVal(val: string|number, type: string): string | number {
     return propFormat(val, type);
+  }
+
+  toPersonalPc(item: any) {
+    const { UserID, AccountIndex } = item.item;
+    this.redirectTo('personalPage', { userId: UserID, index: AccountIndex }, true);
+  }
+
+  toPersonal(item: any) {
+    const { UserID: userId, AccountIndex: accountIndex } = item;
+    // console.log(item, 'item');
+    toPersonalPage({
+      userId,
+      accountIndex,
+    });
   }
 
   get configData() {

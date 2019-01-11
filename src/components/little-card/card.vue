@@ -4,12 +4,12 @@
       <slot name="header">
         <div class="card-header-left">
           <div class="card-avatar">
-            <img alt="头像" :src="data.avatar" />
+            <img @click="toPersonal" alt="头像" :src="data.avatar" />
           </div>
         </div>
         <div class="card-header-right">
           <div class="name">
-            <span>{{data.name}} #{{data.index}}</span>
+            <span @click="toPersonal">{{data.name}} #{{data.index}}</span>
           </div>
           <div class="broker">
             <span>{{data.brokerName}}</span>
@@ -56,8 +56,11 @@ export default class FmLittleCard extends Vue {
   }
 
   sub() {
-    console.log('sub');
     this.$emit('subscribe', this.data);
+  }
+
+  toPersonal() {
+    this.$emit('toPersonal', this.data);
   }
 }
 </script>
@@ -93,6 +96,7 @@ export default class FmLittleCard extends Vue {
           // border: 1px solid pink;
           overflow: hidden;
           >img {
+            cursor: pointer;
             max-width: 100%;
             max-width: 100%;
             border-radius: 50%;
@@ -108,6 +112,7 @@ export default class FmLittleCard extends Vue {
           flex: 1;
         }
         .name {
+          cursor: pointer;
           font-size:16px;
           color:rgba(51,51,51,1);
         }

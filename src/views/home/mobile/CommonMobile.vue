@@ -17,13 +17,14 @@
             <div class="avatar-container" v-if="description.avatar">
               <div class="avatar">
                 <img
+                  @click="toPersonal(slotProps.row)"
                   :onerror="errorUrl"
                   :src="avatarSrc(slotProps.row.UserID)"
                   alt=""
                 >
               </div>
               <div class="text-container">
-                <span class="name-span">{{ slotProps.row.Name}}</span>
+                <span @click="toPersonal(slotProps.row)" class="name-span">{{ slotProps.row.Name}}</span>
                 <span class="index-span">#{{ slotProps.row.AccountIndex}}</span>
               </div>
             </div>
@@ -72,6 +73,10 @@ export default class Index extends Vue {
   toMore() {
     this.$emit('toMore', this.description);
     // this.
+  }
+
+  toPersonal(data: any) {
+    this.$emit('toPersonal', data);
   }
 
   get initHeader() {
