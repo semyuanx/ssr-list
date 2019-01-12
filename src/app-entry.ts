@@ -3,7 +3,7 @@ import App from './App.vue';
 import createRouter from './router';
 import createStore from './stores';
 import { sync } from 'vuex-router-sync';
-import './registerServiceWorker';
+// import './registerServiceWorker';
 import fmui from '@fmfe/fm-vue-ui';
 import '@fmfe/fm-vue-ui/lib/theme-default/index.css';
 import fmcomponents from 'fmcomponents';

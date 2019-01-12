@@ -69,6 +69,7 @@ export default class mainView extends Vue {
       };
     }
 
+
     /**
      * {
      *  avatar: url,

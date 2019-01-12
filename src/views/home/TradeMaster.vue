@@ -87,6 +87,7 @@ export default class Index extends Vue {
           }
         }
         return {
+          item: i,
           brokerName,
           Name: i.NickName,
           UserID: i.UserID,

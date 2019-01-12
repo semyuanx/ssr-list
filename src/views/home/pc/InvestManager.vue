@@ -102,7 +102,11 @@ export default class Index extends Vue {
 
   toMore() {
     // this.$router.push({ name: 'rankList' });
-    this.$emit('toMore');
+    if (this.description.needLeftSlot) {
+      this.$emit('toLeftMore');
+    } else {
+      this.$emit('toMore');
+    }
   }
 
   handleSub(item: any) {

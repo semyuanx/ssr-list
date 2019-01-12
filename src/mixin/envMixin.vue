@@ -3,9 +3,12 @@
 
 const urlMap = {
   traderRegister: '/open/upgrade?type=2',
+  mamCreate: '/open/upgrade/mam',
   tradeMaster: '/trading-strategy/follower',
   personalPage: params => `/user/${params.userId}/trade-account/exhibition?index=${params.index}`,
 };
+
+const urlNewTabWhiteList = ['traderRegister'];
 
 export default {
   computed: {
@@ -41,13 +44,26 @@ export default {
         url = this.base + url;
       }
       if (typeof window !== 'undefined') {
-        if (newTab) {
+        if (urlNewTabWhiteList.includes(alias) || newTab) {
           window.open(url, '_blank');
         } else {
           window.location.href = url;
         }
       }
     },
+    isObject(val) {
+      return Object.prototype.toString.call(val) === '[object Object]';
+    },
+    $errorDialog(msg, cb = () => {}) {
+      return this.$fmdialog({
+        message: msg || '抱歉~失败了，请重试！',
+        type: 'error',
+        duration: 2000,
+        isSingle: true,
+        onConfirm: cb,
+      });
+    },
   },
+
 };
 </script>
