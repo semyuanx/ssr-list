@@ -328,27 +328,61 @@ export default class RankList extends Vue {
   private refactor(params: any = {}) {
     console.log(this.pageIndex, 'this.pageIndex');
     const obj: any = Object.assign({}, this.rankParams);
-    return {
+    let getParams = {
       index: this.index || 1,
       size: 20,
-      maxScore: obj.Score && obj.Score.split('-')[1],
-      minScore: obj.Score && obj.Score.split('-')[0],
-      minRoi: obj.Roi && obj.Roi.split('-')[0],
-      maxRoi: obj.Roi && obj.Roi.split('-')[1],
-      maxRetracement: obj.Retracement && obj.Retracement.split('-')[1],
-      minRetracement: obj.Retracement && obj.Retracement.split('-')[0],
-      maxWeeks: obj.Weeks && obj.Weeks.split('-')[1],
-      minWeeks: obj.Weeks && obj.Weeks.split('-')[0],
-      maxEquity: obj.Equity && obj.Equity.split('-')[1],
-      minEquity: obj.Equity && obj.Equity.split('-')[0],
-      brokerId: this.checkedBrokers.join(','),
+      // maxScore: obj.Score && obj.Score.split('-')[1],
+      // minScore: obj.Score && obj.Score.split('-')[0],
+      // minRoi: obj.Roi && obj.Roi.split('-')[0],
+      // maxRoi: obj.Roi && obj.Roi.split('-')[1],
+      // maxRetracement: obj.Retracement && obj.Retracement.split('-')[1],
+      // minRetracement: obj.Retracement && obj.Retracement.split('-')[0],
+      // maxWeeks: obj.Weeks && obj.Weeks.split('-')[1],
+      // minWeeks: obj.Weeks && obj.Weeks.split('-')[0],
+      // maxEquity: obj.Equity && obj.Equity.split('-')[1],
+      // minEquity: obj.Equity && obj.Equity.split('-')[0],
       ...this.params,
       ...params,
     };
+
+    const brokerList = this.checkedBrokers.length ? { brokerId: this.checkedBrokers.join(',') } : {};
+    const processParam = this.preProcessParams(obj);
+    getParams = { ...processParam, ...getParams, ...brokerList };
+    return getParams;
+  }
+
+  preProcessParams(obj: any) {
+    const params: any = {};
+    if (obj) {
+      Object.keys(obj).forEach((i: any) => {
+        const val: any = obj[i];
+        if (val) {
+          if (val && typeof val === 'string') {
+            if (val.includes('-')) {
+              const split = val.split('-');
+              if (split && split.length) {
+                // eslint-disable-next-line
+                params[`min${i}`] = split[0];
+                // eslint-disable-next-line
+                params[`max${i}`] = split[1];
+              }
+            } else {
+              params[i] = val;
+            }
+          } else if (typeof val === 'number') {
+            params[i] = val;
+          }
+        } else if (typeof val === 'number') {
+          params[i] = val;
+        }
+      });
+    }
+    return params;
   }
 }
 </script>
 <style lang="less" scoped>
 .rank-container {
+  padding-top: 20px;
 }
 </style>

@@ -6,7 +6,7 @@
         <div class="header-tag-lists">
           <div
             :key="index"
-            v-for="(params,index) in filterRes.filter(v=>v.val)"
+            v-for="(params,index) in filterTag"
             class="header-tag-item"
           >
             <FmTag
@@ -137,6 +137,56 @@ export default class FilterHeader extends Vue {
   @RankStore.State
   filterRes: any;
 
+  textMaps: any = {
+    Score: '交易能力值',
+    Equity: '账户净值',
+    Weeks: '交易周期',
+    Retracement: '最大回撤比例',
+    Roi: '收益率',
+    isDESC: '排序',
+    orderby: '排序字段',
+  };
+
+  get filterTag() {
+    const { rankParams } = this;
+    const tags: any = [];
+    if (rankParams) {
+      Object.keys(rankParams).forEach((i: any) => {
+        const val: any = rankParams[i];
+        // eslint-disable-next-line
+        const finalVal = i === 'isDESC' ? val === 1 ? '倒序' : '顺序' : val;
+        if (val) {
+          tags.push({
+            label: this.textMaps[i],
+            val: finalVal,
+          });
+        }
+      });
+    }
+    if (!tags.length) {
+      Object.keys(this.textMaps).forEach((i: any) => {
+        const val: any = this.textMaps[i];
+        tags.push({
+          label: val,
+          val: '不限',
+        });
+      });
+    }
+    const brokerNames: any = [];
+    this.brokersList.forEach((item: any) => {
+      if (this.checkedBrokers.includes(item.BrokerId) || this.checkedBrokers.includes(+item.BrokerId)) {
+        brokerNames.push(item.BrokerName);
+      }
+    });
+    if (brokerNames.length) {
+      tags.push({
+        label: '经纪商',
+        val: brokerNames.join('/'),
+      });
+    }
+    return tags;
+  }
+
   closeFilter() {
     this.isShow = false;
   }
@@ -159,6 +209,7 @@ export default class FilterHeader extends Vue {
 
   handleCloseTag(item: string) {
     const checked = this.checkedBrokers.filter((v: any) => v !== item);
+    console.log(checked, 'handleCloseTag');
     this.setCheckedBrokers(checked);
   }
 
@@ -265,10 +316,13 @@ export default class FilterHeader extends Vue {
   box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0.15);
   border-radius: 6px;
   border: 1px solid rgba(230, 230, 230, 1);
+  overflow-x: hidden;
   ul {
     display: flex;
     flex-wrap: wrap;
     li {
+      overflow: hidden;
+      width: 25%;
       margin-right: 20px;
     }
   }

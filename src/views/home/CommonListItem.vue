@@ -15,6 +15,9 @@ import InvestManagerMobile from '@/views/home/mobile/InvestManagerMobile.vue';
 import mapKey from '@/constant/propMap';
 import { propFormat } from '@/utils/format';
 import { toLoginPage, toSubscribePage, toPersonalPage } from '@/utils/native';
+import { namespace } from 'vuex-class';
+
+const RankStore = namespace('RankStore');
 
 @Component({
   components: {
@@ -25,6 +28,9 @@ import { toLoginPage, toSubscribePage, toPersonalPage } from '@/utils/native';
 export default class Index extends Vue {
   @Prop()
   data:any;
+
+  @RankStore.Mutation
+  setRankParams: any;
 
   @Prop()
   subscribe: any;
@@ -54,7 +60,7 @@ export default class Index extends Vue {
     const condcfg: any = data.CondCfg || {};
 
     params.orderby = condcfg.OrderByName;
-    params.isDESC = condcfg.OrderBy;
+    params.isDESC = condcfg.OrderBy ? 1 : 0;
 
     const configRank = condcfg.CondConfig;
     if (configRank) {
@@ -63,11 +69,8 @@ export default class Index extends Vue {
         if (filter) {
           if (Object.prototype.toString.call(filter) === '[object Object]') {
             if (filter) {
-              if (filter.Min) {
-                params[`min${i}`] = filter.Min;
-              }
-              if (filter.Max) {
-                params[`max${i}`] = filter.Max;
+              if (filter.Min || filter.Max) {
+                params[i] = [filter.Min, filter.Max].join('-');
               }
             }
           } else if (Array.isArray(filter)) {
@@ -79,7 +82,10 @@ export default class Index extends Vue {
       });
     }
     console.log(params, 'pppp');
-    this.$router.push({ name: 'rankList', params });
+    this.setRankParams(params);
+    this.$nextTick(() => {
+      this.$router.push({ name: 'rankList' });
+    });
   }
 
   get configData() {

@@ -60,7 +60,7 @@ export default class Home extends Vue {
 </script>
 <style lang="less" scoped>
 .home {
-  padding-top: 10px;
+  padding-top: 20px;
   min-width: 320px;
   .invest {
     margin-top: 40px;

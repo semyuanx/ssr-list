@@ -42,7 +42,7 @@
             :key="inx"
           >
             <filter-tag
-              :active="(rankParams[item.value]|| '') == citem.value"
+              :active="(allParams[item.value]|| '') == citem.value"
               v-if="!citem.type"
               @selected="rangeHandler(item,citem)"
             >{{citem.name}}</filter-tag>
@@ -231,6 +231,13 @@ export default class FilterPopover extends Vue {
   })
   labelObj!: any[];
 
+  innerParams: any = {};
+
+  public get allParams() {
+    const params = { ...this.rankParams, ...this.innerParams };
+    return params;
+  }
+
   @RankStore.State
   rankParams: any;
 
@@ -242,7 +249,8 @@ export default class FilterPopover extends Vue {
 
   @Emit('filter')
   handleFilter() {
-    this.setRankParams(this.rankParams);
+    const params = { ...this.rankParams, ...this.innerParams };
+    this.setRankParams(params);
   }
 
   @Emit('reset')
@@ -266,6 +274,7 @@ export default class FilterPopover extends Vue {
       expSymbol: '',
       brokerId: '',
     });
+    this.innerParams = {};
   }
 
   private rangeHandler(item: any, citem: any) {
@@ -277,7 +286,7 @@ export default class FilterPopover extends Vue {
     }
     const params = Object.assign({}, this.rankParams);
     params[key] = citem.value;
-    this.setRankParams(params);
+    this.innerParams = { ...this.innerParams, ...params };
   }
 
   private inputHandler(key: string, start: number, end: number) {
@@ -288,7 +297,9 @@ export default class FilterPopover extends Vue {
       const value = `${start || 0}-${end || 0}`;
       params[key] = value;
     }
-    this.setRankParams(params);
+    // console.log(params, 'params')
+    // this.setRankParams(params);
+    this.innerParams = { ...this.innerParams, ...params };
   }
 }
 </script>

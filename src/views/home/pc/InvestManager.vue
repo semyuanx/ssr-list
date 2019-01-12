@@ -22,7 +22,7 @@
     </div>
     <div class="invest-content">
       <div class="left" :style="`background-image: url(${description.background})`">
-        <div><span>{{ description.textTitle }}</span></div>
+        <div class="left-desc"><span class="desc-title">{{ description.textTitle }}</span></div>
         <div>
           <button @click="toRankList" class="sub-right-now">{{description.textBtn || "立即参与"}}</button>
         </div>
@@ -142,6 +142,14 @@ export default class Index extends Vue {
       background-repeat: no-repeat;
       background-position: center;
       background-size: cover;
+      .left-desc {
+        margin-bottom: 20px;
+        .desc-title {
+          font-size:20px;
+          font-family:MicrosoftYaHei;
+          color:rgba(255,255,255,1);
+        }
+      }
       .sub-right-now {
         border-radius:18px;
         border:1px solid rgba(255,255,255,0.4);

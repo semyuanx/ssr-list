@@ -136,7 +136,7 @@ export default class Home extends Vue {
               return;
             }
           }
-          if (scrolled > singleWidth / 2) {
+          if (scrolled > 30) {
             scrolled = 5;
           }
 
