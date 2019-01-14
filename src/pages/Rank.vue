@@ -58,7 +58,9 @@ export default class RankList extends Vue {
   handleFilter() {
     this.resetIndex();
     this.filterResult();
-    this.getData();
+    this.$nextTick(() => {
+      this.getData();
+    });
   }
 
   sortArr: any = [];
@@ -165,7 +167,8 @@ export default class RankList extends Vue {
   }
 
   getPageData(page: number = 1) {
-    this.getRankList(this.refactor({ index: page }));
+    const params: any = this.refactor({ index: page });
+    this.getRankList(params);
   }
 
   getData() {
