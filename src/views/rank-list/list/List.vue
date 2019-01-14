@@ -131,7 +131,7 @@
 
           </template>
         </el-table-column>
-        <el-table-column
+        <!-- <el-table-column
           label="擅长品种"
           prop="ExpSymbol"
           sortable="custom"
@@ -148,7 +148,7 @@
             >{{scope.row.ExpSymbol}}</div>
 
           </template>
-        </el-table-column>
+        </el-table-column> -->
         <el-table-column
           label="订阅人数"
           prop="Subscribers"
