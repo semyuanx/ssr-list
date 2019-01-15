@@ -10,6 +10,7 @@
             class="header-tag-item"
           >
             <FmTag
+              @click="showFilter"
               :msg="params.label"
               :desc="params.val"
             />
@@ -92,6 +93,7 @@ import CheckBoxGroup from '@/components/check-box/CheckBoxGroup.vue';
 import CheckBox from '@/components/check-box/CheckBox.vue';
 import MobileFilterHeader from '@/components/mobile-filter/FilterHeader.vue';
 import { rankList, brokersList } from '@/api/home';
+import propMaps from '@/constant/propMap';
 
 const RankStore = namespace('RankStore');
 
@@ -154,7 +156,10 @@ export default class FilterHeader extends Vue {
       Object.keys(rankParams).forEach((i: any) => {
         const val: any = rankParams[i];
         // eslint-disable-next-line
-        const finalVal = i === 'isDESC' ? val === 1 ? '倒序' : '顺序' : val;
+        let finalVal = i === 'isDESC' ? val === 1 ? '倒序' : '顺序' : val;
+        if (i === 'orderby') {
+          finalVal = (propMaps as any)[val] || val;
+        }
         if (val) {
           tags.push({
             label: this.textMaps[i],
@@ -185,6 +190,12 @@ export default class FilterHeader extends Vue {
       });
     }
     return tags;
+  }
+
+  showFilter() {
+    if (!this.isShow) {
+      this.isShow = true;
+    }
   }
 
   closeFilter() {

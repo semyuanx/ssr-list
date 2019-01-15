@@ -4,7 +4,7 @@
       <FilterHeader @filter="handleFilter" />
     </div>
     <div>
-      <List :getData="getData" @sortChange="sortChange" />
+      <List :showProps="showProps" :getData="getData" @sortChange="sortChange" />
     </div>
   </div>
 </template>
@@ -12,6 +12,7 @@
 import { Component, Vue, Watch } from 'vue-property-decorator';
 import { namespace } from 'vuex-class';
 import throttle from 'lodash.throttle';
+import isequal from 'lodash.isequal';
 
 import FilterHeader from '@/views/rank-list/FilterHeader.vue';
 import List from '@/views/rank-list/List.vue';
@@ -34,6 +35,9 @@ export default class RankList extends Vue {
   @RankStore.Action
   getRankList: any;
 
+  @RankStore.Action
+  getSepRankConfig: any;
+
   @RankStore.State
   rankParams: any;
 
@@ -45,6 +49,9 @@ export default class RankList extends Vue {
 
   @RankStore.State
   checkedBrokers: any;
+
+  @RankStore.State
+  showProps: any;
 
   @RankStore.Mutation
   setFilterRes: any;
@@ -179,6 +186,7 @@ export default class RankList extends Vue {
 
   mounted() {
     // this.getPageData();
+    this.getSepRankConfig({ index: 1 });
     this.getData();
     window.addEventListener('scroll', () => {
       if (isEnterLoad || this.rankListLoading) return;
@@ -233,7 +241,7 @@ export default class RankList extends Vue {
 
   getTopNavHeight() {
     let height = 50;
-    const nav = document.getElementById('#fm-top-nav');
+    const nav = document.getElementById('fm-top-nav');
     if (nav) {
       height = nav.offsetHeight;
     }
@@ -351,7 +359,19 @@ export default class RankList extends Vue {
     const brokerList = this.checkedBrokers.length ? { brokerId: this.checkedBrokers.join(',') } : {};
     const processParam = this.preProcessParams(obj);
     getParams = { ...processParam, ...getParams, ...brokerList };
+    // console.log()
+    if (!isequal(this.allParams, getParams)) {
+      this.allParams = getParams;
+    }
+    console.log(getParams, 'getParams');
     return getParams;
+  }
+
+  allParams: any = {};
+
+  @Watch('allParams')
+  allParamsChanged(v:any) {
+    console.log('allParams has changed', performance.now(), v);
   }
 
   preProcessParams(obj: any) {
@@ -372,10 +392,10 @@ export default class RankList extends Vue {
             } else {
               params[i] = val;
             }
-          } else if (typeof val === 'number') {
+          } else if (typeof val === 'number' || typeof val === 'boolean') {
             params[i] = val;
           }
-        } else if (typeof val === 'number') {
+        } else if (typeof val === 'number' || typeof val === 'boolean') {
           params[i] = val;
         }
       });

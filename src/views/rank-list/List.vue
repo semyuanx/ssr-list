@@ -1,7 +1,7 @@
 <template>
 <div class="main-list-container">
   <div class="fm-show-pc">
-    <FmList :data="rankList" :getData="getData" @sortChange="sortChange" />
+    <FmList :showProps="showProps" :data="rankList" :getData="getData" @sortChange="sortChange" />
   </div>
   <div class="fm-show-mobile">
     <MobileList :data="rankList" @sortChange="sortChange"/>
@@ -35,6 +35,9 @@ export default class List extends Vue {
 
   @Prop()
   getData: any;
+
+  @Prop()
+  showProps: any;
 
   // @Watch('rankList')
   // public rankListChange() {

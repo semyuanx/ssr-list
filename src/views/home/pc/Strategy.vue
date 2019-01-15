@@ -117,7 +117,7 @@ export default class Home extends Vue {
           } else {
             scrolled -= singleWidth;
           }
-          const listsWidthPx = this.data.length * (singleWidth + 20);
+          const listsWidthPx = this.data.length * (singleWidth);
           const listsWidth = `${listsWidthPx}px`;
 
           if (scrolled < 0) {
@@ -132,11 +132,11 @@ export default class Home extends Vue {
 
           // if (scrolled)
           if (direction === 1) {
-            if (this.scrolled === 5) {
+            if (this.scrolled === 5 || this.scrolled === 0) {
               return;
             }
           }
-          if (scrolled > 30) {
+          if (scrolled > 10) {
             scrolled = 5;
           }
 
@@ -211,7 +211,7 @@ export default class Home extends Vue {
       -webkit-overflow-scrolling:touch;
       transition: all .2s ease-in-out;
       .list-item {
-        margin-right: 20px;
+        padding-right: 20px;
       }
       &::-webkit-scrollbar {
         height: 8px;

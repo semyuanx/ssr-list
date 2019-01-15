@@ -9,10 +9,10 @@ import {
   addOrCancelAttentionService,
   checkCanFollowService,
   getBrokersList,
+  getSepRankConfigService,
 } from '@/service/home';
 import { toNumber } from '@/utils/util';
-
-const loadingNumber = 0;
+import propMaps from '@/constant/propMap';
 
 @Repository('RankStore')
 export default class RankStore {
@@ -57,6 +57,9 @@ export default class RankStore {
   @State([])
   public filterRes: any[] = [];
 
+  @State([])
+  public showProps: any[] = [];
+
   // @Set('pageIndex') public setPageIndex: any;
   @Mutation
   public setPageIndex(state: any, payload: any[]) {
@@ -77,6 +80,8 @@ export default class RankStore {
   @Set('rankTotal') public setRankTotal: any;
 
   @Set('rankParamHash') public setRankParamHash: any;
+
+  @Set('showProps') public setShowProps: any;
 
   @Set('rankParams')
   public setRankParams(): any | null {}
@@ -140,6 +145,25 @@ export default class RankStore {
   @Action
   public getLoginStatus(context: { commit: Commit }): any {
     return getLoginStatus().then((res: any) => res);
+  }
+
+  // 特殊绑定设置
+  @Action
+  public async getSepRankConfig(context: { commit: Commit }, payload: any) {
+    const { commit } = context;
+    return getSepRankConfigService(payload).then((res: any) => {
+      if (res && res.HideConfig) {
+        const hideConfig = res.HideConfig;
+        const blackList = ['TrendLine'];
+        const showProps = Object.keys(hideConfig).filter((i: any) => !hideConfig[i] && !blackList.includes(i)).map((i: any) => ({
+          label: (propMaps as any)[i] || ' ',
+          prop: i,
+        }));
+        console.log(showProps, propMaps, 'showProps');
+        commit('setShowProps', showProps);
+      }
+      return res;
+    });
   }
 
   @Action

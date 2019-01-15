@@ -8,7 +8,7 @@
         rightTitle="更多"
         :subTitle="description.filterText"
         :title="description.title">
-        <div @click="toMore" class="contain-icon" v-if="description.needLeftSlot" slot="left">
+        <div @click="toLeftMore" class="contain-icon" v-if="description.needLeftSlot" slot="left">
           <i :class="`icon-flag_24px`"></i>
           <span>{{ description.subTitle || '' }}</span>
           <i :class="`icon-${subRespIcon}`"></i>
@@ -103,10 +103,14 @@ export default class Index extends Vue {
   toMore() {
     // this.$router.push({ name: 'rankList' });
     if (this.description.needLeftSlot) {
-      this.$emit('toLeftMore');
+      this.$emit('toRightMore');
     } else {
       this.$emit('toMore');
     }
+  }
+
+  toLeftMore() {
+    this.$emit('toLeftMore');
   }
 
   handleSub(item: any) {
@@ -194,17 +198,17 @@ export default class Index extends Vue {
         }
         .prod-desc {
           display: flex;
-          flex-direction: column;
-          justify-content: center;
+          // flex-direction: column;
+          // justify-content: center;
+          align-items: center;
           font-family:MicrosoftYaHei;
           .prod-name {
+            margin-right: 8px;
             font-size:20px;
             color:rgba(51,51,51,1);
             line-height:26px;
-            margin-bottom: 5px;
           }
           .prod-danger {
-            margin-top: 5px;
             font-size:12px;
             color:rgba(31,187,149,1);
             line-height:16px;

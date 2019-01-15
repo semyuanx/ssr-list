@@ -668,9 +668,9 @@
     to-fast-properties "^2.0.0"
 
 "@fmfe/fm-vue-ui@^2.0.60":
-  version "2.0.60"
-  resolved "http://registry.npm.taobao.org/@fmfe/fm-vue-ui/download/@fmfe/fm-vue-ui-2.0.60.tgz#adeeaea717666589d098b8aeffd5eef006a596e1"
-  integrity sha512-X9rjLZ/ax88Dok2x6VgyImlO3MMpPeNZV3oau0MX/eczDKhI8xOjGamGkWgy+7lEC5JDRJh5UfWF6e0ozESpCw==
+  version "2.0.66"
+  resolved "https://registry.yarnpkg.com/@fmfe/fm-vue-ui/-/fm-vue-ui-2.0.66.tgz#c663bd95de616d1f14a56ed8ab2f1ccc0c96adc9"
+  integrity sha512-7HFoS4OfyaNFKRLLfCxx/M1nlCv7jepao8sahWomRxzxrLYFVS/nIfCq+iN2sMpXlh95MG3MK5nVqw0H3pmGqQ==
   dependencies:
     tiny-dom-helpers "^1.2.4"
 
@@ -6410,6 +6410,11 @@ lodash.isarray@^3.0.0:
   resolved "http://registry.npm.taobao.org/lodash.isarray/download/lodash.isarray-3.0.4.tgz#79e4eb88c36a8122af86f844aa9bcd851b5fbb55"
   integrity sha1-eeTriMNqgSKvhvhEqpvNhRtfu1U=
 
+lodash.isequal@^4.5.0:
+  version "4.5.0"
+  resolved "https://registry.yarnpkg.com/lodash.isequal/-/lodash.isequal-4.5.0.tgz#415c4478f2bcc30120c22ce10ed3226f7d3e18e0"
+  integrity sha1-QVxEePK8wwEgwizhDtMib30+GOA=
+
 lodash.isplainobject@^4.0.0:
   version "4.0.6"
   resolved "http://registry.npm.taobao.org/lodash.isplainobject/download/lodash.isplainobject-4.0.6.tgz#7c526a52d89b45c45cc690b88163be0497f550cb"
@@ -8322,6 +8327,14 @@ qs@6.5.2, qs@~6.5.2:
   resolved "http://registry.npm.taobao.org/qs/download/qs-6.5.2.tgz#cb3ae806e8740444584ef154ce8ee98d403f3e36"
   integrity sha512-N5ZAX4/LxJmF+7wN74pUD6qAh9/wnvdQcjq9TZjevvXzSUo7bfmw91saqMjzGS2xq91/odN2dW/WOl7qQHNDGA==
 
+query-string@^6.2.0:
+  version "6.2.0"
+  resolved "https://registry.yarnpkg.com/query-string/-/query-string-6.2.0.tgz#468edeb542b7e0538f9f9b1aeb26f034f19c86e1"
+  integrity sha512-5wupExkIt8RYL4h/FE+WTg3JHk62e6fFPWtAZA9J5IWK1PfTfKkMS93HBUHcFpeYi9KsY5pFbh+ldvEyaz5MyA==
+  dependencies:
+    decode-uri-component "^0.2.0"
+    strict-uri-encode "^2.0.0"
+
 querystring-es3@^0.2.0:
   version "0.2.1"
   resolved "http://registry.npm.taobao.org/querystring-es3/download/querystring-es3-0.2.1.tgz#9ec61f79049875707d69414596fd907a4d711e73"
@@ -9361,6 +9374,11 @@ stream-shift@^1.0.0:
   resolved "http://registry.npm.taobao.org/stream-shift/download/stream-shift-1.0.0.tgz#d5c752825e5367e786f78e18e445ea223a155952"
   integrity sha1-1cdSgl5TZ+eG944Y5EXqIjoVWVI=
 
+strict-uri-encode@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/strict-uri-encode/-/strict-uri-encode-2.0.0.tgz#b9c7330c7042862f6b142dc274bbcc5866ce3546"
+  integrity sha1-ucczDHBChi9rFC3CdLvMWGbONUY=
+
 string-argv@^0.0.2:
   version "0.0.2"
   resolved "http://registry.npm.taobao.org/string-argv/download/string-argv-0.0.2.tgz#dac30408690c21f3c3630a3ff3a05877bdcbd736"
@@ -9702,7 +9720,7 @@ timsort@^0.3.0:
 
 tiny-dom-helpers@^1.2.4:
   version "1.2.4"
-  resolved "http://registry.npm.taobao.org/tiny-dom-helpers/download/tiny-dom-helpers-1.2.4.tgz#0950bdff36af2c8e87b2574522c47a55122c8dac"
+  resolved "https://registry.yarnpkg.com/tiny-dom-helpers/-/tiny-dom-helpers-1.2.4.tgz#0950bdff36af2c8e87b2574522c47a55122c8dac"
   integrity sha512-T1eiSRddgAZ/CCEcvCh1u2cPP6lMZRreOCvz60GoA7/QvrvgSTPFxVnQa7KYYb2J3cb4xJSiK/JE7LemBIFK8Q==
 
 tmp@^0.0.33:

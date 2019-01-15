@@ -4,6 +4,7 @@ import {
   login, rankList, customConfig, customRankList,
   relations, addOrCancelAttentionApi, checkCanFollowApi, brokersList,
   getMasterFollowerApi, getRankFollowersApi, getRankDynamicsApi,
+  getSepRankConfigApi,
 } from '@/api/home';
 
 export const getLoginStatus = (params?: object): any => get(login(), {
@@ -31,6 +32,9 @@ export const getRankFollowersService = (params?: object): any => get(getRankFoll
   params,
 });
 export const getRankDynamicsService = (params?: object): any => get(getRankDynamicsApi(), {
+  params,
+});
+export const getSepRankConfigService = (params?: object): any => get(getSepRankConfigApi(), {
   params,
 });
 

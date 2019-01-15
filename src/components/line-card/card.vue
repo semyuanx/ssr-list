@@ -27,7 +27,7 @@
         :key="i.val" v-for="i in data.data"
         class="right-line-container line-rate"
       >
-        <div class=""><span :class="isNumber(i.val) && i.val > 0 ? 'rate-val green': 'rate-val'">{{i && i.val || ''}}</span></div>
+        <div class=""><span :class="isNumber(i.val) && i.val > 0 ? 'rate-val green': 'rate-val'">{{i && i.val}}&nbsp;</span></div>
         <div><span class="common-font">{{i && i.prop || ''}}</span></div>
       </div>
       <slot name="right">

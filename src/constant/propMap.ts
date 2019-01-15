@@ -19,4 +19,5 @@ export default {
   Equity: '账户净值',
   ExpSymbol: '擅长品种',
   Subscribers: '订阅人数',
+  Price: '订阅价格',
 };

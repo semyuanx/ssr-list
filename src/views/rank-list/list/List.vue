@@ -57,7 +57,7 @@
 
           </template>
         </el-table-column>
-        <el-table-column
+        <!-- <el-table-column
           label="交易能力值"
           prop="Score"
           sortable="custom"
@@ -130,7 +130,7 @@
             >{{scope.row.Weeks || 0}}周</div>
 
           </template>
-        </el-table-column>
+        </el-table-column> -->
         <!-- <el-table-column
           label="擅长品种"
           prop="ExpSymbol"
@@ -149,7 +149,7 @@
 
           </template>
         </el-table-column> -->
-        <el-table-column
+        <!-- <el-table-column
           label="订阅人数"
           prop="Subscribers"
           sortable="custom"
@@ -166,7 +166,30 @@
             >{{scope.row.Subscribers}}</div>
 
           </template>
+        </el-table-column> -->
+
+        <el-table-column
+          show-overflow-tooltip="true"
+          :label="i.label"
+          :prop="i.prop"
+          sortable="custom"
+          :min-width="i.label.length > 4 ? '120px':'100px'"
+          :key="i.prop"
+          v-for="i in showProps"
+        >
+          <template slot-scope="scope">
+            <div
+              v-if="dateIsLoading && !scope.row.UserID"
+              class="custom-display-row-loading"
+            ></div>
+            <div
+              v-else
+              class="custom-display-row-line"
+            >{{scope.row[i.prop] | propFormat(i.prop)}}</div>
+
+          </template>
         </el-table-column>
+
         <el-table-column
           label="走势图"
           prop="TrendChart"
@@ -271,7 +294,7 @@ import personCard from 'fmcomponents/src/components/personcard';
 import Chart from '@/components/chart/index.vue';
 
 import SvgIcon from '@/components/svg/index.ts';
-import { numberFormat, percentFormat } from '@/utils/format';
+import { numberFormat, percentFormat, propFormat } from '@/utils/format';
 import { getElementTop, getElementLeft } from '@/utils/util';
 import { Table, TableColumn } from 'element-ui';
 import throttle from 'lodash.throttle';
@@ -290,6 +313,7 @@ const isEnterLoad = false;
   filters: {
     numberFormatOneParams: (val: number) => numberFormat(val, 1),
     percentFormat: (val: number) => percentFormat(val),
+    propFormat: (val: number, prop: string) => propFormat(val, prop),
   },
 } as any))
 export default class List extends Vue {
@@ -304,6 +328,12 @@ export default class List extends Vue {
   })
   data: any;
 
+  @Prop({
+    type: Array,
+    default: () => [],
+  })
+  showProps: any;
+
   data1: any = [];
 
   @Prop()
@@ -316,8 +346,17 @@ export default class List extends Vue {
       const data = this.data && this.data.length ? this.data : Array(10).fill({});
       return data;
     }
-
     return this.data;
+  }
+
+  @Watch('showProps')
+  showPropsChanged() {
+    this.$nextTick(() => {
+      const { rankTable }: any = this.$refs;
+      if (rankTable && rankTable.doLayout) {
+        rankTable.doLayout();
+      }
+    });
   }
 
   mounted() {
@@ -356,12 +395,6 @@ export default class List extends Vue {
     });
   }
 
-  // dataList: any = [];
-  // @Watch('data')
-  // dataChange() {
-  //   this.dataList.push(...this.data)
-  // }
-
   log(msg: any) {
     console.log(msg);
   }
@@ -378,11 +411,6 @@ export default class List extends Vue {
   }
 
   winHeight: any = 800;
-
-
-  created() {
-
-  }
 
   @RankStore.Action
   getRelations: any;
