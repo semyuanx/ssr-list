@@ -10,7 +10,7 @@
 
         <template slot="right">
           <span>{{ rightTitle || '' }}</span>
-          <i :class="`icon-right_24px`"></i>
+          <i style="font-size: 18px;" :class="`icon-right_24px`"></i>
         </template>
       </LineHeader>
     </div>

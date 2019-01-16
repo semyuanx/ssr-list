@@ -119,6 +119,9 @@ export default class Index extends Vue {
 }
 </script>
 <style lang="less" scoped>
+i[class^="icon-"] {
+  font-size: 18px;
+}
 .invest-container {
   .contain-icon {
     cursor: pointer;

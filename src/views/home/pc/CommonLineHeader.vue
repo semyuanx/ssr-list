@@ -5,9 +5,9 @@
         <div class="content-header">
           <h2 class="h2-titile">{{title || ''}}</h2>
             <slot name="left">
-          <div :style="subTitle ? {} : {background: 'transparent'}" class="flex-center sub-title">
-              <span>{{ subTitle || '' }}</span>
-          </div>
+              <div :style="subTitle ? {} : {background: 'transparent'}" class="flex-center sub-title">
+                  <span>{{ subTitle || '' }}</span>
+              </div>
             </slot>
         </div>
       </template>
@@ -87,8 +87,11 @@ export default class Home extends Vue {
 }
 </script>
 <style lang="less" scoped>
+i[class^="icon-"] {
+  font-size: 18px;
+}
 .icon-font {
-  vertical-align: middle;
+  vertical-align: text-bottom;
 }
 .header {
   margin-bottom: 20px;

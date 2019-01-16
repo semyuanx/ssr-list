@@ -8,7 +8,7 @@
             <slot name="left">
             <i :class="`icon-${subIcon}`"></i>
             <span>{{ subTitle || '' }}</span>
-            <i :class="`icon-${subRespIcon}`"></i>
+            <!-- <i :class="`icon-${subRespIcon}`"></i> -->
             </slot>
           </div>
         </div>
@@ -93,8 +93,11 @@ export default class Home extends Vue {
 }
 </script>
 <style lang="less" scoped>
+i[class^="icon-"] {
+  font-size: 18px;
+}
 .icon-font {
-  vertical-align: middle;
+  vertical-align: text-bottom;
 }
 .header {
   margin-bottom: 20px;

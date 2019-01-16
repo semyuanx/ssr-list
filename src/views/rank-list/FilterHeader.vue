@@ -2,7 +2,7 @@
   <div>
     <div class="filter-header fm-show-pc">
       <div class="header-content">
-        <div class="header-fitler-title"><span>筛选条件：</span></div>
+        <div class="header-fitler-title"><span v-if="filterTag.length">筛选条件：</span></div>
         <div class="header-tag-lists">
           <div
             :key="index"
@@ -168,15 +168,15 @@ export default class FilterHeader extends Vue {
         }
       });
     }
-    if (!tags.length) {
-      Object.keys(this.textMaps).forEach((i: any) => {
-        const val: any = this.textMaps[i];
-        tags.push({
-          label: val,
-          val: '不限',
-        });
-      });
-    }
+    // if (!tags.length) {
+    //   Object.keys(this.textMaps).forEach((i: any) => {
+    //     const val: any = this.textMaps[i];
+    //     tags.push({
+    //       label: val,
+    //       val: '不限',
+    //     });
+    //   });
+    // }
     const brokerNames: any = [];
     this.brokersList.forEach((item: any) => {
       if (this.checkedBrokers.includes(item.BrokerId) || this.checkedBrokers.includes(+item.BrokerId)) {

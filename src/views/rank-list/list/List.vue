@@ -21,7 +21,7 @@
             >
               <div class="trader-container-row">
                 <div class="loading-first loading-avatar">
-                  <!-- <img :src="base+'/Avata/'+scope.row.UserID" /> -->
+                  <img :src="base+'/Avata/'+scope.row.UserID" />
                 </div>
                 <div class="loading-first loading-info">
                   <div class="info-1"></div>
@@ -36,11 +36,11 @@
             >
               <div class="trader-container-row">
                 <div class="loading-first avatar">
-                  <img
+                  <!-- <img
                   @click="toUserPage(scope.row)"
                   @mouseenter.self="showCard($event, scope.row.UserID)"
                   @mouseleave="personCard.hide()"
-                  :src="base+'/Avata/'+scope.row.UserID" />
+                  :src="base+'/Avata/'+scope.row.UserID" /> -->
                 </div>
                 <div class="loading-first trader-info">
                   <div
