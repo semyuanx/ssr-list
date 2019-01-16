@@ -3,11 +3,15 @@
     <div class="user" @click="toPersonal">
       <div class="avatar-con">
         <div class="avatar">
-          <img v-if="data.avatar" :src="data.avatar" />
+          <img
+            @mouseenter.self="mouseenter($event)"
+            @mouseleave="mouseleave($event)"
+            v-if="data.avatar" :src="data.avatar" />
         </div>
       </div>
       <div class="user-name">
-        <span>{{data.name}} #{{data.index}}</span>
+        <span><span @mouseenter.self="mouseenter($event)"
+            @mouseleave="mouseleave($event)">{{data.name}}</span> #{{data.index}}</span>
         <div class="broker">
           <span class="broker">{{data.brokerName}}</span>
         </div>
@@ -53,6 +57,14 @@ export default class FmCard extends Vue {
   private data!: any;
 
   @Prop() private rightMsg!: string;
+
+  mouseenter($event: any) {
+    this.$emit('showCard', $event);
+  }
+
+  mouseleave($event: any) {
+    this.$emit('hideCard', $event);
+  }
 
   sub() {
     this.$emit('subscribe', this.data);

@@ -1,7 +1,10 @@
 <template>
   <div class="header">
     <div class="fm-show-pc">
-      <Strategy @toPersonal="toPersonalPc" :subscribe="subscribe" :data="data" :header="header" />
+      <Strategy
+        @hideCard="hideCard"
+        @showCard="showCard"
+        @toPersonal="toPersonalPc" :subscribe="subscribe" :data="data" :header="header" />
     </div>
     <div class="fm-show-mobile">
       <Strategy @toPersonal="toPersonal" :subscribe="mobileSubscribe" :data="data" :header="header" />
@@ -35,6 +38,15 @@ export default class Index extends Vue {
 
   @Prop()
   subscribe: any;
+
+  showCard($event: any, item: any) {
+    const itemList = item.item;
+    this.$emit('showCard', $event, itemList && itemList.UserID);
+  }
+
+  hideCard($event: any) {
+    this.$emit('hideCard');
+  }
 
   toPersonalPc(item: any) {
     const { UserID, AccountIndex } = item.item;

@@ -10,7 +10,7 @@
         current-row-key="UserID"
       >
         <el-table-column
-          label="交易员"
+          label="基本信息"
           prop="UserID"
           min-width="210px"
         >
@@ -224,7 +224,7 @@
         </el-table-column>
         <el-table-column
           label="订阅"
-          prop="SubPrice"
+          prop="Price"
           align="center"
         >
           <!-- eslint-disable-next-line -->
@@ -238,7 +238,7 @@
               v-else
               class="custom-display-row-sub"
             >
-              <span class="sub-row-btn">{{scope.row.SubPrice ? `$${scope.row.SubPrice}/月` : '免费订阅' }}</span>
+              <span class="sub-row-btn">{{scope.row.Price ? `$${scope.row.Price}/月` : '免费订阅' }}</span>
             </div>
 
           </template>

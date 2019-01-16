@@ -125,15 +125,18 @@ i[class^="icon-"] {
 .invest-container {
   .contain-icon {
     cursor: pointer;
-      background-color: #fff;
-      border-radius: 13px;
-      height: 26px;
-      padding: 0 15px;
-      margin-left: 10px;
-      font-size: 12px;
-      display: flex;
-      align-items: center;
-      flex-direction: row;
+    background-color: #fff;
+    border-radius: 13px;
+    height: 26px;
+    padding: 0 15px;
+    margin-left: 10px;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    &:hover {
+      color: @default-color;
+    }
   }
   .invest-content {
     display: flex;

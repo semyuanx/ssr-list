@@ -7,7 +7,12 @@
       <div class="lists-container">
         <div class="lists">
           <div :key="item.index + item.brokerName" v-for="item in data" class="list-item">
-            <FmCard @toPersonal="toPersonal" @subscribe="handleSub" :data="item" />
+            <FmCard
+              @hideCard="hideCard"
+              @showCard="showCard($event, item)"
+              @toPersonal="toPersonal"
+              @subscribe="handleSub"
+              :data="item" />
           </div>
         </div>
       </div>
@@ -49,6 +54,14 @@ export default class Home extends Vue {
 
   public get data1() {
     return this.dataArr;
+  }
+
+  showCard($event: any, item: any) {
+    this.$emit('showCard', $event, item);
+  }
+
+  hideCard($event: any) {
+    this.$emit('hideCard', $event);
   }
 
   dataArr: any = [];
@@ -212,6 +225,8 @@ export default class Home extends Vue {
       transition: all .2s ease-in-out;
       .list-item {
         padding-right: 20px;
+        padding-top: 5px;
+        padding-bottom: 5px;
       }
       &::-webkit-scrollbar {
         height: 8px;

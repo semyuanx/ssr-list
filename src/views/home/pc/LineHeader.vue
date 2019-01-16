@@ -123,6 +123,9 @@ i[class^="icon-"] {
       padding: 0 15px;
       margin-left: 10px;
       font-size: 12px;
+      &:hover {
+        color: @default-color;
+      }
     }
     .right-filter {
       justify-content: flex-end;

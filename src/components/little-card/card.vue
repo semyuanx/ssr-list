@@ -4,12 +4,18 @@
       <slot name="header">
         <div class="card-header-left">
           <div class="card-avatar">
-            <img @click="toPersonal" alt="头像" :src="data.avatar" />
+            <img
+              @mouseenter.self="mouseenter($event)"
+              @mouseleave="mouseleave($event)"
+              @click="toPersonal" alt="头像" :src="data.avatar" />
           </div>
         </div>
         <div class="card-header-right">
           <div class="name">
-            <span @click="toPersonal">{{data.name}} #{{data.index}}</span>
+            <span
+            @mouseenter.self="mouseenter($event)"
+            @mouseleave="mouseleave($event)"
+            @click="toPersonal">{{data.name}} #{{data.index}}</span>
           </div>
           <div class="broker">
             <span>{{data.brokerName}}</span>
@@ -53,6 +59,14 @@ export default class FmLittleCard extends Vue {
 
   isNumber(str: any) {
     return isNumber(str);
+  }
+
+  mouseenter($event: any) {
+    this.$emit('showCard', $event);
+  }
+
+  mouseleave($event: any) {
+    this.$emit('hideCard', $event);
   }
 
   sub() {

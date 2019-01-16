@@ -26,12 +26,12 @@
         <div :class="dataLength > 3 ? 'right-lists right-wrap' : 'right-lists'">
           <template v-if="dataLength > 3">
             <div :key="item.avatar + item.index" v-for="item in data" class="little-list-item">
-                <LittleCard @toPersonal="toPersonal" @subscribe="handleSub" :data="item" />
+                <LittleCard @showCard="showCard($event, item)" @hideCard="hideCard" @toPersonal="toPersonal" @subscribe="handleSub" :data="item" />
             </div>
           </template>
           <template v-else>
             <div :key="item.avatar + item.index" v-for="item in data" class="list-item">
-              <LineCard @toPersonal="toPersonal" @subscribe="handleSub" :data="item" />
+              <LineCard @showCard="showCard($event, item)" @hideCard="hideCard" @toPersonal="toPersonal" @subscribe="handleSub" :data="item" />
             </div>
           </template>
 
@@ -82,6 +82,14 @@ export default class Index extends Vue {
 
   toRankList() {
     this.$router.push({ name: 'rankList' });
+  }
+
+  showCard($event: any, item: any) {
+    this.$emit('showCard', $event, item);
+  }
+
+  hideCard($event: any) {
+    this.$emit('hideCard', $event);
   }
 
   toMore() {

@@ -1,13 +1,17 @@
 <template>
     <div class="main-view-container">
         <div v-if="strategytData" class="strategy">
-            <FmStrategy :subscribe="handleSub" :data="strategytData" :header="strategytDataHeader" />
+            <FmStrategy
+              :subscribe="handleSub" :data="strategytData" :header="strategytDataHeader" />
         </div>
         <div class="list-item">
             <InvestManager :subscribe="toInvest" :data="products" />
         </div>
         <div class="list-item" v-for="(item,index) in investData" :key="index">
-            <CommonListItem :subscribe="handleSub" :data="item" />
+            <CommonListItem
+              @hideCard="hideCard"
+              @showCard="showCard"
+              :subscribe="handleSub" :data="item" />
         </div>
         <div class="invest">
             <TradeMaster :subscribe="toPersonal" :data="masterFollowerData" />
@@ -25,13 +29,14 @@ import InvestManager from '@/views/home/InvestManager.vue'; // @ is an alias to 
 // import DangerKeep from '@/views/home/DangerKeep.vue'; // @ is an alias to /src
 import TradeMaster from '@/views/home/TradeMaster.vue'; // @ is an alias to /src
 import { namespace, Action } from 'vuex-class';
+import { getElementTop, getElementLeft } from '@/utils/util';
 
 import mapKey from '@/constant/propMap';
 
 import { loadAuth } from 'fmcomponents/src/utils';
 import { getLoginStatus } from 'fmcomponents';
 import FollowBox from 'fmcomponents/src/components/follow';
-
+import personCard from 'fmcomponents/src/components/personcard';
 
 const HomeStore = namespace('HomeStore');
 
@@ -46,105 +51,139 @@ const RankStore = namespace('RankStore');
   },
 })
 export default class mainView extends Vue {
-    @HomeStore.State
-    configs: any;
+  @HomeStore.State
+  configs: any;
 
-    @HomeStore.State
-    progressProducts: any;
+  @HomeStore.State
+  progressProducts: any;
 
-    @HomeStore.State
-    masterFollower: any;
-
-    get products() {
-      const data = this.progressProducts.map((i: any) => i);
-      return {
-        data,
-      };
-    }
-
-    get masterFollowerData() {
-      const data = this.masterFollower.map((i: any) => i);
-      return {
-        data,
-      };
-    }
-
-
-    /**
-     * {
-     *  avatar: url,
-     *  name: string,
-     *  index: accountIndex,
-     *  brokername: string,
-     *  list: [
-     *      {
-     *          prop: '收益率',
-     *          val: 34.99%
-     *      }
-     *  ]
-     * }
-     */
-    public get strategytData() {
-      if (this.configs && this.configs.length) {
-        const config:any = this.configs[0];
-
-        let showData: any = [];
-        if (config && config.HideConfig) {
-          Object.keys(config.HideConfig).forEach((i: any) => {
-            if (!config.HideConfig[i]) {
-              showData.push(i);
-            }
-          });
-        }
-        showData = showData.slice(0, 2);
-        if (config.listData && Array.isArray(config.listData.List) && config.listData.List.length > 1) {
-          const newConfig = config.listData.List.map((item: any) => ({
-            avatar: `${this.base}/Avata/${item.UserID}`,
-            name: item.NickName,
-            price: item.Price,
-            index: item.AccountIndex,
-            brokerName: item.BrokerName,
-            item,
-            data: showData.map((it: any) => ({ prop: (mapKey as any)[it], val: item[it] })),
-          }));
-          return newConfig;
-        }
-        return null;
-      }
-      return null;
-    }
-
-    public get strategytDataHeader() {
-      if (this.configs && this.configs.length) {
-        const config:any = this.configs[0];
-        return {
-          title: config.RankName,
-          subTitle: config.ViceTitle,
-        };
-      }
-      return null;
-    }
-
-    public get investData() {
-      const filters = [2, 3, '2', '3'];
-      const data = this.configs.slice(1)
-        .filter((i: any) => i && !filters.includes(i.RankIndex));
-      return data;
-    }
-
-    toPersonal(data:any) {
-      const userId = data.item ? data.item.UserID : data.UserID;
-      const index = data.item ? data.item.AccountIndex : data.index;
-      this.redirectTo('personalPage', { userId, index }, true);
-    }
-
-    toInvest() {
-      this.$router.push({ name: 'invest' });
-    }
-
+  @HomeStore.State
+  masterFollower: any;
 
   @RankStore.Action
   getRelations: any;
+
+
+  get products() {
+    const data = this.progressProducts.map((i: any) => i);
+    return {
+      data,
+    };
+  }
+
+  get masterFollowerData() {
+    const data = this.masterFollower.map((i: any) => i);
+    return {
+      data,
+    };
+  }
+
+  hideCard($event: any) {
+    personCard.hide();
+  }
+
+  showStrategyCard() {
+
+  }
+
+  showCard(e: any, ids: any) {
+    // eslint-disable-next-line
+    const _this = this;
+    const top = getElementTop(e.target);
+    const left = getElementLeft(e.target);
+    personCard.show({
+      id: ids,
+      position: {
+        top: top || e.target.offsetTop,
+        left: left || e.target.offsetLeft,
+        height: e.target.offsetHeight,
+      },
+      callback(val: any) {
+        return new Promise((res) => {
+          if (res) {
+            console.log('res:', val);
+            if (val.code === 'SUCCESS' || val.code === 0) {
+              _this.getFollowAndAttention();
+            } else {
+              // 失败
+            }
+          }
+        });
+      },
+    });
+  }
+
+  /**
+   * {
+   *  avatar: url,
+   *  name: string,
+   *  index: accountIndex,
+   *  brokername: string,
+   *  list: [
+   *      {
+   *          prop: '收益率',
+   *          val: 34.99%
+   *      }
+   *  ]
+   * }
+   */
+  public get strategytData() {
+    if (this.configs && this.configs.length) {
+      const config:any = this.configs[0];
+
+      let showData: any = [];
+      if (config && config.HideConfig) {
+        Object.keys(config.HideConfig).forEach((i: any) => {
+          if (!config.HideConfig[i]) {
+            showData.push(i);
+          }
+        });
+      }
+      showData = showData.slice(0, 2);
+      if (config.listData && Array.isArray(config.listData.List) && config.listData.List.length > 1) {
+        const newConfig = config.listData.List.map((item: any) => ({
+          avatar: `${this.base}/Avata/${item.UserID}`,
+          name: item.NickName,
+          price: item.Price,
+          index: item.AccountIndex,
+          brokerName: item.BrokerName,
+          item,
+          data: showData.map((it: any) => ({ prop: (mapKey as any)[it], val: item[it] })),
+        }));
+        return newConfig;
+      }
+      return null;
+    }
+    return null;
+  }
+
+  public get strategytDataHeader() {
+    if (this.configs && this.configs.length) {
+      const config:any = this.configs[0];
+      return {
+        title: config.RankName,
+        subTitle: config.ViceTitle,
+      };
+    }
+    return null;
+  }
+
+  public get investData() {
+    const filters = [2, 3, '2', '3'];
+    const data = this.configs.slice(1)
+      .filter((i: any) => i && !filters.includes(i.RankIndex));
+    return data;
+  }
+
+  toPersonal(data:any) {
+    const userId = data.item ? data.item.UserID : data.UserID;
+    const index = data.item ? data.item.AccountIndex : data.index;
+    this.redirectTo('personalPage', { userId, index }, true);
+  }
+
+  toInvest() {
+    this.$router.push({ name: 'invest' });
+  }
 
   @RankStore.Action
   addOrCancelAttention: any;

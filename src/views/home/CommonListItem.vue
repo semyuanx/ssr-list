@@ -1,7 +1,15 @@
 <template>
   <div class="header">
     <div class="fm-show-pc">
-      <CommonItem @toMore="toMore" @toPersonal="toPersonalPc" :subscribe="subscribe" v-if="configData" :data="configData" :description="description" />
+      <CommonItem
+        @hideCard="hideCard"
+        @showCard="showCard"
+        @toMore="toMore"
+        @toPersonal="toPersonalPc"
+        :subscribe="subscribe"
+        v-if="configData"
+        :data="configData"
+        :description="description" />
     </div>
     <div class="fm-show-mobile">
       <InvestManagerMobile @toPersonal="toPersonal" :data="data"/>
@@ -53,8 +61,17 @@ export default class Index extends Vue {
     });
   }
 
+  showCard($event: any, item: any) {
+    const itemList = item.item;
+    this.$emit('showCard', $event, itemList && itemList.UserID);
+  }
+
+  hideCard($event: any) {
+    this.$emit('hideCard');
+  }
+
   toMore(data1: any) {
-    console.log(this.data, 'dddddd');
+    // console.log(this.data, 'dddddd');
     const { data } = this;
     const params: any = {};
     const condcfg: any = data.CondCfg || {};
@@ -113,7 +130,7 @@ export default class Index extends Vue {
         name: item.NickName,
         index: item.AccountIndex,
         brokerName: item.BrokerName,
-        price: item.Price,
+        price: item.SubPrice,
         item,
         data: showData.map((it: any) => ({ prop: (mapKey as any)[it], val: this.formatVal(item[it], it) })),
       }));
