@@ -72,16 +72,16 @@ export default function createRouter() {
       },
 
       {
-        path: '/follower', // 跟随大师
-        name: 'follower',
+        path: '/follower1', // 跟随大师
+        name: 'follower1',
         meta: {
           title: 'followme-跟随大师',
         },
         component: () => import(/* webpackChunkName: "about" */ './pages/Follower.vue'),
       },
       {
-        path: '/follower1', // 跟随大师
-        name: 'follower1',
+        path: '/follower', // 跟随大师
+        name: 'follower',
         meta: {
           title: 'followme-跟随大师',
         },
