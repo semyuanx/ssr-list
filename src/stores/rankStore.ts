@@ -159,7 +159,7 @@ export default class RankStore {
           label: (propMaps as any)[i] || ' ',
           prop: i,
         }));
-        console.log(showProps, propMaps, 'showProps');
+        // console.log(showProps, propMaps, 'showProps');
         commit('setShowProps', showProps);
       }
       return res;

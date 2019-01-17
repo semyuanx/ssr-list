@@ -21,7 +21,7 @@
             >
               <div class="trader-container-row">
                 <div class="loading-first loading-avatar">
-                  <img :src="base+'/Avata/'+scope.row.UserID" />
+                  <!-- <img :src="base+'/Avata/'+scope.row.UserID" /> -->
                 </div>
                 <div class="loading-first loading-info">
                   <div class="info-1"></div>
@@ -36,11 +36,11 @@
             >
               <div class="trader-container-row">
                 <div class="loading-first avatar">
-                  <!-- <img
+                  <img
                   @click="toUserPage(scope.row)"
                   @mouseenter.self="showCard($event, scope.row.UserID)"
                   @mouseleave="personCard.hide()"
-                  :src="base+'/Avata/'+scope.row.UserID" /> -->
+                  :src="base+'/Avata/'+scope.row.UserID" />
                 </div>
                 <div class="loading-first trader-info">
                   <div
@@ -49,7 +49,11 @@
                   @mouseleave="personCard.hide()"
                   class="info-1">{{scope.row.NickName}} #{{scope.row.AccountIndex}}</div>
                   <div class="info-2">
-                    {{scope.row.BrokerName || ''}}
+                    {{
+                      Array.isArray(scope.row.AccountList) ?
+                      (scope.row.AccountList.find((i) => i && i.AccountIndex === scope.row.AccountList) || {})['BrokerName']
+                      : ''
+                    }}
                   </div>
                 </div>
               </div>
@@ -57,116 +61,6 @@
 
           </template>
         </el-table-column>
-        <!-- <el-table-column
-          label="交易能力值"
-          prop="Score"
-          sortable="custom"
-          min-width="116px"
-        >
-          <template slot-scope="scope">
-            <div
-              v-if="dateIsLoading && !scope.row.UserID"
-              class="custom-display-row-loading"
-            ></div>
-            <div
-              v-else
-              class="custom-display-row-line"
-            >{{scope.row.Score | numberFormatOneParams}}</div>
-
-          </template>
-        </el-table-column>
-        <el-table-column
-          label="收益率"
-          prop="ROI"
-          min-width="100px"
-          sortable="custom"
-        >
-          <template slot-scope="scope">
-            <div
-              v-if="dateIsLoading && !scope.row.UserID"
-              class="custom-display-row-loading"
-            ></div>
-            <div
-              v-else
-              :class="`custom-display-row-line `"
-            >
-              <span :class="scope.row.ROI >= 0 ? 'special-rate' : ''">{{scope.row.ROI | percentFormat}}</span>
-            </div>
-
-          </template>
-        </el-table-column>
-        <el-table-column
-          label="最大回撤"
-          prop="MaxRetracement"
-          sortable="custom"
-          min-width="100px"
-        >
-          <template slot-scope="scope">
-            <div
-              v-if="dateIsLoading && !scope.row.UserID"
-              class="custom-display-row-loading"
-            ></div>
-            <div
-              v-else
-              class="custom-display-row-line"
-            >{{scope.row.MaxRetracement | percentFormat}}</div>
-
-          </template>
-        </el-table-column>
-        <el-table-column
-          label="交易周期"
-          prop="Weeks"
-          sortable="custom"
-          min-width="100px"
-        >
-          <template slot-scope="scope">
-            <div
-              v-if="dateIsLoading && !scope.row.UserID"
-              class="custom-display-row-loading"
-            ></div>
-            <div
-              v-else
-              class="custom-display-row-line"
-            >{{scope.row.Weeks || 0}}周</div>
-
-          </template>
-        </el-table-column> -->
-        <!-- <el-table-column
-          label="擅长品种"
-          prop="ExpSymbol"
-          sortable="custom"
-          min-width="100px"
-        >
-          <template slot-scope="scope">
-            <div
-              v-if="dateIsLoading && !scope.row.UserID"
-              class="custom-display-row-loading"
-            ></div>
-            <div
-              v-else
-              class="custom-display-row-line"
-            >{{scope.row.ExpSymbol}}</div>
-
-          </template>
-        </el-table-column> -->
-        <!-- <el-table-column
-          label="订阅人数"
-          prop="Subscribers"
-          sortable="custom"
-          min-width="100px"
-        >
-          <template slot-scope="scope">
-            <div
-              v-if="dateIsLoading && !scope.row.UserID"
-              class="custom-display-row-loading"
-            ></div>
-            <div
-              v-else
-              class="custom-display-row-line"
-            >{{scope.row.Subscribers}}</div>
-
-          </template>
-        </el-table-column> -->
 
         <el-table-column
           show-overflow-tooltip="true"
@@ -185,8 +79,11 @@
             <div
               v-else
               class="custom-display-row-line"
-            >{{scope.row[i.prop] | propFormat(i.prop)}}</div>
-
+            >
+              <span :class="{green: scope.row[i.prop] > 0 && !['Orders', 'Weeks'].includes(i.prop)}">
+                {{scope.row[i.prop] | propFormat(i.prop) | moneyFormat(i.prop)}}{{i.suffix}}
+              </span>
+            </div>
           </template>
         </el-table-column>
 
@@ -204,11 +101,10 @@
               v-else
               class="custom-display-row-line"
             >
-
               <div class="chartbox">
                 <Chart
-                  v-if="scope.row.TrendChart && scope.row.TrendChart.length>0 "
-                  :chart-data="scope.row.TrendChart"
+                  v-if="scope.row.List && scope.row.List.length>0 "
+                  :chart-data="scope.row.List"
                 ></Chart>
                 <img
                   v-if="dateIsLoading && !scope.row.UserID"
@@ -223,7 +119,7 @@
           </template>
         </el-table-column>
         <el-table-column
-          label="订阅"
+          label=""
           prop="Price"
           align="center"
         >
@@ -234,11 +130,11 @@
               class="custom-display-row-loading"
             ></div>
             <div
-              @click="handleSub(scope.row)"
+              @click="handleSub($event, scope.row)"
               v-else
               class="custom-display-row-sub"
             >
-              <span class="sub-row-btn">{{scope.row.Price ? `$${scope.row.Price}/月` : '免费订阅' }}</span>
+              <span class="sub-row-btn">{{ scope.row.Attention ? scope.row.Attention == 1 ? '已关注' : '互相关注' : '关注' }}</span>
             </div>
 
           </template>
@@ -252,7 +148,7 @@
                 name="no-data"
               />
             </div>
-            <div class="empty-text"><span>没有找到相关内容，请您换个条件试试吧~</span></div>
+            <div class="empty-text"><span>暂无相关内容~</span></div>
           </div>
         </template>
         <template slot="append">
@@ -294,7 +190,9 @@ import personCard from 'fmcomponents/src/components/personcard';
 import Chart from '@/components/chart/index.vue';
 
 import SvgIcon from '@/components/svg/index.ts';
-import { numberFormat, percentFormat, propFormat } from '@/utils/format';
+import {
+  numberFormat, percentFormat, propFormat, moneyFormat,
+} from '@/utils/format';
 import { getElementTop, getElementLeft } from '@/utils/util';
 import { Table, TableColumn } from 'element-ui';
 import throttle from 'lodash.throttle';
@@ -313,6 +211,10 @@ const isEnterLoad = false;
   filters: {
     numberFormatOneParams: (val: number) => numberFormat(val, 1),
     percentFormat: (val: number) => percentFormat(val),
+    moneyFormat: (val: number, prop: string) => {
+      const props = ['FollowMoney'];
+      return props.includes(prop) ? moneyFormat(val) : val;
+    },
     propFormat: (val: number, prop: string) => propFormat(val, prop),
   },
 } as any))
@@ -359,10 +261,6 @@ export default class List extends Vue {
     });
   }
 
-  mounted() {
-
-  }
-
   toUserPage(data: any) {
     const { UserID, AccountIndex } = data;
     this.redirectTo('personalPage', { userId: UserID, index: AccountIndex }, true);
@@ -395,6 +293,26 @@ export default class List extends Vue {
     });
   }
 
+  // 获取登录用户的跟随列表和关注列表
+  getFollowAndAttention() {
+    getLoginStatus().then((user: any) => {
+      if (user.islogin) {
+        this.getRelations()
+          .then((res: any) => {
+            this.followList = res.follows;
+            this.attentionList = res.attentions;
+          })
+          .catch((err: any) => {
+            console.log('获取登录用户的跟随列表和关注列表失败', err);
+          });
+      }
+    });
+  }
+
+  mounted() {
+    this.getFollowAndAttention();
+  }
+
   log(msg: any) {
     console.log(msg);
   }
@@ -418,139 +336,36 @@ export default class List extends Vue {
   @RankStore.Action
   addOrCancelAttention: any;
 
-  @RankStore.Action
-  checkCanFollow: any;
-
   attentionList: any = [];
 
   followList: any = [];
 
   selfPwdChanged: any = [];
 
-  regetSub() {
-    this.getRelations()
-      .then((res: any) => {
-        this.followList = res.follows;
-        this.attentionList = res.attentions;
-      })
-      .catch((err: any) => {
-        console.log('获取登录用户的跟随列表和关注列表失败', err);
-      });
+  handleSub($event: any, item: any) {
+    this.attention(item, $event);
   }
 
-  checkIfNotice(list: any) {
+  attention(user: any, e: any) {
+    const _this = this;
     const params = {
-      toUserId: list.UserID,
+      toUserId: user.UserID,
     };
-    if (list && Array.isArray(this.attentionList)) {
-      const isAttendion = this.attentionList.find(i => i === list.UserID);
-      if (!isAttendion) {
-        this.addOrCancelAttention(params)
-          .then((res: any) => {
-            this.regetSub();
-          })
-          .catch((err: any) => {
-            this.regetSub();
-          });
-      }
-    }
-  }
-
-  showFollowCard(_this: any, list: any) {
-    FollowBox.show(
-      {
-        traderid: list.UserID,
-        tradername: list.NickName,
-        traderindex: list.AccountIndex,
-        brokerid: list.BrokerID,
-      },
-      (result: any) => {
-        console.log(result);
-        if (result.code === 'SUCCESS' || result.code === 0) {
-          _this.getFollowAndAttention();
-        } else {
-          //
-        }
-      },
-    );
-  }
-
-  // 获取登录用户的跟随列表和关注列表
-  getFollowAndAttention() {
-    getLoginStatus().then((user: any) => {
-      if (user.islogin) {
-        this.getRelations()
-          .then((res: any) => {
-            this.followList = res.follows;
-            this.attentionList = res.attentions;
-          })
-          .catch((err: any) => {
-            console.log('获取登录用户的跟随列表和关注列表失败', err);
-          });
+    getLoginStatus().then((user1: any) => {
+      if (user1.islogin) {
+        e.target.className = e.target.className === 'follow' ? 'follow attation-active' : 'follow';
+        e.target.innerHTML = e.target.innerHTML === this.$t('message.attened') ? this.$t('message.atten') : this.$t('message.attened');
+        this.addOrCancelAttention(params).then((res : any) => {
+        }).catch((err: any) => {
+          console.log(err);
+        });
+      } else {
+        loadAuth();
       }
     });
   }
 
-  checkTraderCanFollow(trader: any) {
-    return this.checkCanFollow({
-      userId: trader.UserID,
-      accountIndex: trader.AccountIndex,
-    }).then((res: any) => res && res.isFollow);
-  }
-
-  handleSub(list1: any) {
-    // console.log('to subsribe', list);
-    const list: any = list1;
-    if (!list.BrokerID) {
-      list.BrokerID = list.MT4Account && list.MT4Account.BrokerID;
-    }
-    if (!list.Account) {
-      list.Account = list.MT4Account && list.MT4Account.Account;
-    }
-    const uaindex = `${list.UserID}_${list.AccountIndex}`;
-    if (this.selfPwdChanged.indexOf(uaindex) > -1) return;
-    getLoginStatus()
-      .then((user: any) => {
-        if (user.islogin) {
-          // follow
-          this.checkIfNotice(list);
-          return this.checkTraderCanFollow(list).then((tres: any) => {
-            if (tres) {
-              this.showFollowCard(this, list);
-              return true;
-            }
-            if (this.selfPwdChanged.indexOf(uaindex) === -1) {
-              this.selfPwdChanged.push(uaindex);
-            }
-            this.$fmdialog({
-              type: 'failure',
-              showClose: true,
-              message:
-                '当前交易员最近有修改密码行为导致交易信号中断，已经被限制跟随',
-              duration: 3000,
-              confirmBtnText: '确定',
-              onConfirm: () => {},
-            });
-            return true;
-          });
-        }
-        loadAuth();
-        return true;
-      })
-      .catch((err: any) => {
-        this.$fmdialog({
-          type: 'failure',
-          showClose: true,
-          message: '网络请求失败， 请重试!',
-          duration: 4000,
-          confirmBtnText: '确定',
-        });
-      });
-  }
-
   handleSortChange({ prop, order }: any) {
-    console.log({ prop, order });
-    // const order: any = {};
     this.$emit('sortChange', { prop, order });
   }
 }
@@ -576,6 +391,9 @@ export default class List extends Vue {
         :global(.cell) {
           padding-right: 0;
           padding-left: 0;
+        }
+        :global(td) {
+          border: none;
         }
 
         &:hover {
@@ -603,6 +421,9 @@ export default class List extends Vue {
         font-weight: 500;
         color: rgba(51, 51, 51, 1);
         line-height: 21px;
+        .green {
+          color: #00aa6d;
+        }
         .trader-container-row {
           display: flex;
           flex-direction: row;

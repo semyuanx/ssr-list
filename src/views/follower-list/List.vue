@@ -1,10 +1,10 @@
 <template>
 <div class="main-list-container">
   <div class="fm-show-pc">
-    <FmList :showProps="showProps" :data="rankList" :getData="getData" @sortChange="sortChange" />
+    <FmList :showProps="showProps" :data="data" :getData="getData" @sortChange="sortChange" />
   </div>
   <div class="fm-show-mobile">
-    <MobileList :data="rankList" @sortChange="sortChange"/>
+    <MobileList :data="data" @sortChange="sortChange"/>
   </div>
 </div>
 </template>
@@ -27,11 +27,8 @@ const RankStore = namespace('RankStore');
 export default class List extends Vue {
   name: string = 'response-list';
 
-  @RankStore.State
-  rankList: any;
-
-  @RankStore.State
-  rankTotal: any;
+  @Prop()
+  data: any;
 
   @Prop()
   getData: any;
@@ -39,19 +36,12 @@ export default class List extends Vue {
   @Prop()
   showProps: any;
 
-  // @Watch('rankList')
-  // public rankListChange() {
-  //   console.log('rank changed', this.rankTotal, this.rankList);
-  // }
+  mounted() {
+
+  }
 
   sortChange({ prop, order }:any) {
     this.$emit('sortChange', { prop, order });
   }
 }
 </script>
-<style lang="less" scoped>
-.main-list-container {
-
-}
-
-</style>

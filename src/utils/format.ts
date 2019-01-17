@@ -14,7 +14,7 @@ export const numberFormat = function numberFormat(val: string|number, format: nu
   if (transformed) {
     if (transformed.includes('.')) {
       const split = transformed.split('.');
-      if (split[1] && split[1].length === format) {
+      if (split[1] && split[1].length <= format) {
         return transformed;
       }
     }
@@ -56,17 +56,17 @@ export const percentFormat = function percentFormat(val: string|number, format: 
 };
 
 export const propFormat = function propFormat(val: string | number, prop: string) {
-  const percentKeys = ['ROI'];
+  const percentKeys = ['ROI', 'Roi'];
   const dotKeys = [
     'Equity', 'DealAmount', 'MaxRetracement',
     'TotalStandardlots', 'TotalSelfStandardlots',
     'TotalFollowStandardlots', 'TotalPips',
     'TotalSelfPips', 'TotalFollowPips',
-    'Score', '',
+    'Score', 'AveragePips', 'Pips',
   ];
   const moneyKeys = [
     'Money', 'TotalMoney', 'TotalSelfMoney',
-    'TotalFollowMoney', 'FollowMoney',
+    'TotalFollowMoney', 'FollowMoney', 'FollowMoney',
   ];
   if (percentKeys.includes(prop)) {
     return percentFormat(val);

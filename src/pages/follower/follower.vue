@@ -1,10 +1,10 @@
 <template>
   <div class="rank-container">
     <div>
-      <FilterHeader @filter="handleFilter" />
+      <FilterHeader :selected="selected" @filter-changed="filterChanged" />
     </div>
     <div>
-      <List :showProps="showProps" :getData="getData" @sortChange="sortChange" />
+      <List :data="dataList" :showProps="showProps" :getData="getData" @sortChange="sortChange" />
     </div>
   </div>
 </template>
@@ -12,10 +12,9 @@
 import { Component, Vue, Watch } from 'vue-property-decorator';
 import { namespace } from 'vuex-class';
 import throttle from 'lodash.throttle';
-import isequal from 'lodash.isequal';
 
-import FilterHeader from '@/views/rank-list/FilterHeader.vue';
-import List from '@/views/rank-list/List.vue';
+import FilterHeader from '@/views/follower-list/FilterHeader.vue';
+import List from '@/views/follower-list/List.vue';
 import { getElementTop, animate } from '@/utils/util';
 
 const FollowerStore = namespace('FollowerStore');
@@ -29,45 +28,64 @@ let isEnterLoad: boolean = false;
   },
 })
 export default class RankList extends Vue {
-  @FollowerStore.State
-  rankListLoading: any;
+  selected: any = {
+    label: '全部',
+    val: 0,
+    selected: false,
+  };
 
   @FollowerStore.Action
-  getRankList: any;
-
-  @FollowerStore.Action
-  getSepRankConfig: any;
+  getRankFollowers: any;
 
   @FollowerStore.State
-  rankParams: any;
-
-  @FollowerStore.State
-  pageIndex: any;
-
-  @FollowerStore.Mutation
-  setPageIndex: any;
-
-  @FollowerStore.State
-  checkedBrokers: any;
+  followers: any;
 
   @FollowerStore.State
   showProps: any;
 
-  @FollowerStore.Mutation
-  setFilterRes: any;
+  paramsData:any = {
+    pageSize: 20,
+    pageIndex: 1,
+    time: 1,
+    pageField: 'FollowMoney',
+    pageSort: 'desc',
+  };
 
-  params: any = {};
+  dataLoading: boolean = false;
+
+  get pageSize() {
+    return this.paramsData.pageSize;
+  }
+
+  updatePageIndex() {
+    this.paramsData.pageIndex += 1;
+  }
+
+  updateTime(time: number) {
+    this.paramsData.time += time;
+  }
+
+  get dataList() {
+    return this.followers;
+  }
 
   setParams(params: any) {
-    this.params = { ...this.params, ...params };
+    this.paramsData = { ...this.paramsData, ...params };
   }
 
   handleFilter() {
     this.resetIndex();
-    this.filterResult();
     this.$nextTick(() => {
       this.getData();
     });
+  }
+
+  filterChanged(item: any) {
+    const { val: time } = item;
+    const params = { time: time || 1 };
+    this.selected = item;
+    console.log(item, 'ii');
+    this.getDataAccourdingParam(params);
   }
 
   sortArr: any = [];
@@ -75,12 +93,16 @@ export default class RankList extends Vue {
   startQueue: any = false;
 
   sortChange({ prop, order: ord }: any) {
-    const order = ord === 'ascending' ? 0 : 1;
+    const order = ord === 'ascending' ? 'asc' : 'desc';
     const params = {
-      orderby: prop,
-      isDESC: order,
+      pageField: prop,
+      pageSort: order,
     };
 
+    this.getDataAccourdingParam(params);
+  }
+
+  getDataAccourdingParam(params: any) {
     this.sortArr.push(params);
     if (!this.startQueue) {
       this.startQueue = true;
@@ -107,104 +129,73 @@ export default class RankList extends Vue {
     }
     this.resetIndex();
     this.setParams(params);
-    this.getRankList(
-      this.refactor(params),
-    ).then(() => {
-      this.getSortData();
+
+    this.$nextTick(() => {
+      this.getData().then(() => {
+        this.getSortData();
+      });
     });
-  }
 
-  public filterResult() {
-    this.setFilterRes([
-      {
-        label: '交易能力值',
-        val: this.refactorWord('', this.rankParams.Score),
-      },
-      {
-        label: '账户净值',
-        val: this.refactorWord('$', this.rankParams.Equity),
-      },
-      {
-        label: '交易周期',
-        val: this.refactorWord('周', this.rankParams.Weeks),
-      },
-      {
-        label: '最大回撤比例',
-        val: this.refactorWord('%', this.rankParams.Retracement),
-      },
-      { label: '收益率', val: this.refactorWord('%', this.rankParams.Roi) },
-      { label: '经纪商', val: this.rankParams.brokerId },
-    ]);
-  }
-
-  private refactorWord(unit: string, val: any) {
-    if (!val) {
-      return '不限';
-    }
-    const arr: string[] = val.split('-');
-    if (arr[0] === '0') {
-      return `< ${this.unitLocation(unit, arr[1])}`;
-    }
-    if (arr[1] === '0') {
-      return `> ${this.unitLocation(unit, arr[0])}`;
-    }
-    return `${this.unitLocation(unit, arr[0])}-${this.unitLocation(
-      unit,
-      arr[1],
-    )}`;
-  }
-
-  private unitLocation(unit: string, val: string) {
-    return unit === '$' ? unit + val : val + unit;
-  }
-
-  @Watch('rankParams', { deep: true })
-  handleRefresh() {
-    this.resetIndex();
-    this.getPageData();
+    // this.getRankFollowers(
+    //   this.refactor(params),
+    // ).then(() => {
+    //   this.getSortData();
+    // });
   }
 
   resetIndex() {
-    // this.index = 1;
-    this.setPageIndex(1);
-  }
-
-  private get index() {
-    return this.pageIndex || 1;
+    this.paramsData.pageIndex = 1;
   }
 
   getPageData(page: number = 1) {
-    const params: any = this.refactor({ index: page });
-    this.getRankList(params);
+    const params: any = this.refactor({ pageIndex: page });
+    this.getRankFollowers(params);
   }
+
+  hasMore: boolean = true;
 
   getData() {
     const params: any = this.refactor();
     console.log(params, 'pppppp');
-    return this.getRankList(params);
+    this.dataLoading = true;
+    return this.getRankFollowers(params)
+      .then((res: any) => {
+        if (res && !res.error) {
+          const { items } = res;
+          if (items.length < this.pageSize) {
+            this.hasMore = false;
+          } else {
+            this.updatePageIndex();
+          }
+        }
+        this.dataLoading = false;
+        return res;
+      });
   }
 
   mounted() {
     // this.getPageData();
-    this.getSepRankConfig({ index: 1 });
     this.getData();
+
+    const loadThrottle = throttle(this.scrollCb, 200);
+
     window.addEventListener('scroll', () => {
-      if (isEnterLoad || this.rankListLoading) return;
+      if (isEnterLoad || this.dataLoading) return;
       isEnterLoad = true;
-      throttle(this.scrollCb, 200)();
+      loadThrottle();
     });
   }
 
   unmouted() {
     window.removeEventListener('scroll', () => {
-      if (isEnterLoad || this.rankListLoading) return;
+      if (isEnterLoad || this.dataLoading) return;
       isEnterLoad = true;
       throttle(this.scrollCb, 200)();
     });
   }
 
   scrollCb() {
-    animate(() => {
+    this.$nextTick(() => {
       this.loadMore();
     });
   }
@@ -337,70 +328,9 @@ export default class RankList extends Vue {
   }
 
   private refactor(params: any = {}) {
-    console.log(this.pageIndex, 'this.pageIndex');
-    const obj: any = Object.assign({}, this.rankParams);
-    let getParams = {
-      index: this.index || 1,
-      size: 20,
-      // maxScore: obj.Score && obj.Score.split('-')[1],
-      // minScore: obj.Score && obj.Score.split('-')[0],
-      // minRoi: obj.Roi && obj.Roi.split('-')[0],
-      // maxRoi: obj.Roi && obj.Roi.split('-')[1],
-      // maxRetracement: obj.Retracement && obj.Retracement.split('-')[1],
-      // minRetracement: obj.Retracement && obj.Retracement.split('-')[0],
-      // maxWeeks: obj.Weeks && obj.Weeks.split('-')[1],
-      // minWeeks: obj.Weeks && obj.Weeks.split('-')[0],
-      // maxEquity: obj.Equity && obj.Equity.split('-')[1],
-      // minEquity: obj.Equity && obj.Equity.split('-')[0],
-      ...this.params,
-      ...params,
-    };
-
-    const brokerList = this.checkedBrokers.length ? { brokerId: this.checkedBrokers.join(',') } : {};
-    const processParam = this.preProcessParams(obj);
-    getParams = { ...processParam, ...getParams, ...brokerList };
-    // console.log()
-    if (!isequal(this.allParams, getParams)) {
-      this.allParams = getParams;
-    }
-    console.log(getParams, 'getParams');
-    return getParams;
-  }
-
-  allParams: any = {};
-
-  @Watch('allParams')
-  allParamsChanged(v:any) {
-    console.log('allParams has changed', performance.now(), v);
-  }
-
-  preProcessParams(obj: any) {
-    const params: any = {};
-    if (obj) {
-      Object.keys(obj).forEach((i: any) => {
-        const val: any = obj[i];
-        if (val) {
-          if (val && typeof val === 'string') {
-            if (val.includes('-')) {
-              const split = val.split('-');
-              if (split && split.length) {
-                // eslint-disable-next-line
-                params[`min${i}`] = split[0];
-                // eslint-disable-next-line
-                params[`max${i}`] = split[1];
-              }
-            } else {
-              params[i] = val;
-            }
-          } else if (typeof val === 'number' || typeof val === 'boolean') {
-            params[i] = val;
-          }
-        } else if (typeof val === 'number' || typeof val === 'boolean') {
-          params[i] = val;
-        }
-      });
-    }
-    return params;
+    const initialParams: any = Object.assign({}, this.paramsData, params);
+    const paramsData = { ...initialParams };
+    return paramsData;
   }
 }
 </script>

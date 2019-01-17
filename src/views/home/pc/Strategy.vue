@@ -145,12 +145,12 @@ export default class Home extends Vue {
 
           // if (scrolled)
           if (direction === 1) {
-            if (this.scrolled === 5 || this.scrolled === 0) {
+            if (this.scrolled === 2 || this.scrolled === 0) {
               return;
             }
           }
-          if (scrolled > 10) {
-            scrolled = 5;
+          if (scrolled > 10 && scrolled < singleWidth / 2) {
+            scrolled = 2;
           }
 
           shouldScroll = `${scrolled}px`;
@@ -204,6 +204,11 @@ export default class Home extends Vue {
           font-size: 50px;
           color: #999999;
         }
+        &:hover {
+          i> {
+            color: @default-color;
+          }
+        }
       }
       .scroll-left {
         left: 20px;
@@ -225,11 +230,11 @@ export default class Home extends Vue {
       transition: all .2s ease-in-out;
       .list-item {
         padding-right: 20px;
-        padding-top: 5px;
-        padding-bottom: 5px;
+        padding-top: 15px;
+        padding-bottom: 15px;
       }
       &::-webkit-scrollbar {
-        height: 8px;
+        height: 4px;
       }
       &::-webkit-scrollbar-track {
         width: 0;

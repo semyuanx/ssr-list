@@ -188,10 +188,12 @@ export default class RankList extends Vue {
     // this.getPageData();
     this.getSepRankConfig({ index: 1 });
     this.getData();
+    const loadThrottle = throttle(this.scrollCb, 200);
+
     window.addEventListener('scroll', () => {
       if (isEnterLoad || this.rankListLoading) return;
       isEnterLoad = true;
-      throttle(this.scrollCb, 200)();
+      loadThrottle();
     });
   }
 
