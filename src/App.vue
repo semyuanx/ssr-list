@@ -97,7 +97,7 @@ export default class App extends Vue {
 </script>
 <style lang="less">
   .fm-content-header+.fm-content-container {
-    margin-top: 50px;
+    margin-top: 60px;
     width: 100%;
     .router-container {
       width: 100%;

@@ -1,16 +1,17 @@
 <template>
   <div class="card-contain">
-    <div class="user" @click="toPersonal">
+    <div class="user" >
       <div class="avatar-con">
         <div class="avatar">
           <img
+            @click="toPersonal"
             @mouseenter.self="mouseenter($event)"
             @mouseleave="mouseleave($event)"
-            v-if="data.avatar" :src="data.avatar" />
+            v-if="data.avatar" :src="data.avatar" alt="avatar" />
         </div>
       </div>
       <div class="user-name">
-        <span><span @mouseenter.self="mouseenter($event)"
+        <span><span @click="toPersonal" class="name-active" @mouseenter.self="mouseenter($event)"
             @mouseleave="mouseleave($event)">{{data.name}}</span> #{{data.index}}</span>
         <div class="broker">
           <span class="broker">{{data.brokerName}}</span>
@@ -19,15 +20,15 @@
     </div>
     <div class="bottom">
       <div class="price">
-        <div class="price-line num-val">
-          <div class="num-percent">{{data.data.length ? data.data[0].val : ''}}</div>
-          <div class="sub-num">{{data.data.length >1 ? data.data[1].val : ''}}</div>
+        <div class="price-line num-val" v-if="Array.isArray(data.data) && data.data.length">
+          <div :key="i.prop + i.val" v-for="i in data.data">
+            <div :class="{'num-same': true, 'need-green': i.hightlight}">{{ i.val }}</div>
+            <div class="desc">{{ i.prop }}</div>
+          </div>
         </div>
-        <div class="price-line desc">
+        <!-- <div class="price-line desc">
           <div :key="i.prop + i.val" v-for="i in data.data">{{i && i.prop || ''}}</div>
-          <!-- <div>{{data.data.length ? data.data[0].prop : ''}}</div>
-          <div>{{data.data.length >1 ? data.data[1].prop : ''}}</div> -->
-        </div>
+        </div> -->
       </div>
       <div class="sub">
         <div @click="sub" class="subscibe-content">

@@ -6,6 +6,7 @@
         class="rank-table"
         :data="dataList"
         :row-class-name="getRowClassName"
+        :header-cell-class-name="getHeaderCellClassName"
         @sort-change="handleSortChange"
         current-row-key="UserID"
       >
@@ -407,6 +408,15 @@ export default class List extends Vue {
     return 'default-row even-row';
   }
 
+  getHeaderCellClassName({
+    row, column, rowIndex, columnIndex,
+  }: any) {
+    if (columnIndex === 0) {
+      return 'header-column';
+    }
+    return '';
+  }
+
   public get dateIsLoading() {
     return this.rankListLoading;
   }
@@ -562,6 +572,11 @@ export default class List extends Vue {
     .rank-table {
       :global(.odd-row) {
         background: rgba(249, 249, 249, 1);
+      }
+      :global(.header-column) {
+        :global(.cell) {
+          padding-left: 20px;
+        }
       }
       .even-row {
         background: rgba(255, 255, 255, 1);

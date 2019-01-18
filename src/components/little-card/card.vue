@@ -27,7 +27,7 @@
       <div class="num-container">
         <div class="num-same num">
           <div :key="i.val" v-for="i in data.data" class="num-left" :title="i.val">
-            <span :class="isNumber(i.val) && i.val > 0 ? 'green': ''">{{i && i.val }}</span>
+            <span :class="{'green': i.highlight}">{{i && i.val }}</span>
           </div>
           <!-- <div class="num-left"><span>89.78%</span></div> -->
           <!-- <div class="num-right"><span>458</span></div> -->

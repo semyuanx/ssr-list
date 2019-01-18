@@ -6,6 +6,7 @@
         class="rank-table"
         :data="dataList"
         :row-class-name="getRowClassName"
+        :header-cell-class-name="getHeaderCellClassName"
         @sort-change="handleSortChange"
         current-row-key="UserID"
       >
@@ -47,13 +48,13 @@
                   @click="toUserPage(scope.row)"
                   @mouseenter.self="showCard($event, scope.row.UserID)"
                   @mouseleave="personCard.hide()"
-                  class="info-1">{{scope.row.NickName}} #{{scope.row.AccountIndex}}</div>
-                  <div class="info-2">
+                  class="info-1"><span class="nick-name">{{scope.row.NickName}}</span> #{{scope.row.AccountIndex}}</div>
+                  <div class="info-2"><span>
                     {{
                       Array.isArray(scope.row.AccountList) ?
-                      (scope.row.AccountList.find((i) => i && i.AccountIndex === scope.row.AccountList) || {})['BrokerName']
+                      (scope.row.AccountList.find((i) => i && i.AccountIndex === scope.row.AccountIndex) || {})['BrokerName']
                       : ''
-                    }}
+                    }}</span>
                   </div>
                 </div>
               </div>
@@ -134,7 +135,7 @@
               v-else
               class="custom-display-row-sub"
             >
-              <span class="sub-row-btn">{{ scope.row.Attention ? scope.row.Attention == 1 ? '已关注' : '互相关注' : '关注' }}</span>
+              <span class="sub-row-btn">{{ scope.row.UserID | checkIfFollow(attentionList, followList) }}</span>
             </div>
 
           </template>
@@ -190,7 +191,8 @@ import personCard from 'fmcomponents/src/components/personcard';
 import Chart from '@/components/chart/index.vue';
 import SvgIcon from '@/components/svg/index.ts';
 import {
-  numberFormat, percentFormat, propFormat, moneyFormat,
+  // numberFormat,
+  propFormat, moneyFormat,
 } from '@/utils/format';
 import { getElementTop, getElementLeft } from '@/utils/util';
 import { Table, TableColumn } from 'element-ui';
@@ -208,13 +210,31 @@ const isEnterLoad = false;
     [TableColumn.name]: TableColumn,
   },
   filters: {
-    numberFormatOneParams: (val: number) => numberFormat(val, 1),
-    percentFormat: (val: number) => percentFormat(val),
+    // numberFormatOneParams: (val: number) => numberFormat(val, 1),
+    // percentFormat: (val: number) => percentFormat(val),
     moneyFormat: (val: number, prop: string) => {
       const props = ['FollowMoney'];
       return props.includes(prop) ? moneyFormat(val) : val;
     },
     propFormat: (val: number, prop: string) => propFormat(val, prop),
+    checkIfFollow: (uid: string | number, attentionList: any, followList: any) => {
+      let inAttention = false;
+      let inFollow = false;
+      if (Array.isArray(attentionList) && (attentionList.includes(uid) || attentionList.includes(`${uid}`))) {
+        inAttention = true;
+      }
+      if (Array.isArray(followList) && (followList.includes(uid) || followList.includes(`${uid}`))) {
+        inFollow = true;
+      }
+      console.log(inFollow, inAttention, 'inAttention');
+      let id = 0;
+      if (inAttention) {
+        id++;
+        if (inFollow) id++;
+      }
+
+      return ['关注', '已关注', '互相关注'][id];
+    },
   },
 } as any))
 export default class List extends Vue {
@@ -323,6 +343,15 @@ export default class List extends Vue {
     return 'default-row even-row';
   }
 
+  getHeaderCellClassName({
+    row, column, rowIndex, columnIndex,
+  }: any) {
+    if (columnIndex === 0) {
+      return 'header-column';
+    }
+    return '';
+  }
+
   public get dateIsLoading() {
     return this.rankListLoading;
   }
@@ -342,7 +371,17 @@ export default class List extends Vue {
   selfPwdChanged: any = [];
 
   handleSub($event: any, item: any) {
-    this.attention(item, $event);
+    const { attentionList } = this;
+    const { UserID: uid } = item;
+    if (Array.isArray(attentionList) && (attentionList.includes(uid) || attentionList.includes(`${uid}`))) {
+      return this.$fmdialog({
+        message: '您确定要取消关注吗?',
+        onConfirm: () => {
+          this.attention(item, $event);
+        },
+      });
+    }
+    return this.attention(item, $event);
   }
 
   attention(user: any, e: any) {
@@ -352,9 +391,10 @@ export default class List extends Vue {
     };
     getLoginStatus().then((user1: any) => {
       if (user1.islogin) {
-        e.target.className = e.target.className === 'follow' ? 'follow attation-active' : 'follow';
+        // e.target.className = e.target.className === 'follow' ? 'follow attation-active' : 'follow';
         e.target.innerHTML = e.target.innerHTML === this.$t('message.attened') ? this.$t('message.atten') : this.$t('message.attened');
         this.addOrCancelAttention(params).then((res : any) => {
+          this.getFollowAndAttention();
         }).catch((err: any) => {
           console.log(err);
         });
@@ -373,6 +413,11 @@ export default class List extends Vue {
 .list-container {
   .list-table {
     .rank-table {
+      :global(.header-column) {
+        :global(.cell) {
+          padding-left: 20px;
+        }
+      }
       :global(.odd-row) {
         background: rgba(249, 249, 249, 1);
       }
@@ -442,15 +487,27 @@ export default class List extends Vue {
             padding-left: 10px;
             font-family:MicrosoftYaHei;
             .info-1 {
+              flex: 1;
               cursor: pointer;
               font-size:14px;
               color:rgba(51,51,51,1);
               line-height:19px;
+              &:hover {
+                .nick-name {
+                  color: @default-color;
+                }
+              }
             }
             .info-2 {
-              font-size:12px;
-              color:rgba(153,153,153,1);
-              line-height:16px;
+              flex: 1;
+              display: flex;
+              align-items: flex-end;
+              padding-bottom: 2px;
+              >span {
+                font-size:12px;
+                color:rgba(153,153,153,1);
+                line-height:16px;
+              }
             }
           }
         }

@@ -168,13 +168,13 @@ i[class^="icon-"] {
         color:rgba(255,255,255,1);
         background-color: transparent;
         padding: 6px 20px;
-
         transition: all .3s ease-in-out;
         cursor: pointer;
       }
       &:hover {
         .sub-right-now {
           background-color: @default-color;
+          border:1px solid @default-color;
         }
       }
     }
@@ -188,7 +188,6 @@ i[class^="icon-"] {
           display: flex;
           flex-direction: row;
           margin-bottom: 1px;
-
         }
         .little-list-item {
           // flex: 1;
@@ -213,6 +212,10 @@ i[class^="icon-"] {
             font-size:20px;
             color:rgba(51,51,51,1);
             line-height:26px;
+            &:hover {
+              color: @default-color;
+              cursor: pointer;
+            }
           }
           .prod-danger {
             font-size:12px;

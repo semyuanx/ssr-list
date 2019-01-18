@@ -4,7 +4,7 @@
             <FmStrategy
               :subscribe="handleSub" :data="strategytData" :header="strategytDataHeader" />
         </div>
-        <div class="list-item">
+        <div class="list-invest">
             <InvestManager :subscribe="toInvest" :data="products" />
         </div>
         <div class="list-item" v-for="(item,index) in investData" :key="index">
@@ -37,6 +37,7 @@ import { loadAuth } from 'fmcomponents/src/utils';
 import { getLoginStatus } from 'fmcomponents';
 import FollowBox from 'fmcomponents/src/components/follow';
 import personCard from 'fmcomponents/src/components/personcard';
+import { numberFormat, percentFormat, propFormat } from '@/utils/format';
 
 const HomeStore = namespace('HomeStore');
 
@@ -139,6 +140,7 @@ export default class mainView extends Vue {
           }
         });
       }
+      const needHightProp = ['ROI'];
       showData = showData.slice(0, 2);
       if (config.listData && Array.isArray(config.listData.List) && config.listData.List.length > 1) {
         const newConfig = config.listData.List.map((item: any) => ({
@@ -148,7 +150,15 @@ export default class mainView extends Vue {
           index: item.AccountIndex,
           brokerName: item.BrokerName,
           item,
-          data: showData.map((it: any) => ({ prop: (mapKey as any)[it], val: item[it] })),
+          data: showData.map((it: any) => {
+            const ival: any = item[it];
+
+            return {
+              hightlight: needHightProp.includes(it) && ival > 0,
+              prop: (mapKey as any)[it],
+              val: propFormat(ival, it),
+            };
+          }),
         }));
         return newConfig;
       }
@@ -322,7 +332,7 @@ export default class mainView extends Vue {
 <style lang="less" scoped>
 .main-view-container {
     .list-item {
-        margin-top: 42px;
+        margin-top: 30px;
     }
 }
 </style>

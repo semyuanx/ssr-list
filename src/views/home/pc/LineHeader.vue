@@ -100,7 +100,7 @@ i[class^="icon-"] {
   vertical-align: text-bottom;
 }
 .header {
-  margin-bottom: 20px;
+  // margin-bottom: 20px;
   .flex-center {
       display: flex;
       align-items: center;

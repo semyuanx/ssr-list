@@ -149,7 +149,7 @@ export default class Home extends Vue {
               return;
             }
           }
-          if (scrolled > 10 && scrolled < singleWidth / 2) {
+          if (scrolled > 10 || Math.abs(scrolled) < singleWidth / 2) {
             scrolled = 2;
           }
 
@@ -221,11 +221,12 @@ export default class Home extends Vue {
   .lists-container {
     width: 100%;
     overflow: hidden;
+    padding: 20px 0;
+    -webkit-overflow-scrolling:touch;
     .lists {
       display: flex;
       flex-direction: row;
       width: 100%;
-      overflow: hidden;
       -webkit-overflow-scrolling:touch;
       transition: all .2s ease-in-out;
       .list-item {

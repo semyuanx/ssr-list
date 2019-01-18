@@ -146,13 +146,13 @@ export default class Index extends Vue {
         color:rgba(255,255,255,1);
         background-color: transparent;
         padding: 6px 20px;
-
         transition: all .3s ease-in-out;
         cursor: pointer;
       }
       &:hover {
         .sub-right-now {
           background-color: @default-color;
+          border:1px solid @default-color;
         }
       }
     }

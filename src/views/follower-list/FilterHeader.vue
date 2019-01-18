@@ -5,7 +5,7 @@
         <div class="select-title">交易时间</div>
         <div class="selected-content">
           <span @click="toggleShow" class="selected-detail">{{selected.label}}</span>
-          <i  @click="toggleShow" :class="{'default-icon-set': true, 'icon-caret_up_small_24px': !isShow, 'icon-caret_down_small_24px': isShow,}"></i>
+          <i  @click="toggleShow" :class="{'default-icon-set': true, 'icon-caret_up_small_24px': isShow, 'icon-caret_down_small_24px': !isShow,}"></i>
           <transition name="select-fade">
             <div v-show="isShow" class="option-container">
               <div class="select-option">
@@ -119,12 +119,12 @@ export default class FilterHeader extends Vue {
 
 .filter-header {
   // padding: 20px 0;
-  padding-bottom: 30px;
+  padding-bottom: 10px;
   .select-container {
     display: flex;
     flex-direction: row;
     align-items: center;
-    min-height: 66px;
+    // min-height: 66px;
     .select-title {
       font-size:12px;
       font-family:MicrosoftYaHei;
@@ -145,7 +145,7 @@ export default class FilterHeader extends Vue {
         line-height:19px;
       }
       .default-icon-set {
-        font-size: 24px;
+        font-size: 18px;
       }
 
       .option-container {
