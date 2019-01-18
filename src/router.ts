@@ -71,14 +71,14 @@ export default function createRouter() {
         component: () => import(/* webpackChunkName: "about" */ './components/address-book/AddressBook.vue'),
       },
 
-      {
-        path: '/follower1', // 跟随大师
-        name: 'follower1',
-        meta: {
-          title: 'followme-跟随大师',
-        },
-        component: () => import(/* webpackChunkName: "about" */ './pages/Follower.vue'),
-      },
+      // {
+      //   path: '/follower1', // 跟随大师
+      //   name: 'follower1',
+      //   meta: {
+      //     title: 'followme-跟随大师',
+      //   },
+      //   component: () => import(/* webpackChunkName: "about" */ './pages/Follower.vue'),
+      // },
       {
         path: '/follower', // 跟随大师
         name: 'follower',
