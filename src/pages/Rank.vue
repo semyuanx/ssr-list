@@ -397,7 +397,7 @@ export default class RankList extends Vue {
       ...params,
     };
 
-    const brokerList = this.checkedBrokers.length ? { brokerId: this.checkedBrokers.join(',') } : {};
+    const brokerList = this.checkedBrokers.length ? { brokerId: this.checkedBrokers } : {};
     const processParam = this.preProcessParams(obj);
     getParams = { ...processParam, ...getParams, ...brokerList };
     // console.log()

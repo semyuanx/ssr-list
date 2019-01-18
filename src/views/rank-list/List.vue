@@ -13,15 +13,15 @@ import {
   Component, Vue, Watch, Prop,
 } from 'vue-property-decorator';
 import { namespace } from 'vuex-class';
-import FmList from './list/List.vue';
-import MobileList from './list/ListMobile.vue';
+// import FmList from './list/List.vue';
+// import MobileList from './list/ListMobile.vue';
 
 const RankStore = namespace('RankStore');
 
 @Component({
   components: {
     FmList: () => import('./list/List.vue'),
-    MobileList,
+    MobileList: () => import('./list/ListMobile.vue'),
   },
 })
 export default class List extends Vue {

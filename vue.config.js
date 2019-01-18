@@ -34,7 +34,10 @@ module.exports = {
     types.forEach(type => addStyleResource(config.module.rule('less').oneOf(type)));
     svgLoader(config);
     config.resolve.extensions.add('.vue').add('.js');
-    // config.output.publicPath('/trading-strategy');
+    config.externals({
+      vue: 'Vue',
+      'vue-router': 'VueRouter',
+    });
   },
   css: {
     loaderOptions: {

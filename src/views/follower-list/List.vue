@@ -21,7 +21,7 @@ const RankStore = namespace('RankStore');
 @Component({
   components: {
     FmList: () => import('./list/List.vue'),
-    MobileList,
+    MobileList: () => import('./list/ListMobile.vue'),
   },
 })
 export default class List extends Vue {

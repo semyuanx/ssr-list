@@ -187,8 +187,7 @@ import { loadAuth } from 'fmcomponents/src/utils';
 import { getLoginStatus } from 'fmcomponents';
 import FollowBox from 'fmcomponents/src/components/follow';
 import personCard from 'fmcomponents/src/components/personcard';
-import Chart from '@/components/chart/index.vue';
-
+// import Chart from '@/components/chart/index.vue';
 import SvgIcon from '@/components/svg/index.ts';
 import {
   numberFormat, percentFormat, propFormat, moneyFormat,
@@ -204,7 +203,7 @@ const isEnterLoad = false;
 @Component(({
   components: {
     SvgIcon,
-    Chart,
+    Chart: () => import('@/components/chart/index.vue'),
     [Table.name]: Table,
     [TableColumn.name]: TableColumn,
   },

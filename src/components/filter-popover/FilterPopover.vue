@@ -174,6 +174,24 @@ export default class FilterPopover extends Vue {
         needLine: true,
       },
       {
+        label: '订阅人数',
+        value: 'Subscribers',
+        desc: '订阅人数',
+        filter: [
+          { name: '不限', value: '' },
+          { name: '小于50人', value: '0-50' },
+          { name: '50-100人', value: '50-100' },
+          { name: '100-300人', value: '100-300' },
+          { name: '300人以上', value: '300-0' },
+          {
+            mode: 'input',
+            start: '',
+            end: '',
+            type: 'interval',
+          },
+        ],
+      },
+      {
         label: '账户净值',
         value: 'Equity',
         desc: '备注介绍',

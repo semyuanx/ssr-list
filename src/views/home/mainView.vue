@@ -22,12 +22,12 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 
-import FmStrategy from '@/views/home/Strategy.vue'; // @ is an alias to /src
-import CommonListItem from '@/views/home/CommonListItem.vue'; // @ is an alias to /src
-import InvestManager from '@/views/home/InvestManager.vue'; // @ is an alias to /src
+// import FmStrategy from '@/views/home/Strategy.vue'; // @ is an alias to /src
+// import CommonListItem from '@/views/home/CommonListItem.vue'; // @ is an alias to /src
+// import InvestManager from '@/views/home/InvestManager.vue'; // @ is an alias to /src
 // import InvestProfessor from '@/views/home/InvestProfessor.vue'; // @ is an alias to /src
 // import DangerKeep from '@/views/home/DangerKeep.vue'; // @ is an alias to /src
-import TradeMaster from '@/views/home/TradeMaster.vue'; // @ is an alias to /src
+// import TradeMaster from '@/views/home/TradeMaster.vue'; // @ is an alias to /src
 import { namespace, Action } from 'vuex-class';
 import { getElementTop, getElementLeft } from '@/utils/util';
 
@@ -44,10 +44,10 @@ const RankStore = namespace('RankStore');
 
 @Component({
   components: {
-    FmStrategy,
-    CommonListItem,
-    InvestManager,
-    TradeMaster,
+    FmStrategy: () => import('@/views/home/Strategy.vue'),
+    CommonListItem: () => import('@/views/home/CommonListItem.vue'),
+    InvestManager: () => import('@/views/home/InvestManager.vue'),
+    TradeMaster: () => import('@/views/home/TradeMaster.vue'),
   },
 })
 export default class mainView extends Vue {
