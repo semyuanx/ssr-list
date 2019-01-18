@@ -251,7 +251,7 @@ export default class Index extends Vue {
       this.$fmdialog({
         message: '无MAM跟随者账户，去开户参与',
         type: 'confirm',
-        onConfirm(flag: any) {
+        onConfirm: (flag: any) => {
           this.redirectTo('mamCreate', '', true);
         },
       });

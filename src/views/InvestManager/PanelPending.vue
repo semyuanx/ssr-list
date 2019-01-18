@@ -266,8 +266,8 @@ export default class Panel extends Vue {
       this.$fmdialog({
         message: `您没有可用的MAM跟随者账户(${this.panelData.Trader.BrokerName}),请开户后重试`,
         type: 'confirm',
-        callback: (flag: any) => {
-          if (flag) window.open(`${_this.base}/portalindex/upgrade/index?type=5`);
+        onConfirm: (flag: any) => {
+          window.open(`${_this.base}/portalindex/upgrade/index?type=5`);
         },
       });
       return;
@@ -277,8 +277,8 @@ export default class Panel extends Vue {
       this.$fmdialog({
         message: `您没有可用的MAM跟随者账户(${this.panelData.Trader.BrokerName}),请开户后重试`,
         type: 'confirm',
-        callback: (flag: any) => {
-          if (flag) window.open(`${_this.base}/portalindex/upgrade/index?type=5`);
+        onConfirm: (flag: any) => {
+          window.open(`${_this.base}/portalindex/upgrade/index?type=5`);
         },
       });
       return;
@@ -291,8 +291,8 @@ export default class Panel extends Vue {
       this.$fmdialog({
         message: '无MAM跟随者账户，去开户参与',
         type: 'confirm',
-        callback(flag: any) {
-          if (flag) window.open(`${_this.base}/portalindex/upgrade/index?type=5`);
+        onConfirm: (flag: any) => {
+          window.open(`${_this.base}/portalindex/upgrade/index?type=5`);
         },
       });
       return;

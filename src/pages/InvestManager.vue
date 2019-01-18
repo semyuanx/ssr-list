@@ -125,8 +125,8 @@ export default class Manager extends Vue {
       this.$fmdialog({
         message: '您没有可用的MAM交易员账户,请开户后重试',
         type: 'confirm',
-        callback(flag: any) {
-          if (flag) window.open(`${_this.base}/portalindex/upgrade/index?type=4`);
+        onConfirm: (flag: any) => {
+          window.open(`${_this.base}/portalindex/upgrade/index?type=4`);
         },
       });
     } else {
@@ -136,8 +136,8 @@ export default class Manager extends Vue {
         this.$fmdialog({
           message: '您没有可用的MAM交易员账户,请开户后重试',
           type: 'confirm',
-          callback(flag: any) {
-            if (flag) window.open(`${_this.base}/portalindex/upgrade/index?type=4`);
+          onConfirm: (flag: any) => {
+            window.open(`${_this.base}/portalindex/upgrade/index?type=4`);
           },
         });
       } else {
