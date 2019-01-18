@@ -36,18 +36,19 @@
             >
               <div class="trader-container-row">
                 <div class="loading-first avatar">
-                  <!-- <img
+                  <img
                   @click="toUserPage(scope.row)"
                   @mouseenter.self="showCard($event, scope.row.UserID)"
                   @mouseleave="personCard.hide()"
-                  :src="base+'/Avata/'+scope.row.UserID" /> -->
+                  :src="base+'/Avata/'+scope.row.UserID" />
                 </div>
                 <div class="loading-first trader-info">
                   <div
                   @click="toUserPage(scope.row)"
-                  @mouseenter.self="showCard($event, scope.row.UserID)"
-                  @mouseleave="personCard.hide()"
-                  class="info-1">{{scope.row.NickName}} #{{scope.row.AccountIndex}}</div>
+                  class="info-1">
+                  <span
+                    @mouseenter.self="showCard($event, scope.row.UserID)"
+                    @mouseleave="personCard.hide()">{{scope.row.NickName}}</span> #{{scope.row.AccountIndex}}</div>
                   <div class="info-2">
                     {{scope.row.BrokerName || ''}}
                   </div>
@@ -577,6 +578,9 @@ export default class List extends Vue {
           padding-right: 0;
           padding-left: 0;
         }
+        :global(td) {
+          border: none;
+        }
 
         &:hover {
           background: rgba(255, 255, 255, 1) !important;
@@ -619,7 +623,7 @@ export default class List extends Vue {
             display: flex;
             flex-direction: column;
             text-align: left;
-            padding-left: 4px;
+            padding-left: 10px;
             font-family:MicrosoftYaHei;
             .info-1 {
               cursor: pointer;

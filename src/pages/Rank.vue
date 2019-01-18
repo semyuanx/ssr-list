@@ -56,7 +56,10 @@ export default class RankList extends Vue {
   @RankStore.Mutation
   setFilterRes: any;
 
-  params: any = {};
+  params: any = {
+    index: 1,
+    size: 20,
+  };
 
   setParams(params: any) {
     this.params = { ...this.params, ...params };
@@ -167,6 +170,8 @@ export default class RankList extends Vue {
   resetIndex() {
     // this.index = 1;
     this.setPageIndex(1);
+    this.hasMore = true;
+    this.params.index = 1;
   }
 
   private get index() {
@@ -174,14 +179,49 @@ export default class RankList extends Vue {
   }
 
   getPageData(page: number = 1) {
-    const params: any = this.refactor({ index: page });
-    this.getRankList(params);
+    this.$nextTick(() => {
+      this.getData();
+    });
   }
+
+  hasMore: boolean = true;
+
+  updatePageIndex() {
+    const { index } = this.params;
+    this.setParams({ index: index + 1 });
+  }
+
+  dataLoading: boolean = false;
 
   getData() {
     const params: any = this.refactor();
-    console.log(params, 'pppppp');
-    return this.getRankList(params);
+    const { size } = this.params;
+    console.log(params, 'pppppp', this.hasMore);
+    if (!this.hasMore) {
+      return new Promise(() => ({}));
+    }
+    return this.getRankList(params)
+      .then((res: any) => {
+        if (res && !res.error) {
+          const { List: list } = res;
+          console.log(list.length, size, 'List.length');
+          if (list.length < size) {
+            this.hasMore = false;
+          } else {
+            this.updatePageIndex();
+          }
+        }
+        this.dataLoading = false;
+        return res;
+      });
+  }
+
+  fixHeader() {
+    const scrollTop = this.getScrollTop();
+
+    animate(() => {
+      this.needFixTableHeader(scrollTop);
+    });
   }
 
   mounted() {
@@ -189,9 +229,11 @@ export default class RankList extends Vue {
     this.getSepRankConfig({ index: 1 });
     this.getData();
     const loadThrottle = throttle(this.scrollCb, 200);
+    const fixThrottle = throttle(this.fixHeader, 200);
 
     window.addEventListener('scroll', () => {
-      if (isEnterLoad || this.rankListLoading) return;
+      fixThrottle();
+      if (isEnterLoad || this.rankListLoading || !this.hasMore) return;
       isEnterLoad = true;
       loadThrottle();
     });
@@ -204,6 +246,7 @@ export default class RankList extends Vue {
       throttle(this.scrollCb, 200)();
     });
   }
+
 
   scrollCb() {
     animate(() => {
@@ -281,10 +324,6 @@ export default class RankList extends Vue {
     const scrollTop = this.getScrollTop();
     const windowHeight = this.getWinHeight();
     const docHeight = this.getDocHeight();
-
-    animate(() => {
-      this.needFixTableHeader(scrollTop);
-    });
 
     const allHeight = scrollTop + windowHeight + (this.throttleHeight || 10);
     if (allHeight > docHeight) {

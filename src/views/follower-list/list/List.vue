@@ -440,7 +440,7 @@ export default class List extends Vue {
             display: flex;
             flex-direction: column;
             text-align: left;
-            padding-left: 4px;
+            padding-left: 10px;
             font-family:MicrosoftYaHei;
             .info-1 {
               cursor: pointer;

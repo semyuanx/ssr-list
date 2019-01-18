@@ -32,44 +32,45 @@
           </div>
           <div class="filter-pop-container">
           <div class="filter-pop">
-            <filter-popover
-              ref="filterPopover"
-              @close="closeFilter"
-              :show="isShow"
-              @filter="handleFilter"
-              @reset="handleReset"
-            >
+            <transition name="filter-fade">
+              <filter-popover
+                ref="filterPopover"
+                @close="closeFilter"
+                :show="isShow"
+                @filter="handleFilter"
+                @reset="handleReset"
+              >
 
-              <template slot="brokerId">
-                <filter-tag
-                  :border="true"
-                  :closed="true"
-                  v-for="item in checkedBrokers"
-                  class="has-close-tag"
-                  @close="handleCloseTag(item)"
-                  :key="item"
-                >{{brokersList.find(v=>v.BrokerId === item) && brokersList.find(v=>v.BrokerId === item).Broker}}</filter-tag>
-                <button
-                  class="add-button"
-                  @click="addBorker=!addBorker"
-                ><i class="fm-fonticon icon-plus_24px"></i>添加</button>
-                <check-box-group
-                  v-model="checked"
-                  class="borkersDialog"
-                  v-show="addBorker && isShow"
-                >
-                  <ul>
-                    <li
-                      v-for="(item,index) in brokersList"
-                      :key="index"
-                    >
-                      <check-box :val="item.BrokerId">{{item.Broker}}</check-box>
-                    </li>
-                  </ul>
-                </check-box-group>
-              </template>
-            </filter-popover>
-
+                <template slot="brokerId">
+                  <filter-tag
+                    :border="true"
+                    :closed="true"
+                    v-for="item in checkedBrokers"
+                    class="has-close-tag"
+                    @close="handleCloseTag(item)"
+                    :key="item"
+                  >{{brokersList.find(v=>v.BrokerId === item) && brokersList.find(v=>v.BrokerId === item).Broker}}</filter-tag>
+                  <button
+                    class="add-button"
+                    @click="addBorker=!addBorker"
+                  ><i class="fm-fonticon icon-plus_24px"></i>添加</button>
+                  <check-box-group
+                    v-model="checked"
+                    class="borkersDialog"
+                    v-show="addBorker && isShow"
+                  >
+                    <ul>
+                      <li
+                        v-for="(item,index) in brokersList"
+                        :key="index"
+                      >
+                        <check-box :val="item.BrokerId">{{item.Broker}}</check-box>
+                      </li>
+                    </ul>
+                  </check-box-group>
+                </template>
+              </filter-popover>
+            </transition>
           </div>
           </div>
         </div>
@@ -147,6 +148,8 @@ export default class FilterHeader extends Vue {
     Roi: '收益率',
     isDESC: '排序',
     orderby: '排序字段',
+    isPTA: 'PTA会员',
+    freeSubPrice: '免费订阅',
   };
 
   get filterTag() {
@@ -160,7 +163,13 @@ export default class FilterHeader extends Vue {
         if (i === 'orderby') {
           finalVal = (propMaps as any)[val] || val;
         }
-        if (val) {
+        if (i === 'isPTA') {
+          finalVal = val === 1 ? '是' : '否';
+        }
+        if (i === 'freeSubPrice') {
+          finalVal = val === 1 ? '是' : '否';
+        }
+        if (finalVal) {
           tags.push({
             label: this.textMaps[i],
             val: finalVal,
@@ -343,5 +352,12 @@ export default class FilterHeader extends Vue {
 }
 .tag-container:first-child + .has-close-tag {
   margin-left: 10px;
+}
+
+.filter-fade-enter-active, .filter-fade-leave-active {
+  transition: opacity .5s;
+}
+.filter-fade-enter, .filter-fade-leave-to {
+  opacity: 0;
 }
 </style>

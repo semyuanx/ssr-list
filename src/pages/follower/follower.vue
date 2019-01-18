@@ -145,6 +145,7 @@ export default class RankList extends Vue {
 
   resetIndex() {
     this.paramsData.pageIndex = 1;
+    this.hasMore = true;
   }
 
   getPageData(page: number = 1) {
@@ -157,6 +158,9 @@ export default class RankList extends Vue {
   getData() {
     const params: any = this.refactor();
     console.log(params, 'pppppp');
+    if (!this.hasMore) {
+      return new Promise(() => ({}));
+    }
     this.dataLoading = true;
     return this.getRankFollowers(params)
       .then((res: any) => {
@@ -173,14 +177,24 @@ export default class RankList extends Vue {
       });
   }
 
+  fixHeader() {
+    const scrollTop = this.getScrollTop();
+
+    animate(() => {
+      this.needFixTableHeader(scrollTop);
+    });
+  }
+
   mounted() {
     // this.getPageData();
     this.getData();
 
     const loadThrottle = throttle(this.scrollCb, 200);
+    const fixThrottle = throttle(this.fixHeader, 200);
 
     window.addEventListener('scroll', () => {
-      if (isEnterLoad || this.dataLoading) return;
+      fixThrottle();
+      if (isEnterLoad || this.dataLoading || !this.hasMore) return;
       isEnterLoad = true;
       loadThrottle();
     });
@@ -270,10 +284,6 @@ export default class RankList extends Vue {
     const scrollTop = this.getScrollTop();
     const windowHeight = this.getWinHeight();
     const docHeight = this.getDocHeight();
-
-    animate(() => {
-      this.needFixTableHeader(scrollTop);
-    });
 
     const allHeight = scrollTop + windowHeight + (this.throttleHeight || 10);
     if (allHeight > docHeight) {

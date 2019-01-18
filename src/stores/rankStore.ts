@@ -133,12 +133,15 @@ export default class RankStore {
         }
         context.commit('setRankList', totalList || []);
         context.commit('setRankTotal', res.TotalCount || 0);
+        return res;
       })
-      .then(() => {
+      .then((res: any) => {
         context.commit('setRankLoading', false);
+        return res;
       })
       .catch(() => {
         context.commit('setRankLoading', false);
+        return { error: 100 };
       });
   }
 

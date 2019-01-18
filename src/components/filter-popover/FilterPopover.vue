@@ -15,10 +15,13 @@
         <filter-tag
           class="base-filters"
           :border="true"
-          :active="true"
+          :active="ptaSelected"
+          @selected="handlePta"
         >{{$t('PTA')}}</filter-tag>
         <filter-tag
           :border="true"
+          :active="freeSubSelected"
+          @selected="handleFreeSub"
           class="base-filters"
         >{{$t('freeSubscription')}}</filter-tag>
       </section>
@@ -75,8 +78,12 @@
         </ul>
         <div
           class="divide-line"
-          v-if="divided.indexOf(index) !== -1"
+          v-if="item.needLine"
         ></div>
+        <!-- <div
+          class="divide-line"
+          v-if="divided.indexOf(index) !== -1"
+        ></div> -->
       </section>
     </article>
     <section class="button-groups">
@@ -132,6 +139,22 @@ export default class FilterPopover extends Vue {
   @Prop({
     default: () => [
       {
+        label: '账户评级',
+        desc: '账户评级',
+        value: 'GradeScore',
+        filter: [
+          { name: '不限', value: '' },
+          { name: 'S', value: '9-0' },
+          { name: 'A+', value: '8-9' },
+          { name: 'A', value: '7-8' },
+          { name: 'A-', value: '6-7' },
+          { name: 'B', value: '5-6' },
+          { name: 'C', value: '4-5' },
+          { name: 'D', value: '0-4' },
+
+        ],
+      },
+      {
         label: '交易能力值',
         desc: '备注介绍',
         value: 'Score',
@@ -141,13 +164,14 @@ export default class FilterPopover extends Vue {
           { name: '71-80', value: '71-80' },
           { name: '81-90', value: '81-90' },
           { name: '>90', value: '90-0' },
-          {
-            mode: 'input',
-            start: '',
-            end: '',
-            type: 'interval',
-          },
+          // {
+          //   mode: 'input',
+          //   start: '',
+          //   end: '',
+          //   type: 'interval',
+          // },
         ],
+        needLine: true,
       },
       {
         label: '账户净值',
@@ -183,6 +207,7 @@ export default class FilterPopover extends Vue {
             type: 'interval',
           },
         ],
+        needLine: true,
       },
       {
         label: '最大回撤比例',
@@ -219,6 +244,7 @@ export default class FilterPopover extends Vue {
             type: 'interval',
           },
         ],
+        needLine: true,
       },
       {
         label: '经纪商',
@@ -275,6 +301,26 @@ export default class FilterPopover extends Vue {
       brokerId: '',
     });
     this.innerParams = {};
+  }
+
+  ptaSelected: boolean = false;
+
+  freeSubSelected: boolean = false;
+
+  private handleFreeSub() {
+    const willValue = !this.freeSubSelected;
+    const params = willValue ? { freeSubPrice: 1 } : { freeSubPrice: 0 };
+
+    this.innerParams = { ...this.innerParams, ...params };
+
+    this.freeSubSelected = willValue;
+  }
+
+  private handlePta() {
+    const willValue = !this.ptaSelected;
+    const params = willValue ? { isPTA: 1 } : { isPTA: 0 };
+    this.innerParams = { ...this.innerParams, ...params };
+    this.ptaSelected = willValue;
   }
 
   private rangeHandler(item: any, citem: any) {
