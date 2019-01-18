@@ -63,7 +63,8 @@ export default class Index extends Vue {
   }
 
   toMore() {
-    this.redirectTo('tradeMaster');
+    // this.redirectTo('tradeMaster');
+    this.$router.push({ name: 'follower' });
   }
 
   toMoreMobile() {

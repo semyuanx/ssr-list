@@ -36,6 +36,8 @@ module.exports = {
     config.resolve.extensions.add('.vue').add('.js');
     config.externals({
       vue: 'Vue',
+      echarts: 'echarts',
+      axios: 'axios',
       'vue-router': 'VueRouter',
     });
   },

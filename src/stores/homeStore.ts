@@ -68,7 +68,7 @@ export default class HomeStore {
         const dPromise: Array<Promise<any>> = data.map(async (element:any) => {
           if (element.RankIndex) {
             try {
-              const resp: Promise<any> = await getCustomRankList({ rankid: element.RankIndex });
+              const resp: Promise<any> = await getCustomRankList({ rankIndex: element.RankIndex });
               console.log(resp, 'resp');
               return { ...element, listData: resp };
             } catch (e) {
