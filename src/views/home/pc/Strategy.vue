@@ -112,7 +112,7 @@ export default class Home extends Vue {
     });
   }
 
-  scrollCompute(direction: any = 1) { // 1是left scroll; 0: right scroll
+  scrollCompute(direction: any = 1, scrollNum: number = 4) { // 1是left scroll; 0: right scroll
     const el = this.$el;
     if (el) {
       const listsContainer: any = el.querySelector('.lists-container');
@@ -126,9 +126,9 @@ export default class Home extends Vue {
           let { scrolled } = this;
           let shouldScroll: string = '';
           if (direction === 1) {
-            scrolled += singleWidth;
+            scrolled += singleWidth * scrollNum;
           } else {
-            scrolled -= singleWidth;
+            scrolled -= singleWidth * scrollNum;
           }
           const listsWidthPx = this.data.length * (singleWidth);
           const listsWidth = `${listsWidthPx}px`;
@@ -142,7 +142,6 @@ export default class Home extends Vue {
               return;
             }
           }
-
           // if (scrolled)
           if (direction === 1) {
             if (this.scrolled === 2 || this.scrolled === 0) {
@@ -160,6 +159,10 @@ export default class Home extends Vue {
         }
       }
     }
+  }
+
+  transitionAnimate() {
+
   }
 
   handleSub(item: any) {
@@ -228,7 +231,7 @@ export default class Home extends Vue {
       flex-direction: row;
       width: 100%;
       -webkit-overflow-scrolling:touch;
-      transition: all .2s ease-in-out;
+      transition: all .3s ease-in-out;
       .list-item {
         padding-right: 20px;
         padding-top: 15px;

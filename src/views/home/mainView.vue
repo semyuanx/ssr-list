@@ -5,7 +5,7 @@
               :subscribe="handleSub" :data="strategytData" :header="strategytDataHeader" />
         </div>
         <div class="list-invest">
-            <InvestManager :subscribe="toInvest" :data="products" />
+            <InvestManager ref="investManager" :subscribe="toInvest" :data="products" />
         </div>
         <div class="list-item" v-for="(item,index) in investData" :key="index">
             <CommonListItem
@@ -27,12 +27,6 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 
-// import FmStrategy from '@/views/home/Strategy.vue'; // @ is an alias to /src
-// import CommonListItem from '@/views/home/CommonListItem.vue'; // @ is an alias to /src
-// import InvestManager from '@/views/home/InvestManager.vue'; // @ is an alias to /src
-// import InvestProfessor from '@/views/home/InvestProfessor.vue'; // @ is an alias to /src
-// import DangerKeep from '@/views/home/DangerKeep.vue'; // @ is an alias to /src
-// import TradeMaster from '@/views/home/TradeMaster.vue'; // @ is an alias to /src
 import { namespace, Action } from 'vuex-class';
 import { getElementTop, getElementLeft } from '@/utils/util';
 
@@ -42,7 +36,9 @@ import { loadAuth } from 'fmcomponents/src/utils';
 import { getLoginStatus } from 'fmcomponents';
 import FollowBox from 'fmcomponents/src/components/follow';
 import personCard from 'fmcomponents/src/components/personcard';
-import { numberFormat, percentFormat, propFormat } from '@/utils/format';
+import {
+  numberFormat, percentFormat, propFormat, moneyFormat,
+} from '@/utils/format';
 
 const HomeStore = namespace('HomeStore');
 
@@ -145,19 +141,72 @@ export default class mainView extends Vue {
           }
         });
       }
+      // mam显示
+      let mamData: any = [];
+      if (config && config.ManualCfg && !config.ManualCfg.IsAddMAM) {
+      // if (config && config.ManualCfg && config.ManualCfg.IsAddMAM) {
+        const { progressProducts } = this;
+        if (progressProducts.length) {
+          mamData = progressProducts.map((item: any) => {
+            let propData = {};
+            if (item.Status === 'Pending') {
+              const expectProfile = item.ExpectTraderProfit + item.ExpectFollowerProfit * item.ExpectFollowerCount;
+              const expectRoi = item.ExpectROI;
+              propData = [
+                {
+                // hightlight: needHightProp.includes(it) && ival > 0,
+                  prop: '预期收益',
+                  val: moneyFormat(expectProfile), // propFormat(ival, it),
+                },
+                {
+                  hightlight: expectRoi && expectRoi > 0,
+                  prop: '预期收益率',
+                  val: percentFormat(expectRoi), // propFormat(ival, it),
+                },
+              ];
+            } else {
+              const currentProfit = item.Profit;
+              const expectRoi = item.ROI;
+              propData = [
+                {
+                // hightlight: needHightProp.includes(it) && ival > 0,
+                  prop: '当前产品收益',
+                  val: moneyFormat(currentProfit), // propFormat(ival, it),
+                },
+                {
+                  hightlight: item.ROI && item.ROI > 0,
+                  prop: '当前收益率',
+                  val: propFormat(expectRoi, 'ROI'), // propFormat(ival, it),
+                },
+              ];
+            }
+            return {
+              mam: true,
+              name: item.Name,
+              confirmBtn: item.Status === 'Pending' ? '立即参与' : '查看详情',
+              index: item.AccountIndex,
+              brokerName: item.BrokerName,
+              item,
+              data: propData,
+            };
+          });
+        }
+      }
+      console.log(config, 'ccccc');
+
       const needHightProp = ['ROI'];
       showData = showData.slice(0, 2);
+      let newConfig = [];
       if (config.listData && Array.isArray(config.listData.List) && config.listData.List.length > 1) {
-        const newConfig = config.listData.List.map((item: any) => ({
+        newConfig = config.listData.List.map((item: any) => ({
           avatar: `${this.base}/Avata/${item.UserID}`,
           name: item.NickName,
-          price: item.Price,
+          confirmBtn: item.SubPrice ? `${item.SubPrice}/月` : '免费订阅',
           index: item.AccountIndex,
           brokerName: item.BrokerName,
           item,
           data: showData.map((it: any) => {
             const ival: any = item[it];
-
             return {
               hightlight: needHightProp.includes(it) && ival > 0,
               prop: (mapKey as any)[it],
@@ -165,6 +214,9 @@ export default class mainView extends Vue {
             };
           }),
         }));
+      }
+      newConfig = mamData.concat(newConfig);
+      if (newConfig.length) {
         return newConfig;
       }
       return null;
@@ -286,6 +338,14 @@ export default class mainView extends Vue {
 
   handleSub(item: any) {
     const list: any = item.item;
+    if (item.mam) {
+      if (this.$refs.investManager) {
+        const { investManager } = this.$refs;
+        (investManager as any).subscribe(item);
+      }
+      return;
+    }
+
     if (!list.BrokerID) {
       list.BrokerID = list.MT4Account && list.MT4Account.BrokerID;
     }

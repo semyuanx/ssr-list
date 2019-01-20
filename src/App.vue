@@ -17,7 +17,7 @@
 </template>
 <script lang="ts">
 import { Component, Vue, Prop } from 'vue-property-decorator';
-// import FMNav from 'fmcomponents/src/components/nav2';
+import FMNav from 'fmcomponents/src/components/nav2';
 // import FMFooter from 'fmcomponents/src/components/footer2';
 import eventBus from '@/utils/event';
 import 'minireset.css';
@@ -25,7 +25,7 @@ import '@/theme/main.less';
 
 @Component({
   components: {
-    FMNav: () => import('fmcomponents/src/components/nav2'),
+    FMNav,
     FMFooter: () => import('fmcomponents/src/components/footer2'),
   },
 })

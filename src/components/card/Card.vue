@@ -33,7 +33,7 @@
       <div class="sub">
         <div @click="sub" class="subscibe-content">
           <span>
-            {{data.price ? `$${data.price}/月` : '免费订阅'}}
+            {{data.confirmBtn}}
           </span>
         </div>
       </div>

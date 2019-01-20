@@ -41,7 +41,7 @@ export default class Home extends Vue {
 
   public params: any = {
     status: 'InProcess',
-    pageSize: 4,
+    pageSize: 5,
     pageIndex: 1,
   };
 

@@ -56,7 +56,7 @@ export const percentFormat = function percentFormat(val: string|number, format: 
 };
 
 export const propFormat = function propFormat(val: string | number, prop: string) {
-  const percentKeys = ['ROI', 'Roi'];
+  const percentKeys = ['ROI', 'Roi', 'MaxRetracement'];
   const dotKeys = [
     'Equity', 'DealAmount', 'MaxRetracement',
     'TotalStandardlots', 'TotalSelfStandardlots',

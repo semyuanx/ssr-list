@@ -160,16 +160,17 @@ export default class FilterHeader extends Vue {
         const val: any = rankParams[i];
         // eslint-disable-next-line
         let finalVal = i === 'isDESC' ? val === 1 ? '倒序' : '顺序' : val;
-        if (i === 'orderby') {
-          finalVal = (propMaps as any)[val] || val;
-        }
+        // if (i === 'orderby') {
+        //   finalVal = (propMaps as any)[val] || val;
+        // }
         if (i === 'isPTA') {
           finalVal = val === 1 ? '是' : '否';
         }
         if (i === 'freeSubPrice') {
           finalVal = val === 1 ? '是' : '否';
         }
-        if (finalVal) {
+        const needIgnore = ['orderby', 'isDESC'];
+        if (finalVal && !needIgnore.includes(i)) {
           tags.push({
             label: this.textMaps[i],
             val: finalVal,
@@ -229,7 +230,7 @@ export default class FilterHeader extends Vue {
 
   handleCloseTag(item: string) {
     const checked = this.checkedBrokers.filter((v: any) => v !== item);
-    console.log(checked, 'handleCloseTag');
+    // console.log(checked, 'handleCloseTag');
     this.setCheckedBrokers(checked);
   }
 

@@ -1,7 +1,14 @@
 <template>
   <div class="header">
     <div class="fm-show-pc">
-      <InvestManager @toRightMore="toMore" @toLeftMore="publishProduct" @toJoinMore="toJoinMore" @toMore="toMore" :subscribe="subscribe" v-if="configData.data.length > 1" :data="configData" :description="description" />
+      <InvestManager
+        @toRightMore="toMore"
+        @toLeftMore="publishProduct"
+        @toJoinMore="toJoinMore"
+        @toMore="toMore" :subscribe="subscribe"
+        v-if="configData.data.length > 1"
+        :data="configData"
+        :description="description" />
     </div>
     <div class="fm-show-mobile">
       <CommonMobile @toMore="toMore" v-if="mobileConfigData.length"  :data="mobileConfigData" :description="description" />

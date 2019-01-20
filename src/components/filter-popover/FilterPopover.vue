@@ -109,6 +109,8 @@ import zhCN from '@/i18n/zh-CN/components/filter-popover/FilterPopover';
 import zhTW from '@/i18n/zh-TW/components/filter-popover/FilterPopover';
 import enUS from '@/i18n/en-US/components/filter-popover/FilterPopover';
 
+import { isNumber } from '@/utils/util';
+
 const RankStore = namespace('RankStore');
 
 @Component({
@@ -233,7 +235,7 @@ export default class FilterPopover extends Vue {
         desc: '备注介绍',
         filter: [
           { name: '不限', value: '' },
-          { name: '小于10%', value: '0-13' },
+          { name: '小于10%', value: '0-10' },
           { name: '10%-20%', value: '10-20' },
           { name: '20%-30%', value: '20-30' },
           { name: '30%以上', value: '30-0' },
@@ -251,7 +253,7 @@ export default class FilterPopover extends Vue {
         desc: '备注介绍',
         filter: [
           { name: '不限', value: '' },
-          { name: '小于10%', value: '0-13' },
+          { name: '小于10%', value: '0-10' },
           { name: '10%-20%', value: '10-20' },
           { name: '20%-30%', value: '20-30' },
           { name: '30%以上', value: '30-0' },
@@ -354,6 +356,10 @@ export default class FilterPopover extends Vue {
   }
 
   private inputHandler(key: string, start: number, end: number) {
+    console.log(key, start, end, 'end');
+    if (!['0', 0].includes(start) || !isNumber(start)) {
+      return;
+    }
     const params = Object.assign({}, this.rankParams);
     if (!start && !end) {
       params[key] = '';

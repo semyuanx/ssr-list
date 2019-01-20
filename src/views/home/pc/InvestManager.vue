@@ -62,7 +62,7 @@
 import {
   Component, Vue, Prop, Watch,
 } from 'vue-property-decorator';
-import { namespace } from 'vuex-class';
+// import { namespace } from 'vuex-class';
 
 import CommonLineHeader from './CommonLineHeader.vue'; // @ is an alias to /src
 import LineCard from '@/components/line-card/card.vue'; // @ is an alias to /src

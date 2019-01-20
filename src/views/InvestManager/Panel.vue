@@ -165,10 +165,10 @@ export default class Panel extends Vue {
   }
 
   get submitUrl():string {
-    if (this.panelData.Status === 'Settled') {
-      return `${this.base}/u/id/${this.panelData.Trader.UserID}_${this.panelData.Trader.AccountIndex}?pd=${this.panelData.ID}`;
-    }
-    return `${this.base}/user/${this.panelData.UserID}/trade-account/exhibition?index=${this.panelData.AccountIndex}`;
+    // if (this.panelData.Status === 'Settled') {
+    //   return `${this.base}/u/id/${this.panelData.Trader.UserID}_${this.panelData.Trader.AccountIndex}?pd=${this.panelData.ID}`;
+    // }
+    return `${this.base}/user/${this.panelData.UserID}/trade-account/exhibition?index=${this.panelData.AccountIndex}?pd=${this.panelData.ID}`;
   }
 
   get incomeDistribution():string {
