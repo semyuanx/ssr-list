@@ -226,7 +226,7 @@ const isEnterLoad = false;
       if (Array.isArray(followList) && (followList.includes(uid) || followList.includes(`${uid}`))) {
         inFollow = true;
       }
-      console.log(inFollow, inAttention, 'inAttention');
+      // console.log(inFollow, inAttention, 'inAttention');
       let id = 0;
       if (inAttention) {
         id++;

@@ -13,6 +13,7 @@ import {
 } from '@/service/home';
 import { toNumber } from '@/utils/util';
 import propMaps from '@/constant/propMap';
+import { needHighlight, suffixProps } from '@/constant/propFormat';
 
 @Repository('RankStore')
 export default class RankStore {
@@ -157,10 +158,12 @@ export default class RankStore {
     return getSepRankConfigService(payload).then((res: any) => {
       if (res && res.HideConfig) {
         const hideConfig = res.HideConfig;
-        const blackList = ['TrendLine'];
+        const blackList = ['TrendLine', 'SubPrice'];
         const showProps = Object.keys(hideConfig).filter((i: any) => !hideConfig[i] && !blackList.includes(i)).map((i: any) => ({
           label: (propMaps as any)[i] || ' ',
           prop: i,
+          highlight: needHighlight.includes(i),
+          suffix: suffixProps[i] || '',
         }));
         // console.log(showProps, propMaps, 'showProps');
         commit('setShowProps', showProps);

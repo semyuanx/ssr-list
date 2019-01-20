@@ -15,7 +15,7 @@
             <span
             @mouseenter.self="mouseenter($event)"
             @mouseleave="mouseleave($event)"
-            @click="toPersonal">{{data.name}} #{{data.index}}</span>
+            @click="toPersonal"><span class="name-hover">{{data.name}}</span> #{{data.index}}</span>
           </div>
           <div class="broker">
             <span>{{data.brokerName}}</span>
@@ -29,13 +29,9 @@
           <div :key="i.val" v-for="i in data.data" class="num-left" :title="i.val">
             <span :class="{'green': i.highlight}">{{i && i.val }}</span>
           </div>
-          <!-- <div class="num-left"><span>89.78%</span></div> -->
-          <!-- <div class="num-right"><span>458</span></div> -->
         </div>
         <div class="num-same desc">
           <div :key="i.prop" v-for="i in data.data"><span>{{i && i.prop || ''}}</span></div>
-          <!-- <div><span>收益率</span></div>
-          <div><span>订阅人数</span></div> -->
         </div>
       </div>
       <div class="sub-btn">
@@ -46,7 +42,6 @@
 </template>
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
-import { isNumber } from '@/utils/util';
 
 @Component
 export default class FmLittleCard extends Vue {
@@ -56,10 +51,6 @@ export default class FmLittleCard extends Vue {
     default: () => {},
   })
   data: any;
-
-  isNumber(str: any) {
-    return isNumber(str);
-  }
 
   mouseenter($event: any) {
     this.$emit('showCard', $event);
@@ -107,8 +98,10 @@ export default class FmLittleCard extends Vue {
           width:40px;
           height:40px;
           border-radius: 20px;
-          // border: 1px solid pink;
           overflow: hidden;
+          display: flex;
+          align-items: center;
+          justify-content: center;
           >img {
             cursor: pointer;
             max-width: 100%;
@@ -129,6 +122,12 @@ export default class FmLittleCard extends Vue {
           cursor: pointer;
           font-size:16px;
           color:rgba(51,51,51,1);
+          .name-hover {
+            &:hover {
+              color: @default-color;
+              cursor: pointer;
+            }
+          }
         }
       }
     }

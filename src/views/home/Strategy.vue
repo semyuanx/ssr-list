@@ -2,8 +2,6 @@
   <div class="header">
     <div class="fm-show-pc">
       <Strategy
-        @hideCard="hideCard"
-        @showCard="showCard"
         @toPersonal="toPersonalPc" :subscribe="subscribe" :data="data" :header="header" />
     </div>
     <div class="fm-show-mobile">
@@ -14,7 +12,7 @@
 <script lang="ts">
 import { namespace } from 'vuex-class';
 import { Component, Vue, Prop } from 'vue-property-decorator';
-import Strategy from '@/views/home/pc/Strategy.vue';
+// import Strategy from '@/views/home/pc/Strategy.vue';
 // import StrategyMobile from '@/views/home/mobile/Strategy.vue';
 import { toLoginPage, toSubscribePage, toPersonalPage } from '@/utils/native';
 
@@ -22,7 +20,7 @@ const RankStore = namespace('RankStore');
 
 @Component({
   components: {
-    Strategy,
+    Strategy: () => import('@/views/home/pc/Strategy.vue'),
     // StrategyMobile,
   },
 })
@@ -38,15 +36,6 @@ export default class Index extends Vue {
 
   @Prop()
   subscribe: any;
-
-  showCard($event: any, item: any) {
-    const itemList = item.item;
-    this.$emit('showCard', $event, itemList && itemList.UserID);
-  }
-
-  hideCard($event: any) {
-    this.$emit('hideCard');
-  }
 
   toPersonalPc(item: any) {
     const { UserID, AccountIndex } = item.item;

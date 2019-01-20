@@ -99,6 +99,7 @@ export default class Index extends Vue {
 
   get subTitle(): string {
     function createStr(obj: {Max: 0, Min: 0}, title: string, format: boolean = false) {
+      if (!obj) return '';
       const { Max, Min } = obj;
       const max = format ? percentFormat(Max) : Max;
       const min = format ? percentFormat(Min) : Min;

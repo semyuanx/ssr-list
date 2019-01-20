@@ -1,4 +1,4 @@
-export default {
+const mapProps: any = {
   Date: '日期',
   Money: '当日平仓收益',
   TotalMoney: '当前日期的累计收益',
@@ -19,5 +19,9 @@ export default {
   Equity: '账户净值',
   ExpSymbol: '擅长品种',
   Subscribers: '订阅人数',
-  Price: '订阅价格',
+  SubPrice: '订阅价格',
+  IsPTA: 'pta会员',
+  GradeScore: '评级',
 };
+
+export default mapProps;

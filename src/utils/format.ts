@@ -83,4 +83,25 @@ export const timeFormat = function timeFormat(val: any, format = '00:00:00') {
   return numeral(val).format(format);
 };
 
-export const none = () => {};
+export const gradeFormat = function gradeFormat(val: any) {
+  if (!val) {
+    return 'D';
+  }
+  let grade = 'D';
+  if (val >= 9) {
+    grade = 'S';
+  } else if (val >= 8 && val < 9) {
+    grade = 'A+';
+  } else if (val >= 7 && val < 8) {
+    grade = 'A';
+  } else if (val >= 6 && val < 7) {
+    grade = 'A-';
+  } else if (val >= 5 && val < 6) {
+    grade = 'B';
+  } else if (val >= 4 && val < 5) {
+    grade = 'C';
+  } else {
+    grade = 'D';
+  }
+  return grade;
+};

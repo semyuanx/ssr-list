@@ -22,7 +22,7 @@
             >
               <div class="trader-container-row">
                 <div class="loading-first loading-avatar">
-                  <img :src="base+'/Avata/'+scope.row.UserID" />
+                  <!-- <img :src="base+'/Avata/'+scope.row.UserID" /> -->
                 </div>
                 <div class="loading-first loading-info">
                   <div class="info-1"></div>
@@ -48,10 +48,11 @@
                   @click="toUserPage(scope.row)"
                   class="info-1">
                   <span
+                    class="nick-name"
                     @mouseenter.self="showCard($event, scope.row.UserID)"
                     @mouseleave="personCard.hide()">{{scope.row.NickName}}</span> #{{scope.row.AccountIndex}}</div>
                   <div class="info-2">
-                    {{scope.row.BrokerName || ''}}
+                    <span>{{scope.row.BrokerName || ''}}</span>
                   </div>
                 </div>
               </div>
@@ -59,116 +60,6 @@
 
           </template>
         </el-table-column>
-        <!-- <el-table-column
-          label="交易能力值"
-          prop="Score"
-          sortable="custom"
-          min-width="116px"
-        >
-          <template slot-scope="scope">
-            <div
-              v-if="dateIsLoading && !scope.row.UserID"
-              class="custom-display-row-loading"
-            ></div>
-            <div
-              v-else
-              class="custom-display-row-line"
-            >{{scope.row.Score | numberFormatOneParams}}</div>
-
-          </template>
-        </el-table-column>
-        <el-table-column
-          label="收益率"
-          prop="ROI"
-          min-width="100px"
-          sortable="custom"
-        >
-          <template slot-scope="scope">
-            <div
-              v-if="dateIsLoading && !scope.row.UserID"
-              class="custom-display-row-loading"
-            ></div>
-            <div
-              v-else
-              :class="`custom-display-row-line `"
-            >
-              <span :class="scope.row.ROI >= 0 ? 'special-rate' : ''">{{scope.row.ROI | percentFormat}}</span>
-            </div>
-
-          </template>
-        </el-table-column>
-        <el-table-column
-          label="最大回撤"
-          prop="MaxRetracement"
-          sortable="custom"
-          min-width="100px"
-        >
-          <template slot-scope="scope">
-            <div
-              v-if="dateIsLoading && !scope.row.UserID"
-              class="custom-display-row-loading"
-            ></div>
-            <div
-              v-else
-              class="custom-display-row-line"
-            >{{scope.row.MaxRetracement | percentFormat}}</div>
-
-          </template>
-        </el-table-column>
-        <el-table-column
-          label="交易周期"
-          prop="Weeks"
-          sortable="custom"
-          min-width="100px"
-        >
-          <template slot-scope="scope">
-            <div
-              v-if="dateIsLoading && !scope.row.UserID"
-              class="custom-display-row-loading"
-            ></div>
-            <div
-              v-else
-              class="custom-display-row-line"
-            >{{scope.row.Weeks || 0}}周</div>
-
-          </template>
-        </el-table-column> -->
-        <!-- <el-table-column
-          label="擅长品种"
-          prop="ExpSymbol"
-          sortable="custom"
-          min-width="100px"
-        >
-          <template slot-scope="scope">
-            <div
-              v-if="dateIsLoading && !scope.row.UserID"
-              class="custom-display-row-loading"
-            ></div>
-            <div
-              v-else
-              class="custom-display-row-line"
-            >{{scope.row.ExpSymbol}}</div>
-
-          </template>
-        </el-table-column> -->
-        <!-- <el-table-column
-          label="订阅人数"
-          prop="Subscribers"
-          sortable="custom"
-          min-width="100px"
-        >
-          <template slot-scope="scope">
-            <div
-              v-if="dateIsLoading && !scope.row.UserID"
-              class="custom-display-row-loading"
-            ></div>
-            <div
-              v-else
-              class="custom-display-row-line"
-            >{{scope.row.Subscribers}}</div>
-
-          </template>
-        </el-table-column> -->
 
         <el-table-column
           show-overflow-tooltip="true"
@@ -187,7 +78,7 @@
             <div
               v-else
               class="custom-display-row-line"
-            >{{scope.row[i.prop] | propFormat(i.prop)}}</div>
+            ><span :class="{green: i.highlight && scope.row[i.prop] > 0}">{{scope.row[i.prop] | propFormat(i.prop)}} {{i.suffix}}</span></div>
 
           </template>
         </el-table-column>
@@ -213,7 +104,7 @@
                   :chart-data="scope.row.TrendChart"
                 ></Chart>
                 <img
-                  v-if="dateIsLoading && !scope.row.UserID"
+                  v-else
                   :src="cdn + '/images/NoData-Report.jpg'"
                   style="display:block;width:100%;"
                   :alt="'暂无数据'"
@@ -296,7 +187,9 @@ import personCard from 'fmcomponents/src/components/personcard';
 import Chart from '@/components/chart/index.vue';
 
 import SvgIcon from '@/components/svg/index.ts';
-import { numberFormat, percentFormat, propFormat } from '@/utils/format';
+import {
+  numberFormat, percentFormat, propFormat, gradeFormat,
+} from '@/utils/format';
 import { getElementTop, getElementLeft } from '@/utils/util';
 import { Table, TableColumn } from 'element-ui';
 import throttle from 'lodash.throttle';
@@ -315,7 +208,14 @@ const isEnterLoad = false;
   filters: {
     numberFormatOneParams: (val: number) => numberFormat(val, 1),
     percentFormat: (val: number) => percentFormat(val),
-    propFormat: (val: number, prop: string) => propFormat(val, prop),
+    propFormat: (val: number, prop: string) => {
+      if (prop === 'GradeScore') {
+        return gradeFormat(val);
+      } if (prop === 'IsPTA') {
+        return val ? '是' : '否';
+      }
+      return propFormat(val, prop);
+    },
   },
 } as any))
 export default class List extends Vue {
@@ -567,6 +467,11 @@ export default class List extends Vue {
 }
 </script>
 <style lang="less" scoped>
+
+.green {
+  color: #1FBB95;
+}
+
 .list-container {
   .list-table {
     .rank-table {
@@ -632,6 +537,10 @@ export default class List extends Vue {
             border-radius: 20px;
             overflow: hidden;
             cursor: pointer;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
           }
           .trader-info {
             flex: 1;
@@ -645,11 +554,24 @@ export default class List extends Vue {
               font-size:14px;
               color:rgba(51,51,51,1);
               line-height:19px;
+              &:hover {
+                .nick-name {
+                  color: @default-color;
+                }
+              }
             }
             .info-2 {
               font-size:12px;
               color:rgba(153,153,153,1);
-              line-height:16px;
+              flex: 1;
+              display: flex;
+              align-items: flex-end;
+              padding-bottom: 2px;
+              >span {
+                font-size:12px;
+                color:rgba(153,153,153,1);
+                line-height:16px;
+              }
             }
           }
         }

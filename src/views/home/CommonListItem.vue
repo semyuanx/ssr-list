@@ -24,6 +24,7 @@ import mapKey from '@/constant/propMap';
 import { propFormat } from '@/utils/format';
 import { toLoginPage, toSubscribePage, toPersonalPage } from '@/utils/native';
 import { namespace } from 'vuex-class';
+import { needHighlight } from '@/constant/propFormat';
 
 const RankStore = namespace('RankStore');
 
@@ -98,7 +99,7 @@ export default class Index extends Vue {
         }
       });
     }
-    console.log(params, 'pppp');
+    // console.log(params, 'pppp');
     this.setRankParams(params);
     this.$nextTick(() => {
       this.$router.push({ name: 'rankList' });
@@ -132,7 +133,14 @@ export default class Index extends Vue {
         brokerName: item.BrokerName,
         price: item.SubPrice,
         item,
-        data: showData.map((it: any) => ({ prop: (mapKey as any)[it], val: this.formatVal(item[it], it) })),
+        data: showData.map((it: any) => {
+          const ival: any = item[it];
+          return {
+            prop: mapKey[it],
+            val: this.formatVal(ival, it),
+            highlight: needHighlight.includes(it) && ival > 0,
+          };
+        }),
       }));
       return newConfig.slice(0, 4);
     }

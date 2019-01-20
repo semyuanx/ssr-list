@@ -14,7 +14,12 @@
               :subscribe="handleSub" :data="item" />
         </div>
         <div class="invest">
-            <TradeMaster :subscribe="toPersonal" :data="masterFollowerData" />
+            <TradeMaster
+              @hideCard="hideCard"
+              @showCard="showCard"
+              :subscribe="toPersonal"
+              :data="masterFollowerData"
+            />
         </div>
     </div>
 </template>

@@ -1,7 +1,15 @@
 <template>
   <div class="trader-master">
     <div class="fm-show-pc">
-      <InvestManager @toPersonal="toPersonalPc" @toJoinMore="toJoinMore" @toMore="toMore" :subscribe="subscribe" v-if="configData.data.length > 1" :data="configData" :description="description" />
+      <InvestManager
+        @hideCard="hideCard"
+        @showCard="showCard"
+        @toPersonal="toPersonalPc"
+        @toJoinMore="toJoinMore"
+        @toMore="toMore"
+        :subscribe="subscribe"
+        v-if="configData.data.length > 1"
+        :data="configData" :description="description" />
     </div>
     <div class="fm-show-mobile">
       <CommonMobile @toPersonal="toPersonal" @toMore="toMoreMobile" v-if="mobileConfigData.length" :data="mobileConfigData" :description="description" />
@@ -47,6 +55,15 @@ export default class Index extends Vue {
       align: 'right',
     },
   ];
+
+  showCard($event: any, item: any) {
+    const itemList = item.item;
+    this.$emit('showCard', $event, itemList && itemList.UserID);
+  }
+
+  hideCard($event: any) {
+    this.$emit('hideCard');
+  }
 
   toPersonalPc(item: any) {
     const { UserID, AccountIndex } = item.item;
@@ -122,7 +139,11 @@ export default class Index extends Vue {
           rightBtnText: '立即查看',
           data: [
             { prop: '跟随获利', val: moneyFormat(i.FollowMoney) },
-            { prop: '收益率', val: percentFormat(i.Roi) },
+            {
+              prop: '收益率',
+              val: percentFormat(i.Roi),
+              highlight: i.Roi > 0,
+            },
           ],
         };
       });
