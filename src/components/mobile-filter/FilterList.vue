@@ -40,7 +40,7 @@
           :prop="i.prop"
           sortable="custom"
           :key="i.prop + i.lable"
-          v-for="i in showProps"
+          v-for="i in commonProps"
         >
           <template slot-scope="scope">
             <p class="orderCount">
@@ -76,7 +76,7 @@
 
 <script lang="ts">
 import { Component, Vue, Prop } from 'vue-property-decorator';
-import { percentFormat } from '@/utils/format';
+import { percentFormat, moneyFormat } from '@/utils/format';
 import FilterButton from './FilterButton.vue';
 import { Table, TableColumn } from 'element-ui';
 
@@ -84,7 +84,13 @@ import { Table, TableColumn } from 'element-ui';
   filters: {
     filterProp: (val: number, prop: string) => {
       const percentProps = ['Roi', 'ROI'];
-      return percentProps.includes(prop) ? percentFormat(val) : val;
+      const moneyProps = ['FollowMoney'];
+      if (percentProps.includes(prop)) {
+        return percentFormat(val);
+      } if (moneyProps.includes(prop)) {
+        return moneyFormat(val);
+      }
+      return val;
     },
   },
   components: {
@@ -107,6 +113,12 @@ export default class FilterList extends Vue {
     default: () => [],
   })
   showProps: any;
+
+  get commonProps() {
+    let props = [];
+    props = this.showProps.filter((i: any) => !i.type);
+    return props;
+  }
 
   @Prop({
     type: Array,

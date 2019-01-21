@@ -33,8 +33,16 @@ export const moneyFormat = function moneyFormat(val: string|number, format: numb
 
   type = `$0.[${type}]`;
   const transformed = v.format(type);
-  // eslint-disable-next-line
-  return transformed ? transformed.includes('.') ? transformed.slice(0, transformed.length - 1) : transformed : val;
+  if (transformed) {
+    if (transformed.includes('.')) {
+      const split = transformed.split('.');
+      if (split[1] && split[1].length <= format) {
+        return transformed;
+      }
+    }
+    return transformed.includes('.') ? transformed.slice(0, transformed.length - 1) : transformed;
+  }
+  return val;
 };
 export const percentFormat = function percentFormat(val: string|number, format: number = 2, simple: boolean = false) {
   if (!val) {
