@@ -101,7 +101,7 @@ export default class FmLittleCard extends Vue {
         height:50px;
         display: flex;
         align-items: center;
-        justify-content: center;
+        justify-content: flex-start;
         .card-avatar {
           width:40px;
           height:40px;
