@@ -3,7 +3,7 @@
     <div class="list-table">
       <el-table
         ref="rankTable"
-        class="rank-table"
+        class="follower-rank-table"
         :data="dataList"
         :row-class-name="getRowClassName"
         :header-cell-class-name="getHeaderCellClassName"
@@ -39,14 +39,14 @@
                 <div class="loading-first avatar">
                   <img
                   @click="toUserPage(scope.row)"
-                  @mouseenter.self="showCard($event, scope.row.UserID)"
+                  @mouseenter.self="showCard($event, scope.row)"
                   @mouseleave="personCard.hide()"
                   :src="base+'/Avata/'+scope.row.UserID" />
                 </div>
                 <div class="loading-first trader-info">
                   <div
                   @click="toUserPage(scope.row)"
-                  @mouseenter.self="showCard($event, scope.row.UserID)"
+                  @mouseenter.self="showCard($event, scope.row)"
                   @mouseleave="personCard.hide()"
                   class="info-1"><span class="nick-name">{{scope.row.NickName}}</span> #{{scope.row.AccountIndex}}</div>
                   <div class="info-2"><span>
@@ -285,11 +285,15 @@ export default class List extends Vue {
     this.redirectTo('personalPage', { userId: UserID, index: AccountIndex }, true);
   }
 
-  showCard(e: any, ids: any) {
+  showCard(e: any, item: any) {
     // eslint-disable-next-line
     const _this = this;
     const top = getElementTop(e.target);
     const left = getElementLeft(e.target);
+    let ids = item.UserID;
+    if (item.AccountIndex) {
+      ids += `_${item.AccountIndex}`;
+    }
     personCard.show({
       id: ids,
       position: {
@@ -412,7 +416,7 @@ export default class List extends Vue {
 <style lang="less" scoped>
 .list-container {
   .list-table {
-    .rank-table {
+    .follower-rank-table {
       :global(.header-column) {
         :global(.cell) {
           padding-left: 20px;

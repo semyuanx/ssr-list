@@ -39,7 +39,7 @@
                 <div class="loading-first avatar">
                   <img
                   @click="toUserPage(scope.row)"
-                  @mouseenter.self="showCard($event, scope.row.UserID)"
+                  @mouseenter.self="showCard($event, scope.row)"
                   @mouseleave="personCard.hide()"
                   :src="base+'/Avata/'+scope.row.UserID" />
                 </div>
@@ -49,9 +49,17 @@
                   class="info-1">
                   <span
                     class="nick-name"
-                    @mouseenter.self="showCard($event, scope.row.UserID)"
+                    @mouseenter.self="showCard($event, scope.row)"
                     @mouseleave="personCard.hide()">{{scope.row.NickName}}</span> #{{scope.row.AccountIndex}}</div>
                   <div class="info-2">
+                    <span v-if="showPtaAndGrade.includes('GradeScore')"
+                      :class="'grade-score-icon ' + mapGradeClass(scope.row.GradeScore)"
+                    >
+                      {{scope.row.GradeScore | propFormat('GradeScore')}}
+                    </span>
+                    <span v-if="showPtaAndGrade.includes('IsPTA') && scope.row.IsPTA" class="pta-icon">
+                      <img style="width: 14px; height: 14px;" src="~@/assets/pta.png" />
+                    </span>
                     <span>{{scope.row.BrokerName || ''}}</span>
                   </div>
                 </div>
@@ -68,7 +76,7 @@
           sortable="custom"
           :min-width="i.label.length > 4 ? '120px':'100px'"
           :key="i.prop"
-          v-for="i in showProps"
+          v-for="i in showPropsList"
         >
           <template slot-scope="scope">
             <div
@@ -236,12 +244,36 @@ export default class List extends Vue {
   })
   showProps: any;
 
-  data1: any = [];
+  get showPropsList() {
+    const noList = ['IsPTA', 'GradeScore'];
+    const showProps = this.showProps.filter((i: any) => !noList.includes(i.prop));
+    return showProps;
+  }
+
+  mapGradeClass(val: any) {
+    const grade = gradeFormat(val);
+    const gradeMap: any = {
+      S: 1,
+      'A+': 2,
+      A: 3,
+      'A-': 4,
+      B: 5,
+      C: 6,
+      D: 7,
+    };
+    return `grade-score-${gradeMap[grade]}`;
+  }
 
   @Prop()
   getData: any;
 
   personCard: any = personCard;
+
+  get showPtaAndGrade() {
+    const noList = ['IsPTA', 'GradeScore'];
+    const showProps = this.showProps.filter((i: any) => noList.includes(i.prop)).map((i: any) => i.prop);
+    return showProps;
+  }
 
   get dataList() {
     if (this.rankListLoading) {
@@ -270,11 +302,16 @@ export default class List extends Vue {
     this.redirectTo('personalPage', { userId: UserID, index: AccountIndex }, true);
   }
 
-  showCard(e: any, ids: any) {
+  showCard(e: any, item: any) {
     // eslint-disable-next-line
     const _this = this;
     const top = getElementTop(e.target);
     const left = getElementLeft(e.target);
+    let ids = item.UserID;
+    if (!ids) return;
+    if (item.AccountIndex) {
+      ids += `_${item.AccountIndex}`;
+    }
     personCard.show({
       id: ids,
       position: {
@@ -314,7 +351,7 @@ export default class List extends Vue {
     if (columnIndex === 0) {
       return 'header-column';
     }
-    return '';
+    return 'header-column-default';
   }
 
   public get dateIsLoading() {
@@ -376,7 +413,7 @@ export default class List extends Vue {
         brokerid: list.BrokerID,
       },
       (result: any) => {
-        console.log(result);
+        // console.log(result);
         if (result.code === 'SUCCESS' || result.code === 0) {
           _this.getFollowAndAttention();
         } else {
@@ -481,6 +518,17 @@ export default class List extends Vue {
       :global(.header-column) {
         :global(.cell) {
           padding-left: 20px;
+          font-size:12px;
+          color:rgba(102,102,102,1);
+          font-weight: normal;
+        }
+      }
+      :global(.header-column-default) {
+        :global(.cell) {
+          padding: 0;
+          font-size:12px;
+          color:rgba(102,102,102,1);
+          font-weight: normal;
         }
       }
       .even-row {
@@ -571,6 +619,46 @@ export default class List extends Vue {
                 font-size:12px;
                 color:rgba(153,153,153,1);
                 line-height:16px;
+              }
+              .pta-icon {
+                img {
+                  vertical-align: bottom;
+                }
+                margin-right: 5px;
+              }
+              .grade-score-icon {
+                width:20px;
+                height:14px;
+                font-size:12px;
+                font-family:DINOT-Bold;
+                font-weight:bold;
+                color:rgba(255,255,255,1);
+                line-height:15px;
+                border-radius: 6px  2px  6px  2px;
+                text-align: center;
+                margin-right: 5px;
+              }
+              .grade-score-1 {
+                background: linear-gradient(to bottom, #8A8D91, #272829);
+              }
+              .grade-score-2 {
+                background: linear-gradient(to bottom, #F2D6A2, #BFA36F);
+              }
+              .grade-score-3 {
+                background: linear-gradient(to bottom, #F2D6A2, #BFA36F);
+              }
+              .grade-score-4 {
+                background: linear-gradient(to bottom, #F2D6A2, #BFA36F);
+              }
+              .grade-score-5 {
+                background: linear-gradient(to bottom, #DADCE0, #A3A5A8);
+              }
+              // c
+              .grade-score-6 {
+                background: linear-gradient(to bottom, #E2E2E2, #C5C7CA);
+              }
+              .grade-score-7 {
+                background: linear-gradient(to bottom, #E2E2E2, #C5C7CA);
               }
             }
           }

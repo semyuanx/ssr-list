@@ -1,7 +1,7 @@
 <template>
 <div class="list-container">
   <div class="list-body">
-    <MobileFilterList :loading="dateIsLoading" @subscribe="subscribe" :data="data" @sortChange="sortChange"/>
+    <MobileFilterList :showProps="showProps" :loading="dateIsLoading" @subscribe="subscribe" :data="data" @sortChange="sortChange"/>
   </div>
 </div>
 </template>
@@ -32,6 +32,18 @@ export default class List extends Vue {
     default: () => [],
   })
   data: any;
+
+
+  showProps: any = [
+    {
+      label: '跟随收益',
+      prop: 'FollowMoney',
+    },
+    {
+      label: '跟随收益率',
+      prop: 'Roi',
+    },
+  ];
 
   public get dateIsLoading() {
     return this.rankListLoading;

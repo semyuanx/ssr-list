@@ -21,7 +21,7 @@
             </p> -->
           </template>
         </el-table-column>
-        <el-table-column
+        <!-- <el-table-column
           align="right"
           label="收益率"
           prop="ROI"
@@ -30,20 +30,28 @@
           <template slot-scope="scope">
             <p class="rateOfReturn">
               <span :class="scope.row.ROI >= 0 ? 'rateValue up' : 'rateValue'">{{scope.row.ROI | percentFormat}}</span>
-              <!-- <span class="ratePercent">%</span> -->
+
+            </p>
+          </template>
+        </el-table-column> -->
+        <el-table-column
+          align="right"
+          :label="i.label"
+          :prop="i.prop"
+          sortable="custom"
+          :key="i.prop + i.lable"
+          v-for="i in showProps"
+        >
+          <template slot-scope="scope">
+            <p class="orderCount">
+              <span
+                :class="{'green' : i.highlight && scope.row[i.prop] > 0}">
+                {{scope.row[i.prop] | filterProp(i.prop)}}
+              </span>
             </p>
           </template>
         </el-table-column>
-        <el-table-column
-          align="right"
-          label="订阅人数"
-          prop="Subscribers"
-          sortable="custom"
-        >
-          <template slot-scope="scope">
-            <p class="orderCount">{{scope.row.Subscribers}}</p>
-          </template>
-        </el-table-column>
+
         <el-table-column
           align="right"
           label=""
@@ -53,7 +61,7 @@
               :border="true"
               @click="toSubscribe"
               class="filter-button"
-            >{{scope.row.price || '$9.99'}}</filter-button>
+            >{{scope.row.SubPrice ? scope.row.SubPrice + '/月' : '免费订阅'}}</filter-button>
           </template>
         </el-table-column>
         <div v-if="loading" class="loading-container" slot="append">
@@ -74,7 +82,10 @@ import { Table, TableColumn } from 'element-ui';
 
 @Component({
   filters: {
-    percentFormat: (val: number) => percentFormat(val),
+    filterProp: (val: number, prop: string) => {
+      const percentProps = ['Roi', 'ROI'];
+      return percentProps.includes(prop) ? percentFormat(val) : val;
+    },
   },
   components: {
     FilterButton,
@@ -90,6 +101,12 @@ export default class FilterList extends Vue {
     default: () => [],
   })
   data: any;
+
+  @Prop({
+    type: Array,
+    default: () => [],
+  })
+  showProps: any;
 
   @Prop({
     type: Array,
@@ -111,6 +128,9 @@ export default class FilterList extends Vue {
 <style lang="less" scoped>
 @theme-color: #ff6200;
 
+.green {
+  color: #00aa6d;
+}
 .filter-list-container {
   font-family: PingFang-SC-Medium;
   color: #333;
