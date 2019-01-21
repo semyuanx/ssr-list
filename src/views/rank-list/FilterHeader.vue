@@ -51,7 +51,7 @@
                     class="has-close-tag"
                     @close="handleCloseTag(item)"
                     :key="item"
-                  >{{brokersList.find(v=>v.BrokerId === item) && brokersList.find(v=>v.BrokerId === item).Broker}}</filter-tag>
+                  >{{brokersList.find(v=>v.BrokerId === item) && brokersList.find(v=>v.BrokerId === item).BrokerName}}</filter-tag>
                   <button
                     class="add-button"
                     @click="addBorker=!addBorker"
@@ -255,6 +255,8 @@ export default class FilterHeader extends Vue {
   @Emit('filter')
   handleFilter(value: object) {
     this.isShow = false;
+    const { checked } = this;
+    this.setCheckedBrokers(checked);
   }
 
   handleReset(value: object) {
@@ -264,8 +266,10 @@ export default class FilterHeader extends Vue {
 
   handleCloseTag(item: string) {
     const checked = this.checkedBrokers.filter((v: any) => v !== item);
+    const thisChecked = this.checked.filter((v: any) => v !== item);
+    this.checked = thisChecked;
     // console.log(checked, 'handleCloseTag');
-    this.setCheckedBrokers(checked);
+    // console.log(this.checked, 'cccc');
   }
 
   @Watch('checked', { deep: true })
