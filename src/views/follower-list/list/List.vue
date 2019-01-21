@@ -353,7 +353,7 @@ export default class List extends Vue {
     if (columnIndex === 0) {
       return 'header-column';
     }
-    return '';
+    return 'header-column-default';
   }
 
   public get dateIsLoading() {
@@ -420,6 +420,17 @@ export default class List extends Vue {
       :global(.header-column) {
         :global(.cell) {
           padding-left: 20px;
+          font-size:12px;
+          color:rgba(102,102,102,1);
+          font-weight: normal;
+        }
+      }
+      :global(.header-column-default) {
+        :global(.cell) {
+          padding: 0;
+          font-size:12px;
+          color:rgba(102,102,102,1);
+          font-weight: normal;
         }
       }
       :global(.odd-row) {

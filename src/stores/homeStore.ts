@@ -69,7 +69,7 @@ export default class HomeStore {
           if (element.RankIndex) {
             try {
               const resp: Promise<any> = await getCustomRankList({ rankIndex: element.RankIndex });
-              console.log(resp, 'resp');
+              // console.log(resp, 'resp');
               return { ...element, listData: resp };
             } catch (e) {
               return { element };
@@ -80,8 +80,7 @@ export default class HomeStore {
         });
 
         Promise.all(dPromise).then((result: any) => {
-          console.log(result, 'result');
-
+          // console.log(result, 'result');
           if (result && typeof localStorage !== 'undefined') {
             try {
               localStorage.setItem(key, JSON.stringify(result));
@@ -89,7 +88,6 @@ export default class HomeStore {
               console.log(e);
             }
           }
-
           context.commit('setConfig', result);
         });
       }
@@ -107,7 +105,7 @@ export default class HomeStore {
       console.log(e);
     }
     if (data.items) {
-      console.log(data, 'progressProducts');
+      // console.log(data, 'progressProducts');
       commit('setProgressProducts', data.items);
     }
     return data;
@@ -123,7 +121,7 @@ export default class HomeStore {
       console.log(e);
     }
     if (data.items) {
-      console.log(data, 'setMasterFollower');
+      // console.log(data, 'setMasterFollower');
       commit('setMasterFollower', data.items);
     }
     return data;

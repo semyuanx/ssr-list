@@ -96,5 +96,12 @@ export default function createRouter() {
         component: () => import(/* webpackChunkName: "about" */ './pages/tradedynamics/index.vue'),
       },
     ],
+
+    scrollBehavior(to, from, savedPosition) {
+      if (savedPosition) {
+        return savedPosition;
+      }
+      return { x: 0, y: 0 };
+    },
   });
 }

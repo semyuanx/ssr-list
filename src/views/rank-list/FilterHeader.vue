@@ -31,7 +31,9 @@
             <i class="icon-filtrate_24px"></i><span>筛选器</span>
           </div>
           <div class="filter-pop-container">
-          <div class="filter-pop">
+          <div
+            class="filter-pop"
+            v-clickoutside="handleOutsideClick">
             <transition name="filter-fade">
               <filter-popover
                 ref="filterPopover"
@@ -56,6 +58,7 @@
                   ><i class="fm-fonticon icon-plus_24px"></i>添加</button>
                   <check-box-group
                     v-model="checked"
+                    v-clickoutside="handleBrokerOutsideClick"
                     class="borkersDialog"
                     v-show="addBorker && isShow"
                   >
@@ -93,8 +96,9 @@ import FilterTag from '@/components/filter-popover/FilterTag.vue';
 import CheckBoxGroup from '@/components/check-box/CheckBoxGroup.vue';
 import CheckBox from '@/components/check-box/CheckBox.vue';
 import MobileFilterHeader from '@/components/mobile-filter/FilterHeader.vue';
-import { rankList, brokersList } from '@/api/home';
 import propMaps from '@/constant/propMap';
+import { gradeFormat } from '@/utils/format';
+import Clickoutside from 'element-ui/src/utils/clickoutside';
 
 const RankStore = namespace('RankStore');
 
@@ -108,6 +112,9 @@ const RankStore = namespace('RankStore');
     CheckBoxGroup,
     CheckBox,
     MobileFilterHeader,
+  },
+  directives: {
+    Clickoutside,
   },
 })
 export default class FilterHeader extends Vue {
@@ -140,6 +147,21 @@ export default class FilterHeader extends Vue {
   @RankStore.State
   filterRes: any;
 
+  handleOutsideClick(e: any) {
+    const { isShow } = this;
+
+    if (isShow) {
+      this.isShow = false;
+    }
+  }
+
+  handleBrokerOutsideClick(e: any) {
+    const { addBorker } = this;
+    if (addBorker) {
+      this.addBorker = false;
+    }
+  }
+
   textMaps: any = {
     Score: '交易能力值',
     Equity: '账户净值',
@@ -150,6 +172,7 @@ export default class FilterHeader extends Vue {
     orderby: '排序字段',
     isPTA: 'PTA会员',
     freeSubPrice: '免费订阅',
+    GradeScore: '账户评级',
   };
 
   get filterTag() {
@@ -168,6 +191,17 @@ export default class FilterHeader extends Vue {
         }
         if (i === 'freeSubPrice') {
           finalVal = val === 1 ? '是' : '否';
+        }
+        if (i === 'GradeScore') {
+          const gradeMap: any = {
+            '9-0': 'S',
+            '7-8': 'A+',
+            '6-7': 'A',
+            '5-6': 'A-',
+            '4-5': 'B',
+            '4-0': 'D',
+          };
+          finalVal = gradeMap[val] || 'D';
         }
         const needIgnore = ['orderby', 'isDESC'];
         if (finalVal && !needIgnore.includes(i)) {
