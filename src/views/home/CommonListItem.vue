@@ -21,7 +21,7 @@ import { Component, Vue, Prop } from 'vue-property-decorator';
 import CommonItem from '@/views/home/pc/CommonItem.vue';
 import InvestManagerMobile from '@/views/home/mobile/InvestManagerMobile.vue';
 import mapKey from '@/constant/propMap';
-import { propFormat } from '@/utils/format';
+import { propFormat, processConfig } from '@/utils/format';
 import { toLoginPage, toSubscribePage, toPersonalPage } from '@/utils/native';
 import { namespace } from 'vuex-class';
 import { needHighlight } from '@/constant/propFormat';
@@ -40,6 +40,9 @@ export default class Index extends Vue {
 
   @RankStore.Mutation
   setRankParams: any;
+
+  @RankStore.Mutation
+  setUseDefaultParams: any;
 
   @Prop()
   subscribe: any;
@@ -74,32 +77,35 @@ export default class Index extends Vue {
   toMore(data1: any) {
     // console.log(this.data, 'dddddd');
     const { data } = this;
-    const params: any = {};
-    const condcfg: any = data.CondCfg || {};
+    // const params: any = {};
+    const CondCfg: any = data.CondCfg || {};
 
-    params.orderby = condcfg.OrderByName;
-    params.isDESC = condcfg.OrderBy ? 1 : 0;
+    // params.orderby = condcfg.OrderByName;
+    // params.isDESC = condcfg.OrderBy ? 1 : 0;
 
-    const configRank = condcfg.CondConfig;
-    if (configRank) {
-      Object.keys(configRank).forEach((i: any) => {
-        const filter: any = configRank[i];
-        if (filter) {
-          if (Object.prototype.toString.call(filter) === '[object Object]') {
-            if (filter) {
-              if (filter.Min || filter.Max) {
-                params[i] = [filter.Min, filter.Max].join('-');
-              }
-            }
-          } else if (Array.isArray(filter)) {
-            console.log(' no');
-          } else {
-            params[i] = filter;
-          }
-        }
-      });
-    }
+    const params = processConfig(CondCfg);
+
+    // const configRank = condcfg.CondConfig;
+    // if (configRank) {
+    //   Object.keys(configRank).forEach((i: any) => {
+    //     const filter: any = configRank[i];
+    //     if (filter) {
+    //       if (Object.prototype.toString.call(filter) === '[object Object]') {
+    //         if (filter) {
+    //           if (filter.Min || filter.Max) {
+    //             params[i] = [filter.Min, filter.Max].join('-');
+    //           }
+    //         }
+    //       } else if (Array.isArray(filter)) {
+    //         console.log(' no');
+    //       } else {
+    //         params[i] = filter;
+    //       }
+    //     }
+    //   });
+    // }
     // console.log(params, 'pppp');
+    this.setUseDefaultParams(false);
     this.setRankParams(params);
     this.$nextTick(() => {
       this.$router.push({ name: 'rankList' });

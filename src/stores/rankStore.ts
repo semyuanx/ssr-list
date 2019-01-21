@@ -14,6 +14,7 @@ import {
 import { toNumber } from '@/utils/util';
 import propMaps from '@/constant/propMap';
 import { needHighlight, suffixProps } from '@/constant/propFormat';
+import { processConfig } from '@/utils/format';
 
 @Repository('RankStore')
 export default class RankStore {
@@ -61,6 +62,9 @@ export default class RankStore {
   @State([])
   public showProps: any[] = [];
 
+  @State(true)
+  public useDefaultParams: boolean = true;
+
   // @Set('pageIndex') public setPageIndex: any;
   @Mutation
   public setPageIndex(state: any, payload: any[]) {
@@ -69,6 +73,8 @@ export default class RankStore {
   }
 
   @Set('rankListLoading') public setRankLoading: any;
+
+  @Set('useDefaultParams') public setUseDefaultParams: any;
 
   @Set('hasMore') public setHasMore: any;
 
@@ -153,12 +159,12 @@ export default class RankStore {
 
   // 特殊绑定设置
   @Action
-  public async getSepRankConfig(context: { commit: Commit }, payload: any) {
-    const { commit } = context;
+  public async getSepRankConfig(context: { commit: Commit, state: any}, payload: any) {
+    const { commit, state } = context;
     return getSepRankConfigService(payload).then((res: any) => {
       if (res && res.HideConfig) {
         const hideConfig = res.HideConfig;
-        const blackList = ['TrendLine', 'SubPrice'];
+        const blackList: any = [];
         const showProps = Object.keys(hideConfig).filter((i: any) => !hideConfig[i] && !blackList.includes(i)).map((i: any) => ({
           label: (propMaps as any)[i] || ' ',
           prop: i,
@@ -167,6 +173,20 @@ export default class RankStore {
         }));
         // console.log(showProps, propMaps, 'showProps');
         commit('setShowProps', showProps);
+      }
+
+      if (res && res.CondCfg) {
+        const { CondCfg } = res;
+        const { rankParams, useDefaultParams } = state;
+        let params: any = {};
+
+        params = processConfig(CondCfg);
+
+        params = { ...rankParams, ...params };
+        console.log(params, 'ppp***pp', useDefaultParams);
+        if (useDefaultParams) {
+          commit('setRankParams', params);
+        }
       }
       return res;
     });

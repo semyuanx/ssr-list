@@ -22,7 +22,7 @@ export default function createRouter() {
         path: '/ranking',
         name: 'rankList',
         meta: {
-          title: 'followme-排行榜',
+          title: '外汇优秀交易员排名__经纪商交易员操盘排行_ Followme外汇社区',
         },
         // route level code-splitting
         // this generates a separate chunk (about.[hash].js) for this route
@@ -33,7 +33,7 @@ export default function createRouter() {
         path: '/invest',
         name: 'investManager',
         meta: {
-          title: 'followme-投资管家',
+          title: '投资管家_外汇投资理财托管产品大全-Followme外汇社区',
         },
         // route level code-splitting
         // this generates a separate chunk (about.[hash].js) for this route
@@ -83,7 +83,7 @@ export default function createRouter() {
         path: '/follower', // 跟随大师
         name: 'follower',
         meta: {
-          title: 'followme-跟随大师',
+          title: '最新跟随交易排行榜_外汇跟单盈利榜单_ Followme外汇社区',
         },
         component: () => import(/* webpackChunkName: "about" */ './pages/follower/follower.vue'),
       },
@@ -91,7 +91,7 @@ export default function createRouter() {
         path: '/dynamic', // 交易动态
         name: 'tradedynamics',
         meta: {
-          title: 'followme-交易动态',
+          title: 'Followme最新交易员和投资者跟随交易动态_Followme外汇社区',
         },
         component: () => import(/* webpackChunkName: "about" */ './pages/tradedynamics/index.vue'),
       },

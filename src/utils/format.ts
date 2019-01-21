@@ -113,3 +113,42 @@ export const gradeFormat = function gradeFormat(val: any) {
   }
   return grade;
 };
+
+
+export const processConfig = function processConfig(CondCfg: any) {
+  let params: any = {};
+  if (CondCfg) {
+    const { CondConfig } = CondCfg;
+    const isDESC = CondCfg.OrderBy ? 1 : 0;
+    const orderby = CondCfg.OrderByName;
+    if (orderby) {
+      params = { ...params, ...{ isDESC, orderby } };
+    }
+    if (CondConfig) {
+      Object.keys(CondConfig).forEach((i: any) => {
+        const filter: any = CondConfig[i];
+        if (filter) {
+          if (Object.prototype.toString.call(filter) === '[object Object]') {
+            if (filter) {
+              if (filter.Min || filter.Max) {
+                params[i] = [filter.Min, filter.Max].join('-');
+              }
+            }
+          } else if (Array.isArray(filter)) {
+            console.log(' no');
+            if (i === 'brokerId') {
+              params.brokerId = filter;
+            }
+          } else if (i === 'IsPTA') {
+            params.isPTA = filter ? 1 : 0;
+          } else if (i === 'freeSubPrice') {
+            params.freeSubPrice = filter ? 1 : 0;
+          } else {
+            params[i] = filter;
+          }
+        }
+      });
+    }
+  }
+  return params;
+};

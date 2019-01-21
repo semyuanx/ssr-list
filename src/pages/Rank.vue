@@ -226,8 +226,10 @@ export default class RankList extends Vue {
 
   mounted() {
     // this.getPageData();
-    this.getSepRankConfig({ index: 1 });
-    this.getData();
+    this.getSepRankConfig({ index: 1 }).then(() => {
+      this.getData();
+    });
+
     const loadThrottle = throttle(this.scrollCb, 200);
     const fixThrottle = throttle(this.fixHeader, 200);
 

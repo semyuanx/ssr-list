@@ -52,12 +52,12 @@
                     @mouseenter.self="showCard($event, scope.row)"
                     @mouseleave="personCard.hide()">{{scope.row.NickName}}</span> #{{scope.row.AccountIndex}}</div>
                   <div class="info-2">
-                    <span v-if="showPtaAndGrade.includes('GradeScore')"
+                    <span v-if="showOthers.includes('GradeScore')"
                       :class="'grade-score-icon ' + mapGradeClass(scope.row.GradeScore)"
                     >
                       {{scope.row.GradeScore | propFormat('GradeScore')}}
                     </span>
-                    <span v-if="showPtaAndGrade.includes('IsPTA') && scope.row.IsPTA" class="pta-icon">
+                    <span v-if="showOthers.includes('IsPTA') && scope.row.IsPTA" class="pta-icon">
                       <img style="width: 14px; height: 14px;" src="~@/assets/pta.png" />
                     </span>
                     <span>{{scope.row.BrokerName || ''}}</span>
@@ -245,7 +245,7 @@ export default class List extends Vue {
   showProps: any;
 
   get showPropsList() {
-    const noList = ['IsPTA', 'GradeScore'];
+    const noList = ['IsPTA', 'GradeScore', 'TrendLine', 'SubPrice'];
     const showProps = this.showProps.filter((i: any) => !noList.includes(i.prop));
     return showProps;
   }
@@ -269,9 +269,10 @@ export default class List extends Vue {
 
   personCard: any = personCard;
 
-  get showPtaAndGrade() {
-    const noList = ['IsPTA', 'GradeScore'];
+  get showOthers() {
+    const noList = ['IsPTA', 'GradeScore', 'SubPrice'];
     const showProps = this.showProps.filter((i: any) => noList.includes(i.prop)).map((i: any) => i.prop);
+    // console.log(showProps, 'ssss')
     return showProps;
   }
 
