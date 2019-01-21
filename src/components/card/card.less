@@ -17,6 +17,7 @@
   border: 1px solid transparent;
   align-items: center;
   position: relative;
+  overflow: hidden;
   &:hover {
     .bottom {
       .sub {
@@ -31,6 +32,13 @@
           transform: translateY(-20px);
         }
       }
+    }
+    .in-strategy {
+      display: none;
+    }
+    .strategy-content {
+      display: block;
+      opacity: 1;
     }
   }
   .user {
@@ -59,11 +67,41 @@
         color: #999999;
         font-size: 12rem / @base-font;
       }
+      .name-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
       .name-active {
         cursor: pointer;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        max-width: 75%;
+        display: inline-block;
+        margin-right: 4px;
         &:hover {
           color: @default-color;
         }
+      }
+    }
+  }
+  .strategy-content {
+    display: none;
+    opacity: 0;
+    text-align: center;
+    transition: all .3s ease-in-out;
+    .strategy-content-container {
+      line-height:18px;
+      padding: 0 10%;
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 3;
+      overflow: hidden;
+      .strategy-detail {
+        font-size:14px;
+        font-family:MicrosoftYaHei;
+        color:rgba(102,102,102,1);
       }
     }
   }
@@ -209,4 +247,41 @@
       }
     }
   }
+}
+
+
+.grade-score-icon {
+  display: inline-block;
+  width:20px;
+  height:14px;
+  font-size:12px;
+  font-family:DINOT-Bold;
+  font-weight:bold;
+  color:rgba(255,255,255,1);
+  line-height:14px;
+  border-radius: 6px  2px  6px  2px;
+  text-align: center;
+  margin-left: 4px;
+}
+.grade-score-1 {
+  background: linear-gradient(to bottom, #8A8D91, #272829);
+}
+.grade-score-2 {
+  background: linear-gradient(to bottom, #F2D6A2, #BFA36F);
+}
+.grade-score-3 {
+  background: linear-gradient(to bottom, #F2D6A2, #BFA36F);
+}
+.grade-score-4 {
+  background: linear-gradient(to bottom, #F2D6A2, #BFA36F);
+}
+.grade-score-5 {
+  background: linear-gradient(to bottom, #DADCE0, #A3A5A8);
+}
+// c
+.grade-score-6 {
+  background: linear-gradient(to bottom, #E2E2E2, #C5C7CA);
+}
+.grade-score-7 {
+  background: linear-gradient(to bottom, #E2E2E2, #C5C7CA);
 }

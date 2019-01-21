@@ -36,7 +36,9 @@
           :style="{width:labelWidth,minWidth:labelWidth}"
         >
           <span class="label-name">{{item.label}}</span>
-          <i class="fm-fonticon icon-info_circle_24px"></i>
+          <el-tooltip v-if="item.tips" class="item" effect="dark" :content="item.tips" placement="top">
+            <i class="fm-fonticon icon-info_circle_24px"></i>
+          </el-tooltip>
         </div>
         <ul class="filter-content">
           <li
@@ -59,6 +61,8 @@
                 class="interval-input start-input"
                 :class="{'active-input': citem.start}"
                 v-model.lazy.number.trim="citem.start"
+                @change="inputChanged(item.value,citem, 'start')"
+                @input="inputChanged(item.value,citem, 'end')"
                 @blur="inputHandler(item.value,citem.start,citem.end)"
               >
               <span class="interval-span">-</span>
@@ -68,6 +72,8 @@
                 class="interval-input end-input"
                 :class="{'active-input': citem.end}"
                 v-model.lazy.number.trim="citem.end"
+                @change="inputChanged(item.value,citem, 'end')"
+                @input="inputChanged(item.value,citem, 'end')"
                 @blur="inputHandler(item.value,citem.start,citem.end)"
               >
             </div>
@@ -109,6 +115,8 @@ import zhCN from '@/i18n/zh-CN/components/filter-popover/FilterPopover';
 import zhTW from '@/i18n/zh-TW/components/filter-popover/FilterPopover';
 import enUS from '@/i18n/en-US/components/filter-popover/FilterPopover';
 
+import { Tooltip } from 'element-ui';
+
 import { isNumber } from '@/utils/util';
 
 const RankStore = namespace('RankStore');
@@ -116,6 +124,7 @@ const RankStore = namespace('RankStore');
 @Component({
   components: {
     FilterTag,
+    [Tooltip.name]: Tooltip,
   },
   i18n: {
     messages: {
@@ -158,6 +167,7 @@ export default class FilterPopover extends Vue {
       },
       {
         label: '交易能力值',
+        tips: '交易能力值是通过综合评估交易员在一定周期内的盈利与风控能力、资金规划与绩效稳定性等多重维度的计算结果',
         desc: '备注介绍',
         value: 'Score',
         filter: [
@@ -177,6 +187,7 @@ export default class FilterPopover extends Vue {
       },
       {
         label: '订阅人数',
+        tips: '统计时刻的订阅账户数',
         value: 'Subscribers',
         desc: '订阅人数',
         filter: [
@@ -211,6 +222,7 @@ export default class FilterPopover extends Vue {
         ],
       },
       {
+        tips: '第一笔交易至今的周数',
         label: '交易周期',
         value: 'Weeks',
         desc: '备注介绍',
@@ -230,6 +242,7 @@ export default class FilterPopover extends Vue {
         needLine: true,
       },
       {
+        tips: '最大的净值回撤比例',
         label: '最大回撤比例',
         value: 'Retracement',
         desc: '备注介绍',
@@ -275,7 +288,146 @@ export default class FilterPopover extends Vue {
       },
     ],
   })
-  labelObj!: any[];
+  labelObj1!: any[];
+
+  labelObj: any[] = [
+    {
+      label: '账户评级',
+      desc: '账户评级',
+      value: 'GradeScore',
+      filter: [
+        { name: '不限', value: '' },
+        { name: 'S', value: '9-0' },
+        { name: 'A+', value: '8-9' },
+        { name: 'A', value: '7-8' },
+        { name: 'A-', value: '6-7' },
+        { name: 'B', value: '5-6' },
+        { name: 'C', value: '4-5' },
+        { name: 'D', value: '0-4' },
+      ],
+    },
+    {
+      label: '交易能力值',
+      tips: '交易能力值是通过综合评估交易员在一定周期内的盈利与风控能力、资金规划与绩效稳定性等多重维度的计算结果',
+      desc: '备注介绍',
+      value: 'Score',
+      filter: [
+        { name: '不限', value: '' },
+        { name: '60-70', value: '60-70' },
+        { name: '71-80', value: '71-80' },
+        { name: '81-90', value: '81-90' },
+        { name: '>90', value: '90-0' },
+        // {
+        //   mode: 'input',
+        //   start: '',
+        //   end: '',
+        //   type: 'interval',
+        // },
+      ],
+      needLine: true,
+    },
+    {
+      label: '订阅人数',
+      tips: '统计时刻的订阅账户数',
+      value: 'Subscribers',
+      desc: '订阅人数',
+      filter: [
+        { name: '不限', value: '' },
+        { name: '小于50人', value: '0-50' },
+        { name: '50-100人', value: '50-100' },
+        { name: '100-300人', value: '100-300' },
+        { name: '300人以上', value: '300-0' },
+        {
+          mode: 'input',
+          start: '',
+          end: '',
+          type: 'interval',
+        },
+      ],
+    },
+    {
+      label: '账户净值',
+      value: 'Equity',
+      desc: '备注介绍',
+      filter: [
+        { name: '不限', value: '' },
+        { name: '小于 $5000', value: '0-5000' },
+        { name: '$5000 - $20000', value: '5000-20000' },
+        { name: '$20000 - $50000', value: '20000-50000' },
+        {
+          mode: 'input',
+          start: '',
+          end: '',
+          type: 'interval',
+        },
+      ],
+    },
+    {
+      tips: '第一笔交易至今的周数',
+      label: '交易周期',
+      value: 'Weeks',
+      desc: '备注介绍',
+      filter: [
+        { name: '不限', value: '' },
+        { name: '小于13周', value: '0-13' },
+        { name: '13-26周', value: '13-26' },
+        { name: '26-52周', value: '26-52' },
+        { name: '52周以上', value: '52-0' },
+        {
+          mode: 'input',
+          start: '',
+          end: '',
+          type: 'interval',
+        },
+      ],
+      needLine: true,
+    },
+    {
+      tips: '最大的净值回撤比例',
+      label: '最大回撤比例',
+      value: 'Retracement',
+      desc: '备注介绍',
+      filter: [
+        { name: '不限', value: '' },
+        { name: '小于10%', value: '0-10' },
+        { name: '10%-20%', value: '10-20' },
+        { name: '20%-30%', value: '20-30' },
+        { name: '30%以上', value: '30-0' },
+        {
+          mode: 'input',
+          start: '',
+          end: '',
+          type: 'interval',
+        },
+      ],
+    },
+    {
+      label: '收益率',
+      value: 'Roi',
+      desc: '备注介绍',
+      filter: [
+        { name: '不限', value: '' },
+        { name: '小于10%', value: '0-10' },
+        { name: '10%-20%', value: '10-20' },
+        { name: '20%-30%', value: '20-30' },
+        { name: '30%以上', value: '30-0' },
+        {
+          mode: 'input',
+          start: '',
+          end: '',
+          type: 'interval',
+        },
+      ],
+      needLine: true,
+    },
+    {
+      label: '经纪商',
+      value: 'brokerId',
+      desc: '备注介绍',
+      hasAdd: true,
+      filter: [{ name: '全部', value: '' }],
+    },
+  ];
 
   innerParams: any = {};
 
@@ -355,20 +507,35 @@ export default class FilterPopover extends Vue {
     this.innerParams = { ...this.innerParams, ...params };
   }
 
+  private inputChanged(key: string, start: any, type: string) {
+    const modelVal = start[type];
+    console.log(start, 'inputChanged');
+    if (modelVal === '0' || modelVal === 0 || !isNumber(modelVal)) {
+      start[type] = '';
+    }
+  }
+
   private inputHandler(key: string, start: number, end: number) {
     console.log(key, start, end, 'end');
-    if (!['0', 0].includes(start) || !isNumber(start)) {
-      return;
-    }
+    // this.labelObj.filter((i: any) => {
+    //   if (i.value === key) {
+    //     console.log(i)
+    //   }
+    // })
     const params = Object.assign({}, this.rankParams);
+
+    if (!['0', 0].includes(start) && !isNumber(start)) {
+      params[key] = '';
+    }
+    if (!['0', 0].includes(end) && !isNumber(end)) {
+      params[key] = '';
+    }
     if (!start && !end) {
       params[key] = '';
     } else {
       const value = `${start || 0}-${end || 0}`;
       params[key] = value;
     }
-    // console.log(params, 'params')
-    // this.setRankParams(params);
     this.innerParams = { ...this.innerParams, ...params };
   }
 }

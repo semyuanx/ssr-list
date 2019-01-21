@@ -13,8 +13,12 @@
         </div>
 
         <div  class="user-name">
-          <span><span @click="toPersonal" class="name-active" @mouseenter.self="mouseenter($event)"
-              @mouseleave="mouseleave($event)">{{data.name}}</span> #{{data.index}}</span>
+          <span class="name-container"><span @click="toPersonal" class="name-active" @mouseenter.self="mouseenter($event)"
+              @mouseleave="mouseleave($event)">{{data.name}}</span>
+              <span> #{{data.index}}</span>
+              <span
+                :class="'grade-score-icon ' + mapGradeClass(data.grade)"
+              >{{data.grade}}</span></span>
           <div class="broker">
             <span class="broker">{{data.brokerName}}</span>
           </div>
@@ -22,16 +26,18 @@
       </slot>
     </div>
     <div class="bottom">
-      <div class="price">
+      <div :class="'price ' +  (data.showStrategy ? 'in-strategy' : '')">
         <div class="price-line num-val" v-if="Array.isArray(data.data) && data.data.length">
           <div :key="i.prop + i.val" v-for="i in data.data">
             <div :class="{'num-same': true, 'need-green': i.hightlight}">{{ i.val }}</div>
             <div class="desc">{{ i.prop }}</div>
           </div>
         </div>
-        <!-- <div class="price-line desc">
-          <div :key="i.prop + i.val" v-for="i in data.data">{{i && i.prop || ''}}</div>
-        </div> -->
+      </div>
+      <div v-if="data.showStrategy" class="strategy-content">
+        <div class="strategy-content-container">
+          <span class="strategy-detail">{{data.strategyDesc}}</span>
+        </div>
       </div>
       <div class="sub">
         <div @click="sub" class="subscibe-content">
@@ -76,6 +82,20 @@ export default class FmCard extends Vue {
 
   toPersonal() {
     this.$emit('toPersonal', this.data);
+  }
+
+  mapGradeClass(val: any) {
+    const grade = val;
+    const gradeMap: any = {
+      S: 1,
+      'A+': 2,
+      A: 3,
+      'A-': 4,
+      B: 5,
+      C: 6,
+      D: 7,
+    };
+    return `grade-score-${gradeMap[grade]}`;
   }
 }
 </script>

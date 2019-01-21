@@ -173,11 +173,15 @@ export default class FilterHeader extends Vue {
     isPTA: 'PTA会员',
     freeSubPrice: '免费订阅',
     GradeScore: '账户评级',
+    Subscribers: '订阅人数',
   };
 
   get filterTag() {
     const { rankParams } = this;
     const tags: any = [];
+
+    const needProcess = ['Subscribers', 'Equity', 'Weeks', 'Retracement', 'Roi'];
+
     if (rankParams) {
       Object.keys(rankParams).forEach((i: any) => {
         const val: any = rankParams[i];
@@ -204,6 +208,12 @@ export default class FilterHeader extends Vue {
           finalVal = gradeMap[val] || 'D';
         }
         const needIgnore = ['orderby', 'isDESC'];
+
+        if (needProcess.includes(i) && finalVal) {
+          const valArr = finalVal.split('-');
+          // if (valArr)
+        }
+
         if (finalVal && !needIgnore.includes(i)) {
           tags.push({
             label: this.textMaps[i],

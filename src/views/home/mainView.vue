@@ -37,7 +37,7 @@ import { getLoginStatus } from 'fmcomponents';
 import FollowBox from 'fmcomponents/src/components/follow';
 import personCard from 'fmcomponents/src/components/personcard';
 import {
-  numberFormat, percentFormat, propFormat, moneyFormat,
+  percentFormat, propFormat, moneyFormat, gradeFormat,
 } from '@/utils/format';
 
 const HomeStore = namespace('HomeStore');
@@ -202,8 +202,11 @@ export default class mainView extends Vue {
         newConfig = config.listData.List.map((item: any) => ({
           avatar: `${this.base}/Avata/${item.UserID}`,
           name: item.NickName,
+          grade: gradeFormat(item.GradeScore),
           confirmBtn: item.SubPrice ? `${item.SubPrice}/月` : '免费订阅',
           index: item.AccountIndex,
+          showStrategy: true,
+          strategyDesc: `交易策略: ${item.StrategyDesc}`,
           brokerName: item.BrokerName,
           item,
           data: showData.map((it: any) => {
