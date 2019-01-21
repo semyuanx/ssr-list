@@ -143,8 +143,8 @@ export default class mainView extends Vue {
       }
       // mam显示
       let mamData: any = [];
-      if (config && config.ManualCfg && !config.ManualCfg.IsAddMAM) {
-      // if (config && config.ManualCfg && config.ManualCfg.IsAddMAM) {
+      // if (config && config.ManualCfg && !config.ManualCfg.IsAddMAM) {
+      if (config && config.ManualCfg && config.ManualCfg.IsAddMAM) {
         const { progressProducts } = this;
         if (progressProducts.length) {
           mamData = progressProducts.map((item: any) => {
@@ -183,6 +183,7 @@ export default class mainView extends Vue {
             return {
               mam: true,
               name: item.Name,
+              danger: `风险<${percentFormat(item.FollowerMaxRisk)}`,
               confirmBtn: item.Status === 'Pending' ? '立即参与' : '查看详情',
               index: item.AccountIndex,
               brokerName: item.BrokerName,
@@ -192,7 +193,7 @@ export default class mainView extends Vue {
           });
         }
       }
-      console.log(config, 'ccccc');
+      // console.log(config, 'ccccc');
 
       const needHightProp = ['ROI'];
       showData = showData.slice(0, 2);
@@ -215,7 +216,7 @@ export default class mainView extends Vue {
           }),
         }));
       }
-      newConfig = mamData.concat(newConfig);
+      newConfig = newConfig.concat(mamData);
       if (newConfig.length) {
         return newConfig;
       }

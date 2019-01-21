@@ -12,7 +12,17 @@
               @showCard="showCard($event, item)"
               @toPersonal="toPersonal"
               @subscribe="handleSub"
-              :data="item" />
+              :data="item">
+                <template v-if="item.mam" slot="header">
+                  <div class="card-header">
+                    <div class="mam-tag">
+                      <span class="mam-type">mam</span>
+                    </div>
+                    <div class="mam-name" @click="toMamPersonal(item)">{{item.name}}</div>
+                    <div class="mam-danger">{{item.danger}}</div>
+                  </div>
+                </template>
+            </FmCard>
           </div>
         </div>
       </div>
@@ -57,6 +67,8 @@ export default class Home extends Vue {
   }
 
   showCard($event: any, item: any) {
+    console.log(item, '*****');
+    // return;
     this.$emit('showCard', $event, item);
   }
 
@@ -177,6 +189,14 @@ export default class Home extends Vue {
     this.$emit('toPersonal', item);
   }
 
+  toMamPersonal(item: any) {
+    const mainItem = item.item;
+    if (mainItem && mainItem.Trader) {
+      const info = { item: mainItem.Trader };
+      this.$emit('toPersonal', info);
+    }
+  }
+
   toRankList() {
     this.$router.push({ name: 'rankList' });
   }
@@ -236,6 +256,39 @@ export default class Home extends Vue {
         padding-right: 20px;
         padding-top: 15px;
         padding-bottom: 15px;
+        .card-header {
+          .mam-tag {
+            text-align: center;
+            margin-bottom: 14px;
+            .mam-type {
+              width:60px;
+              height:20px;
+              background:rgba(255,98,0,1);
+              border-radius:14px;
+              font-size:12px;
+              font-family:MicrosoftYaHei;
+              color:rgba(255,255,255,1);
+              line-height:16px;
+              display: inline-block;
+            }
+          }
+          .mam-name {
+            color:rgba(51,51,51,1);
+            line-height:26px;
+            font-size:20px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            &:hover {
+              color: @default-color;
+            }
+          }
+          .mam-danger {
+            font-size:12px;
+            font-family:MicrosoftYaHei;
+            color:rgba(31,187,149,1);
+            line-height:16px;
+          }
+        }
       }
       &::-webkit-scrollbar {
         height: 4px;

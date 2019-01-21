@@ -1,22 +1,25 @@
 <template>
   <div class="card-contain">
     <div class="user" >
-      <div class="avatar-con">
-        <div class="avatar">
-          <img
-            @click="toPersonal"
-            @mouseenter.self="mouseenter($event)"
-            @mouseleave="mouseleave($event)"
-            v-if="data.avatar" :src="data.avatar" alt="avatar" />
+      <slot name="header">
+        <div class="avatar-con">
+          <div class="avatar">
+            <img
+              @click="toPersonal"
+              @mouseenter.self="mouseenter($event)"
+              @mouseleave="mouseleave($event)"
+              v-if="data.avatar" :src="data.avatar" alt="avatar" />
+          </div>
         </div>
-      </div>
-      <div class="user-name">
-        <span><span @click="toPersonal" class="name-active" @mouseenter.self="mouseenter($event)"
-            @mouseleave="mouseleave($event)">{{data.name}}</span> #{{data.index}}</span>
-        <div class="broker">
-          <span class="broker">{{data.brokerName}}</span>
+
+        <div  class="user-name">
+          <span><span @click="toPersonal" class="name-active" @mouseenter.self="mouseenter($event)"
+              @mouseleave="mouseleave($event)">{{data.name}}</span> #{{data.index}}</span>
+          <div class="broker">
+            <span class="broker">{{data.brokerName}}</span>
+          </div>
         </div>
-      </div>
+      </slot>
     </div>
     <div class="bottom">
       <div class="price">
