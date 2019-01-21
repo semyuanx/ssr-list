@@ -181,6 +181,24 @@ export default class FilterHeader extends Vue {
     const tags: any = [];
 
     const needProcess = ['Subscribers', 'Equity', 'Weeks', 'Retracement', 'Roi'];
+    const needProcessMap: any = {
+      Subscribers:
+      {
+        suffix: '人',
+      },
+      Equity: {
+        suffix: '',
+      },
+      Weeks: {
+        suffix: '周',
+      },
+      Retracement: {
+        suffix: '',
+      },
+      Roi: {
+        suffix: '',
+      },
+    };
 
     if (rankParams) {
       Object.keys(rankParams).forEach((i: any) => {
@@ -211,7 +229,17 @@ export default class FilterHeader extends Vue {
 
         if (needProcess.includes(i) && finalVal) {
           const valArr = finalVal.split('-');
-          // if (valArr)
+          console.log(valArr, 'valArrvalArr');
+          if (valArr && valArr.length) {
+            if (!valArr[0] || [0, '0'].includes(valArr[0])) {
+              finalVal = `小于${valArr[1]}${needProcessMap[i].suffix}`;
+            } else
+            if (!valArr[1] || [0, '0'].includes(valArr[1])) {
+              finalVal = `大于${valArr[0]}${needProcessMap[i].suffix}`;
+            } else {
+              finalVal += needProcessMap[i].suffix;
+            }
+          }
         }
 
         if (finalVal && !needIgnore.includes(i)) {
