@@ -74,7 +74,7 @@
           :label="i.label"
           :prop="i.prop"
           sortable="custom"
-          :min-width="i.label.length > 4 ? '120px':'100px'"
+          :min-width="i.label.length > 4 ? '100px':'100px'"
           :key="i.prop"
           v-for="i in showPropsList"
         >

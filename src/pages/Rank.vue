@@ -385,23 +385,19 @@ export default class RankList extends Vue {
     let getParams = {
       index: this.index || 1,
       size: 20,
-      // maxScore: obj.Score && obj.Score.split('-')[1],
-      // minScore: obj.Score && obj.Score.split('-')[0],
-      // minRoi: obj.Roi && obj.Roi.split('-')[0],
-      // maxRoi: obj.Roi && obj.Roi.split('-')[1],
-      // maxRetracement: obj.Retracement && obj.Retracement.split('-')[1],
-      // minRetracement: obj.Retracement && obj.Retracement.split('-')[0],
-      // maxWeeks: obj.Weeks && obj.Weeks.split('-')[1],
-      // minWeeks: obj.Weeks && obj.Weeks.split('-')[0],
-      // maxEquity: obj.Equity && obj.Equity.split('-')[1],
-      // minEquity: obj.Equity && obj.Equity.split('-')[0],
       ...this.params,
       ...params,
     };
 
-    const brokerList = this.checkedBrokers.length ? { brokerId: this.checkedBrokers } : {};
+    const brokerList = this.checkedBrokers.length ? { brokerId: this.checkedBrokers.join(';') } : {};
     const processParam = this.preProcessParams(obj);
     getParams = { ...processParam, ...getParams, ...brokerList };
+    if ('minSubscribers' in getParams) {
+      getParams.minSubCount = getParams.minSubscribers;
+    }
+    if ('maxSubscribers' in getParams) {
+      getParams.maxSubCount = getParams.maxSubscribers;
+    }
     // console.log()
     if (!isequal(this.allParams, getParams)) {
       this.allParams = getParams;

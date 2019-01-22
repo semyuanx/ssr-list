@@ -173,6 +173,7 @@ export default class FmLittleCard extends Vue {
           font-family:DINOT-Bold;
           font-weight:bold;
           line-height:26px;
+          font-weight: 600;
         }
       }
       .line-leave {

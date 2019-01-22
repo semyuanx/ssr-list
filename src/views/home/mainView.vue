@@ -406,7 +406,7 @@ export default class mainView extends Vue {
 <style lang="less" scoped>
 .main-view-container {
     .list-item {
-        margin-top: 30px;
+        margin-bottom: 30px;
     }
 }
 </style>

@@ -244,7 +244,7 @@ export default class Home extends Vue {
   .lists-container {
     width: 100%;
     overflow: hidden;
-    padding: 20px 0;
+    padding: 0 0 20px 0;
     -webkit-overflow-scrolling:touch;
     .lists {
       display: flex;

@@ -151,6 +151,9 @@ export default class FmLittleCard extends Vue {
           }
           .num-left {
             margin-right: 4px;
+            span {
+              font-weight: 600;
+            }
           }
           .num-right {
             color: #333333;

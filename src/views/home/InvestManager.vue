@@ -1,12 +1,15 @@
 <template>
   <div class="header">
-    <div class="fm-show-pc">
+    <div
+      v-if="configData.data.length > 1"
+      class="fm-show-pc"
+      :class="{'invest-content': configData.data.length > 1}"
+    >
       <InvestManager
         @toRightMore="toMore"
         @toLeftMore="publishProduct"
         @toJoinMore="toJoinMore"
         @toMore="toMore" :subscribe="subscribe"
-        v-if="configData.data.length > 1"
         :data="configData"
         :description="description" />
     </div>
@@ -287,6 +290,7 @@ export default class Index extends Vue {
 }
 </script>
 <style lang="less" scoped>
-
-
+.invest-content {
+  margin-bottom: 30px;
+}
 </style>
