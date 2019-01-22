@@ -128,29 +128,31 @@ export const processConfig = function processConfig(CondCfg: any) {
       Object.keys(CondConfig).forEach((i: any) => {
         const filter: any = CondConfig[i];
 
-        if (Object.prototype.toString.call(filter) === '[object Object]') {
-          if (filter) {
-            if (filter.Min || filter.Max) {
-              params[i] = [filter.Min, filter.Max].join('-');
+        if (typeof filter !== 'undefined' || filter !== null) {
+          if (Object.prototype.toString.call(filter) === '[object Object]') {
+            if (filter) {
+              if (filter.Min || filter.Max) {
+                params[i] = [filter.Min, filter.Max].join('-');
+              }
             }
-          }
-        } else if (Array.isArray(filter)) {
-          console.log(' no', i);
-          if (i === 'BrokerID') {
-            params.brokerId = filter;
+          } else if (Array.isArray(filter)) {
+            console.log(' no', i);
+            if (i === 'BrokerID') {
+              params.brokerId = filter;
+            } else {
+              params[i] = filter;
+            }
+          } else if (typeof filter === 'boolean') {
+            if (i === 'IsPTA') {
+              params.isPTA = filter ? 1 : 0;
+            } else if (i === 'FreeSubPrice') {
+              params.freeSubPrice = filter ? 1 : 0;
+            } else {
+              params[i] = filter;
+            }
           } else {
             params[i] = filter;
           }
-        } else if (typeof filter === 'boolean') {
-          if (i === 'IsPTA') {
-            params.isPTA = filter ? 1 : 0;
-          } else if (i === 'FreeSubPrice') {
-            params.freeSubPrice = filter ? 1 : 0;
-          } else {
-            params[i] = filter;
-          }
-        } else if (typeof filter !== 'undefined' || filter !== null) {
-          params[i] = filter;
         }
       });
     }

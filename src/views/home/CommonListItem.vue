@@ -80,31 +80,8 @@ export default class Index extends Vue {
     // const params: any = {};
     const CondCfg: any = data.CondCfg || {};
 
-    // params.orderby = condcfg.OrderByName;
-    // params.isDESC = condcfg.OrderBy ? 1 : 0;
-
     const params = processConfig(CondCfg);
 
-    // const configRank = condcfg.CondConfig;
-    // if (configRank) {
-    //   Object.keys(configRank).forEach((i: any) => {
-    //     const filter: any = configRank[i];
-    //     if (filter) {
-    //       if (Object.prototype.toString.call(filter) === '[object Object]') {
-    //         if (filter) {
-    //           if (filter.Min || filter.Max) {
-    //             params[i] = [filter.Min, filter.Max].join('-');
-    //           }
-    //         }
-    //       } else if (Array.isArray(filter)) {
-    //         console.log(' no');
-    //       } else {
-    //         params[i] = filter;
-    //       }
-    //     }
-    //   });
-    // }
-    // console.log(params, 'pppp');
     this.setUseDefaultParams(false);
     this.setRankParams(params);
     this.$nextTick(() => {
@@ -167,6 +144,7 @@ export default class Index extends Vue {
     if (filters) {
       Object.keys(filters).filter((i: any) => i !== 'BrokerID').forEach((i: any) => {
         const filter = filters[i];
+        console.log(filter, i, 'iiiiiiiiii');
         const prop = `${(mapKey as any)[i]}`;
         if (filter) {
           if (Object.prototype.toString.call(filter) === '[object Object]') {
@@ -190,8 +168,8 @@ export default class Index extends Vue {
       background: config.ChartID,
       title: config.RankName,
       subTitle: config.ViceTitle,
-      textTitle: config.RankText,
-      filterText: info.length ? `上榜条件:${info.join(',')}` : '',
+      textTitle: config.ViceTitle,
+      filterText: config.RankText,
     };
   }
 }

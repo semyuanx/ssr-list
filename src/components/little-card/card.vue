@@ -118,12 +118,13 @@ export default class FmLittleCard extends Vue {
 
     .card-header {
       .flex-row();
+      align-items: center;
       .card-header-left {
-        width:50px;
-        height:50px;
-        display: flex;
-        align-items: center;
-        justify-content: flex-start;
+        // width:50px;
+        // height:50px;
+        // display: flex;
+        // align-items: center;
+        // justify-content: flex-start;
         .card-avatar {
           width:40px;
           height:40px;
@@ -141,6 +142,7 @@ export default class FmLittleCard extends Vue {
         }
       }
       .card-header-right {
+        padding-left: 4px;
         flex: 1;
         font-size:12px;
         color:rgba(153,153,153,1);
@@ -257,6 +259,7 @@ export default class FmLittleCard extends Vue {
   margin-left: 4px;
 }
 .grade-score-1 {
+  color: #FFDEA1;
   background: linear-gradient(to bottom, #8A8D91, #272829);
 }
 .grade-score-2 {

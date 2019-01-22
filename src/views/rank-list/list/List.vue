@@ -549,12 +549,14 @@ export default class List extends Vue {
         }
         :global(td) {
           border: none;
+          transition: none;
         }
 
         &:hover {
           background: rgba(255, 255, 255, 1) !important;
           box-shadow: 0px 0px 30px 0px rgba(0, 0, 0, 0.1);
           :global(td) {
+            box-shadow: 20px 0px 1.25rem 0 rgba(0, 0, 0, 0.1);
             background-color: #ffffff !important;
           }
           .custom-display-row-sub {
@@ -640,6 +642,7 @@ export default class List extends Vue {
                 margin-right: 5px;
               }
               .grade-score-1 {
+                color: #FFDEA1;
                 background: linear-gradient(to bottom, #8A8D91, #272829);
               }
               .grade-score-2 {

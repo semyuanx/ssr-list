@@ -47,7 +47,7 @@
       </div>
       <div v-if="data.showStrategy" class="strategy-content">
         <div class="strategy-content-container">
-          <span class="strategy-detail">{{data.strategyDesc}}</span>
+          <span :title="data.strategyDesc" class="strategy-detail">{{data.strategyDesc}}</span>
         </div>
       </div>
       <div class="sub">

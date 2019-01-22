@@ -113,7 +113,8 @@ i[class^="icon-"] {
       // background-color: #fff;
       border-radius: 13px;
       height: 26px;
-      padding: 0 15px;
+      line-height: 26px;
+      // padding: 0 15px;
       margin-left: 10px;
       font-size: 12px;
     }

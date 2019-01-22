@@ -112,17 +112,17 @@ export default class Index extends Vue {
   }
 
   get description() {
-    const config:any = this.data;
-
+    const { config }:any = this.data;
     return {
       linkUrl: '',
+      textBtn: config.ChartText,
       btnText: config.ChartText,
       source: config,
       background: config.ChartID,
-      title: config.RankName,
-      subTitle: config.ViceTitle,
-      textTitle: config.RankText,
-      filterText: config.ViceTitle,
+      title: config.RankName || '投资管家',
+      subTitle: config.RankText,
+      textTitle: config.ViceTitle,
+      filterText: config.RankText,
       needLeftSlot: true,
     };
   }

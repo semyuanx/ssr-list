@@ -20,7 +20,7 @@ const mapProps: any = {
   ExpSymbol: '擅长品种',
   Subscribers: '订阅人数',
   SubPrice: '订阅价格',
-  IsPTA: 'pta会员',
+  IsPTA: 'PTA会员',
   GradeScore: '评级',
 };
 

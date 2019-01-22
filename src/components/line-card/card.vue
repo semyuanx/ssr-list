@@ -126,12 +126,13 @@ export default class FmLittleCard extends Vue {
     .card-header {
       .flex-row();
       flex: 2;
+      align-items: center;
       .card-header-left {
-        width:50px;
-        height:50px;
-        display: flex;
-        align-items: center;
-        justify-content: flex-start;
+        // width:50px;
+        // height:50px;
+        // display: flex;
+        // align-items: center;
+        // justify-content: flex-start;
         .card-avatar {
           width:40px;
           height:40px;
@@ -153,6 +154,7 @@ export default class FmLittleCard extends Vue {
         font-size:12px;
         color:rgba(153,153,153,1);
         .flex-column();
+        padding-left: 4px;
         >div {
           flex: 1;
         }
@@ -268,4 +270,42 @@ export default class FmLittleCard extends Vue {
       color:rgba(31,187,149,1);
     }
   }
+
+
+.grade-score-icon {
+  display: inline-block;
+  width:20px;
+  height:14px;
+  font-size:12px;
+  font-family:DINOT-Bold;
+  font-weight:bold;
+  color:rgba(255,255,255,1);
+  line-height:14px;
+  border-radius: 6px  2px  6px  2px;
+  text-align: center;
+  margin-left: 4px;
+}
+.grade-score-1 {
+  color: #FFDEA1;
+  background: linear-gradient(to bottom, #8A8D91, #272829);
+}
+.grade-score-2 {
+  background: linear-gradient(to bottom, #F2D6A2, #BFA36F);
+}
+.grade-score-3 {
+  background: linear-gradient(to bottom, #F2D6A2, #BFA36F);
+}
+.grade-score-4 {
+  background: linear-gradient(to bottom, #F2D6A2, #BFA36F);
+}
+.grade-score-5 {
+  background: linear-gradient(to bottom, #DADCE0, #A3A5A8);
+}
+// c
+.grade-score-6 {
+  background: linear-gradient(to bottom, #E2E2E2, #C5C7CA);
+}
+.grade-score-7 {
+  background: linear-gradient(to bottom, #E2E2E2, #C5C7CA);
+}
 </style>

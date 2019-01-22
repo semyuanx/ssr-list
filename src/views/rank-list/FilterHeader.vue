@@ -203,63 +203,57 @@ export default class FilterHeader extends Vue {
     if (rankParams) {
       Object.keys(rankParams).forEach((i: any) => {
         const val: any = rankParams[i];
-        // eslint-disable-next-line
-        let finalVal = i === 'isDESC' ? val === 1 ? '倒序' : '顺序' : val;
-        // if (i === 'orderby') {
-        //   finalVal = (propMaps as any)[val] || val;
-        // }
-        if (i === 'isPTA') {
-          finalVal = val === 1 ? '是' : '否';
-        }
-        if (i === 'freeSubPrice') {
-          finalVal = val === 1 ? '是' : '否';
-        }
-        if (i === 'GradeScore') {
-          const gradeMap: any = {
-            '9-0': 'S',
-            '8-9': 'A+',
-            '7-8': 'A',
-            '6-7': 'A-',
-            '5-6': 'B',
-            '4-5': 'C',
-            '4-0': 'D',
-          };
-          console.log(gradeMap[val], val, '******');
-          finalVal = gradeMap[val] || 'D';
-        }
-        const needIgnore = ['orderby', 'isDESC', 'isPTA', 'freeSubPrice', 'brokerId', 'ExpSymbol', 'BrokerID'];
+        if (typeof val !== 'undefined' && val !== null) {
+          // eslint-disable-next-line
+          let finalVal = i === 'isDESC' ? val === 1 ? '倒序' : '顺序' : val;
+          // if (i === 'orderby') {
+          //   finalVal = (propMaps as any)[val] || val;
+          // }
+          if (i === 'isPTA') {
+            finalVal = val === 1 ? '是' : '否';
+          }
+          if (i === 'freeSubPrice') {
+            finalVal = val === 1 ? '是' : '否';
+          }
+          if (i === 'GradeScore') {
+            const gradeMap: any = {
+              '9-0': 'S',
+              '8-9': 'A+',
+              '7-8': 'A',
+              '6-7': 'A-',
+              '5-6': 'B',
+              '4-5': 'C',
+              '4-0': 'D',
+            };
+            console.log(gradeMap[val], val, '******');
+            finalVal = gradeMap[val] || 'D';
+          }
+          const needIgnore = ['orderby', 'isDESC', 'isPTA', 'freeSubPrice', 'brokerId', 'ExpSymbol', 'BrokerID'];
 
-        if (needProcess.includes(i) && finalVal) {
-          const valArr = finalVal.split('-');
-          if (valArr && valArr.length) {
-            if (!valArr[0] || [0, '0'].includes(valArr[0])) {
-              finalVal = `小于${valArr[1]}${needProcessMap[i].suffix}`;
-            } else
-            if (!valArr[1] || [0, '0'].includes(valArr[1])) {
-              finalVal = `大于${valArr[0]}${needProcessMap[i].suffix}`;
-            } else {
-              finalVal += needProcessMap[i].suffix;
+          if (needProcess.includes(i) && finalVal) {
+            const valArr = finalVal.split('-');
+            if (valArr && valArr.length) {
+              if (!valArr[0] || [0, '0'].includes(valArr[0])) {
+                finalVal = `小于${valArr[1]}${needProcessMap[i].suffix}`;
+              } else
+              if (!valArr[1] || [0, '0'].includes(valArr[1])) {
+                finalVal = `大于${valArr[0]}${needProcessMap[i].suffix}`;
+              } else {
+                finalVal += needProcessMap[i].suffix;
+              }
             }
           }
-        }
 
-        if (finalVal && !needIgnore.includes(i)) {
-          tags.push({
-            label: this.textMaps[i],
-            val: finalVal,
-          });
+          if (finalVal && !needIgnore.includes(i)) {
+            tags.push({
+              label: this.textMaps[i],
+              val: finalVal,
+            });
+          }
         }
       });
     }
-    // if (!tags.length) {
-    //   Object.keys(this.textMaps).forEach((i: any) => {
-    //     const val: any = this.textMaps[i];
-    //     tags.push({
-    //       label: val,
-    //       val: '不限',
-    //     });
-    //   });
-    // }
+
     const brokerNames: any = [];
     this.brokersList.forEach((item: any) => {
       if (this.checkedBrokers.includes(item.BrokerId) || this.checkedBrokers.includes(+item.BrokerId)) {
