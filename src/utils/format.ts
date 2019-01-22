@@ -127,28 +127,34 @@ export const processConfig = function processConfig(CondCfg: any) {
     if (CondConfig) {
       Object.keys(CondConfig).forEach((i: any) => {
         const filter: any = CondConfig[i];
-        if (filter) {
-          if (Object.prototype.toString.call(filter) === '[object Object]') {
-            if (filter) {
-              if (filter.Min || filter.Max) {
-                params[i] = [filter.Min, filter.Max].join('-');
-              }
+
+        if (Object.prototype.toString.call(filter) === '[object Object]') {
+          if (filter) {
+            if (filter.Min || filter.Max) {
+              params[i] = [filter.Min, filter.Max].join('-');
             }
-          } else if (Array.isArray(filter)) {
-            console.log(' no');
-            if (i === 'brokerId') {
-              params.brokerId = filter;
-            }
-          } else if (i === 'IsPTA') {
+          }
+        } else if (Array.isArray(filter)) {
+          console.log(' no', i);
+          if (i === 'BrokerID') {
+            params.brokerId = filter;
+          } else {
+            params[i] = filter;
+          }
+        } else if (typeof filter === 'boolean') {
+          if (i === 'IsPTA') {
             params.isPTA = filter ? 1 : 0;
-          } else if (i === 'freeSubPrice') {
+          } else if (i === 'FreeSubPrice') {
             params.freeSubPrice = filter ? 1 : 0;
           } else {
             params[i] = filter;
           }
+        } else if (typeof filter !== 'undefined' || filter !== null) {
+          params[i] = filter;
         }
       });
     }
   }
+  console.log(params, '*************&&&&&&&&&&&&&&');
   return params;
 };

@@ -57,6 +57,12 @@ export default class mainView extends Vue {
   configs: any;
 
   @HomeStore.State
+  configsFollower: any;
+
+  @HomeStore.State
+  configsInvest: any;
+
+  @HomeStore.State
   progressProducts: any;
 
   @HomeStore.State
@@ -70,6 +76,7 @@ export default class mainView extends Vue {
     const data = this.progressProducts.map((i: any) => i);
     return {
       data,
+      config: this.configsInvest,
     };
   }
 
@@ -77,15 +84,12 @@ export default class mainView extends Vue {
     const data = this.masterFollower.map((i: any) => i);
     return {
       data,
+      config: this.configsFollower,
     };
   }
 
   hideCard($event: any) {
     personCard.hide();
-  }
-
-  showStrategyCard() {
-
   }
 
   showCard(e: any, ids: any) {

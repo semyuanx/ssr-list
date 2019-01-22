@@ -13,9 +13,25 @@
         <div class="card-header-right">
           <div class="name">
             <span
-            @mouseenter.self="mouseenter($event)"
-            @mouseleave="mouseleave($event)"
-            @click="toPersonal"><span class="name-hover">{{data.name}}</span> #{{data.index}}</span>
+              class="name-info-container"
+            >
+                <span
+                  @mouseenter.self="mouseenter($event)"
+                  @mouseleave="mouseleave($event)"
+                  @click="toPersonal"
+                  class="name-hover">{{data.name}}</span>
+                <span>&nbsp;#{{data.index}}</span>
+                <span
+                  v-if="data.isShowGrade"
+                  :class="'grade-score-icon ' + mapGradeClass(data.grade)"
+                >{{data.grade}}</span>
+                <span
+                  v-if="data.isShowPta"
+                  :class="'grade-score-icon '"
+                >
+                  <img style="width: 14px; height: 14px;" src="~@/assets/pta.png" />
+                </span>
+            </span>
           </div>
           <div class="broker">
             <span>{{data.brokerName}}</span>
@@ -66,6 +82,20 @@ export default class FmLittleCard extends Vue {
 
   toPersonal() {
     this.$emit('toPersonal', this.data);
+  }
+
+  mapGradeClass(val: any) {
+    const grade = val;
+    const gradeMap: any = {
+      S: 1,
+      'A+': 2,
+      A: 3,
+      'A-': 4,
+      B: 5,
+      C: 6,
+      D: 7,
+    };
+    return `grade-score-${gradeMap[grade]}`;
   }
 }
 </script>
@@ -127,6 +157,12 @@ export default class FmLittleCard extends Vue {
               color: @default-color;
               cursor: pointer;
             }
+          }
+
+          .name-info-container {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
           }
         }
       }
@@ -205,4 +241,41 @@ export default class FmLittleCard extends Vue {
     }
 
   }
+
+
+.grade-score-icon {
+  display: inline-block;
+  width:20px;
+  height:14px;
+  font-size:12px;
+  font-family:DINOT-Bold;
+  font-weight:bold;
+  color:rgba(255,255,255,1);
+  line-height:14px;
+  border-radius: 6px  2px  6px  2px;
+  text-align: center;
+  margin-left: 4px;
+}
+.grade-score-1 {
+  background: linear-gradient(to bottom, #8A8D91, #272829);
+}
+.grade-score-2 {
+  background: linear-gradient(to bottom, #F2D6A2, #BFA36F);
+}
+.grade-score-3 {
+  background: linear-gradient(to bottom, #F2D6A2, #BFA36F);
+}
+.grade-score-4 {
+  background: linear-gradient(to bottom, #F2D6A2, #BFA36F);
+}
+.grade-score-5 {
+  background: linear-gradient(to bottom, #DADCE0, #A3A5A8);
+}
+// c
+.grade-score-6 {
+  background: linear-gradient(to bottom, #E2E2E2, #C5C7CA);
+}
+.grade-score-7 {
+  background: linear-gradient(to bottom, #E2E2E2, #C5C7CA);
+}
 </style>

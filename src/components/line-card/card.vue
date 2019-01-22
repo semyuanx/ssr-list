@@ -13,9 +13,25 @@
         <div class="card-header-right">
           <div class="name">
             <span
-              @mouseenter.self="mouseenter($event)"
-              @mouseleave="mouseleave($event)"
-              @click="toPersonal"><span class="name-hover">{{data.name}}</span> #{{data.index}}</span>
+              class="name-info-container"
+            >
+                <span
+                  @mouseenter.self="mouseenter($event)"
+                  @mouseleave="mouseleave($event)"
+                  @click="toPersonal"
+                  class="name-hover">{{data.name}}</span>
+                <span>&nbsp;#{{data.index}}</span>
+                <span
+                  v-if="data.isShowGrade"
+                  :class="'grade-score-icon ' + mapGradeClass(data.grade)"
+                >{{data.grade}}</span>
+                <span
+                  v-if="data.isShowPta"
+                  :class="'grade-score-icon '"
+                >
+                  <img style="width: 14px; height: 14px;" src="~@/assets/pta.png" />
+                </span>
+              </span>
           </div>
           <div class="broker">
             <span>{{data.brokerName}}</span>
@@ -135,6 +151,11 @@ export default class FmLittleCard extends Vue {
               color: @default-color;
               cursor: pointer;
             }
+          }
+          .name-info-container {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
           }
         }
       }

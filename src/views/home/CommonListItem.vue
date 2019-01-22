@@ -21,7 +21,7 @@ import { Component, Vue, Prop } from 'vue-property-decorator';
 import CommonItem from '@/views/home/pc/CommonItem.vue';
 import InvestManagerMobile from '@/views/home/mobile/InvestManagerMobile.vue';
 import mapKey from '@/constant/propMap';
-import { propFormat, processConfig } from '@/utils/format';
+import { propFormat, processConfig, gradeFormat } from '@/utils/format';
 import { toLoginPage, toSubscribePage, toPersonalPage } from '@/utils/native';
 import { namespace } from 'vuex-class';
 import { needHighlight } from '@/constant/propFormat';
@@ -126,6 +126,9 @@ export default class Index extends Vue {
       });
     }
 
+    const showGrade = showData.includes('GradeScore');
+    const showPta = showData.includes('IsPTA');
+
     if (config.listData && Array.isArray(config.listData.List) && config.listData.List.length > 1) {
       if (config.listData.List.length > 3) {
         showData = showData.slice(0, 2);
@@ -138,6 +141,9 @@ export default class Index extends Vue {
         index: item.AccountIndex,
         brokerName: item.BrokerName,
         price: item.SubPrice,
+        isShowGrade: showGrade,
+        grade: gradeFormat(item.GradeScore),
+        isShowPta: showPta && item.IsPTA,
         item,
         data: showData.map((it: any) => {
           const ival: any = item[it];
@@ -179,6 +185,7 @@ export default class Index extends Vue {
     }
 
     return {
+      btnText: config.ChartText,
       source: config,
       background: config.ChartID,
       title: config.RankName,

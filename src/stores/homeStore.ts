@@ -3,10 +3,15 @@ import {
 } from '@/utils/store-class-annotation';
 import { Commit, ActionTree } from 'vuex';
 import {
-  getCustomConfig, getCustomRankList, getMasterFollowerService, getRankFollowersService,
+  getCustomConfig, getCustomRankList,
+  getMasterFollowerService,
+  getRankFollowersService,
   getRankDynamicsService,
+  getSepRankConfigService,
 } from '@/service/home';
 import { getAllProducts } from '@/service/manager';
+import { processConfig } from '@/utils/format';
+import propMaps from '@/constant/propMap';
 
 @Repository('HomeStore')
 export default class HomeStore {
@@ -17,11 +22,24 @@ export default class HomeStore {
   public progressProducts: Array<any> = [];
 
   @State([])
+  public masterFollower: Array<any> = [];
 
-  public masterFollower: Array<any> = []; // 交易大师
+  // 交易大师
+  @State({})
+  public configsFollower: any = {};
+
+  // 交易大师
+  @State({})
+  public configsInvest: any = {}; // 投资管家配置
 
   @Set('configs')
   public setConfig(): any | null { }
+
+  @Set('configsInvest')
+  public setSpecialConfig2(): any | null { }
+
+  @Set('configsFollower')
+  public setSpecialConfig3(): any | null { }
 
   @Set('progressProducts')
   public setProgressProducts(): any | null { }
@@ -157,5 +175,48 @@ export default class HomeStore {
     //   // commit('setMasterFollower', data.items);
     // }
     return { data };
+  }
+
+  // 特殊绑定设置
+  @Action
+  public async getSepRankConfig(context: { commit: Commit, state: any}, payload: any) {
+    const { commit, state } = context;
+    return getSepRankConfigService(payload).then((res: any) => {
+      if (typeof payload !== 'object' && !payload.index) {
+        return;
+      }
+      const { index } = payload;
+      if (res) {
+        commit(`setSpecialConfig${index}`, res);
+      }
+      // if (res && res.HideConfig) {
+      //   const hideConfig = res.HideConfig;
+      //   const blackList: any = [];
+      //   const showProps = Object.keys(hideConfig).filter((i: any) => !hideConfig[i] && !blackList.includes(i)).map((i: any) => ({
+      //     label: (propMaps as any)[i] || ' ',
+      //     prop: i,
+      //     // highlight: needHighlight.includes(i),
+      //     // suffix: suffixProps[i] || '',
+      //   }));
+      //   // console.log(showProps, propMaps, 'showProps');
+      //   commit('setShowProps', showProps);
+      // }
+
+      // if (res && res.CondCfg) {
+      //   const { CondCfg } = res;
+      //   const { rankParams, useDefaultParams } = state;
+      //   let params: any = {};
+
+      //   params = processConfig(CondCfg);
+
+      //   params = { ...rankParams, ...params };
+      //   console.log(params, 'ppp***pp', useDefaultParams);
+      //   if (useDefaultParams) {
+      //     commit('setRankParams', params);
+      //   }
+      // }
+      // eslint-disable-next-line
+      return res;
+    });
   }
 }

@@ -32,6 +32,9 @@ export default class Home extends Vue {
   getCustomConfig: any;
 
   @HomeStore.Action
+  getSepRankConfig: any;
+
+  @HomeStore.Action
   getProductsAsync: any;
 
   @HomeStore.Action
@@ -46,6 +49,8 @@ export default class Home extends Vue {
   };
 
   mounted() {
+    this.getSepRankConfig({ index: 2 });
+    this.getSepRankConfig({ index: 3 });
     this.getCustomConfig();
     this.getProductsAsync(this.params);
     this.getMasterFollower({

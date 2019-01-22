@@ -13,7 +13,10 @@
         </div>
 
         <div  class="user-name">
-          <span class="name-container"><span @click="toPersonal" class="name-active" @mouseenter.self="mouseenter($event)"
+          <span class="name-container">
+            <span
+              @click="toPersonal"
+              class="name-active" @mouseenter.self="mouseenter($event)"
               @mouseleave="mouseleave($event)">{{data.name}}</span>
               <span> #{{data.index}}</span>
               <span

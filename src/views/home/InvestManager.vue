@@ -32,7 +32,7 @@ import { namespace, Action } from 'vuex-class';
 
 const ManagerStore = namespace('ManagerStore');
 
-const invest = require('@/assets/invest.png');
+// const invest = require('@/assets/invest.png');
 @Component({
   components: {
     InvestManager,
@@ -116,12 +116,13 @@ export default class Index extends Vue {
 
     return {
       linkUrl: '',
+      btnText: config.ChartText,
       source: config,
-      background: invest,
-      title: '投资管家',
-      subTitle: '发起产品',
-      textTitle: '零风险跟随',
-      filterText: '发起产品',
+      background: config.ChartID,
+      title: config.RankName,
+      subTitle: config.ViceTitle,
+      textTitle: config.RankText,
+      filterText: config.ViceTitle,
       needLeftSlot: true,
     };
   }

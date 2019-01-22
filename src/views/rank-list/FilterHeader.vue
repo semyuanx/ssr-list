@@ -227,11 +227,10 @@ export default class FilterHeader extends Vue {
           console.log(gradeMap[val], val, '******');
           finalVal = gradeMap[val] || 'D';
         }
-        const needIgnore = ['orderby', 'isDESC'];
+        const needIgnore = ['orderby', 'isDESC', 'isPTA', 'freeSubPrice', 'brokerId', 'ExpSymbol', 'BrokerID'];
 
         if (needProcess.includes(i) && finalVal) {
           const valArr = finalVal.split('-');
-          console.log(valArr, 'valArrvalArr');
           if (valArr && valArr.length) {
             if (!valArr[0] || [0, '0'].includes(valArr[0])) {
               finalVal = `小于${valArr[1]}${needProcessMap[i].suffix}`;

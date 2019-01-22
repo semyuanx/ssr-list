@@ -21,10 +21,12 @@ import { Component, Vue, Prop } from 'vue-property-decorator';
 import InvestManager from '@/views/home/pc/InvestManager.vue';
 // import TradeMasterMobile from '@/views/home/mobile/TradeMaster.vue';
 import CommonMobile from '@/views/home/mobile/CommonMobile.vue';
-import { moneyFormat, percentFormat } from '@/utils/format';
+import { moneyFormat, percentFormat, propFormat } from '@/utils/format';
 import { toLoginPage, toSubscribePage, toPersonalPage } from '@/utils/native';
+import mapKey from '@/constant/propMap';
+import { needHighlight } from '@/constant/propFormat';
 
-const followerMaster = require('@/assets/followerMaster.png');
+// const followerMaster = require('@/assets/followerMaster.png');
 
 @Component({
   components: {
@@ -92,6 +94,10 @@ export default class Index extends Vue {
     this.$router.push({ name: 'follower' });
   }
 
+  formatVal(val: string|number, type: string): string | number {
+    return propFormat(val, type);
+  }
+
   get mobileConfigData() {
     const config:any = this.data;
     let data = [];
@@ -119,10 +125,22 @@ export default class Index extends Vue {
   }
 
   get configData() {
-    const config:any = this.data;
-    let data = [];
-    if (Array.isArray(config.data)) {
-      data = config.data.map((i: any) => {
+    // const config:any = this.data;
+    const { config, data: dataSource }:any = this.data;
+
+    // let showData: any = [];
+    // if (config && config.HideConfig) {
+    //   Object.keys(config.HideConfig).forEach((i: any) => {
+    //     if (!config.HideConfig[i]) {
+    //       showData.push(i);
+    //     }
+    //   });
+    // }
+    // const needShowProps = showData.slice(0, 2);
+    // console.log(showData, 'showDatashowData')
+    let data: any = [];
+    if (Array.isArray(dataSource)) {
+      data = dataSource.map((i: any) => {
         let brokerName = '';
         if (Array.isArray(i.AccountList) && i.AccountList.length) {
           const accountInfo = i.AccountList.find((j: any) => j && j.AccountIndex === i.AccountIndex);
@@ -137,7 +155,8 @@ export default class Index extends Vue {
           index: i.AccountIndex,
           brokerName,
           rightBtnText: '立即查看',
-          data: [
+          data:
+          [
             { prop: '跟随获利', val: moneyFormat(i.FollowMoney) },
             {
               prop: '收益率',
@@ -145,6 +164,7 @@ export default class Index extends Vue {
               highlight: i.Roi > 0,
             },
           ],
+
         };
       });
     }
@@ -152,17 +172,17 @@ export default class Index extends Vue {
   }
 
   get description() {
-    const config:any = this.data;
-
+    const { config }:any = this.data;
     return {
-      linkUrl: '',
+      subTitle: config.ViceTitle,
+      btnText: config.ChartText,
+      linkUrl: config.ChartID,
       source: config,
-      background: followerMaster,
-      title: '跟随大师',
-      subTitle: 'ssss',
-      textTitle: '获利最多跟随者',
+      background: config.ChartID,
+      title: config.RankName,
+      textTitle: config.RankText,
       filterText: '',
-      textBtn: '立即查看',
+      textBtn: config.ChartText,
       avatar: true,
       header: this.header,
     };
