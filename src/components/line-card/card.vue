@@ -82,6 +82,20 @@ export default class FmLittleCard extends Vue {
   toPersonal() {
     this.$emit('toPersonal', this.data);
   }
+
+  mapGradeClass(val: any) {
+    const grade = val;
+    const gradeMap: any = {
+      S: 1,
+      'A+': 2,
+      A: 3,
+      'A-': 4,
+      B: 5,
+      C: 6,
+      D: 7,
+    };
+    return `grade-score-${gradeMap[grade]}`;
+  }
 }
 </script>
 <style lang="less" scoped>
