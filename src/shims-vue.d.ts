@@ -24,5 +24,6 @@ declare module 'vue/types/vue' {
         cdn: string;
         redirectTo: Function;
         isObject: Function;
+        log: Function;
     }
 }

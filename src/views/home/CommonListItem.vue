@@ -144,7 +144,6 @@ export default class Index extends Vue {
     if (filters) {
       Object.keys(filters).filter((i: any) => i !== 'BrokerID').forEach((i: any) => {
         const filter = filters[i];
-        console.log(filter, i, 'iiiiiiiiii');
         const prop = `${(mapKey as any)[i]}`;
         if (filter) {
           if (Object.prototype.toString.call(filter) === '[object Object]') {

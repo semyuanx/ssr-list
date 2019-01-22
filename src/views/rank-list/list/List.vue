@@ -335,10 +335,6 @@ export default class List extends Vue {
     });
   }
 
-  log(msg: any) {
-    console.log(msg);
-  }
-
   getRowClassName({ row, rowIndex }: any) {
     if (rowIndex % 2 === 0) {
       return 'default-row odd-row';
@@ -563,6 +559,9 @@ export default class List extends Vue {
             .sub-row-btn {
               background: rgba(255, 98, 0, 1);
               color: #ffffff;
+              &:hover {
+                background-color: @hover-default-color;
+              }
             }
           }
         }
@@ -686,6 +685,8 @@ export default class List extends Vue {
           transition: all 0.3s ease-in;
           text-align: center;
           overflow: hidden;
+          z-index: 10;
+
         }
       }
       .custom-display-row-loading {

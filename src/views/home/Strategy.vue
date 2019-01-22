@@ -13,7 +13,6 @@
 import { namespace } from 'vuex-class';
 import { Component, Vue, Prop } from 'vue-property-decorator';
 // import Strategy from '@/views/home/pc/Strategy.vue';
-// import StrategyMobile from '@/views/home/mobile/Strategy.vue';
 import { toLoginPage, toSubscribePage, toPersonalPage } from '@/utils/native';
 
 const RankStore = namespace('RankStore');

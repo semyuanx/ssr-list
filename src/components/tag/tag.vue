@@ -48,7 +48,7 @@ export default class Tag extends Vue {
   overflow: hidden;
   text-overflow:ellipsis;
   white-space: nowrap;
-  cursor: pointer;
+  // cursor: pointer;
   display: inline-block;
   flex: 1;
   font-size:12px;

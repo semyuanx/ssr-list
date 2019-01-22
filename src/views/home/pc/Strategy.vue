@@ -1,7 +1,11 @@
 <template>
   <div class="strategy-container">
     <div class="header" v-if="header">
-      <LineHeader @leftClick="leftClick" @rightClick="toRankList" rightIconDirection='left' rightTitle="筛选器" subTitle="成为交易员" :title="header.title || ''" />
+      <LineHeader @leftClick="leftClick" @rightClick="toRankList" rightIconDirection='left' rightTitle="" subTitle="成为交易员" :title="header.title || ''" >
+        <div slot="right">
+          <FilterBtn />
+        </div>
+      </LineHeader>
     </div>
     <div class="lists-outer">
       <div class="lists-container">
@@ -46,11 +50,13 @@ import LineHeader from './LineHeader.vue'; // @ is an alias to /src
 import FmCard from '@/components/card/Card.vue'; // @ is an alias to /src
 import { getElementTop, getElementLeft } from '@/utils/util';
 import eventBus from '@/utils/event';
+import FilterBtn from '@/views/home/FilterHeader.vue';
 
 @Component({
   components: {
     LineHeader,
     FmCard,
+    FilterBtn,
   },
 })
 export default class Home extends Vue {

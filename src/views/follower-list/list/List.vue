@@ -336,10 +336,6 @@ export default class List extends Vue {
     this.getFollowAndAttention();
   }
 
-  log(msg: any) {
-    console.log(msg);
-  }
-
   getRowClassName({ row, rowIndex }: any) {
     if (rowIndex % 2 === 0) {
       return 'default-row odd-row';

@@ -2,26 +2,6 @@
   <div>
     <div class="filter-header fm-show-pc">
       <div class="header-content">
-        <div class="header-fitler-title"><span v-if="filterTag.length">筛选条件：</span></div>
-        <div class="header-tag-lists">
-          <div
-            :key="index"
-            v-for="(params,index) in filterTag"
-            class="header-tag-item"
-          >
-            <FmTag
-              :msg="params.label"
-              :desc="params.val"
-            />
-          </div>
-          <!-- <div class="header-tag-item">
-            <FmTag
-              type="2"
-              msg="PTA"
-              desc="会员"
-            />
-          </div> -->
-        </div>
         <div class="header-filter">
           <div
             @click="emitFilter"
@@ -142,6 +122,9 @@ export default class FilterHeader extends Vue {
 
   @RankStore.Mutation
   setCheckedBrokers: any;
+
+  @RankStore.Mutation
+  setUseDefaultParams: any;
 
   @RankStore.State
   filterRes: any;
@@ -312,9 +295,14 @@ export default class FilterHeader extends Vue {
     this.isShow = false;
     const { checked } = this;
     this.setCheckedBrokers(checked);
+    this.setUseDefaultParams(false);
+    this.$nextTick(() => {
+      this.$router.push({ name: 'rankList' });
+    });
   }
 
   handleReset(value: object) {
+    console.log('ressssssset');
     this.setCheckedBrokers([]);
     this.checked = [];
   }
@@ -368,11 +356,12 @@ export default class FilterHeader extends Vue {
   cursor: pointer;
 }
 .filter-header {
-  padding: 20px 0;
+  // padding: 20px 0;
 
   .header-content {
     display: flex;
     flex-direction: row;
+    justify-content: flex-end;
     // align-items: center;
     // flex-wrap: wrap;
     .header-fitler-title {

@@ -403,6 +403,7 @@ export default class RankList extends Vue {
       this.allParams = getParams;
     }
     console.log(getParams, 'getParams');
+
     return getParams;
   }
 
@@ -415,18 +416,20 @@ export default class RankList extends Vue {
 
   preProcessParams(obj: any) {
     const params: any = {};
+    const needPercent = ['Retracement', 'Roi'];
+
     if (obj) {
       Object.keys(obj).forEach((i: any) => {
         const val: any = obj[i];
         if (val) {
           if (val && typeof val === 'string') {
             if (val.includes('-')) {
-              const split = val.split('-');
+              const split: any = val.split('-');
               if (split && split.length) {
                 // eslint-disable-next-line
-                params[`min${i}`] = split[0];
+                params[`min${i}`] = needPercent.includes(i) ? (split[0] / 100): split[0];
                 // eslint-disable-next-line
-                params[`max${i}`] = split[1];
+                params[`max${i}`] = needPercent.includes(i) ? (split[1] / 100): split[1];
               }
             } else {
               params[i] = val;

@@ -431,6 +431,11 @@ export default class FilterPopover extends Vue {
 
   innerParams: any = {};
 
+  @Watch('allParams')
+  allParamsChanged(v: any) {
+    // console.log(v, 'vvvvvchanged');
+  }
+
   public get allParams() {
     const params = { ...this.rankParams, ...this.innerParams };
     return params;
@@ -473,6 +478,8 @@ export default class FilterPopover extends Vue {
       brokerId: '',
     });
     this.innerParams = {};
+    this.ptaSelected = false;
+    this.freeSubSelected = false;
   }
 
   ptaSelected: boolean = false;
@@ -502,9 +509,20 @@ export default class FilterPopover extends Vue {
       item.filter[len - 1].start = '';
       item.filter[len - 1].end = '';
     }
-    const params = Object.assign({}, this.rankParams);
+    const params: any = {};
     params[key] = citem.value;
     this.innerParams = { ...this.innerParams, ...params };
+  }
+
+  mounted() {
+    this.log('mounted init');
+    this.innerParams = { ...this.innerParams, ...this.rankParams };
+    if ([1, '1'].includes(this.rankParams.isPTA)) {
+      this.ptaSelected = true;
+    }
+    if ([1, '1'].includes(this.rankParams.freeSubPrice)) {
+      this.freeSubSelected = true;
+    }
   }
 
   private inputChanged(key: string, start: any, type: string) {
@@ -516,13 +534,9 @@ export default class FilterPopover extends Vue {
   }
 
   private inputHandler(key: string, start: number, end: number) {
-    console.log(key, start, end, 'end');
-    // this.labelObj.filter((i: any) => {
-    //   if (i.value === key) {
-    //     console.log(i)
-    //   }
-    // })
-    const params = Object.assign({}, this.rankParams);
+    // console.log(key, start, end, 'end');
+
+    const params: any = {};
 
     if (!['0', 0].includes(start) && !isNumber(start)) {
       params[key] = '';

@@ -33,7 +33,7 @@
             <div :key="item.avatar + item.index" v-for="item in data.data" class="little-list-item">
                 <LittleCard @showCard="showCard($event, item)" @hideCard="hideCard" @toPersonal="toPersonal"  @subscribe="handleSub" :data="item">
                   <div v-if="data.needSlot" class="prod-desc" slot="header">
-                    <div class="prod-name">{{item.name || ''}}</div>
+                    <div @click="toPersonal(item)" class="prod-name">{{item.name || ''}}</div>
                     <div class="prod-danger">{{item.danger || ''}}</div>
                   </div>
                 </LittleCard>
@@ -43,7 +43,7 @@
             <div :key="item.avatar + item.index" v-for="(item) in data.data" class="list-item">
               <LineCard @showCard="showCard($event, item)" @hideCard="hideCard" @toPersonal="toPersonal" @subscribe="handleSub" :data="item">
                 <div v-if="data.needSlot" class="prod-desc" slot="left">
-                  <div class="prod-name">{{item.name || ''}}</div>
+                  <div @click="toPersonal(item)" class="prod-name">{{item.name || ''}}</div>
                   <div class="prod-danger">{{item.danger || ''}}</div>
                 </div>
               </LineCard>

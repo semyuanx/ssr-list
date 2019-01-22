@@ -7,6 +7,7 @@
     >
       <InvestManager
         @toRightMore="toMore"
+        @toPersonal="toPersonalPc"
         @toLeftMore="publishProduct"
         @toJoinMore="toJoinMore"
         @toMore="toMore" :subscribe="subscribe"
@@ -64,6 +65,11 @@ export default class Index extends Vue {
   // subscribe: any;
   subscribe(item: any) {
     this.join(item);
+  }
+
+  toPersonalPc(item: any) {
+    const { Trader } = item.item;
+    this.toPersonalPage(Trader);
   }
 
   toMore(item: any) {
@@ -172,25 +178,30 @@ export default class Index extends Vue {
     }
   }
 
+  toPersonalPage(data: any) {
+    if (!data || (this.isObject(data) && !data.UserID)) {
+      return this.$fmdialog({
+        message: '抱歉~当前产品信息有误，请联系后台服务人员！',
+        type: 'error',
+        duration: 2000,
+        isSingle: true,
+        onConfirm: () => {},
+      });
+    }
+    return this.redirectTo('personalPage', {
+      userId: data.UserID,
+      index: data.AccountIndex,
+    }, true);
+  }
+
   join(mamData: any) {
     const { item } = mamData;
     const mamInfo = item || {};
 
     if (mamInfo.Status !== 'Pending') {
       const { Trader } = mamInfo;
-      if (!Trader || (this.isObject(Trader) && !Trader.UserID)) {
-        return this.$fmdialog({
-          message: '抱歉~当前产品信息有误，请联系后台服务人员！',
-          type: 'error',
-          duration: 2000,
-          isSingle: true,
-          onConfirm: () => {},
-        });
-      }
-      return this.redirectTo('personalPage', {
-        userId: Trader.UserID,
-        index: Trader.AccountIndex,
-      }, true);
+
+      this.toPersonalPage(Trader);
     }
 
     // 满标直接返回
