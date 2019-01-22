@@ -92,16 +92,22 @@
     text-align: center;
     transition: all .3s ease-in-out;
     .strategy-content-container {
+      height: 80px;
       line-height:18px;
-      padding: 0 10%;
+      padding: 5% 10%;
       display: -webkit-box;
-      -webkit-box-orient: vertical;
+      
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      .strategy-detail {
+        -webkit-box-orient: vertical;
       -webkit-line-clamp: 3;
       overflow: hidden;
-      .strategy-detail {
         font-size:14px;
         font-family:MicrosoftYaHei;
         color:rgba(102,102,102,1);
+        // height: 100%;
       }
     }
   }

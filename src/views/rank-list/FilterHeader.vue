@@ -217,12 +217,14 @@ export default class FilterHeader extends Vue {
         if (i === 'GradeScore') {
           const gradeMap: any = {
             '9-0': 'S',
-            '7-8': 'A+',
-            '6-7': 'A',
-            '5-6': 'A-',
-            '4-5': 'B',
+            '8-9': 'A+',
+            '7-8': 'A',
+            '6-7': 'A-',
+            '5-6': 'B',
+            '4-5': 'C',
             '4-0': 'D',
           };
+          console.log(gradeMap[val], val, '******');
           finalVal = gradeMap[val] || 'D';
         }
         const needIgnore = ['orderby', 'isDESC'];

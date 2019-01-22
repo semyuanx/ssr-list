@@ -133,7 +133,7 @@ export default class mainView extends Vue {
     if (this.configs && this.configs.length) {
       const config:any = this.configs[0];
 
-      let showData: any = [];
+      const showData: any = [];
       if (config && config.HideConfig) {
         Object.keys(config.HideConfig).forEach((i: any) => {
           if (!config.HideConfig[i]) {
@@ -196,7 +196,10 @@ export default class mainView extends Vue {
       // console.log(config, 'ccccc');
 
       const needHightProp = ['ROI'];
-      showData = showData.slice(0, 2);
+      const show2Data = showData.slice(0, 2);
+      console.log(showData, 'sssssssssss');
+      const showGrade = showData.includes('GradeScore');
+      const showPta = showData.includes('IsPTA');
       let newConfig = [];
       if (config.listData && Array.isArray(config.listData.List) && config.listData.List.length > 1) {
         newConfig = config.listData.List.map((item: any) => ({
@@ -206,10 +209,12 @@ export default class mainView extends Vue {
           confirmBtn: item.SubPrice ? `${item.SubPrice}/月` : '免费订阅',
           index: item.AccountIndex,
           showStrategy: true,
+          isShowGrade: showGrade,
+          isShowPta: showPta && item.IsPTA,
           strategyDesc: `交易策略: ${item.StrategyDesc}`,
           brokerName: item.BrokerName,
           item,
-          data: showData.map((it: any) => {
+          data: show2Data.map((it: any) => {
             const ival: any = item[it];
             return {
               hightlight: needHightProp.includes(it) && ival > 0,

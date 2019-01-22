@@ -17,8 +17,16 @@
               @mouseleave="mouseleave($event)">{{data.name}}</span>
               <span> #{{data.index}}</span>
               <span
+                v-if="data.isShowGrade"
                 :class="'grade-score-icon ' + mapGradeClass(data.grade)"
-              >{{data.grade}}</span></span>
+              >{{data.grade}}</span>
+              <span
+                v-if="data.isShowPta"
+                :class="'grade-score-icon '"
+              >
+                <img style="width: 14px; height: 14px;" src="~@/assets/pta.png" />
+              </span>
+          </span>
           <div class="broker">
             <span class="broker">{{data.brokerName}}</span>
           </div>
