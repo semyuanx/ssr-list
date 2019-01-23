@@ -1,5 +1,8 @@
 
 const path = require('path');
+// const WebpackBundleAnalyzer = require('webpack-bundle-analyzer');
+// eslint-disable-next-line
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 function addStyleResource(rule) {
   rule.use('style-resource')
@@ -40,6 +43,10 @@ module.exports = {
       axios: 'axios',
       'vue-router': 'VueRouter',
     });
+    console.log(process.env.NODE_ENV, '************');
+    if (process.env.NODE_ENV === 'development') {
+      config.plugin('bundle-analyze').use(BundleAnalyzerPlugin);
+    }
   },
   css: {
     loaderOptions: {
