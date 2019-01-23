@@ -1,9 +1,9 @@
 <template>
 <div class="main-list-container">
-  <div class="fm-show-pc">
+  <div class="fm-show-pc" v-if="isShowPc">
     <FmList :showProps="showProps" :data="rankList" :getData="getData" @sortChange="sortChange" />
   </div>
-  <div class="fm-show-mobile">
+  <div class="fm-show-mobile" v-if="!isShowPc">
     <MobileList :data="rankList" @sortChange="sortChange"/>
   </div>
 </div>
@@ -15,6 +15,7 @@ import {
 import { namespace } from 'vuex-class';
 // import FmList from './list/List.vue';
 // import MobileList from './list/ListMobile.vue';
+import eventBus from '@/utils/event';
 
 const RankStore = namespace('RankStore');
 
@@ -43,6 +44,26 @@ export default class List extends Vue {
   // public rankListChange() {
   //   console.log('rank changed', this.rankTotal, this.rankList);
   // }
+
+  get isShowPc() {
+    return this.windowSize > 880;
+  }
+
+  mounted() {
+    if (this.isBrowser()) {
+      this.computeWindowSize();
+      eventBus.$on('window-resize', () => {
+        this.computeWindowSize();
+      });
+    }
+  }
+
+  windowSize: any = 0;
+
+  computeWindowSize() {
+    const winW = window.innerWidth;
+    this.windowSize = winW;
+  }
 
   sortChange({ prop, order }:any) {
     this.$emit('sortChange', { prop, order });

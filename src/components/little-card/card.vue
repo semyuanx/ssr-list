@@ -29,7 +29,7 @@
                   v-if="data.isShowPta"
                   :class="'grade-score-icon '"
                 >
-                  <img style="width: 14px; height: 14px;" src="~@/assets/pta.png" />
+                  <PtaLogo />
                 </span>
             </span>
           </div>
@@ -42,8 +42,8 @@
     <div class="card-body">
       <div class="num-container">
         <div class="num-same num">
-          <div :key="i.val" v-for="i in data.data" class="num-left" :title="i.val">
-            <span :class="{'green': i.highlight}">{{i && i.val }}</span>
+          <div :key="i.val" v-for="(i, index) in data.data" class="num-left" :title="i.val">
+            <span :class="{'green': index === 0 }">{{i && i.val }}</span>
           </div>
         </div>
         <div class="num-same desc">
@@ -58,8 +58,13 @@
 </template>
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
+import PtaLogo from '@/components/ptaLogo/index.vue';
 
-@Component
+@Component({
+  components: {
+    PtaLogo,
+  },
+})
 export default class FmLittleCard extends Vue {
   public name: string = 'fm-little-card';
 

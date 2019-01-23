@@ -59,7 +59,7 @@
           <template slot-scope="scope">
             <filter-button
               :border="true"
-              @click="toSubscribe"
+              @touch="toSubscribe"
               class="filter-button"
             >{{scope.row.SubPrice ? scope.row.SubPrice + '/月' : '免费订阅'}}</filter-button>
           </template>

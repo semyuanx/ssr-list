@@ -58,7 +58,7 @@
                       {{scope.row.GradeScore | propFormat('GradeScore')}}
                     </span>
                     <span v-if="showOthers.includes('IsPTA') && scope.row.IsPTA" class="pta-icon">
-                      <img style="width: 14px; height: 14px;" src="~@/assets/pta.png" />
+                      <PtaLogo />
                     </span>
                     <span>{{scope.row.BrokerName || ''}}</span>
                   </div>
@@ -106,7 +106,7 @@
               class="custom-display-row-line"
             >
 
-              <div class="chartbox">
+              <div class="chartbox fm-show-pc">
                 <Chart
                   v-if="scope.row.TrendChart && scope.row.TrendChart.length>0 "
                   :chart-data="scope.row.TrendChart"
@@ -142,7 +142,6 @@
             >
               <span class="sub-row-btn">{{scope.row.SubPrice ? `$${scope.row.SubPrice}/月` : '免费订阅' }}</span>
             </div>
-
           </template>
         </el-table-column>
         <template slot="empty">
@@ -202,6 +201,7 @@ import {
 import { getElementTop, getElementLeft } from '@/utils/util';
 import { Table, TableColumn } from 'element-ui';
 import throttle from 'lodash.throttle';
+import PtaLogo from '@/components/ptaLogo/index.vue';
 
 const RankStore = namespace('RankStore');
 
@@ -210,6 +210,7 @@ const isEnterLoad = false;
 @Component(({
   components: {
     SvgIcon,
+    PtaLogo,
     Chart, // () => import('@/components/chart/index.vue'),
     [Table.name]: Table,
     [TableColumn.name]: TableColumn,

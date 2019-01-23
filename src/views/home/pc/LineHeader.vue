@@ -6,9 +6,8 @@
           <h2 class="h2-titile">{{title || ''}}</h2>
           <div @click="leftClick" :style="subTitle ? {} : {background: 'transparent'}" class="flex-center sub-title">
             <slot name="left">
-            <i :class="`icon-${subIcon}`"></i>
-            <span>{{ subTitle || '' }}</span>
-            <!-- <i :class="`icon-${subRespIcon}`"></i> -->
+              <i :class="`icon-${subIcon}`"></i>
+              <span>{{ subTitle || '' }}</span>
             </slot>
           </div>
         </div>

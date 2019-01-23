@@ -127,6 +127,9 @@ i[class^="icon-"] {
       }
       .right-click {
         cursor: pointer;
+        &:hover {
+          color: @default-color;
+        }
       }
     }
   }

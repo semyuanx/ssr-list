@@ -2,6 +2,10 @@
   <div class="strategy-container">
     <div class="header" v-if="header">
       <LineHeader @leftClick="leftClick" @rightClick="toRankList" rightIconDirection='left' rightTitle="" subTitle="成为交易员" :title="header.title || ''" >
+        <div class="header-sub-title" slot="left">
+          <i :class="`icon-plus_24px`"></i>
+          <span>{{ '成为交易员' || '' }}</span>
+        </div>
         <div slot="right">
           <FilterBtn />
         </div>
@@ -187,7 +191,7 @@ export default class Home extends Vue {
     if (this.subscribe) {
       this.subscribe(item);
     } else {
-      console.log('mobile');
+      this.log('mobile');
     }
   }
 
@@ -213,7 +217,17 @@ export default class Home extends Vue {
 }
 </script>
 <style lang="less" scoped>
+i[class^="icon-"] {
+  font-size: 18px;
+}
 .strategy-container {
+  .header {
+    .header-sub-title {
+      padding: 10px;
+      display: inline-flex;
+      align-items: center;
+    }
+  }
   .lists-outer {
     position: relative;
     .scroll-btn-container {

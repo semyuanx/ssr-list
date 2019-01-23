@@ -25,5 +25,6 @@ declare module 'vue/types/vue' {
         redirectTo: Function;
         isObject: Function;
         log: Function;
+        isBrowser: () => boolean;
     }
 }

@@ -344,6 +344,9 @@ export default class FilterHeader extends Vue {
 }
 </script>
 <style lang="less" scoped>
+i[class^="icon-"] {
+  font-size: 18px;
+}
 .add-button {
   outline: none;
   border: none;
@@ -397,6 +400,11 @@ export default class FilterHeader extends Vue {
 
       .filter-content {
         position: relative;
+        display: inline-flex;
+        align-items: center;
+        &:hover {
+          color: @default-color;
+        }
         > i {
           vertical-align: middle;
         }

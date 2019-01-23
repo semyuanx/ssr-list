@@ -29,7 +29,7 @@
                   v-if="data.isShowPta"
                   :class="'grade-score-icon '"
                 >
-                  <img style="width: 14px; height: 14px;" src="~@/assets/pta.png" />
+                  <PtaLogo />
                 </span>
               </span>
           </div>
@@ -41,10 +41,10 @@
     </div>
     <div class="line-content right-line">
       <div
-        :key="i.val" v-for="i in data.data"
+        :key="i.val" v-for="(i, index) in data.data"
         class="right-line-container line-rate"
       >
-        <div class=""><span :class="{'rate-val': true, green: i.highlight}">{{i && i.val}}&nbsp;</span></div>
+        <div class=""><span :class="{'rate-val': true, green: index === 0}">{{i && i.val}}&nbsp;</span></div>
         <div><span class="common-font">{{i && i.prop || ''}}</span></div>
       </div>
       <slot name="right">
@@ -57,7 +57,13 @@
 </template>
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
-@Component
+import PtaLogo from '@/components/ptaLogo/index.vue';
+
+@Component({
+  components: {
+    PtaLogo,
+  },
+})
 export default class FmLittleCard extends Vue {
   public name: string = 'fm-little-card';
 
