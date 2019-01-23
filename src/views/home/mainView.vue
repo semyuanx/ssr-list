@@ -11,12 +11,15 @@
             <CommonListItem
               @hideCard="hideCard"
               @showCard="showCard"
+              :followList="followList"
               :subscribe="handleSub" :data="item" />
         </div>
         <div class="invest">
             <TradeMaster
               @hideCard="hideCard"
               @showCard="showCard"
+              :followList="followList"
+              :attentionList="attentionList"
               :subscribe="toPersonal"
               :data="masterFollowerData"
             />
@@ -201,32 +204,39 @@ export default class mainView extends Vue {
 
       const needHightProp = ['ROI'];
       const show2Data = showData.slice(0, 2);
-      console.log(showData, 'sssssssssss');
+      this.log(showData, 'sssssssssss');
       const showGrade = showData.includes('GradeScore');
       const showPta = showData.includes('IsPTA');
       let newConfig = [];
+      const isShowSubBtn = showData.includes('SubPrice');
       if (config.listData && Array.isArray(config.listData.List) && config.listData.List.length > 1) {
-        newConfig = config.listData.List.map((item: any) => ({
-          avatar: `${this.base}/Avata/${item.UserID}`,
-          name: item.NickName,
-          grade: gradeFormat(item.GradeScore),
-          confirmBtn: item.SubPrice ? `${item.SubPrice}/月` : '免费订阅',
-          index: item.AccountIndex,
-          showStrategy: true,
-          isShowGrade: showGrade,
-          isShowPta: showPta && item.IsPTA,
-          strategyDesc: `交易策略: ${item.StrategyDesc}`,
-          brokerName: item.BrokerName,
-          item,
-          data: show2Data.map((it: any) => {
-            const ival: any = item[it];
-            return {
-              hightlight: needHightProp.includes(it) && ival > 0,
-              prop: (mapKey as any)[it],
-              val: propFormat(ival, it),
-            };
-          }),
-        }));
+        newConfig = config.listData.List.map((item: any) => {
+          this.log(item, this.followList, 'this.followList');
+          const isEdit = this.followList.includes(`${item.UserID}_${item.AccountIndex}`);
+          // eslint-disable-next-line
+          const otherEditText = isEdit ? '编辑订阅' : item.SubPrice ? `${item.SubPrice}/月` : '免费订阅';
+          return {
+            avatar: `${this.base}/Avata/${item.UserID}`,
+            name: item.NickName,
+            grade: gradeFormat(item.GradeScore),
+            confirmBtn: !isShowSubBtn ? false : otherEditText,
+            index: item.AccountIndex,
+            showStrategy: true,
+            isShowGrade: showGrade,
+            isShowPta: showPta && item.IsPTA,
+            strategyDesc: `交易策略: ${item.StrategyDesc}`,
+            brokerName: item.BrokerName,
+            item,
+            data: show2Data.map((it: any) => {
+              const ival: any = item[it];
+              return {
+                hightlight: needHightProp.includes(it) && ival > 0,
+                prop: (mapKey as any)[it],
+                val: propFormat(ival, it),
+              };
+            }),
+          };
+        });
       }
       newConfig = newConfig.concat(mamData);
       if (newConfig.length) {
@@ -258,7 +268,21 @@ export default class mainView extends Vue {
   toPersonal(data:any) {
     const userId = data.item ? data.item.UserID : data.UserID;
     const index = data.item ? data.item.AccountIndex : data.index;
-    this.redirectTo('personalPage', { userId, index }, true);
+    // this.redirectTo('personalPage', { userId, index }, true);
+    const params = {
+      toUserId: userId,
+    };
+    const isAttendion = this.attentionList.find((i: any) => i === userId || i === (`${userId}`));
+    if (!isAttendion) {
+      this.toNoticeOrUnNoticeOne(params);
+    } else {
+      this.$fmdialog({
+        message: '确定要取消关注?',
+        onConfirm: () => {
+          this.toNoticeOrUnNoticeOne(params);
+        },
+      });
+    }
   }
 
   toInvest() {
@@ -277,6 +301,12 @@ export default class mainView extends Vue {
 
   selfPwdChanged: any = [];
 
+  mounted() {
+    setTimeout(() => {
+      this.getFollowAndAttention();
+    }, 1000);
+  }
+
   regetSub() {
     this.getRelations()
       .then((res: any) => {
@@ -288,6 +318,16 @@ export default class mainView extends Vue {
       });
   }
 
+  toNoticeOrUnNoticeOne(params: any) {
+    this.addOrCancelAttention(params)
+      .then((res: any) => {
+        this.regetSub();
+      })
+      .catch((err: any) => {
+        this.regetSub();
+      });
+  }
+
   checkIfNotice(list: any) {
     const params = {
       toUserId: list.UserID,
@@ -295,13 +335,7 @@ export default class mainView extends Vue {
     if (list && Array.isArray(this.attentionList)) {
       const isAttendion = this.attentionList.find(i => i === list.UserID);
       if (!isAttendion) {
-        this.addOrCancelAttention(params)
-          .then((res: any) => {
-            this.regetSub();
-          })
-          .catch((err: any) => {
-            this.regetSub();
-          });
+        this.toNoticeOrUnNoticeOne(params);
       }
     }
   }

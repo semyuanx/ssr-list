@@ -43,7 +43,7 @@ module.exports = {
       axios: 'axios',
       'vue-router': 'VueRouter',
     });
-    console.log(process.env.NODE_ENV, '************');
+    console.log('***********', process.env.NODE_ENV, '************');
     if (process.env.NODE_ENV === 'development') {
       config.plugin('bundle-analyze').use(BundleAnalyzerPlugin);
     }

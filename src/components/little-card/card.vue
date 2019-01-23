@@ -51,7 +51,7 @@
         </div>
       </div>
       <div class="sub-btn">
-        <span @click="sub" class="subscribe-btn">{{data.price ? `$${data.price}/月` : data.rightBtnText ? data.rightBtnText : '免费订阅'}}</span>
+        <span v-if="data.confirmBtn" @click="sub" class="subscribe-btn">{{data.confirmBtn}}</span>
       </div>
     </div>
   </div>

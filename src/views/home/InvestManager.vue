@@ -107,7 +107,7 @@ export default class Index extends Vue {
         item: i,
         name: i.Name,
         danger: `风险<${percentFormat(i.FollowerMaxRisk)}`,
-        rightBtnText: i.Status === 'Pending' ? '立即参与' : '参看详情',
+        confirmBtn: i.Status === 'Pending' ? '立即参与' : '参看详情',
         data: [
           { prop: '产品资金', val: moneyFormat(i.Balance) },
           { prop: '参与人数', val: i.FollowerCount },

@@ -140,7 +140,9 @@
               v-else
               class="custom-display-row-sub"
             >
-              <span class="sub-row-btn">{{scope.row.SubPrice ? `$${scope.row.SubPrice}/月` : '免费订阅' }}</span>
+              <span class="sub-row-btn">
+                {{isSubed(scope.row) ? '编辑订阅' : scope.row.SubPrice ? `$${scope.row.SubPrice}/月` : '免费订阅' }}
+              </span>
             </div>
           </template>
         </el-table-column>
@@ -252,6 +254,10 @@ export default class List extends Vue {
     return showProps;
   }
 
+  isSubed(info: any) {
+    return this.followList.includes(`${info.UserID}_${info.AccountIndex}`);
+  }
+
   mapGradeClass(val: any) {
     const grade = gradeFormat(val);
     const gradeMap: any = {
@@ -297,7 +303,7 @@ export default class List extends Vue {
   }
 
   mounted() {
-
+    this.regetSub();
   }
 
   toUserPage(data: any) {

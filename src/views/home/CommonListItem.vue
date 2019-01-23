@@ -38,6 +38,11 @@ export default class Index extends Vue {
   @Prop()
   data:any;
 
+  @Prop({
+    default: () => [],
+  })
+  followList: any;
+
   @RankStore.Mutation
   setRankParams: any;
 
@@ -105,6 +110,7 @@ export default class Index extends Vue {
 
     const showGrade = showData.includes('GradeScore');
     const showPta = showData.includes('IsPTA');
+    const isShowSubBtn = showData.includes('SubPrice');
 
     if (config.listData && Array.isArray(config.listData.List) && config.listData.List.length > 1) {
       if (config.listData.List.length > 3) {
@@ -112,25 +118,29 @@ export default class Index extends Vue {
       } else {
         showData = showData.slice(0, 3);
       }
-      const newConfig = config.listData.List.map((item: any) => ({
-        avatar: `${this.base}/Avata/${item.UserID}`,
-        name: item.NickName,
-        index: item.AccountIndex,
-        brokerName: item.BrokerName,
-        price: item.SubPrice,
-        isShowGrade: showGrade,
-        grade: gradeFormat(item.GradeScore),
-        isShowPta: showPta && item.IsPTA,
-        item,
-        data: showData.map((it: any) => {
-          const ival: any = item[it];
-          return {
-            prop: mapKey[it],
-            val: this.formatVal(ival, it),
-            highlight: needHighlight.includes(it) && ival > 0,
-          };
-        }),
-      }));
+      const newConfig = config.listData.List.map((item: any) => {
+        const isEdit = this.followList.includes(`${item.UserID}_${item.AccountIndex}`);
+        return {
+          avatar: `${this.base}/Avata/${item.UserID}`,
+          name: item.NickName,
+          index: item.AccountIndex,
+          brokerName: item.BrokerName,
+          price: item.SubPrice,
+          confirmBtn: !isShowSubBtn ? false : isEdit ? '编辑订阅' : item.SubPrice ? `${item.SubPrice}/月` : '免费订阅',
+          isShowGrade: showGrade,
+          grade: gradeFormat(item.GradeScore),
+          isShowPta: showPta && item.IsPTA,
+          item,
+          data: showData.map((it: any) => {
+            const ival: any = item[it];
+            return {
+              prop: mapKey[it],
+              val: this.formatVal(ival, it),
+              highlight: needHighlight.includes(it) && ival > 0,
+            };
+          }),
+        };
+      });
       return newConfig.slice(0, 4);
     }
     return null;

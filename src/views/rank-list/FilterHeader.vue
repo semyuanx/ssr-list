@@ -234,7 +234,7 @@ export default class FilterHeader extends Vue {
               '4-5': 'C',
               '4-0': 'D',
             };
-            this.log(gradeMap[val], val, '******');
+            // this.log(gradeMap[val], val, '******');
             finalVal = gradeMap[val] || 'D';
           }
           const needIgnore = ['orderby', 'isDESC', 'freeSubPrice', 'brokerId', 'ExpSymbol', 'BrokerID'];
@@ -243,13 +243,13 @@ export default class FilterHeader extends Vue {
             const valArr = finalVal.split('-');
             if (valArr && valArr.length) {
               // console.log(i, valArr[0], valArr[1], 'jjjjjjjjjjjj', needProcessMap[i].percent)
+              this.log(valArr[0] && ![0, '0'].includes(valArr[0]), [0, '0'].includes(valArr[1]), i, '************');
               if (needProcessMap[i].percent) {
-                console.log(valArr[0] && ![0, '0'].includes(valArr[0]));
                 if (valArr[0] && ![0, '0'].includes(valArr[0])) {
                   valArr[0] = percentFormat(valArr[0] / 100);
-                  console.log(valArr[0]);
+                  this.log(valArr[0]);
                 }
-                if (valArr[1] || ![0, '0'].includes(valArr[1])) {
+                if (valArr[1] && ![0, '0'].includes(valArr[1])) {
                   valArr[1] = percentFormat(valArr[1] / 100);
                 }
               }

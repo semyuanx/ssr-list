@@ -129,6 +129,7 @@ export const gradeFormat = function gradeFormat(val: any) {
 
 export const processConfig = function processConfig(CondCfg: any) {
   let params: any = {};
+  const dotToPercent = ['Roi', 'ROI', 'MaxRetracement'];
   if (CondCfg) {
     const { CondConfig } = CondCfg;
     const isDESC = CondCfg.OrderBy ? 1 : 0;
@@ -144,7 +145,11 @@ export const processConfig = function processConfig(CondCfg: any) {
           if (Object.prototype.toString.call(filter) === '[object Object]') {
             if (filter) {
               if (filter.Min || filter.Max) {
-                params[i] = [filter.Min, filter.Max].join('-');
+                if (dotToPercent.includes(i)) {
+                  params[i] = [filter.Min * 100, filter.Max * 100].join('-');
+                } else {
+                  params[i] = [filter.Min, filter.Max].join('-');
+                }
               }
             }
           } else if (Array.isArray(filter)) {

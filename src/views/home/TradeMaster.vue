@@ -22,7 +22,7 @@ import InvestManager from '@/views/home/pc/InvestManager.vue';
 // import TradeMasterMobile from '@/views/home/mobile/TradeMaster.vue';
 import CommonMobile from '@/views/home/mobile/CommonMobile.vue';
 import { moneyFormat, percentFormat, propFormat } from '@/utils/format';
-import { toLoginPage, toSubscribePage, toPersonalPage } from '@/utils/native';
+import { toPersonalPage } from '@/utils/native';
 import mapKey from '@/constant/propMap';
 import { needHighlight } from '@/constant/propFormat';
 
@@ -36,6 +36,16 @@ import { needHighlight } from '@/constant/propFormat';
 export default class Index extends Vue {
   @Prop()
   data:any;
+
+  @Prop({
+    default: () => [],
+  })
+  followList:any;
+
+  @Prop({
+    default: () => [],
+  })
+  attentionList:any;
 
   @Prop()
   subscribe: any;
@@ -125,19 +135,8 @@ export default class Index extends Vue {
   }
 
   get configData() {
-    // const config:any = this.data;
     const { config, data: dataSource }:any = this.data;
 
-    // let showData: any = [];
-    // if (config && config.HideConfig) {
-    //   Object.keys(config.HideConfig).forEach((i: any) => {
-    //     if (!config.HideConfig[i]) {
-    //       showData.push(i);
-    //     }
-    //   });
-    // }
-    // const needShowProps = showData.slice(0, 2);
-    // console.log(showData, 'showDatashowData')
     let data: any = [];
     if (Array.isArray(dataSource)) {
       data = dataSource.map((i: any) => {
@@ -148,13 +147,16 @@ export default class Index extends Vue {
             brokerName = accountInfo.BrokerName;
           }
         }
+        const isAttentionList = this.attentionList.includes(i.UserID) || this.attentionList.includes(`${i.UserID}`);
+        // const isFollowed = this.followList.includes(i.UserID + '_' + i.AccountIndex);
+        // this.log(isFollowed, i, this.followList, this.attentionList, 'ttttttt')
         return {
           item: i,
           avatar: `${this.base}/Avata/${i.UserID}`,
           name: i.NickName,
           index: i.AccountIndex,
           brokerName,
-          rightBtnText: '立即查看',
+          confirmBtn: isAttentionList ? '已关注' : '关注',
           data:
           [
             { prop: '跟随获利', val: moneyFormat(i.FollowMoney) },

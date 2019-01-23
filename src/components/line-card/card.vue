@@ -49,7 +49,7 @@
       </div>
       <slot name="right">
         <div class="right-line-container line-join">
-          <span @click="sub" class="subscribe-btn">{{data.price ? `$${data.price}/月` : data.rightBtnText ? data.rightBtnText : '免费订阅'}}</span>
+          <span v-if="data.confirmBtn" @click="sub" class="subscribe-btn">{{data.confirmBtn}}</span>
         </div>
       </slot>
     </div>
