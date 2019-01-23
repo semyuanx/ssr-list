@@ -10146,6 +10146,11 @@ uuid@^3.0.1, uuid@^3.3.2:
   resolved "http://registry.npm.taobao.org/uuid/download/uuid-3.3.2.tgz#1b4af4955eb3077c501c23872fc6513811587131"
   integrity sha512-yXJmeNaw3DnnKAOKJE51sL/ZaYfWJRl1pK9dr19YFCu0ObS231AB1/LbqTKRAQ5kw8A90rA6fr4riOUpTZvQZA==
 
+v2-datepicker@^3.1.1:
+  version "3.1.1"
+  resolved "https://registry.yarnpkg.com/v2-datepicker/-/v2-datepicker-3.1.1.tgz#1f7583695e30c08f7ddad83acf2f233ed2b38b0e"
+  integrity sha512-8AasUMiok5ZLhvbL4wImjiFg/ftRnbqdFoThdLSEgVN7nEU9MfIjQ2irK3+VGcpjZr436RX3LtrwsU4vnsaOig==
+
 v2-table@^3.0.3:
   version "3.0.3"
   resolved "http://registry.npm.taobao.org/v2-table/download/v2-table-3.0.3.tgz#131bb6e105e5bd8d75077cab920f803f53e8500f"

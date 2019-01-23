@@ -122,48 +122,51 @@ export default class Manager extends Vue {
   startProductSatuation(account: any) {
     const _this = this;
     if (account.length <= 0) {
-      this.$fmdialog({
+      return this.$fmdialog({
         message: '您没有可用的MAM交易员账户,请开户后重试',
         type: 'confirm',
         onConfirm: (flag: any) => {
-          window.open(`${_this.base}/portalindex/upgrade/index?type=4`);
+          window.open(`${_this.kaiHu}/portalindex/upgrade/mam`);
         },
       });
-    } else {
-      // eslint-disable-next-line
-      const freeAccounts = account.filter((account: any) => account.IsMAMFree === true) || [];
-      if (freeAccounts.length <= 0) {
-        this.$fmdialog({
-          message: '您没有可用的MAM交易员账户,请开户后重试',
-          type: 'confirm',
-          onConfirm: (flag: any) => {
-            window.open(`${_this.base}/portalindex/upgrade/index?type=4`);
-          },
-        });
-      } else {
-        openCreateDialog();
-      }
     }
+    // eslint-disable-next-line
+      const freeAccounts = account.filter((account: any) => account.IsMAMFree === true) || [];
+    if (freeAccounts.length <= 0) {
+      return this.$fmdialog({
+        message: '您没有可用的MAM交易员账户,请开户后重试',
+        type: 'confirm',
+        onConfirm: (flag: any) => {
+          window.open(`${_this.kaiHu}/portalindex/upgrade/mam`);
+        },
+      });
+    }
+    return openCreateDialog();
   }
 
   startProduct() {
     getLoginStatus().then((user: any) => {
       if (user.islogin) {
         if (this.userInfo && this.userInfo.RealName && this.userInfo.AccountEmail && this.userInfo.AccountMobile && this.userInfo.IDNO) {
-          this.startProductSatuation(this.mamAccounts);
-        } else {
-          window.location.href = `${this.base}/open/upgrade/newindex?type=4`;
+          return this.startProductSatuation(this.mamAccounts);
         }
-      } else {
-        loadAuth();
+        // window.location.href = `${this.kaiHu}/open/upgrade/newindex?type=4`;
+        return this.$fmdialog({
+          message: '您当前没有可用的MAM交易员账户,请开户后再试',
+          type: 'confirm',
+          onConfirm: (flag: any) => {
+            window.open(`${this.kaiHu}/open/upgrade/mam`);
+          },
+        });
       }
+      return loadAuth();
     });
   }
 
   startMam() {
     getLoginStatus().then((user: any) => {
       if (user.islogin) {
-        window.location.href = `${this.base}/portalindex/upgrade/mam`;
+        window.location.href = `${this.kaiHu}/portalindex/upgrade/mam`;
       } else {
         loadAuth();
       }

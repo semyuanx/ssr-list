@@ -85,10 +85,12 @@
         <span title="剩余参与时间">{{timeCount}}</span>
       </div>
     </section>
-    <img
-      src="./safe.png"
-      class="safe-img"
-    />
+    <el-tooltip class="item" effect="dark" :content="maxRisk" placement="top">
+      <img
+        src="./safe.png"
+        class="safe-img"
+      />
+    </el-tooltip>
   </div>
 </template>
 <script lang="ts">
@@ -102,6 +104,7 @@ import enUS from '@/i18n/en-US/views/InvestManager/Panel';
 import {
   percentFormat, numberFormat, timeFormat, moneyFormat,
 } from '@/utils/format';
+import { Tooltip } from 'element-ui';
 
 import { getLoginStatus } from 'fmcomponents';
 import { loadAuth } from 'fmcomponents/src/utils';
@@ -119,6 +122,9 @@ interface Context {
   Status:string;
 }
 @Component({
+  components: {
+    [Tooltip.name]: Tooltip,
+  },
   i18n: {
     messages: {
       'zh-CN': zhCN,
@@ -135,6 +141,12 @@ export default class Panel extends Vue {
   @Prop({ default: () => {} }) private panelData!: any;
 
   @Prop({ default: () => [] }) private accounts!: any;
+
+  get maxRisk() {
+    let risk = this.panelData.FollowerMaxRisk || 0;
+    risk = percentFormat(risk);
+    return `该产品风险<${risk}`;
+  }
 
   timeCount: string = '--:--:--';
 
@@ -161,13 +173,17 @@ export default class Panel extends Vue {
   }
 
   calculateTime() {
-    const now = new Date();
-    const endDate = new Date(this.panelData.ExpectStartTime * 1000);
-    const leftTime = endDate.getTime() - now.getTime();
-    // eslint-disable-next-line
-    const leftsecond = parseInt(`${leftTime / 1000}`);
+    const now = Date.now() / 1000;
+    const endDate = this.panelData.ExpectStartTime;
+    const leftTime = endDate - now;
+    if (!endDate || !leftTime || leftTime < 0) {
+      this.timeCount = '';
+      window.clearInterval(this.timeInter);
+      return;
+    }
+    this.log(leftTime, 'leftTime');
+    const leftsecond = leftTime;
     this.timeCount = timeFormat(leftsecond);
-    if (!leftTime) window.clearInterval(this.timeInter);
   }
 
   mounted() {
@@ -267,7 +283,7 @@ export default class Panel extends Vue {
         message: `您没有可用的MAM跟随者账户(${this.panelData.Trader.BrokerName}),请开户后重试`,
         type: 'confirm',
         onConfirm: (flag: any) => {
-          window.open(`${_this.base}/portalindex/upgrade/index?type=5`);
+          window.open(`${_this.kaiHu}/portalindex/upgrade/mam`);
         },
       });
       return;
@@ -278,7 +294,7 @@ export default class Panel extends Vue {
         message: `您没有可用的MAM跟随者账户(${this.panelData.Trader.BrokerName}),请开户后重试`,
         type: 'confirm',
         onConfirm: (flag: any) => {
-          window.open(`${_this.base}/portalindex/upgrade/index?type=5`);
+          window.open(`${_this.kaiHu}/portalindex/upgrade/mam`);
         },
       });
       return;
@@ -292,7 +308,7 @@ export default class Panel extends Vue {
         message: '无MAM跟随者账户，去开户参与',
         type: 'confirm',
         onConfirm: (flag: any) => {
-          window.open(`${_this.base}/portalindex/upgrade/index?type=5`);
+          window.open(`${_this.kaiHu}/portalindex/upgrade/mam`);
         },
       });
       return;

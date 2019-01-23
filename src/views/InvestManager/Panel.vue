@@ -101,10 +101,12 @@
         }[panelData.Status]
       }}</a>
     </section>
-    <img
-      src="./safe.png"
-      class="safe-img"
-    />
+    <el-tooltip class="item" effect="dark" :content="maxRisk" placement="top">
+      <img
+        src="./safe.png"
+        class="safe-img"
+      />
+    </el-tooltip>
   </div>
 </template>
 <script lang="ts">
@@ -115,7 +117,8 @@ import { API_PREFIX_V2 } from '@/constant/api';
 import zhCN from '@/i18n/zh-CN/views/InvestManager/Panel';
 import zhTW from '@/i18n/zh-TW/views/InvestManager/Panel';
 import enUS from '@/i18n/en-US/views/InvestManager/Panel';
-import { moneyFormat } from '@/utils/format';
+import { moneyFormat, percentFormat } from '@/utils/format';
+import { Tooltip } from 'element-ui';
 
 interface Context {
   Name?: string;
@@ -130,6 +133,9 @@ interface Context {
 }
 
 @Component({
+  components: {
+    [Tooltip.name]: Tooltip,
+  },
   i18n: {
     messages: {
       'zh-CN': zhCN,
@@ -150,6 +156,12 @@ export default class Panel extends Vue {
     const index = this.panelData.AccountIndex;
     const url = `${this.base}/user/${userId}/trade-account/exhibition?index=${index}`;
     window.open(url, '_blank');
+  }
+
+  get maxRisk() {
+    let risk = this.panelData.FollowerMaxRisk || 0;
+    risk = percentFormat(risk);
+    return `该产品风险<${risk}`;
   }
 
   get status() {

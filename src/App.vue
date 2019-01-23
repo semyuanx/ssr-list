@@ -23,6 +23,11 @@ import eventBus from '@/utils/event';
 import 'minireset.css';
 import '@/theme/main.less';
 
+import 'v2-datepicker/lib/index.css';
+import V2Datepicker from 'v2-datepicker';
+
+Vue.use(V2Datepicker);
+
 @Component({
   components: {
     FMNav,
