@@ -66,7 +66,7 @@
                         v-for="(item,index) in brokersList"
                         :key="index"
                       >
-                        <check-box :val="item.BrokerId">{{item.Broker}}</check-box>
+                        <check-box :val="item.BrokerId">{{item.BrokerName}}</check-box>
                       </li>
                     </ul>
                   </check-box-group>
@@ -104,6 +104,7 @@ const RankStore = namespace('RankStore');
 // const HomeStore = namespace('HomeStore');
 
 @Component({
+  name: 'fm-filter-header',
   components: {
     FmTag,
     FilterPopover,
@@ -232,10 +233,10 @@ export default class FilterHeader extends Vue {
               '6-7': 'A-',
               '5-6': 'B',
               '4-5': 'C',
-              '4-0': 'D',
+              '0-4': 'D',
             };
             // this.log(gradeMap[val], val, '******');
-            finalVal = gradeMap[val] || 'D';
+            finalVal = gradeMap[val] || '';
           }
           const needIgnore = ['orderby', 'isDESC', 'freeSubPrice', 'brokerId', 'ExpSymbol', 'BrokerID'];
 
@@ -338,9 +339,10 @@ export default class FilterHeader extends Vue {
 
   mounted() {
     // this.checked = this.checkedBrokers;
-    this.getBrokersList({
-      // commonlyused: 1,
-    });
+    setTimeout(() => {
+      this.getBrokersList({});
+    }, 1000);
+
     const { rankParams } = this;
     if (rankParams && Array.isArray(rankParams.brokerId) && rankParams.brokerId.length) {
       const brokers = rankParams.brokerId;

@@ -47,7 +47,7 @@
             :key="inx"
           >
             <filter-tag
-              :active="(allParams[item.value]|| '') == citem.value"
+              :active="(allParams[item.value]) == citem.value"
               v-if="!citem.type"
               @selected="rangeHandler(item,citem)"
             >{{citem.name}}</filter-tag>
@@ -504,6 +504,11 @@ export default class FilterPopover extends Vue {
 
   private rangeHandler(item: any, citem: any) {
     const key: string = item.value;
+    if (key === 'brokerId') {
+      this.log(this.$parent);
+      return;
+    }
+
     if (item.filter) {
       const len: number = item.filter.length;
       item.filter[len - 1].start = '';
@@ -515,14 +520,17 @@ export default class FilterPopover extends Vue {
   }
 
   mounted() {
-    this.log('mounted init');
+    this.log('mounted init', this.rankParams);
     this.innerParams = { ...this.innerParams, ...this.rankParams };
-    if ([1, '1'].includes(this.rankParams.isPTA)) {
+    if (this.rankParams.isPTA && [1, '1'].includes(this.rankParams.isPTA)) {
       this.ptaSelected = true;
     }
-    if ([1, '1'].includes(this.rankParams.freeSubPrice)) {
+    if (this.rankParams.freeSubPric && [1, '1'].includes(this.rankParams.freeSubPrice)) {
       this.freeSubSelected = true;
     }
+    // if (this.rankParams.Roi) {
+
+    // }
   }
 
   private inputChanged(key: string, start: any, type: string) {

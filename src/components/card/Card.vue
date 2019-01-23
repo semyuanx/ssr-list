@@ -27,7 +27,7 @@
                 v-if="data.isShowPta"
                 :class="'grade-score-icon '"
               >
-                <img style="width: 14px; height: 14px;" src="~@/assets/pta.png" />
+                <PtaLogo />
               </span>
           </span>
           <div class="broker">
@@ -63,12 +63,17 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
+import PtaLogo from '@/components/ptaLogo/index.vue';
 
 export interface dataType {
   avatar: string;
 }
 
-@Component
+@Component({
+  components: {
+    PtaLogo,
+  },
+})
 export default class FmCard extends Vue {
   public name: string = 'fm-card';
 

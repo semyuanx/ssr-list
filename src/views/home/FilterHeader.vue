@@ -21,7 +21,6 @@
                 @filter="handleFilter"
                 @reset="handleReset"
               >
-
                 <template slot="brokerId">
                   <filter-tag
                     :border="true"
@@ -46,7 +45,7 @@
                         v-for="(item,index) in brokersList"
                         :key="index"
                       >
-                        <check-box :val="item.BrokerId">{{item.Broker}}</check-box>
+                        <check-box :val="item.BrokerId">{{item.BrokerName}}</check-box>
                       </li>
                     </ul>
                   </check-box-group>
@@ -217,7 +216,7 @@ export default class FilterHeader extends Vue {
               '4-5': 'C',
               '4-0': 'D',
             };
-            console.log(gradeMap[val], val, '******');
+            // console.log(gradeMap[val], val, '******');
             finalVal = gradeMap[val] || 'D';
           }
           const needIgnore = ['orderby', 'isDESC', 'isPTA', 'freeSubPrice', 'brokerId', 'ExpSymbol', 'BrokerID'];
@@ -326,9 +325,9 @@ export default class FilterHeader extends Vue {
 
   mounted() {
     // this.checked = this.checkedBrokers;
-    this.getBrokersList({
-      // commonlyused: 1,
-    });
+    setTimeout(() => {
+      this.getBrokersList({});
+    }, 1000);
     const { rankParams } = this;
     if (rankParams && Array.isArray(rankParams.brokerId) && rankParams.brokerId.length) {
       const brokers = rankParams.brokerId;
