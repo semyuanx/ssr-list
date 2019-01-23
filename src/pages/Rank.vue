@@ -448,6 +448,6 @@ export default class RankList extends Vue {
 </script>
 <style lang="less" scoped>
 .rank-container {
-  padding-top: 20px;
+  // padding-top: 20px;
 }
 </style>

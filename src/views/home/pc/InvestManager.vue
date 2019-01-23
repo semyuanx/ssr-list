@@ -229,6 +229,8 @@ i[class^="icon-"] {
             font-size:12px;
             color:rgba(31,187,149,1);
             line-height:16px;
+            background:rgba(31,187,149, 0.1);
+            padding: 0 4px;
           }
         }
       }

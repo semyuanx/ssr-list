@@ -234,6 +234,9 @@ export default class FmLittleCard extends Vue {
           .subscribe-btn {
               background:rgba(255,98,0,1);
               color:rgba(255,255,255,1);
+              &:hover {
+                background: @hover-default-color;
+              }
             }
         }
       }

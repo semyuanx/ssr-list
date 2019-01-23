@@ -219,7 +219,7 @@ export default class FilterHeader extends Vue {
           let finalVal = i === 'isDESC' ? val === 1 ? '倒序' : '顺序' : val;
 
           if (i === 'isPTA') {
-            finalVal = val === 1 ? '是' : '否';
+            finalVal = val === 1 ? ' ' : '';
           }
           if (i === 'freeSubPrice') {
             finalVal = val === 1 ? '是' : '否';
@@ -234,10 +234,10 @@ export default class FilterHeader extends Vue {
               '4-5': 'C',
               '4-0': 'D',
             };
-            console.log(gradeMap[val], val, '******');
+            this.log(gradeMap[val], val, '******');
             finalVal = gradeMap[val] || 'D';
           }
-          const needIgnore = ['orderby', 'isDESC', 'isPTA', 'freeSubPrice', 'brokerId', 'ExpSymbol', 'BrokerID'];
+          const needIgnore = ['orderby', 'isDESC', 'freeSubPrice', 'brokerId', 'ExpSymbol', 'BrokerID'];
 
           if (needProcess.includes(i) && finalVal) {
             const valArr = finalVal.split('-');

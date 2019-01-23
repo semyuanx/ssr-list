@@ -126,9 +126,9 @@ export default class Index extends Vue {
       source: config,
       background: config.ChartID,
       title: config.RankName || '投资管家',
-      subTitle: config.RankText,
+      subTitle: config.RankText || '发起产品',
       textTitle: config.ViceTitle,
-      filterText: config.RankText,
+      filterText: config.RankText || '发起产品',
       needLeftSlot: true,
     };
   }

@@ -1,5 +1,5 @@
 <template>
-  <div class="mobile-filter-wrap">
+  <div class="fm-show-pc mobile-filter-wrap">
     <FilterSetting />
   </div>
 </template>

@@ -31,7 +31,7 @@
         </div>
       </div>
 
-      <div class="scroll-btn-container fm-show-pc">
+      <div v-if="data.length > 4" class="scroll-btn-container fm-show-pc">
           <div @click="scrollLeft" class="scroll-btn scroll-left" :style="`left: ${0 - left}px;`">
             <i class="icon-left_24px" />
           </div>

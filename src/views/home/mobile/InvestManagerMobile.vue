@@ -35,7 +35,7 @@ import { Component, Vue, Prop } from 'vue-property-decorator';
 import LineHead from '@/components/line-head/index.vue'; // @ is an alias to /src
 import SimpleTable from '@/components/simple-table/index.vue'; // @ is an alias to /src
 import propMaps from '@/constant/propMap';
-import { percentFormat } from '@/utils/format';
+import { percentFormat, propFormat } from '@/utils/format';
 
 const numeral = require('numeral');
 
@@ -87,9 +87,11 @@ export default class Index extends Vue {
     }
     return this.data.listData.List.map((v: any) => ({
       ...v,
-      ROI: numeral(v.ROI).format('0.00%'),
-      Profit: numeral(v.Profit).format('$0.00'),
-      Score: numeral(v.Score).format('0.000'),
+      MaxRetracement: propFormat(v.MaxRetracement, 'MaxRetracement'),
+      Equity: propFormat(v.Equity, 'Equity'),
+      ROI: propFormat(v.ROI, 'ROI'),
+      Profit: propFormat(v.Profit, 'Profit'),
+      Score: propFormat(v.Score, 'Score'),
     }));
   }
 

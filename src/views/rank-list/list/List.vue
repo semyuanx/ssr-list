@@ -127,6 +127,7 @@
           label="订阅"
           prop="SubPrice"
           align="center"
+          v-if="showOthers.includes('SubPrice')"
         >
           <!-- eslint-disable-next-line -->
           <template slot-scope="scope">

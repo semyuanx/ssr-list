@@ -14,7 +14,7 @@ export default function createRouter() {
         path: '/',
         name: 'home',
         meta: {
-          title: 'followme-排行榜个人榜单',
+          title: '外汇优秀交易员排名__经纪商交易员操盘排行_ Followme外汇社区',
         },
         component: Home,
       },
@@ -52,7 +52,7 @@ export default function createRouter() {
         path: '/filter',
         name: 'filter',
         meta: {
-          title: 'followme-筛选设置',
+          title: '外汇优秀交易员排名__经纪商交易员操盘排行_ Followme外汇社区',
         },
         // route level code-splitting
         // this generates a separate chunk (about.[hash].js) for this route
@@ -63,7 +63,7 @@ export default function createRouter() {
         path: '/book',
         name: 'book',
         meta: {
-          title: 'followme-经纪商选择',
+          title: '外汇优秀交易员排名__经纪商交易员操盘排行_ Followme外汇社区',
         },
         // route level code-splitting
         // this generates a separate chunk (about.[hash].js) for this route

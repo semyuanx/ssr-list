@@ -27,9 +27,12 @@
           line-height:40px;
           padding: 0;
           color:rgba(255,255,255,1);
-          background:rgba(255,98,0,1);
+          background: @default-color;
           border-radius:21px;
           transform: translateY(-20px);
+          &:hover {
+            background: @hover-default-color;
+          }
         }
       }
     }

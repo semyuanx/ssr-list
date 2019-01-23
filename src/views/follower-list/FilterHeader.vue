@@ -11,7 +11,7 @@
               <div class="select-option">
                 <div @click.capture="selectSlef(i)" :key="i.val" v-for="i in options" :class="{'option-content': true, 'option-selected': i.selected}">
                   <span class="option-title">{{i.label}}</span>
-                  <span class="option-icon"><i class="icon-check_24px"></i></span>
+                  <span class="option-icon"><i v-if="i.selected" class="icon-check_24px"></i></span>
                 </div>
               </div>
             </div>

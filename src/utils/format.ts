@@ -51,15 +51,27 @@ export const percentFormat = function percentFormat(val: string|number, format: 
   if (format < 1) return numeral(val).format('0%');
   const v = numeral(val);
 
-  let type = Array(format).fill(0).join('');
-
-
+  let type = Array(format + 1).fill(0).join('');
   if (!simple) {
     type = `0.${type}%`;
   } else {
     type = `0.[${type}]%`;
   }
-  const transformed = v.format(type);
+  const transformed: string = v.format(type);
+  if (transformed && !transformed.includes('NaN')) {
+    if (transformed.includes('.')) {
+      const noPercentTransformed = transformed.replace(/%$/, '');
+      const split: any = noPercentTransformed.split('.');
+      if (split[1] && split[1].length <= format) {
+        return transformed;
+      } if (!split[1]) {
+        return transformed;
+      } if (split[1] && split[1].length > format) {
+        const merged = noPercentTransformed.slice(0, noPercentTransformed.length - 1);
+        return `${merged}%`;
+      }
+    }
+  }
   return transformed && transformed.includes('NaN') ? '0%' : transformed;
 };
 
