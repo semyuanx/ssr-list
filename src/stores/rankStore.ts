@@ -68,7 +68,7 @@ export default class RankStore {
   // @Set('pageIndex') public setPageIndex: any;
   @Mutation
   public setPageIndex(state: any, payload: any[]) {
-    console.log(payload, 'payload');
+    // console.log(payload, 'payload');
     state.pageIndex = payload;
   }
 
@@ -125,7 +125,7 @@ export default class RankStore {
         const list = Array.isArray(res.List) ? res.List : [];
 
         let totalList = context.state.rankList;
-        console.log(pageIndex, 'pageIndex', context.state.pageIndex);
+        // console.log(pageIndex, 'pageIndex', context.state.pageIndex);
         if (pageIndex === 1) {
           totalList = list;
         } else {
@@ -183,7 +183,7 @@ export default class RankStore {
         params = processConfig(CondCfg);
 
         params = { ...rankParams, ...params };
-        console.log(params, 'ppp***pp', useDefaultParams);
+        // console.log(params, 'ppp***pp', useDefaultParams);
         if (useDefaultParams) {
           commit('setRankParams', params);
         }
@@ -201,7 +201,7 @@ export default class RankStore {
   public getBrokersList(context: { commit: Commit }, payload: any): any {
     getBrokersList(payload)
       .then((res: any) => {
-        console.log(res, 'brokersList');
+        // console.log(res, 'brokersList');
         context.commit('setBrokersList', res.brokers || []);
       })
       .catch(() => {});

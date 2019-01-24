@@ -37,30 +37,41 @@ export default {
   },
   props: ['chartData', 'smallChartYExt', 'smallChartXExt', 'bigChartYExt', 'bigChartXExt'],
   computed: {
-    smallChartY() {
-      const smallY = !this.smallChartYExt ? null : getChartData(this.smallChartYExt.slice(this.smallChartYExt.length - 10), 'yAxis');
-      return smallY;
-    },
-    smallChartX() {
-      const smallX = !this.smallChartXExt ? null : getChartData(this.smallChartXExt.slice(this.smallChartXExt.length - 10), 'xAxis');
-      return smallX;
-    },
-    bigChartY() {
-      const bigY = !this.bigChartYExt ? null : getChartData(this.bigChartYExt, 'yAxis');
-      return bigY;
-    },
-    bigChartX() {
-      const bigY = !this.bigChartXExt ? null : getChartData(this.bigChartXExt, 'xAxis');
-      return bigY;
-    },
+    // smallChartY() {
+    //   // const smallY = !this.smallChartYExt ? null : getChartData(this.smallChartYExt.slice(this.smallChartYExt.length - 10), 'yAxis');
+    //   // return smallY;
+    //   return [];
+    // },
+    // smallChartX() {
+    //   // const smallX = !this.smallChartXExt ? null : getChartData(this.smallChartXExt.slice(this.smallChartXExt.length - 10), 'xAxis');
+    //   // return smallX;
+    //   return [];
+    // },
+    // bigChartY() {
+    //   const bigY = !this.bigChartYExt ? null : getChartData(this.bigChartYExt, 'yAxis');
+    //   return bigY;
+    //   return
+    // },
+    // bigChartX() {
+    //   const bigY = !this.bigChartXExt ? null : getChartData(this.bigChartXExt, 'xAxis');
+    //   return bigY;
+    // },
   },
   methods: {
     init() {
+      this.$nextTick(() => {
+        this.initChart();
+      });
+    },
+    initChart() {
       const that = this;
-      const bigChartX = !this.chartData ? null : getChartData(this.chartData, 'xAxis');
+      const bigChartX = !this.chartData ? [] : getChartData(this.chartData, 'xAxis');
+      const smallChartX = bigChartX.slice(bigChartX.length - 10);
+      // const smallChartX = !this.chartData ? null : getChartData(this.chartData.slice(this.chartData.length - 10), 'xAxis');
+
       const bigChartY = !this.chartData ? null : getChartData(this.chartData, 'yAxis');
-      const smallChartY = !this.chartData ? null : getChartData(this.chartData.slice(this.chartData.length - 10), 'yAxis');
-      const smallChartX = !this.chartData ? null : getChartData(this.chartData.slice(this.chartData.length - 10), 'xAxis');
+      // const smallChartY = !this.chartData ? null : getChartData(this.chartData.slice(this.chartData.length - 10), 'yAxis');
+      const smallChartY = bigChartY.slice(bigChartY.length - 10);
 
       that.target = Highcharts.chart(this.$el.querySelector('.small-chart-box'), {
         chart: {
@@ -309,11 +320,7 @@ export default {
     },
   },
   mounted() {
-    if (typeof window !== 'undefined') {
-      animate(() => {
-        this.init();
-      });
-    }
+    this.init();
   },
   beforeDestory() {
     this.bigTarget.destory();
@@ -321,17 +328,13 @@ export default {
   watch: {
     smallChartX: {
       handler(a, b) {
-        animate(() => {
-          this.init();
-        });
+        this.init();
       },
       deep: true,
     },
     chartData: {
       handler(a, b) {
-        animate(() => {
-          this.init();
-        });
+        this.init();
       },
       deep: true,
     },

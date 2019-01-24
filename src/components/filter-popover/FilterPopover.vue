@@ -544,6 +544,23 @@ export default class FilterPopover extends Vue {
   }
 
   mounted() {
+    this.$nextTick(() => {
+      setTimeout(() => {
+        this.initParams();
+      }, 1000);
+    });
+  }
+
+  @Watch('show')
+  showChanged(v: any) {
+    if (v) {
+      this.$nextTick(() => {
+        this.initParams();
+      });
+    }
+  }
+
+  initParams() {
     const { lableMap, rankParams } = this;
     this.log('mounted init', this.rankParams);
 
@@ -567,15 +584,14 @@ export default class FilterPopover extends Vue {
 
     const needFilled = ['Subscribers', 'Equity', 'Weeks', 'Retracement', 'Roi', 'MaxRetracement'];
     const mapValue = lableMap[key];
-    // this.log(mapValue, 'mmmmmap', key)
+    this.log(mapValue, 'mmmmmap', key);
     if (needFilled.includes(key) && (mapValue || mapValue === 0)) {
       const filter = labelObj[mapValue].filter;
       const lastFilterFilled = filter[filter.length - 1];
-      // this.log(lastFilterFilled, key, 'kkkk')
+      this.log(lastFilterFilled, key, 'kkkk');
       if (!filter.find((i: any) => i && i.value === val)) {
         if (val.includes('-')) {
           const split = val.split('-');
-          // this.log(split, key, 'kkkk')
           if (split[0] && ![0, '0'].includes(split[0])) {
             lastFilterFilled.start = split[0];
           }

@@ -224,12 +224,14 @@ export default class FilterHeader extends Vue {
         if (typeof val !== 'undefined' && val !== null) {
           // eslint-disable-next-line
           let finalVal = i === 'isDESC' ? val === 1 ? '倒序' : '顺序' : val;
-
+          let currentProp = this.textMaps[i];
           if (i === 'isPTA') {
-            finalVal = val === 1 ? ' ' : '';
+            finalVal = val === 1 ? currentProp : '';
+            currentProp = '';
           }
           if (i === 'freeSubPrice') {
-            finalVal = val === 1 ? ' ' : '';
+            finalVal = val === 1 ? currentProp : '';
+            currentProp = '';
           }
           if (i === 'GradeScore') {
             const gradeMap: any = {
@@ -276,7 +278,7 @@ export default class FilterHeader extends Vue {
 
           if (finalVal && !needIgnore.includes(i)) {
             tags.push({
-              label: this.textMaps[i],
+              label: currentProp,
               val: finalVal,
             });
           }
@@ -335,8 +337,6 @@ export default class FilterHeader extends Vue {
     const checked = this.checkedBrokers.filter((v: any) => v !== item);
     const thisChecked = this.checked.filter((v: any) => v !== item);
     this.checked = thisChecked;
-    // console.log(checked, 'handleCloseTag');
-    // console.log(this.checked, 'cccc');
   }
 
   setChecked(brokerLists: any) {
@@ -421,6 +421,9 @@ export default class FilterHeader extends Vue {
 
       .filter-content {
         position: relative;
+        &:hover {
+          color: @default-color;
+        }
         > i {
           vertical-align: middle;
         }
