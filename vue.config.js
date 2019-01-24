@@ -16,14 +16,32 @@ function addStyleResource(rule) {
 
 const svgLoader = (config) => {
   const svgRule = config.module.rule('svg');
+  const svgRuleModule = config.module.rule('svgModule');
   // 清除已有的所有 loader。
   // 如果你不这样做，接下来的 loader 会附加在该规则现有的 loader 之后。
   svgRule.uses.clear();
 
   // 添加要替换的 loader
+  // svgRule
+  //   .use('svg-inline-loader')
+  //   .loader('svg-inline-loader');
+
+
   svgRule
+    .test(/\.svg$/)
+    .exclude
+    .add(/node_modules\//)
+    .end()
     .use('svg-inline-loader')
     .loader('svg-inline-loader');
+
+  svgRuleModule
+    .test(/\.svg$/)
+    .include
+    .add(/node_modules\//)
+    .end()
+    .use('file-loader')
+    .loader('file-loader');
 };
 
 module.exports = {
