@@ -223,7 +223,7 @@ export default class FilterHeader extends Vue {
             finalVal = val === 1 ? ' ' : '';
           }
           if (i === 'freeSubPrice') {
-            finalVal = val === 1 ? '是' : '否';
+            finalVal = val === 1 ? ' ' : '';
           }
           if (i === 'GradeScore') {
             const gradeMap: any = {
@@ -238,7 +238,7 @@ export default class FilterHeader extends Vue {
             // this.log(gradeMap[val], val, '******');
             finalVal = gradeMap[val] || '';
           }
-          const needIgnore = ['orderby', 'isDESC', 'freeSubPrice', 'brokerId', 'ExpSymbol', 'BrokerID'];
+          const needIgnore = ['orderby', 'isDESC', 'brokerId', 'ExpSymbol', 'BrokerID'];
 
           if (needProcess.includes(i) && finalVal) {
             const valArr = finalVal.split('-');
