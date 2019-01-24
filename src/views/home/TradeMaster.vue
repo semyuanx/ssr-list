@@ -136,10 +136,10 @@ export default class Index extends Vue {
 
   get configData() {
     const { config, data: dataSource }:any = this.data;
-
     let data: any = [];
     if (Array.isArray(dataSource)) {
-      data = dataSource.map((i: any) => {
+      data = dataSource.slice(0, 4);
+      data = data.map((i: any) => {
         let brokerName = '';
         if (Array.isArray(i.AccountList) && i.AccountList.length) {
           const accountInfo = i.AccountList.find((j: any) => j && j.AccountIndex === i.AccountIndex);

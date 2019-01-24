@@ -103,7 +103,8 @@ export default class Index extends Vue {
     const config:any = this.data;
     let data = [];
     if (Array.isArray(config.data)) {
-      data = config.data.map((i: any) => ({
+      data = config.data.slice(0, 4);
+      data = data.map((i: any) => ({
         item: i,
         name: i.Name,
         danger: `风险<${percentFormat(i.FollowerMaxRisk)}`,
