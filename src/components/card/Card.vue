@@ -50,7 +50,7 @@
           <span :title="data.strategyDesc" class="strategy-detail">{{data.strategyDesc}}</span>
         </div>
       </div>
-      <div v-if="confirmBtn" class="sub">
+      <div v-if="data.confirmBtn" class="sub">
         <div @click="sub" class="subscibe-content">
           <span >
             {{data.confirmBtn}}

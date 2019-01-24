@@ -77,7 +77,7 @@ export default class Home extends Vue {
   }
 
   showCard($event: any, item: any) {
-    console.log(item, '*****');
+    // console.log(item, '*****');
     // return;
     this.$emit('showCard', $event, item);
   }

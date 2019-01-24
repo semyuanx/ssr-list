@@ -209,12 +209,14 @@ export default class mainView extends Vue {
       const showPta = showData.includes('IsPTA');
       let newConfig = [];
       const isShowSubBtn = showData.includes('SubPrice');
+      // console.log(isShowSubBtn, showData,'showData')
       if (config.listData && Array.isArray(config.listData.List) && config.listData.List.length > 1) {
         newConfig = config.listData.List.map((item: any) => {
           this.log(item, this.followList, 'this.followList');
           const isEdit = this.followList.includes(`${item.UserID}_${item.AccountIndex}`);
           // eslint-disable-next-line
           const otherEditText = isEdit ? '编辑订阅' : item.SubPrice ? `${item.SubPrice}/月` : '免费订阅';
+          // this.log(!isShowSubBtn ? false : otherEditText, 'otherEditText')
           return {
             avatar: `${this.base}/Avata/${item.UserID}`,
             name: item.NickName,
