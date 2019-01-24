@@ -146,7 +146,11 @@ export const processConfig = function processConfig(CondCfg: any) {
             if (filter) {
               if (filter.Min || filter.Max) {
                 if (dotToPercent.includes(i)) {
-                  params[i] = [filter.Min * 100, filter.Max * 100].join('-');
+                  if (i === 'MaxRetracement') {
+                    params.Retracement = [filter.Min * 100, filter.Max * 100].join('-');
+                  } else {
+                    params[i] = [filter.Min * 100, filter.Max * 100].join('-');
+                  }
                 } else {
                   params[i] = [filter.Min, filter.Max].join('-');
                 }

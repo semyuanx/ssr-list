@@ -40,6 +40,8 @@
                 :show="isShow"
                 @filter="handleFilter"
                 @reset="handleReset"
+                :checked="checked"
+                @resetChecked="resetChecked"
               >
 
                 <template slot="brokerId">
@@ -159,7 +161,6 @@ export default class FilterHeader extends Vue {
 
   handleOutsideClick(e: any) {
     const { isShow } = this;
-
     if (isShow) {
       this.isShow = false;
     }
@@ -177,6 +178,7 @@ export default class FilterHeader extends Vue {
     Equity: '账户净值',
     Weeks: '交易周期',
     Retracement: '最大回撤比例',
+    MaxRetracement: '最大回撤比例',
     Roi: '收益率',
     isDESC: '排序',
     orderby: '排序字段',
@@ -189,8 +191,8 @@ export default class FilterHeader extends Vue {
   get filterTag() {
     const { rankParams } = this;
     const tags: any = [];
-
-    const needProcess = ['Subscribers', 'Equity', 'Weeks', 'Retracement', 'Roi'];
+    // this.log(rankParams, 'innerParams')
+    const needProcess = ['Subscribers', 'Equity', 'Weeks', 'Retracement', 'MaxRetracement', 'Roi'];
     const needProcessMap: any = {
       Subscribers:
       {
@@ -203,6 +205,10 @@ export default class FilterHeader extends Vue {
         suffix: '周',
       },
       Retracement: {
+        suffix: '',
+        percent: true,
+      },
+      MaxRetracement: {
         suffix: '',
         percent: true,
       },
@@ -240,10 +246,11 @@ export default class FilterHeader extends Vue {
           }
           const needIgnore = ['orderby', 'isDESC', 'brokerId', 'ExpSymbol', 'BrokerID'];
 
+          this.log(needProcess.includes(i), finalVal, 'kkkkkkkkkkkkkkk');
           if (needProcess.includes(i) && finalVal) {
             const valArr = finalVal.split('-');
             if (valArr && valArr.length) {
-              // console.log(i, valArr[0], valArr[1], 'jjjjjjjjjjjj', needProcessMap[i].percent)
+              // this.log(i, valArr[0], valArr[1], 'jjjjjjjjjjjj', needProcessMap[i].percent)
               this.log(valArr[0] && ![0, '0'].includes(valArr[0]), [0, '0'].includes(valArr[1]), i, '************');
               if (needProcessMap[i].percent) {
                 if (valArr[0] && ![0, '0'].includes(valArr[0])) {
@@ -313,6 +320,10 @@ export default class FilterHeader extends Vue {
     this.isShow = false;
     const { checked } = this;
     this.setCheckedBrokers(checked);
+  }
+
+  resetChecked() {
+    this.checked = [];
   }
 
   handleReset(value: object) {

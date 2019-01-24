@@ -13,6 +13,7 @@ module.exports = {
     'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
     'max-len': 0,
     'no-nested-ternary': 0,
+    'prefer-destructuring': 0,
     'import/order': false,
     'class-methods-use-this': 0,
     'no-param-reassign': 0,

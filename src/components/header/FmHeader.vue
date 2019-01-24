@@ -33,11 +33,14 @@ export default class FmHeader extends Vue {
   display: flex;
   flex-direction: row;
   min-height: 40px;
+
   .msg-contain {
-    flex: 1;
     display: flex;
     align-items: center;
     flex-direction: row;
+    &.left {
+      flex: 1;
+    }
   }
 }
 @media screen and (max-width: 880px) {

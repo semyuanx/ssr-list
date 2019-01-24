@@ -144,6 +144,8 @@ export default class FilterPopover extends Vue {
   // 要插入分割线的索引位置，从0开始
   @Prop({ default: () => [1, 4, 6] }) divided!: number[];
 
+  @Prop({ default: () => [] }) checked!: any[];
+
   @Prop({ default: false }) show!: boolean;
 
   // 过滤条件的字段格式
@@ -429,12 +431,23 @@ export default class FilterPopover extends Vue {
     },
   ];
 
+  lableMap: any = {
+    GradeScore: 0,
+    Score: 1,
+    Subscribers: 2,
+    Equity: 3,
+    Weeks: 4,
+    Retracement: 5,
+    MaxRetracement: 5,
+    Roi: 6,
+  };
+
   innerParams: any = {};
 
-  @Watch('allParams')
-  allParamsChanged(v: any) {
-    // console.log(v, 'vvvvvchanged');
-  }
+  // @Watch('allParams')
+  // allParamsChanged(v: any) {
+  //   // console.log(v, 'vvvvvchanged');
+  // }
 
   public get allParams() {
     const params = { ...this.rankParams, ...this.innerParams };
@@ -469,9 +482,11 @@ export default class FilterPopover extends Vue {
       });
     });
     this.setRankParams({
+      GradeScore: '',
       Score: '',
       Roi: '',
       Retracement: '',
+      Subscribers: '',
       Weeks: '',
       Equity: '',
       expSymbol: '',
@@ -502,10 +517,19 @@ export default class FilterPopover extends Vue {
     this.ptaSelected = willValue;
   }
 
+  // @Watch('checked')
+  // checkedChanged () {
+  //   const { labelObj } = this;
+  //   labelObj[labelObj.length - 1].filter[0].value = 1
+  //   this.log(this.checked)
+  // }
+
   private rangeHandler(item: any, citem: any) {
     const key: string = item.value;
     if (key === 'brokerId') {
-      this.log(this.$parent);
+      // this.log(this.$parent);
+      // this.log(this.checked, '*******')
+      this.$emit('resetChecked');
       return;
     }
 
@@ -520,22 +544,52 @@ export default class FilterPopover extends Vue {
   }
 
   mounted() {
+    const { lableMap, rankParams } = this;
     this.log('mounted init', this.rankParams);
-    this.innerParams = { ...this.innerParams, ...this.rankParams };
-    if (this.rankParams.isPTA && [1, '1'].includes(this.rankParams.isPTA)) {
+
+    this.innerParams = { ...this.innerParams, ...rankParams };
+    if (rankParams.isPTA && [1, '1'].includes(rankParams.isPTA)) {
       this.ptaSelected = true;
     }
-    if (this.rankParams.freeSubPric && [1, '1'].includes(this.rankParams.freeSubPrice)) {
+    if (rankParams.freeSubPric && [1, '1'].includes(rankParams.freeSubPrice)) {
       this.freeSubSelected = true;
     }
-    // if (this.rankParams.Roi) {
+    Object.keys(rankParams).forEach((key: any) => {
+      const val = rankParams[key];
+      if (val) {
+        this.processInitFill(key, val);
+      }
+    });
+  }
 
-    // }
+  processInitFill(key: string, val: any) {
+    const { lableMap, labelObj } = this;
+
+    const needFilled = ['Subscribers', 'Equity', 'Weeks', 'Retracement', 'Roi', 'MaxRetracement'];
+    const mapValue = lableMap[key];
+    // this.log(mapValue, 'mmmmmap', key)
+    if (needFilled.includes(key) && (mapValue || mapValue === 0)) {
+      const filter = labelObj[mapValue].filter;
+      const lastFilterFilled = filter[filter.length - 1];
+      // this.log(lastFilterFilled, key, 'kkkk')
+      if (!filter.find((i: any) => i && i.value === val)) {
+        if (val.includes('-')) {
+          const split = val.split('-');
+          // this.log(split, key, 'kkkk')
+          if (split[0] && ![0, '0'].includes(split[0])) {
+            lastFilterFilled.start = split[0];
+          }
+          if (split[1] && ![0, '0'].includes(split[1])) {
+            lastFilterFilled.end = split[1];
+          }
+        }
+      }
+    }
   }
 
   private inputChanged(key: string, start: any, type: string) {
     const modelVal = start[type];
-    console.log(start, 'inputChanged');
+    this.log(start, 'inputChanged');
     if (modelVal === '0' || modelVal === 0 || !isNumber(modelVal)) {
       start[type] = '';
     }
