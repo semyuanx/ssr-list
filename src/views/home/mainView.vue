@@ -190,6 +190,7 @@ export default class mainView extends Vue {
             return {
               mam: true,
               name: item.Name,
+              type: 'MAM',
               danger: `风险<${percentFormat(item.FollowerMaxRisk)}`,
               confirmBtn: item.Status === 'Pending' ? '立即参与' : '查看详情',
               index: item.AccountIndex,

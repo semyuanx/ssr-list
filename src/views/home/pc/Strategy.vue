@@ -24,7 +24,7 @@
                 <template v-if="item.mam" slot="header">
                   <div class="fm-show-pc card-header">
                     <div class="mam-tag">
-                      <span class="mam-type">mam</span>
+                      <span class="mam-type">{{item.type}}</span>
                     </div>
                     <div class="mam-name" @click="toMamPersonal(item)">{{item.name}}</div>
                     <div class="mam-danger">{{item.danger}}</div>
@@ -33,7 +33,7 @@
                   <div class="fm-show-mobile">
                     <div class="mobile-card-header">
                       <div class="mam-tag">
-                        <span class="mam-type">mam</span>
+                        <span class="mam-type">{{item.type}}</span>
                       </div>
                       <div class="mam-name" @click="toMamPersonal(item)">{{item.name}}</div>
                       <div class="mam-danger">{{item.danger}}</div>
@@ -46,10 +46,10 @@
       </div>
 
       <div v-if="data.length > 4" class="scroll-btn-container fm-show-pc">
-          <div @click="scrollLeft" class="scroll-btn scroll-left" :style="`left: ${0 - left}px;`">
+          <div @click="scrollLeft" class="scroll-btn " :class="{'scroll-left': !scrollLeftBtn, grayed: scrollLeftBtn}" :style="`left: ${0 - left}px;`">
             <i class="icon-left_24px" />
           </div>
-          <div @click="scrollRight" class="scroll-btn scroll-right" :style="`right: ${0 - left}px;`">
+          <div @click="scrollRight" class="scroll-btn " :class="{'scroll-right': !scrollRightBtn, grayed: scrollRightBtn}" :style="`right: ${0 - left}px;`">
             <i class="icon-right_24px" />
           </div>
       </div>
@@ -144,44 +144,70 @@ export default class Home extends Vue {
     });
   }
 
+  scrollRightBtn: boolean = false;
+
+  scrollLeftBtn: boolean = true;
+
   scrollCompute(direction: any = 1, scrollNum: number = 4) { // 1是left scroll; 0: right scroll
     const el = this.$el;
-    if (el) {
+    const len = this.data.length;
+    if (el && len > 4) {
       const listsContainer: any = el.querySelector('.lists-container');
-      const containerWidth = listsContainer.offsetWidth;
+      // const containerWidth = listsContainer.offsetWidth;
       const lists: any = el.querySelector('.lists');
       const width = lists.offsetWidth;
       if (lists) {
         const listItem = lists.querySelector('.list-item');
         if (listItem) {
           const singleWidth = listItem.offsetWidth;
+          const containerWidth = singleWidth * len;
+
           let { scrolled } = this;
           let shouldScroll: string = '';
+
+          const everyScrollWidth = singleWidth * scrollNum;
+
           if (direction === 1) {
-            scrolled += singleWidth * scrollNum;
+            scrolled += everyScrollWidth;
           } else {
-            scrolled -= singleWidth * scrollNum;
+            scrolled -= everyScrollWidth;
           }
-          const listsWidthPx = this.data.length * (singleWidth);
+          const listsWidthPx = (len - 1) * (singleWidth);
           const listsWidth = `${listsWidthPx}px`;
 
+          // this.log(singleWidth, scrolled, len, this.scrollRightBtn, 'singleWidth')
+
           if (scrolled < 0) {
-            const willScrolled = scrolled - containerWidth;
-            if (Math.abs(willScrolled) > listsWidthPx) {
-              scrolled = listsWidthPx - containerWidth;
-              scrolled = 0 - scrolled;
-            } else if (Math.abs(willScrolled) > listsWidthPx + singleWidth) {
-              return;
+            const willScrolled = scrolled;
+            console.log(willScrolled, listsWidthPx);
+            if (Math.abs(willScrolled) >= listsWidthPx) {
+              const maxScroll = (containerWidth - everyScrollWidth);
+              scrolled = 0 - maxScroll;
+              if (Math.abs(willScrolled) + 1 > maxScroll) {
+                this.scrollRightBtn = true;
+              } else {
+                this.scrollRightBtn = false;
+              }
+            } else {
+              this.scrollRightBtn = false;
             }
           }
           // if (scrolled)
+          // this.log(direction, scrolled);
           if (direction === 1) {
-            if (this.scrolled === 2 || this.scrolled === 0) {
+            if (scrolled + 1 > 0) {
+              this.scrollLeftBtn = true;
+            } else {
+              this.scrollLeftBtn = false;
+            }
+            if (this.scrolled > 0 || this.scrolled === 0) {
               return;
             }
+          } else {
+            this.scrollLeftBtn = false;
           }
           if (scrolled > 10 || Math.abs(scrolled) < singleWidth / 2) {
-            scrolled = 2;
+            scrolled = 0;
           }
 
           shouldScroll = `${scrolled}px`;
@@ -253,21 +279,33 @@ i[class^="icon-"] {
         display: flex;
         justify-content: center;
         align-items: center;
+        color: #767676;
         >i {
           font-size: 50px;
           color: #999999;
         }
+
+      }
+      .scroll-left {
+        left: 20px;
         &:hover {
           i> {
             color: @default-color;
           }
         }
       }
-      .scroll-left {
-        left: 20px;
-      }
       .scroll-right {
         right: 20px;
+        &:hover {
+          i> {
+            color: @default-color;
+          }
+        }
+      }
+      .grayed {
+        i {
+          color: rgba(118, 118, 118, 0.3);
+        }
       }
     }
   }
@@ -298,7 +336,7 @@ i[class^="icon-"] {
               font-size:12px;
               font-family:MicrosoftYaHei;
               color:rgba(255,255,255,1);
-              line-height:16px;
+              line-height:20px;
               display: inline-block;
             }
           }
@@ -364,7 +402,7 @@ i[class^="icon-"] {
           font-size:12px;
           font-family:MicrosoftYaHei;
           color:rgba(255,255,255,1);
-          line-height:16px;
+          line-height:20px;
           display: inline-block;
         }
       }

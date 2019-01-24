@@ -145,6 +145,9 @@ export const processConfig = function processConfig(CondCfg: any) {
           if (Object.prototype.toString.call(filter) === '[object Object]') {
             if (filter) {
               if (filter.Min || filter.Max) {
+                if (i === 'SubCount') {
+                  params.Subscribers = [filter.Min, filter.Max].join('-');
+                }
                 if (dotToPercent.includes(i)) {
                   if (i === 'MaxRetracement') {
                     params.Retracement = [filter.Min * 100, filter.Max * 100].join('-');

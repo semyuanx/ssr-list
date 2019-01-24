@@ -189,10 +189,15 @@ export default class FilterHeader extends Vue {
   };
 
   get filterTag() {
-    const { rankParams } = this;
+    const { rankParams: rankAlias } = this;
+    const rankParams = { ...rankAlias };
     const tags: any = [];
     // this.log(rankParams, 'innerParams')
-    const needProcess = ['Subscribers', 'Equity', 'Weeks', 'Retracement', 'MaxRetracement', 'Roi'];
+    const needProcess = ['Subscribers', 'Score', 'Equity', 'Weeks', 'Retracement', 'MaxRetracement', 'Roi'];
+    if (rankParams.SubCount) {
+      rankParams.Subscribers = rankParams.SubCount;
+      rankParams.SubCount = '';
+    }
     const needProcessMap: any = {
       Subscribers:
       {
@@ -215,6 +220,10 @@ export default class FilterHeader extends Vue {
       Roi: {
         suffix: '',
         percent: true,
+      },
+      Score: {
+        suffix: '',
+        percent: false,
       },
     };
 
@@ -251,7 +260,7 @@ export default class FilterHeader extends Vue {
           this.log(needProcess.includes(i), finalVal, 'kkkkkkkkkkkkkkk');
           if (needProcess.includes(i) && finalVal) {
             const valArr = finalVal.split('-');
-            if (valArr && valArr.length) {
+            if (valArr && valArr.length && needProcessMap[i]) {
               // this.log(i, valArr[0], valArr[1], 'jjjjjjjjjjjj', needProcessMap[i].percent)
               this.log(valArr[0] && ![0, '0'].includes(valArr[0]), [0, '0'].includes(valArr[1]), i, '************');
               if (needProcessMap[i].percent) {
