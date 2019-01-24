@@ -1,7 +1,8 @@
 /* eslint-disable */
 // https://github.com/axios/axios#interceptors
 import axios, { AxiosResponse, AxiosRequestConfig } from 'axios';
-import dialog from '@fmfe/fm-vue-ui/lib/dialog';
+
+import { Notification } from 'element-ui';
 
 import { getAppInfo, isApp, isNativeFuncExist} from '@/utils/native.ts'
 
@@ -99,9 +100,10 @@ export default class Network {
     public onResponse = (response: AxiosResponse) => {
       this.req._logger.end && this.req._logger.end(`Ajax_request_${response.config.url}`);
       if (response.data.code) {
-        dialog({
-          type: 'failure',
+        Notification({
+          title: 'failure',
           message: `${response.data.message} `,
+          type: 'error'
         });
         this.req._logger.error
             && this.req._logger.error(`Ajax request failed ${response.config.url} error ${response.data.code}`);

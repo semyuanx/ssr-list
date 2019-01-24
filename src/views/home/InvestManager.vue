@@ -201,7 +201,7 @@ export default class Index extends Vue {
     if (mamInfo.Status !== 'Pending') {
       const { Trader } = mamInfo;
 
-      this.toPersonalPage(Trader);
+      return this.toPersonalPage(Trader);
     }
 
     // 满标直接返回
