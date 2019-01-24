@@ -53,6 +53,9 @@ export default class Index extends Vue {
   subscribe: any;
 
   formatVal(val: string|number, type: string): string | number {
+    if (Array.isArray(val)) {
+      return val.join('/');
+    }
     return propFormat(val, type);
   }
 
@@ -111,12 +114,14 @@ export default class Index extends Vue {
     const showGrade = showData.includes('GradeScore');
     const showPta = showData.includes('IsPTA');
     const isShowSubBtn = showData.includes('SubPrice');
+    const needIgnore = ['IsPTA', 'GradeScore', 'SubPrice'];
+    // const show2Data = showData.filter((ik: any) => !needIgnore.includes(ik)).slice(0, 2);
 
     if (config.listData && Array.isArray(config.listData.List) && config.listData.List.length > 1) {
       if (config.listData.List.length > 3) {
-        showData = showData.slice(0, 2);
+        showData = showData.filter((ik: any) => !needIgnore.includes(ik)).slice(0, 2);
       } else {
-        showData = showData.slice(0, 3);
+        showData = showData.filter((ik: any) => !needIgnore.includes(ik)).slice(0, 3);
       }
       const newConfig = config.listData.List.map((item: any) => {
         const isEdit = this.followList.includes(`${item.UserID}_${item.AccountIndex}`);

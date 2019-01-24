@@ -201,15 +201,14 @@ export default class mainView extends Vue {
         }
       }
       // console.log(config, 'ccccc');
+      const needIgnore = ['IsPTA', 'GradeScore', 'SubPrice'];
+      const show2Data = showData.filter((ik: any) => !needIgnore.includes(ik)).slice(0, 2);
 
       const needHightProp = ['ROI'];
-      const show2Data = showData.slice(0, 2);
-      this.log(showData, 'sssssssssss');
       const showGrade = showData.includes('GradeScore');
       const showPta = showData.includes('IsPTA');
       let newConfig = [];
       const isShowSubBtn = showData.includes('SubPrice');
-      // console.log(isShowSubBtn, showData,'showData')
       if (config.listData && Array.isArray(config.listData.List) && config.listData.List.length > 1) {
         newConfig = config.listData.List.map((item: any) => {
           this.log(item, this.followList, 'this.followList');

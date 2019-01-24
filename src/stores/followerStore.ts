@@ -3,11 +3,11 @@ import {
 } from '@/utils/store-class-annotation';
 import { Commit } from 'vuex';
 import {
-  getRankList,
+  // getRankList,
   getRankFollowersService,
 } from '@/service/home';
-import { toNumber } from '@/utils/util';
-import propMaps from '@/constant/propMap';
+// import { toNumber } from '@/utils/util';
+// import propMaps from '@/constant/propMap';
 
 @Repository('FollowerStore')
 export default class RankStore {
@@ -68,7 +68,7 @@ export default class RankStore {
       let data: any = [];
       const { pageIndex } = params;
       const { followers } = state;
-      console.log(res, followers, 'followers');
+      // console.log(res, followers, 'followers');
       if (!res || !Array.isArray(res.items)) {
         return res;
       }

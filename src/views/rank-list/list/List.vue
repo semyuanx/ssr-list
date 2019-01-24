@@ -331,7 +331,7 @@ export default class List extends Vue {
       callback(val: any) {
         return new Promise((res) => {
           if (res) {
-            console.log('res:', val);
+            // console.log('res:', val);
             if (val.code === 'SUCCESS' || val.code === 0) {
               _this.getFollowAndAttention();
             } else {
