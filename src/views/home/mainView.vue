@@ -74,6 +74,7 @@ export default class mainView extends Vue {
   @RankStore.Action
   getRelations: any;
 
+  loginInfo: any = {};
 
   get products() {
     const data = this.progressProducts.map((i: any) => i);
@@ -274,6 +275,39 @@ export default class mainView extends Vue {
     const params = {
       toUserId: userId,
     };
+
+    if (this.loginInfo.id) {
+      const id: any = this.loginInfo.id;
+      const isSelfAttendion = this.attentionList.find((i: any) => i === id || i === (`${id}`));
+      if (isSelfAttendion) {
+        return this.$fmdialog({
+          message: 'sorry, 自己不能关注自己',
+          onConfirm: () => {
+            // this.toNoticeOrUnNoticeOne(params);
+          },
+        });
+      }
+      return this.toAttentionOther(params, userId);
+    }
+    return getLoginStatus().then((user: any) => {
+      if (user.islogin) {
+        const id: any = user.id;
+        const isSelfAttendion = this.attentionList.find((i: any) => i === id || i === (`${id}`));
+        if (isSelfAttendion) {
+          return this.$fmdialog({
+            message: 'sorry, 自己不能关注自己',
+            onConfirm: () => {
+              // this.toNoticeOrUnNoticeOne(params);
+            },
+          });
+        }
+        return this.toAttentionOther(params, userId);
+      }
+      return loadAuth();
+    });
+  }
+
+  toAttentionOther(params: any, userId: any) {
     const isAttendion = this.attentionList.find((i: any) => i === userId || i === (`${userId}`));
     if (!isAttendion) {
       this.toNoticeOrUnNoticeOne(params);
@@ -366,6 +400,7 @@ export default class mainView extends Vue {
   getFollowAndAttention() {
     getLoginStatus().then((user: any) => {
       if (user.islogin) {
+        this.loginInfo = user;
         this.getRelations()
           .then((res: any) => {
             this.followList = res.follows;
@@ -407,6 +442,7 @@ export default class mainView extends Vue {
       .then((user: any) => {
         if (user.islogin) {
           // follow
+          this.loginInfo = user;
           this.checkIfNotice(list);
           return this.checkTraderCanFollow(list).then((tres: any) => {
             if (tres) {

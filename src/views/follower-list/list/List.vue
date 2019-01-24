@@ -389,18 +389,28 @@ export default class List extends Vue {
     const params = {
       toUserId: user.UserID,
     };
+    const { attentionList } = this;
+
     getLoginStatus().then((user1: any) => {
       if (user1.islogin) {
+        const uid = user1.id;
+        if ((attentionList.includes(uid) || attentionList.includes(`${uid}`))) {
+          return this.$fmdialog({
+            message: 'sorry, 自己不能关注自己',
+            onConfirm: () => {
+              // this.toNoticeOrUnNoticeOne(params);
+            },
+          });
+        }
         // e.target.className = e.target.className === 'follow' ? 'follow attation-active' : 'follow';
         e.target.innerHTML = e.target.innerHTML === this.$t('message.attened') ? this.$t('message.atten') : this.$t('message.attened');
-        this.addOrCancelAttention(params).then((res : any) => {
+        return this.addOrCancelAttention(params).then((res : any) => {
           this.getFollowAndAttention();
         }).catch((err: any) => {
           console.log(err);
         });
-      } else {
-        loadAuth();
       }
+      return loadAuth();
     });
   }
 

@@ -368,62 +368,63 @@ i[class^="icon-"] {
 
   }
 }
-@media screen and (max-width: 880px) {
-  @base-font: 20;
-  @page-padding: 15rem / @base-font;
-  .generate-padding() {
-    padding-right: @page-padding;
-    padding-left: @page-padding;
-  }
-  .strategy-container {
-    .lists {
-      overflow: auto !important;
-      .generate-padding();
-      .list-item {
-        margin-right: 15px;
-      }
-    }
-  }
 
-  .fm-show-mobile {
-    .mobile-card-header {
-      display: flex;
-      align-items: center;
-      .mam-tag {
-        text-align: center;
-        margin-right: 10px;
-        display: flex;
-        align-items: center;
-        .mam-type {
-          width:60px;
-          height:20px;
-          background:rgba(255,98,0,1);
-          border-radius:14px;
-          font-size:12px;
-          font-family:MicrosoftYaHei;
-          color:rgba(255,255,255,1);
-          line-height:20px;
-          display: inline-block;
-        }
-      }
-      .mam-name {
-        color:rgba(51,51,51,1);
-        line-height:26px;
-        font-size:20px;
-        margin-right: 10px;
-        cursor: pointer;
-        &:hover {
-          color: @default-color;
-        }
-      }
-      .mam-danger {
-        font-size:12px;
-        font-family:MicrosoftYaHei;
-        color:rgba(31,187,149,1);
-        line-height:16px;
-      }
-    }
-  }
+// @media screen and (max-width: 880px) {
+//   @base-font: 20;
+//   @page-padding: 15rem / @base-font;
+//   .generate-padding() {
+//     padding-right: @page-padding;
+//     padding-left: @page-padding;
+//   }
+//   .strategy-container {
+//     .lists {
+//       overflow: auto !important;
+//       .generate-padding();
+//       .list-item {
+//         margin-right: 15px;
+//       }
+//     }
+//   }
 
-}
+//   .fm-show-mobile {
+//     .mobile-card-header {
+//       display: flex;
+//       align-items: center;
+//       .mam-tag {
+//         text-align: center;
+//         margin-right: 10px;
+//         display: flex;
+//         align-items: center;
+//         .mam-type {
+//           width:60px;
+//           height:20px;
+//           background:rgba(255,98,0,1);
+//           border-radius:14px;
+//           font-size:12px;
+//           font-family:MicrosoftYaHei;
+//           color:rgba(255,255,255,1);
+//           line-height:20px;
+//           display: inline-block;
+//         }
+//       }
+//       .mam-name {
+//         color:rgba(51,51,51,1);
+//         line-height:26px;
+//         font-size:20px;
+//         margin-right: 10px;
+//         cursor: pointer;
+//         &:hover {
+//           color: @default-color;
+//         }
+//       }
+//       .mam-danger {
+//         font-size:12px;
+//         font-family:MicrosoftYaHei;
+//         color:rgba(31,187,149,1);
+//         line-height:16px;
+//       }
+//     }
+//   }
+
+// }
 </style>

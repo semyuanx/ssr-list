@@ -5,3 +5,22 @@
 @default-color: #FF6200;
 @hover-default-color: #f05102;
 @default-hover-color: #f05102;
+
+.resetMobile () {
+    @media screen and (max-width: 880px) {
+        html {
+            /* iPhone6的375px尺寸作为16px基准，414px正好18px大小, 600 20px */
+            font-size: calc(100% + 4 * (100vw - 375px) / 500);
+            font-size: calc(20px + 4 * (100vw - 375px) / 500);
+        }
+        .fm-show-mobile {
+            display: block !important;
+        }
+        .fm-show-pc {
+            display: none !important;
+        }
+        .fm-content-container {
+            min-height: unset;
+        }
+    }
+}
