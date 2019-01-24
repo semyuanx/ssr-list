@@ -568,9 +568,11 @@ export default class FilterPopover extends Vue {
     if (rankParams.isPTA && [1, '1'].includes(rankParams.isPTA)) {
       this.ptaSelected = true;
     }
-    if (rankParams.freeSubPric && [1, '1'].includes(rankParams.freeSubPrice)) {
+    console.log(this.innerParams, 'rankParams*****************');
+    if (rankParams.freeSubPrice && [1, '1'].includes(rankParams.freeSubPrice)) {
       this.freeSubSelected = true;
     }
+
     Object.keys(rankParams).forEach((key: any) => {
       const val = rankParams[key];
       if (val) {

@@ -21,9 +21,7 @@ export default class MobileFilter extends Vue {
   getBrokersList: any;
 
   mounted() {
-    this.getBrokersList({
-      commonlyused: 1,
-    });
+    this.getBrokersList({});
   }
 }
 </script>

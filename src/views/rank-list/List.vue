@@ -40,11 +40,6 @@ export default class List extends Vue {
   @Prop()
   showProps: any;
 
-  // @Watch('rankList')
-  // public rankListChange() {
-  //   console.log('rank changed', this.rankTotal, this.rankList);
-  // }
-
   get isShowPc() {
     return this.windowSize > 880;
   }

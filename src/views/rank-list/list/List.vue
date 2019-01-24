@@ -198,7 +198,7 @@ import Chart from '@/components/chart/index.vue';
 
 import SvgIcon from '@/components/svg/index.ts';
 import {
-  numberFormat, percentFormat, propFormat, gradeFormat,
+  numberFormat, percentFormat, propFormat, gradeFormat, moneyFormat,
 } from '@/utils/format';
 import { getElementTop, getElementLeft } from '@/utils/util';
 import { Table, TableColumn } from 'element-ui';
@@ -225,6 +225,8 @@ const isEnterLoad = false;
         return gradeFormat(val);
       } if (prop === 'IsPTA') {
         return val ? '是' : '否';
+      } if (prop === 'Equity') {
+        return moneyFormat(val);
       }
       return propFormat(val, prop);
     },
