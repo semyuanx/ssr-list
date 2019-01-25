@@ -172,14 +172,14 @@ export default class Home extends Vue {
           } else {
             scrolled -= everyScrollWidth;
           }
-          const listsWidthPx = (len - 1) * (singleWidth);
+          const listsWidthPx = (len - 4) * (singleWidth);
           const listsWidth = `${listsWidthPx}px`;
 
           // this.log(singleWidth, scrolled, len, this.scrollRightBtn, 'singleWidth')
 
           if (scrolled < 0) {
             const willScrolled = scrolled;
-            console.log(willScrolled, listsWidthPx);
+            // console.log(willScrolled, listsWidthPx);
             if (Math.abs(willScrolled) >= listsWidthPx) {
               const maxScroll = (containerWidth - everyScrollWidth);
               scrolled = 0 - maxScroll;
@@ -191,6 +191,8 @@ export default class Home extends Vue {
             } else {
               this.scrollRightBtn = false;
             }
+          } else {
+            this.scrollRightBtn = false;
           }
           // if (scrolled)
           // this.log(direction, scrolled);

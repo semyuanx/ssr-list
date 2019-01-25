@@ -60,7 +60,7 @@
                     <span v-if="showOthers.includes('IsPTA') && scope.row.IsPTA" class="pta-icon">
                       <PtaLogo />
                     </span>
-                    <span>{{scope.row.BrokerName || ''}}</span>
+                    <span class="broker-name">{{scope.row.BrokerName || ''}}</span>
                   </div>
                 </div>
               </div>
@@ -209,7 +209,6 @@ import PtaLogo from '@/components/ptaLogo/index.vue';
 const RankStore = namespace('RankStore');
 
 const isEnterLoad = false;
-
 @Component(({
   components: {
     SvgIcon,
@@ -635,6 +634,12 @@ export default class List extends Vue {
               display: flex;
               align-items: flex-end;
               padding-bottom: 2px;
+              .broker-name {
+                max-width: 116px;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+              }
               >span {
                 font-size:12px;
                 color:rgba(153,153,153,1);

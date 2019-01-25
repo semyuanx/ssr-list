@@ -1,6 +1,6 @@
 {
   "name": "ssr-rank-list",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "start": "vue-cli-service serve",
@@ -8,8 +8,9 @@
     "build:beta": "vue-cli-service build --mode=alibeta",
     "beta": "npm run build:beta",
     "build:prod": "vue-cli-service build --mode=production",
+    "prod": "npm run build:prod",
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
+    "build1": "vue-cli-service build",
     "lint": "vue-cli-service lint",
     "test:e2e": "vue-cli-service test:e2e",
     "test:unit": "vue-cli-service test:unit"
