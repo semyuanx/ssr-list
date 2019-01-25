@@ -362,17 +362,30 @@ export default class FilterHeader extends Vue {
     setTimeout(() => {
       this.getBrokersList({});
     }, 1000);
+    // this.initParams();
+  }
 
+  initParams() {
     const { rankParams } = this;
+    // this.log('rankParams', rankParams, this.checkedBrokers,'***************************')
+    let brokerId: any = [];
     if (rankParams && Array.isArray(rankParams.brokerId) && rankParams.brokerId.length) {
-      const brokers = rankParams.brokerId;
-
+      brokerId = rankParams.brokerId;
+    }
+    if (this.checkedBrokers && Array.isArray(this.checkedBrokers) && this.checkedBrokers.length) {
       this.checkedBrokers.forEach((i: any) => {
-        if (!brokers.includes(i)) {
-          brokers.push(i);
+        if (!brokerId.includes(i)) {
+          brokerId.push(i);
         }
       });
-      this.setChecked(brokers);
+    }
+    this.setChecked(brokerId);
+  }
+
+  @Watch('isShow')
+  changedShow(v: any) {
+    if (v) {
+      this.initParams();
     }
   }
 }

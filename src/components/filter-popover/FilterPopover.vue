@@ -47,7 +47,7 @@
             :key="inx"
           >
             <filter-tag
-              :active="(allParams[item.value]) == citem.value"
+              :active="(allParams[item.value] || '') == citem.value"
               v-if="!citem.type"
               @selected="rangeHandler(item,citem)"
             >{{citem.name}}</filter-tag>
@@ -490,7 +490,7 @@ export default class FilterPopover extends Vue {
       Weeks: '',
       Equity: '',
       expSymbol: '',
-      brokerId: '',
+      brokerId: [],
     });
     this.innerParams = {};
     this.ptaSelected = false;
@@ -517,12 +517,15 @@ export default class FilterPopover extends Vue {
     this.ptaSelected = willValue;
   }
 
-  // @Watch('checked')
-  // checkedChanged () {
-  //   const { labelObj } = this;
-  //   labelObj[labelObj.length - 1].filter[0].value = 1
-  //   this.log(this.checked)
-  // }
+  @Watch('checked')
+  checkedChanged(v: any) {
+    const { labelObj } = this;
+    if (v && v.length) {
+      labelObj[labelObj.length - 1].filter[0].value = 1;
+    } else {
+      labelObj[labelObj.length - 1].filter[0].value = '';
+    }
+  }
 
   private rangeHandler(item: any, citem: any) {
     const key: string = item.value;
@@ -568,7 +571,7 @@ export default class FilterPopover extends Vue {
     if (rankParams.isPTA && [1, '1'].includes(rankParams.isPTA)) {
       this.ptaSelected = true;
     }
-    console.log(this.innerParams, 'rankParams*****************');
+    // console.log(this.innerParams, 'rankParams*****************');
     if (rankParams.freeSubPrice && [1, '1'].includes(rankParams.freeSubPrice)) {
       this.freeSubSelected = true;
     }

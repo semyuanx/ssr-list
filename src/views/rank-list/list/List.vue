@@ -193,7 +193,7 @@ import { namespace } from 'vuex-class';
 
 import { loadAuth } from 'fmcomponents/src/utils';
 import { getLoginStatus } from 'fmcomponents';
-import FollowBox from 'fmcomponents/src/components/follow';
+// import FollowBox from 'fmcomponents/src/components/follow';
 import personCard from 'fmcomponents/src/components/personcard';
 import Chart from '@/components/chart/index.vue';
 
@@ -413,6 +413,13 @@ export default class List extends Vue {
   }
 
   showFollowCard(_this: any, list: any) {
+    import('fmcomponents/src/components/follow').then((followModule: any) => {
+      const followBox: any = followModule.default;
+      this.showFollowCard1(followBox, list);
+    });
+  }
+
+  showFollowCard1(FollowBox: any, list: any) {
     FollowBox.show(
       {
         traderid: list.UserID,
@@ -423,7 +430,7 @@ export default class List extends Vue {
       (result: any) => {
         // console.log(result);
         if (result.code === 'SUCCESS' || result.code === 0) {
-          _this.getFollowAndAttention();
+          this.getFollowAndAttention();
         } else {
           //
         }

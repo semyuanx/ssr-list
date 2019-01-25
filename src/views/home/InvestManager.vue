@@ -28,7 +28,7 @@ import { moneyFormat, percentFormat } from '@/utils/format';
 
 import { getLoginStatus } from 'fmcomponents';
 import { loadAuth } from 'fmcomponents/src/utils';
-import { openJoinDialog, openCreateDialog } from 'fmcomponents/src/components/mam';
+// import { openJoinDialog, openCreateDialog } from 'fmcomponents/src/components/mam';
 import { namespace, Action } from 'vuex-class';
 
 const ManagerStore = namespace('ManagerStore');
@@ -174,9 +174,17 @@ export default class Index extends Vue {
           },
         });
       } else {
-        openCreateDialog();
+        // openCreateDialog();
+        this.openCreateDialog();
       }
     }
+  }
+
+  openCreateDialog() {
+    import('fmcomponents/src/components/mam').then((Module: any) => {
+      const { openCreateDialog }: any = Module;
+      openCreateDialog();
+    });
   }
 
   toPersonalPage(data: any) {
@@ -293,11 +301,25 @@ export default class Index extends Vue {
       return;
     }
     // 通过了直接可以参与了
-    openJoinDialog({
-      productId: mamInfo.ID,
-      onSuccess: () => {
-        // _this.$emit('fetch-data');
-      },
+    // openJoinDialog({
+    //   productId: mamInfo.ID,
+    //   onSuccess: () => {
+    //     // _this.$emit('fetch-data');
+    //   },
+    // });
+    this.openJoinDialog(mamInfo.ID);
+  }
+
+  openJoinDialog(id: any) {
+    import('fmcomponents/src/components/mam').then((Module: any) => {
+      const { openJoinDialog }: any = Module;
+      // console.log(Module)
+      openJoinDialog({
+        productId: id,
+        onSuccess: () => {
+          // _this.$emit('fetch-data');
+        },
+      });
     });
   }
 }
