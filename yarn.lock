@@ -4567,7 +4567,7 @@ flush-write-stream@^1.0.0:
 
 "fmcomponents@git+ssh://git@gitlab.followme.com/Frontend/fmcomponents.git#master":
   version "2.0.0"
-  resolved "git+ssh://git@gitlab.followme.com/Frontend/fmcomponents.git#46b2c2e268ff8bc527758238a50b446995c0cae2"
+  resolved "git+ssh://git@gitlab.followme.com/Frontend/fmcomponents.git#5f84fd384484b845f1f49651be2f70eeb496325b"
   dependencies:
     babel-polyfill "^6.23.0"
     echarts "^4.2.0-rc.2"

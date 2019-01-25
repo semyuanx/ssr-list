@@ -84,5 +84,5 @@ module.exports = {
       msTileImage: 'img/icons/followme-120-120.png',
     },
   },
-  transpileDependencies: [/fmcomponents/],
+  // transpileDependencies: [/fmcomponents/],
 };

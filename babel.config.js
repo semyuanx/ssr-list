@@ -12,6 +12,6 @@ module.exports = {
         "styleLibraryName": "theme-chalk"
       }
     ],
-    "@babel/plugin-transform-modules-commonjs",
+    // "@babel/plugin-transform-modules-commonjs",
   ]
 };
