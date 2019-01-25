@@ -271,14 +271,14 @@ export default class mainView extends Vue {
   toPersonal(data:any) {
     const userId = data.item ? data.item.UserID : data.UserID;
     const index = data.item ? data.item.AccountIndex : data.index;
-    // this.redirectTo('personalPage', { userId, index }, true);
     const params = {
       toUserId: userId,
     };
 
     if (this.loginInfo.id) {
-      const id: any = this.loginInfo.id;
-      const isSelfAttendion = this.attentionList.find((i: any) => i === id || i === (`${id}`));
+      const uid: any = this.loginInfo.id;
+      const selfId = [uid, `${uid}`];
+      const isSelfAttendion = selfId.includes(userId);
       if (isSelfAttendion) {
         return this.$fmdialog({
           message: 'sorry, 自己不能关注自己',
@@ -291,8 +291,9 @@ export default class mainView extends Vue {
     }
     return getLoginStatus().then((user: any) => {
       if (user.islogin) {
-        const id: any = user.id;
-        const isSelfAttendion = this.attentionList.find((i: any) => i === id || i === (`${id}`));
+        const uid: any = user.id;
+        const selfId = [uid, `${uid}`];
+        const isSelfAttendion = selfId.includes(userId);
         if (isSelfAttendion) {
           return this.$fmdialog({
             message: 'sorry, 自己不能关注自己',

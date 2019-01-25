@@ -65,11 +65,16 @@ export default {
     },
     initChart() {
       const that = this;
-      const bigChartX = !this.chartData ? [] : getChartData(this.chartData, 'xAxis');
+      const transformData = !this.chartData ? {} : getChartData(this.chartData);
+      const { x, y } = transformData;
+      // const bigChartX = !this.chartData ? [] : getChartData(this.chartData, 'xAxis');
+
+      const bigChartX = x || [];
       const smallChartX = bigChartX.slice(bigChartX.length - 10);
       // const smallChartX = !this.chartData ? null : getChartData(this.chartData.slice(this.chartData.length - 10), 'xAxis');
 
-      const bigChartY = !this.chartData ? null : getChartData(this.chartData, 'yAxis');
+      const bigChartY = y || [];
+      // const bigChartY = !this.chartData ? [] : getChartData(this.chartData, 'yAxis');
       // const smallChartY = !this.chartData ? null : getChartData(this.chartData.slice(this.chartData.length - 10), 'yAxis');
       const smallChartY = bigChartY.slice(bigChartY.length - 10);
 

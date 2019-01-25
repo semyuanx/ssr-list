@@ -210,8 +210,6 @@ const isEnterLoad = false;
     [TableColumn.name]: TableColumn,
   },
   filters: {
-    // numberFormatOneParams: (val: number) => numberFormat(val, 1),
-    // percentFormat: (val: number) => percentFormat(val),
     moneyFormat: (val: number, prop: string) => {
       const props = ['FollowMoney'];
       return props.includes(prop) ? moneyFormat(val) : val;
@@ -386,15 +384,18 @@ export default class List extends Vue {
 
   attention(user: any, e: any) {
     const _this = this;
+    const userId = user.UserID;
     const params = {
-      toUserId: user.UserID,
+      toUserId: userId,
     };
     const { attentionList } = this;
 
     getLoginStatus().then((user1: any) => {
       if (user1.islogin) {
         const uid = user1.id;
-        if ((attentionList.includes(uid) || attentionList.includes(`${uid}`))) {
+        this.log(attentionList, uid, 'attentionList');
+        const selfId = [uid, `${uid}`];
+        if (selfId.includes(userId)) {
           return this.$fmdialog({
             message: 'sorry, 自己不能关注自己',
             onConfirm: () => {
@@ -464,9 +465,9 @@ export default class List extends Vue {
 
         &:hover {
           background: rgba(255, 255, 255, 1) !important;
-          box-shadow: 0px 0px 30px 0px rgba(0, 0, 0, 0.1);
+          // box-shadow: 0px 0px 30px 0px rgba(0, 0, 0, 0.1);
           :global(td) {
-            box-shadow: 20px 0px 30px 0 rgba(0, 0, 0, 0.1);
+            box-shadow: 20px 0px 24px 0 rgba(0, 0, 0, 0.05);
             background-color: #ffffff !important;
           }
           .custom-display-row-sub {

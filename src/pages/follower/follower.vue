@@ -262,7 +262,7 @@ export default class RankList extends Vue {
   needFixTableHeader(scrollTop: number) {
     const el = this.$el;
     if (el) {
-      const rankTable = el.querySelector('.rank-table');
+      const rankTable = el.querySelector('.follower-rank-table');
       if (rankTable) {
         const header: any = rankTable.querySelector('.el-table__header-wrapper');
         if (header) {

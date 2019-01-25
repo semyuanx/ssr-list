@@ -127,6 +127,7 @@
           label="订阅"
           prop="SubPrice"
           align="center"
+          min-width="120px"
           v-if="showOthers.includes('SubPrice')"
         >
           <!-- eslint-disable-next-line -->
@@ -560,9 +561,9 @@ export default class List extends Vue {
 
         &:hover {
           background: rgba(255, 255, 255, 1) !important;
-          box-shadow: 0px 0px 30px 0px rgba(0, 0, 0, 0.1);
+          // box-shadow: 0px 0px 30px 0px rgba(0, 0, 0, 0.1);
           :global(td) {
-            box-shadow: 20px 0px 1.25rem 0 rgba(0, 0, 0, 0.1);
+            box-shadow: 20px 0px 24px 0 rgba(0, 0, 0, 0.05);
             background-color: #ffffff !important;
           }
           .custom-display-row-sub {
