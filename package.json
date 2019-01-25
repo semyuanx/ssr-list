@@ -21,7 +21,7 @@
     "beautify-scrollbar": "^1.0.8",
     "chai": "^4.1.2",
     "element-ui": "^2.4.11",
-    "fmcomponents": "git+ssh://git@gitlab.followme.com/Frontend/fmcomponents.git#feat-2.2-follow-limit",
+    "fmcomponents": "git+ssh://git@gitlab.followme.com/Frontend/fmcomponents.git#master",
     "highcharts": "^7.0.1",
     "lib-app-base": "git+ssh://git@gitlab.followme.com:Frontend/lib-app-base.git#dev",
     "lib-message": "git+ssh://git@gitlab.followme.com:Frontend/lib-message.git#master",

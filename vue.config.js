@@ -75,7 +75,7 @@ module.exports = {
   },
   // pwa: false,
   pwa: {
-    name: 'followme-排行榜',
+    name: '外汇优秀交易员排名__经纪商交易员操盘排行_ Followme外汇社区',
     iconPaths: {
       favicon32: 'img/icons/followme-32-32.png',
       favicon16: 'img/icons/followme-32-32.png',
@@ -84,4 +84,5 @@ module.exports = {
       msTileImage: 'img/icons/followme-120-120.png',
     },
   },
+  transpileDependencies: [/fmcomponents/],
 };
