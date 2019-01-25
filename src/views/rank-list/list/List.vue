@@ -60,7 +60,7 @@
                     <span v-if="showOthers.includes('IsPTA') && scope.row.IsPTA" class="pta-icon">
                       <PtaLogo />
                     </span>
-                    <span class="broker-name">{{scope.row.BrokerName || ''}}</span>
+                    <span :title="scope.row.BrokerName" class="broker-name">{{scope.row.BrokerName || ''}}</span>
                   </div>
                 </div>
               </div>
