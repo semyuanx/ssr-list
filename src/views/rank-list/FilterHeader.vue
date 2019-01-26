@@ -460,7 +460,7 @@ export default class FilterHeader extends Vue {
           position: absolute;
           top: 8px;
           right: 0;
-          z-index: 100;
+          z-index: 10;
         }
       }
     }

@@ -3,7 +3,7 @@
 
     <div v-if="!isAppVisit" class="fm-content-header">
       <!--顶部导航栏-->
-      <FMNav :test='isAppVisit'/>
+      <FMNav :test='isAppVisit' :activeMenu="1"/>
     </div>
     <div class="fm-content-container">
       <div class="router-container">

@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "vue-cli-service serve",
-    "alibeta": "vue-cli-service serve --mode alibeta",
+    "alibeta": "vue-cli-service serve --mode=alibeta",
     "build:beta": "vue-cli-service build --mode=alibeta",
     "beta": "npm run build:beta",
     "build:prod": "vue-cli-service build --mode=production",
@@ -22,7 +22,7 @@
     "beautify-scrollbar": "^1.0.8",
     "chai": "^4.1.2",
     "element-ui": "^2.4.11",
-    "fmcomponents": "git+ssh://git@gitlab.followme.com/Frontend/fmcomponents.git#master",
+    "fmcomponents": "git+ssh://git@gitlab.followme.com/Frontend/fmcomponents.git#production",
     "highcharts": "^7.0.1",
     "lib-app-base": "git+ssh://git@gitlab.followme.com:Frontend/lib-app-base.git#dev",
     "lib-message": "git+ssh://git@gitlab.followme.com:Frontend/lib-message.git#master",
