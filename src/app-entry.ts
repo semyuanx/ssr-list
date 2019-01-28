@@ -19,16 +19,16 @@ export function createApp(ctx: any) {
   if (process.env.NODE_ENV !== 'production') {
     Vue.config.productionTip = false;
   }
-  let lang = 'zh-CN';
-  const gLang = (window as any).FMLANG;
-  if (gLang) {
-    lang = gLang;
-  } else {
-    const cLang = (window as any).LANG;
-    if (cLang) {
-      lang = cLang;
-    }
-  }
+  const lang = 'zh-CN';
+  // const gLang = (window as any).FMLANG;
+  // if (gLang) {
+  //   lang = gLang;
+  // } else {
+  //   const cLang = (window as any).LANG;
+  //   if (cLang) {
+  //     lang = cLang;
+  //   }
+  // }
   const injectEnv: any = {
     install(vue: any, option: any) {
       const v: any = vue;
@@ -43,7 +43,7 @@ export function createApp(ctx: any) {
     CDN: process.env.VUE_APP_FM_CDN,
     KAIHU: process.env.VUE_APP_FM_KAIHU,
     TRADE: process.env.VUE_APP_FM_TRADE,
-    locale: (window as any).Lang || 'zh-CN',
+    locale: lang || 'zh-CN',
   }, domain);
   Vue.use(injectEnv, mainDomain);
   Vue.use(fmcomponents, mainDomain);
