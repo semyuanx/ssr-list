@@ -19,14 +19,22 @@ export function createApp(ctx: any) {
   if (process.env.NODE_ENV !== 'production') {
     Vue.config.productionTip = false;
   }
-
+  let lang = 'zh-CN';
+  const gLang = (window as any).FMLANG;
+  if (gLang) {
+    lang = gLang;
+  } else {
+    const cLang = (window as any).LANG;
+    if (cLang) {
+      lang = cLang;
+    }
+  }
   const injectEnv: any = {
     install(vue: any, option: any) {
       const v: any = vue;
       v.prototype.$baseStrings = option;
     },
   };
-
   const mainDomain = Object.assign({
     API: process.env.VUE_APP_FM_API,
     BASE: process.env.VUE_APP_FM_BASE,
@@ -42,7 +50,7 @@ export function createApp(ctx: any) {
   Vue.use(fmui);
   Vue.mixin(envMixin);
 
-  const i18n = createI18n();
+  const i18n = createI18n(lang);
   const store = createStore();
   const router = createRouter();
   router.beforeEach((to, from, next) => {
