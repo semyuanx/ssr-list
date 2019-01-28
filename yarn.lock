@@ -1072,8 +1072,8 @@ ajv-keywords@^2.1.0:
   resolved "http://registry.npm.taobao.org/ajv-keywords/download/ajv-keywords-2.1.1.tgz#617997fc5f60576894c435f940d819e135b80762"
 
 ajv-keywords@^3.1.0:
-  version "3.2.0"
-  resolved "https://registry.yarnpkg.com/ajv-keywords/-/ajv-keywords-3.2.0.tgz#e86b819c602cf8821ad637413698f1dec021847a"
+  version "3.3.0"
+  resolved "https://registry.yarnpkg.com/ajv-keywords/-/ajv-keywords-3.3.0.tgz#cb6499da9b83177af8bc1732b2f0a1a1a3aacf8c"
 
 ajv@^5.2.3, ajv@^5.3.0:
   version "5.5.2"
@@ -3991,7 +3991,7 @@ flush-write-stream@^1.0.0:
 
 "fmcomponents@git+ssh://git@gitlab.followme.com/Frontend/fmcomponents.git#production":
   version "2.0.0"
-  resolved "git+ssh://git@gitlab.followme.com/Frontend/fmcomponents.git#db10060a78597cf5abea1f664f38f2ce164a1bd8"
+  resolved "git+ssh://git@gitlab.followme.com/Frontend/fmcomponents.git#88b00d517c02866baa19968602689ad9a5a7336b"
   dependencies:
     babel-polyfill "^6.23.0"
     echarts "^4.2.0-rc.2"

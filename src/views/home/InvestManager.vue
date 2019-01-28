@@ -140,7 +140,7 @@ export default class Index extends Vue {
 
   startProduct() {
     getLoginStatus().then((user: any) => {
-      if (user.islogin) {
+      if (user.isLogin) {
         this.getAllAccounts({ checkMAM: true }).then(() => {
           this.startProductSatuation(this.mamAccounts);
         });
@@ -224,7 +224,7 @@ export default class Index extends Vue {
       });
     }
     return getLoginStatus().then((user: any) => {
-      if (user.islogin) {
+      if (user.isLogin) {
         this.getAllAccounts({ checkMAM: true }).then(() => {
           this.joinSasution(this.accounts, user, mamInfo);
         });

@@ -317,7 +317,7 @@ export default class List extends Vue {
   // 获取登录用户的跟随列表和关注列表
   getFollowAndAttention() {
     getLoginStatus().then((user: any) => {
-      if (user.islogin) {
+      if (user.isLogin) {
         this.getRelations()
           .then((res: any) => {
             this.followList = res.follows;
@@ -391,7 +391,7 @@ export default class List extends Vue {
     const { attentionList } = this;
 
     getLoginStatus().then((user1: any) => {
-      if (user1.islogin) {
+      if (user1.isLogin) {
         const uid = user1.id;
         this.log(attentionList, uid, 'attentionList');
         const selfId = [uid, `${uid}`];

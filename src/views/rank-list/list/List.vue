@@ -305,7 +305,11 @@ export default class List extends Vue {
   }
 
   mounted() {
-    this.regetSub();
+    getLoginStatus().then((rst: any) => {
+      if (rst.isLogin) {
+        this.regetSub();
+      }
+    });
   }
 
   toUserPage(data: any) {
@@ -440,7 +444,7 @@ export default class List extends Vue {
   // 获取登录用户的跟随列表和关注列表
   getFollowAndAttention() {
     getLoginStatus().then((user: any) => {
-      if (user.islogin) {
+      if (user.isLogin) {
         this.getRelations()
           .then((res: any) => {
             this.followList = res.follows;
@@ -473,7 +477,7 @@ export default class List extends Vue {
     if (this.selfPwdChanged.indexOf(uaindex) > -1) return;
     getLoginStatus()
       .then((user: any) => {
-        if (user.islogin) {
+        if (user.isLogin) {
           // follow
           this.checkIfNotice(list);
           return this.checkTraderCanFollow(list).then((tres: any) => {

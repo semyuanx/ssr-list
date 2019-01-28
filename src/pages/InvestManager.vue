@@ -146,7 +146,7 @@ export default class Manager extends Vue {
 
   startProduct() {
     getLoginStatus().then((user: any) => {
-      if (user.islogin) {
+      if (user.isLogin) {
         if (this.userInfo && this.userInfo.RealName && this.userInfo.AccountEmail && this.userInfo.AccountMobile && this.userInfo.IDNO) {
           return this.startProductSatuation(this.mamAccounts);
         }
@@ -165,7 +165,7 @@ export default class Manager extends Vue {
 
   startMam() {
     getLoginStatus().then((user: any) => {
-      if (user.islogin) {
+      if (user.isLogin) {
         window.location.href = `${this.kaiHu}/portalindex/upgrade/mam`;
       } else {
         loadAuth();

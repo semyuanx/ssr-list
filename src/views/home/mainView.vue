@@ -290,7 +290,7 @@ export default class mainView extends Vue {
       return this.toAttentionOther(params, userId);
     }
     return getLoginStatus().then((user: any) => {
-      if (user.islogin) {
+      if (user.isLogin) {
         const uid: any = user.id;
         const selfId = [uid, `${uid}`];
         const isSelfAttendion = selfId.includes(userId);
@@ -407,7 +407,7 @@ export default class mainView extends Vue {
   // 获取登录用户的跟随列表和关注列表
   getFollowAndAttention() {
     getLoginStatus().then((user: any) => {
-      if (user.islogin) {
+      if (user.isLogin) {
         this.loginInfo = user;
         this.getRelations()
           .then((res: any) => {

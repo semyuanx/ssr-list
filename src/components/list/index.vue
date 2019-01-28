@@ -290,7 +290,7 @@ export default {
     getFollowAndAttention() {
       const _this = this;
       this.$getLogStatus().then((user) => {
-        if (user.islogin) {
+        if (user.isLogin) {
           this.getRelations().then((res) => {
             _this.followList = res.follows;
             _this.attentionList = res.attentions;
