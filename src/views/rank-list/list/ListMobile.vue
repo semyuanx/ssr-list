@@ -12,12 +12,23 @@ import SvgIcon from '@/components/svg/index.ts';
 import MobileFilterList from '@/components/mobile-filter/FilterList.vue';
 import { toLoginPage, toSubscribePage } from '@/utils/native';
 
+import zhCN from '@/i18n/zh-CN/views/rank-list/list/ListMobile';
+import zhTW from '@/i18n/zh-TW/views/rank-list/list/ListMobile';
+import enUS from '@/i18n/en-US/views/rank-list/list/ListMobile';
+
 const RankStore = namespace('RankStore');
 
 @Component({
   components: {
     SvgIcon,
     MobileFilterList,
+  },
+  i18n: {
+    messages: {
+      'zh-CN': zhCN,
+      'zh-TW': zhTW,
+      'en-US': enUS,
+    },
   },
 })
 export default class List extends Vue {
@@ -35,12 +46,12 @@ export default class List extends Vue {
 
   showProps: any = [
     {
-      label: '收益率',
+      label: `${this.$i18n.t('profitRate')}`,
       prop: 'ROI',
       highlight: true,
     },
     {
-      label: '订阅人数',
+      label: `${this.$i18n.t('subscribeCount')}`,
       prop: 'Subscribers',
     },
   ];

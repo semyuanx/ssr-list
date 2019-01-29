@@ -2,7 +2,7 @@
   <div>
     <div class="filter-header fm-show-pc">
       <div class="header-content">
-        <div class="header-fitler-title"><span v-if="filterTag.length">筛选条件：</span></div>
+        <div class="header-fitler-title"><span v-if="filterTag.length">{{$t('filterCondition')}}</span></div>
         <div class="header-tag-lists">
           <div
             :key="index"
@@ -27,7 +27,7 @@
             @click="emitFilter"
             class="filter-content"
           >
-            <i class="icon-filtrate_24px"></i><span>筛选器</span>
+            <i class="icon-filtrate_24px"></i><span>{{$t('filter')}}</span>
           </div>
           <div class="filter-pop-container">
           <div
@@ -56,7 +56,7 @@
                   <button
                     class="add-button"
                     @click="addBorker=!addBorker"
-                  ><i class="fm-fonticon icon-plus_24px"></i>添加</button>
+                  ><i class="fm-fonticon icon-plus_24px"></i>{{$t('add')}}</button>
                   <check-box-group
                     v-model="checked"
                     v-clickoutside="handleBrokerOutsideClick"
@@ -90,6 +90,11 @@
 import {
   Component, Vue, Watch, Emit,
 } from 'vue-property-decorator';
+
+import zhCN from '@/i18n/zh-CN/views/rank-list/FilterHeader';
+import zhTW from '@/i18n/zh-TW/views/rank-list/FilterHeader';
+import enUS from '@/i18n/en-US/views/rank-list/FilterHeader';
+
 import { namespace } from 'vuex-class';
 import FmTag from '@/components/tag/tag.vue'; // @ is an alias to /src
 import FilterPopover from '@/components/filter-popover/FilterPopover.vue';
@@ -117,6 +122,13 @@ const RankStore = namespace('RankStore');
   },
   directives: {
     Clickoutside,
+  },
+  i18n: {
+    messages: {
+      'zh-CN': zhCN,
+      'zh-TW': zhTW,
+      'en-US': enUS,
+    },
   },
 })
 export default class FilterHeader extends Vue {
@@ -174,18 +186,18 @@ export default class FilterHeader extends Vue {
   }
 
   textMaps: any = {
-    Score: '交易能力值',
-    Equity: '账户净值',
-    Weeks: '交易周期',
-    Retracement: '最大回撤比例',
-    MaxRetracement: '最大回撤比例',
-    Roi: '收益率',
-    isDESC: '排序',
-    orderby: '排序字段',
-    isPTA: 'PTA会员',
-    freeSubPrice: '免费订阅',
-    GradeScore: '账户评级',
-    Subscribers: '订阅人数',
+    Score: this.$i18n.t('score') as string,
+    Equity: this.$i18n.t('equity') as string,
+    Weeks: this.$i18n.t('weeks') as string,
+    Retracement: this.$i18n.t('retracement') as string,
+    MaxRetracement: this.$i18n.t('maxRetracement') as string,
+    Roi: this.$i18n.t('roi') as string,
+    isDESC: this.$i18n.t('isDESC') as string,
+    orderby: this.$i18n.t('orderby') as string,
+    isPTA: this.$i18n.t('isPTA') as string,
+    freeSubPrice: this.$i18n.t('freeSubPrice') as string,
+    GradeScore: this.$i18n.t('gradeScore') as string,
+    Subscribers: this.$i18n.t('subscribers') as string,
   };
 
   get filterTag() {
@@ -201,13 +213,13 @@ export default class FilterHeader extends Vue {
     const needProcessMap: any = {
       Subscribers:
       {
-        suffix: '人',
+        suffix: this.$i18n.t('people') as string,
       },
       Equity: {
         suffix: '',
       },
       Weeks: {
-        suffix: '周',
+        suffix: this.$i18n.t('week') as string,
       },
       Retracement: {
         suffix: '',
@@ -232,7 +244,7 @@ export default class FilterHeader extends Vue {
         const val: any = rankParams[i];
         if (typeof val !== 'undefined' && val !== null) {
           // eslint-disable-next-line
-          let finalVal = i === 'isDESC' ? val === 1 ? '倒序' : '顺序' : val;
+          let finalVal = i === 'isDESC' ? val === 1 ? `${this.$i18n.t('orderbyDesc')}` : `${this.$i18n.t('orderbyAsc')}` : val;
           let currentProp = this.textMaps[i];
           if (i === 'isPTA') {
             finalVal = val === 1 ? currentProp : '';
@@ -273,10 +285,10 @@ export default class FilterHeader extends Vue {
                 }
               }
               if (!valArr[0] || [0, '0'].includes(valArr[0])) {
-                finalVal = `小于${valArr[1]}${needProcessMap[i].suffix}`;
+                finalVal = `${this.$i18n.t('lessThan')}${valArr[1]}${needProcessMap[i].suffix}`;
               } else
               if (!valArr[1] || [0, '0'].includes(valArr[1])) {
-                finalVal = `大于${valArr[0]}${needProcessMap[i].suffix}`;
+                finalVal = `${this.$i18n.t('moreThan')}${valArr[0]}${needProcessMap[i].suffix}`;
               } else if (needProcessMap[i].percent) {
                 finalVal = `${valArr[0]}-${valArr[1]}${needProcessMap[i].suffix}`;
               } else {
@@ -303,7 +315,7 @@ export default class FilterHeader extends Vue {
     });
     if (brokerNames.length) {
       tags.push({
-        label: '经纪商',
+        label: `${this.$i18n.t('broker')}`,
         val: brokerNames.join('/'),
       });
     }

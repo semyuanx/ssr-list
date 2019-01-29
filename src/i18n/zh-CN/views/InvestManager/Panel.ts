@@ -10,4 +10,10 @@ export default {
   person: '人',
   incomeDistribution: '收益分配',
   gotoJoin: '立即参与',
+  chanpingzijin: '产品资金',
+  zuizhongjingzhi: '最终净值',
+  shengyushijian: '剩余时间',
+  canyurenshu: '参与人数',
+  gensuizhezuizhongshouyi: '跟随者最终收益',
+  caozuoshichang: '操作时长',
 };

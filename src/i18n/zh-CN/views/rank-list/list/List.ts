@@ -1,0 +1,15 @@
+export default{
+  trader: '交易员',
+  trend: '走势图',
+  noData: '暂无数据',
+  subscribe: '订阅',
+  editSubscribe: '编辑订阅',
+  month: '月',
+  freeSubscribe: '免费订阅',
+  noData2: '没有找到相关内容，请您换个条件试试吧~',
+  limitFollow: '当前交易员最近有修改密码行为导致交易信号中断，已经被限制跟随',
+  done: '确定',
+  netFail: '网络请求失败， 请重试!',
+  yes: '是',
+  no: '否',
+};

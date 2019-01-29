@@ -11,7 +11,7 @@
         current-row-key="UserID"
       >
         <el-table-column
-          label="交易员"
+          :label="$t('trader')"
           prop="UserID"
           min-width="210px"
         >
@@ -55,7 +55,7 @@
                     <span v-if="showOthers.includes('GradeScore')"
                       :class="'grade-score-icon ' + mapGradeClass(scope.row.GradeScore)"
                     >
-                      {{scope.row.GradeScore | propFormat('GradeScore')}}
+                      {{scope.row.GradeScore | propFormat('GradeScore', null, this.$i18n)}}
                     </span>
                     <span v-if="showOthers.includes('IsPTA') && scope.row.IsPTA" class="pta-icon">
                       <PtaLogo />
@@ -86,13 +86,13 @@
             <div
               v-else
               class="custom-display-row-line"
-            ><span :class="{green: i.highlight && scope.row[i.prop] > 0}">{{scope.row[i.prop] | propFormat(i.prop)}} {{i.suffix}}</span></div>
+            ><span :class="{green: i.highlight && scope.row[i.prop] > 0}">{{scope.row[i.prop] | propFormat(i.prop, null, this.$i18n)}} {{i.suffix}}</span></div>
 
           </template>
         </el-table-column>
 
         <el-table-column
-          label="走势图"
+          :label="$t('trend')"
           prop="TrendChart"
           align="center"
         >
@@ -115,7 +115,7 @@
                   v-else
                   :src="cdn + '/images/NoData-Report.jpg'"
                   style="display:block;width:100%;"
-                  :alt="'暂无数据'"
+                  :alt="$t('noData')"
                 >
               </div>
 
@@ -124,7 +124,7 @@
           </template>
         </el-table-column>
         <el-table-column
-          label="订阅"
+          :label="$t('subscribe')"
           prop="SubPrice"
           align="center"
           min-width="120px"
@@ -142,7 +142,7 @@
               class="custom-display-row-sub"
             >
               <span class="sub-row-btn">
-                {{isSubed(scope.row) ? '编辑订阅' : scope.row.SubPrice ? `$${scope.row.SubPrice}/月` : '免费订阅' }}
+                {{isSubed(scope.row) ? `${$t('editSubscribe')}` : scope.row.SubPrice ? `$${scope.row.SubPrice}/${$t('month')}` : `${$t('freeSubscribe')}` }}
               </span>
             </div>
           </template>
@@ -156,7 +156,7 @@
                 name="no-data"
               />
             </div>
-            <div class="empty-text"><span>没有找到相关内容，请您换个条件试试吧~</span></div>
+            <div class="empty-text"><span>{{$t('noData2')}}</span></div>
           </div>
         </template>
         <template slot="append">
@@ -206,6 +206,10 @@ import { Table, TableColumn } from 'element-ui';
 import throttle from 'lodash.throttle';
 import PtaLogo from '@/components/ptaLogo/index.vue';
 
+import zhCN from '@/i18n/zh-CN/views/rank-list/list/List';
+import zhTW from '@/i18n/zh-TW/views/rank-list/list/List';
+import enUS from '@/i18n/en-US/views/rank-list/list/List';
+
 const RankStore = namespace('RankStore');
 
 const isEnterLoad = false;
@@ -220,15 +224,22 @@ const isEnterLoad = false;
   filters: {
     numberFormatOneParams: (val: number) => numberFormat(val, 1),
     percentFormat: (val: number) => percentFormat(val),
-    propFormat: (val: number, prop: string) => {
+    propFormat: (val: number, prop: string, _i18n: any) => {
       if (prop === 'GradeScore') {
         return gradeFormat(val);
       } if (prop === 'IsPTA') {
-        return val ? '是' : '否';
+        return val ? `${_i18n.t('yes')}` : `${_i18n.t('no')}`;
       } if (prop === 'Equity') {
         return moneyFormat(val);
       }
       return propFormat(val, prop);
+    },
+  },
+  i18n: {
+    messages: {
+      'zh-CN': zhCN,
+      'zh-TW': zhTW,
+      'en-US': enUS,
     },
   },
 } as any))
@@ -491,10 +502,9 @@ export default class List extends Vue {
             this.$fmdialog({
               type: 'failure',
               showClose: true,
-              message:
-                '当前交易员最近有修改密码行为导致交易信号中断，已经被限制跟随',
+              message: `${this.$i18n.t('limitFollow')}`,
               duration: 3000,
-              confirmBtnText: '确定',
+              confirmBtnText: `${this.$i18n.t('done')}`,
               onConfirm: () => {},
             });
             return true;
@@ -507,9 +517,9 @@ export default class List extends Vue {
         this.$fmdialog({
           type: 'failure',
           showClose: true,
-          message: '网络请求失败， 请重试!',
+          message: `${this.$i18n.t('netFail')}`,
           duration: 4000,
-          confirmBtnText: '确定',
+          confirmBtnText: `${this.$i18n.t('done')}`,
         });
       });
   }

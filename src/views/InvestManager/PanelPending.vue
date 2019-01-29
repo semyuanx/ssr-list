@@ -26,26 +26,26 @@
     </section>
     <section class="panel-body">
       <ul class="income">
-        <li title="(发起人资金+最低参与资金*目标跟随人数）*预期收益率">
+        <li :title="$t('expectProfitTitle')">
           <span class="income-value deficit">
             <span>{{expectProfit}}</span>
             <!-- <span>.</span> -->
             <!-- <span class="income-value-float">{{ProfitArr[1]}}</span> -->
           </span>
-          <span class="income-label">预期收益</span>
+          <span class="income-label">{{$t('incomeLabel')}}</span>
         </li>
         <li>
           <span class="income-value deficit">
             <span>{{expectRoi}}</span>
             <!-- <span class="income-value-percent">%</span> -->
           </span>
-          <span class="income-label">预期收益率</span>
+          <span class="income-label">{{$t('incomeRateLabel')}}</span>
         </li>
       </ul>
       <div class="progress-box">
           <div class="progress-info">
-              剩余 <span style="color:#5aabe3;">{{this.panelData.ExpectFollowerCount - this.panelData.FollowerCount}}</span>
-               人 / 共 <span>{{this.panelData.ExpectFollowerCount}}</span> 人
+              {{$t('shengyu')}} <span style="color:#5aabe3;">{{this.panelData.ExpectFollowerCount - this.panelData.FollowerCount}}</span>
+               {{$t('personPercent')}} <span>{{this.panelData.ExpectFollowerCount}}</span> {{$t('person')}}
           </div>
           <div class="progress-out">
               <div class="progress-in" :style="{width: progressWidth}"></div>
@@ -53,19 +53,19 @@
       </div>
       <ul class="sub-info">
         <li>
-          <span class="sub-info-label">最低参与资金</span>
+          <span class="sub-info-label">{{$t('minFollowBalanceLabel')}}</span>
           <span class="sub-info-value">{{minFollowBalance}}</span>
         </li>
         <li>
-          <span class="sub-info-label">最大风险</span>
+          <span class="sub-info-label">{{$t('followerMaxRiskLabel')}}</span>
           <span class="sub-info-value" style="color: #ff6200;">{{followerMaxRisk}}</span>
         </li>
         <li>
-          <span class="sub-info-label">操作周期</span>
+          <span class="sub-info-label">{{$t('daysLeftLabel')}}</span>
           <span class="sub-info-value">{{daysLeft}}</span>
         </li>
         <li>
-          <span class="sub-info-label">收益分配</span>
+          <span class="sub-info-label">{{$t('incomeDistributionLabel')}}</span>
           <span class="sub-info-value">{{incomeDistribution}}</span>
         </li>
       </ul>
@@ -82,7 +82,7 @@
         }[panelData.Status]
       }}</a>
       <div class="inter-time">
-        <span title="剩余参与时间">{{timeCount}}</span>
+        <span :title="$t('timeCountTitle')">{{timeCount}}</span>
       </div>
     </section>
     <el-tooltip class="item" effect="dark" :content="maxRisk" placement="top">
@@ -145,7 +145,7 @@ export default class Panel extends Vue {
   get maxRisk() {
     let risk = this.panelData.FollowerMaxRisk || 0;
     risk = percentFormat(risk);
-    return `该产品风险<${risk}`;
+    return `${this.$i18n.t('productionRiskTitle')}<${risk}`;
   }
 
   timeCount: string = '--:--:--';
@@ -208,7 +208,7 @@ export default class Panel extends Vue {
   }
 
   get daysLeft() {
-    return `${this.panelData.DaysLeft}天`;
+    return `${this.panelData.DaysLeft}${this.$i18n.t('day')}`;
   }
 
   get joinCount():number {
@@ -249,7 +249,7 @@ export default class Panel extends Vue {
     // 满标直接返回
     if (this.panelData.ExpectFollowerCount == this.panelData.FollowerCount) {
       this.$fmdialog({
-        message: '抱歉~当前产品跟随名额已满',
+        message: `${this.$i18n.t('noChance')}`,
         type: 'error',
         duration: 2000,
       });
@@ -269,7 +269,7 @@ export default class Panel extends Vue {
     // 判断该产品是不是当前用户自己发起的
     if (user.id == this.panelData.Trader.UserID) {
       this.$fmdialog({
-        message: '您是发起人，无法参与',
+        message: `${this.$i18n.t('youOwner')}`,
         type: 'error',
         duration: 2000,
       });
@@ -280,7 +280,7 @@ export default class Panel extends Vue {
     const sameBrokerAccounts = accounts.filter((account: any) => account.BrokerId === this.panelData.Trader.BrokerID) || [];
     if (sameBrokerAccounts.length == 0) {
       this.$fmdialog({
-        message: `您没有可用的MAM跟随者账户(${this.panelData.Trader.BrokerName}),请开户后重试`,
+        message: `${this.$i18n.t('noMamFollower')} (${this.panelData.Trader.BrokerName}),${this.$i18n.t('tryAgain')}`,
         type: 'confirm',
         onConfirm: (flag: any) => {
           window.open(`${_this.kaiHu}/portalindex/upgrade/mam`);
@@ -291,7 +291,7 @@ export default class Panel extends Vue {
     const freeSameBrokerAccounts = sameBrokerAccounts.filter((account: any) => account.IsMAMFree === true) || [];
     if (freeSameBrokerAccounts.length == 0) {
       this.$fmdialog({
-        message: `您没有可用的MAM跟随者账户(${this.panelData.Trader.BrokerName}),请开户后重试`,
+        message: `${this.$i18n.t('noMamUse')} (${this.panelData.Trader.BrokerName}),${this.$i18n.t('tryAgain')}`,
         type: 'confirm',
         onConfirm: (flag: any) => {
           window.open(`${_this.kaiHu}/portalindex/upgrade/mam`);
@@ -305,7 +305,7 @@ export default class Panel extends Vue {
     const mamFollowerAccounts = accounts.filter((account: any) => account.UserType === 2 && account.AccountType === 3) || [];
     if (mamFollowerAccounts.length == 0) {
       this.$fmdialog({
-        message: '无MAM跟随者账户，去开户参与',
+        message: `${this.$i18n.t('noMamFolloerAccount')}`,
         type: 'confirm',
         onConfirm: (flag: any) => {
           window.open(`${_this.kaiHu}/portalindex/upgrade/mam`);
@@ -317,7 +317,7 @@ export default class Panel extends Vue {
     const mamFreeFollowerAccounts = mamFollowerAccounts.filter((account: any) => account.IsMAMFree === true) || [];
     if (mamFreeFollowerAccounts.length == 0) {
       this.$fmdialog({
-        message: '无更多账户可参与产品，请新开账户',
+        message: `${this.$i18n.t('noMoreAccount')}`,
         type: 'error',
         duration: 2000,
       });

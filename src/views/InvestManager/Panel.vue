@@ -46,21 +46,21 @@
       <ul class="sub-info">
         <li>
           <template v-if="status === 'Trading'">
-            <span class="sub-info-label">产品资金</span>
+            <span class="sub-info-label">{{$t('chanpingzijin')}}</span>
             <span class="sub-info-value">${{panelData.Balance}}</span>
           </template>
           <template v-if="status === 'Settled'">
-            <span class="sub-info-label">最终净值</span>
+            <span class="sub-info-label">{{$t('zuizhongjingzhi')}}</span>
             <span class="sub-info-value">${{panelData.Equity}}</span>
           </template>
         </li>
         <li>
           <template v-if="status === 'Trading'">
-            <span class="sub-info-label">剩余时间</span>
+            <span class="sub-info-label">{{$t('shengyushijian')}}</span>
             <span class="sub-info-value">{{panelData.DaysLeft}} {{$t('day')}}</span>
           </template>
           <template v-if="status === 'Settled'">
-            <span class="sub-info-label">参与人数</span>
+            <span class="sub-info-label">{{$t('canyurenshu')}}</span>
             <span class="sub-info-value">{{joinCount}}</span>
           </template>
         </li>
@@ -70,21 +70,21 @@
         </li> -->
         <li>
           <template v-if="status === 'Trading'">
-            <span class="sub-info-label">参与人数</span>
+            <span class="sub-info-label">{{$t('canyurenshu')}}</span>
             <span class="sub-info-value">{{joinCount}} {{$t('person')}}</span>
           </template>
           <template v-if="status === 'Settled'">
-            <span class="sub-info-label">跟随者最终收益</span>
+            <span class="sub-info-label">{{$t('gensuizhezuizhongshouyi')}}</span>
             <span class="sub-info-value">{{followerProfit}}</span>
           </template>
         </li>
         <li>
           <template v-if="status === 'Settled'">
-            <span class="sub-info-label">操作时长</span>
+            <span class="sub-info-label">{{$t('caozuoshichang')}}</span>
             <span class="sub-info-value">{{panelData.Days}}</span>
           </template>
           <template v-else>
-            <span class="sub-info-label">收益分配</span>
+            <span class="sub-info-label">{{$t('incomeDistribution')}}</span>
             <span class="sub-info-value">{{incomeDistribution}} {{$t('day')}}</span>
           </template>
         </li>
