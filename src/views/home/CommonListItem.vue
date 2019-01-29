@@ -25,6 +25,9 @@ import { propFormat, processConfig, gradeFormat } from '@/utils/format';
 import { toLoginPage, toSubscribePage, toPersonalPage } from '@/utils/native';
 import { namespace } from 'vuex-class';
 import { needHighlight } from '@/constant/propFormat';
+import zhCN from '@/i18n/zh-CN/views/home/CommonListItem';
+import zhTW from '@/i18n/zh-TW/views/home/CommonListItem';
+import enUS from '@/i18n/en-US/views/home/CommonListItem';
 
 const RankStore = namespace('RankStore');
 
@@ -32,6 +35,13 @@ const RankStore = namespace('RankStore');
   components: {
     CommonItem,
     InvestManagerMobile,
+  },
+  i18n: {
+    messages: {
+      'zh-CN': zhCN,
+      'zh-TW': zhTW,
+      'en-US': enUS,
+    },
   },
 })
 export default class Index extends Vue {
@@ -131,7 +141,7 @@ export default class Index extends Vue {
           index: item.AccountIndex,
           brokerName: item.BrokerName,
           price: item.SubPrice,
-          confirmBtn: !isShowSubBtn ? false : isEdit ? '编辑订阅' : item.SubPrice ? `${item.SubPrice}/月` : '免费订阅',
+          confirmBtn: !isShowSubBtn ? false : isEdit ? this.$i18n.t('bjdy') : item.SubPrice ? `${item.SubPrice}/${this.$i18n.t('month')}` : this.$i18n.t('mfdy'),
           isShowGrade: showGrade,
           grade: gradeFormat(item.GradeScore),
           isShowPta: showPta && item.IsPTA,

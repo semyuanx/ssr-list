@@ -26,11 +26,22 @@ import { toPersonalPage } from '@/utils/native';
 import mapKey from '@/constant/propMap';
 import { needHighlight } from '@/constant/propFormat';
 
+import zhCN from '@/i18n/zh-CN/views/home/TradeMaster';
+import zhTW from '@/i18n/zh-TW/views/home/TradeMaster';
+import enUS from '@/i18n/en-US/views/home/TradeMaster';
+
 // const followerMaster = require('@/assets/followerMaster.png');
 
 @Component({
   components: {
     InvestManager, CommonMobile,
+  },
+  i18n: {
+    messages: {
+      'zh-CN': zhCN,
+      'zh-TW': zhTW,
+      'en-US': enUS,
+    },
   },
 })
 export default class Index extends Vue {
@@ -156,12 +167,12 @@ export default class Index extends Vue {
           name: i.NickName,
           index: i.AccountIndex,
           brokerName,
-          confirmBtn: isAttentionList ? '已关注' : '关注',
+          confirmBtn: isAttentionList ? this.$i18n.t('followed') : this.$i18n.t('follow'),
           data:
           [
-            { prop: '跟随获利', val: moneyFormat(i.FollowMoney) },
+            { prop: this.$i18n.t('gshl'), val: moneyFormat(i.FollowMoney) },
             {
-              prop: '收益率',
+              prop: this.$i18n.t('syl'),
               val: percentFormat(i.Roi),
               highlight: i.Roi > 0,
             },
@@ -181,10 +192,10 @@ export default class Index extends Vue {
       linkUrl: config.ChartID,
       source: config,
       background: config.ChartID,
-      title: config.RankName || '跟随大师',
+      title: config.RankName || this.$i18n.t('gsds'),
       textTitle: config.ViceTitle,
       filterText: config.RankText,
-      textBtn: config.ChartText || '查看更多',
+      textBtn: config.ChartText || this.$i18n.t('more'),
       avatar: true,
       header: this.header,
     };

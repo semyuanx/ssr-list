@@ -4,9 +4,9 @@
       <LineHeader
         subIcon="flag"
         rightIcon="right_24px"
-        rightTitle="更多"
-        subTitle="上榜条件：最大回撤<30%、收益率>10%"
-        title="风控能力">
+        :rightTitle="$t('more')"
+        :subTitle="$t('sbtj')"
+        :title="$t('fknl')">
 
         <template slot="right">
           <span>{{ rightTitle || '' }}</span>
@@ -16,9 +16,9 @@
     </div>
     <div class="invest-content">
       <div class="left">
-        <div><span>零风险跟随</span></div>
+        <div><span>{{$t('lfxgs')}}</span></div>
         <div>
-          <button class="sub-btn">立即订阅</button>
+          <button class="sub-btn">{{$t('ljgs')}}</button>
         </div>
       </div>
       <div class="right">
@@ -44,11 +44,21 @@
 import { Component, Vue } from 'vue-property-decorator';
 import LineHeader from './LineHeader.vue'; // @ is an alias to /src
 import LittleCard from '@/components/little-card/card.vue'; // @ is an alias to /src
+import zhCN from '@/i18n/zh-CN/views/home/pc/DangerKeep';
+import zhTW from '@/i18n/zh-TW/views/home/pc/DangerKeep';
+import enUS from '@/i18n/en-US/views/home/pc/DangerKeep';
 
 @Component({
   components: {
     LineHeader,
     LittleCard,
+  },
+  i18n: {
+    messages: {
+      'zh-CN': zhCN,
+      'zh-TW': zhTW,
+      'en-US': enUS,
+    },
   },
 })
 export default class Index extends Vue {

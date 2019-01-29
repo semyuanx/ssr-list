@@ -7,7 +7,7 @@
             @click="emitFilter"
             class="filter-content"
           >
-            <i class="icon-filtrate_24px"></i><span>筛选器</span>
+            <i class="icon-filtrate_24px"></i><span>{{$t('Sizer')}}</span>
           </div>
           <div class="filter-pop-container">
           <div
@@ -33,7 +33,7 @@
                   <button
                     class="add-button"
                     @click="addBorker=!addBorker"
-                  ><i class="fm-fonticon icon-plus_24px"></i>添加</button>
+                  ><i class="fm-fonticon icon-plus_24px"></i>{{$t('Add')}}</button>
                   <check-box-group
                     v-model="checked"
                     v-clickoutside="handleBrokerOutsideClick"
@@ -77,6 +77,9 @@ import MobileFilterHeader from '@/components/mobile-filter/FilterHeader.vue';
 import propMaps from '@/constant/propMap';
 import { gradeFormat, percentFormat } from '@/utils/format';
 import Clickoutside from 'element-ui/src/utils/clickoutside';
+import zhCN from '@/i18n/zh-CN/views/home/FilterHeader';
+import zhTW from '@/i18n/zh-TW/views/home/FilterHeader';
+import enUS from '@/i18n/en-US/views/home/FilterHeader';
 
 const RankStore = namespace('RankStore');
 
@@ -93,6 +96,13 @@ const RankStore = namespace('RankStore');
   },
   directives: {
     Clickoutside,
+  },
+  i18n: {
+    messages: {
+      'zh-CN': zhCN,
+      'zh-TW': zhTW,
+      'en-US': enUS,
+    },
   },
 })
 export default class FilterHeader extends Vue {
@@ -175,13 +185,13 @@ export default class FilterHeader extends Vue {
     const needProcessMap: any = {
       Subscribers:
       {
-        suffix: '人',
+        suffix: this.$i18n.t('people'),
       },
       Equity: {
         suffix: '',
       },
       Weeks: {
-        suffix: '周',
+        suffix: this.$i18n.t('week'),
       },
       Retracement: {
         suffix: '',
@@ -198,13 +208,13 @@ export default class FilterHeader extends Vue {
         const val: any = rankParams[i];
         if (typeof val !== 'undefined' && val !== null) {
           // eslint-disable-next-line
-          let finalVal = i === 'isDESC' ? val === 1 ? '倒序' : '顺序' : val;
+          let finalVal = i === 'isDESC' ? val === 1 ? this.$i18n.t('desc') : this.$i18n.t('asc') : val;
 
           if (i === 'isPTA') {
-            finalVal = val === 1 ? '是' : '否';
+            finalVal = val === 1 ? this.$i18n.t('yes') : this.$i18n.t('no');
           }
           if (i === 'freeSubPrice') {
-            finalVal = val === 1 ? '是' : '否';
+            finalVal = val === 1 ? this.$i18n.t('yes') : this.$i18n.t('no');
           }
           if (i === 'GradeScore') {
             const gradeMap: any = {
@@ -236,10 +246,10 @@ export default class FilterHeader extends Vue {
                 }
               }
               if (!valArr[0] || [0, '0'].includes(valArr[0])) {
-                finalVal = `小于${valArr[1]}${needProcessMap[i].suffix}`;
+                finalVal = `${this.$i18n.t('xy')}${valArr[1]}${needProcessMap[i].suffix}`;
               } else
               if (!valArr[1] || [0, '0'].includes(valArr[1])) {
-                finalVal = `大于${valArr[0]}${needProcessMap[i].suffix}`;
+                finalVal = `${this.$i18n.t('dy')}${valArr[0]}${needProcessMap[i].suffix}`;
               } else if (needProcessMap[i].percent) {
                 finalVal = `${valArr[0]}-${valArr[1]}${needProcessMap[i].suffix}`;
               } else {
@@ -266,7 +276,7 @@ export default class FilterHeader extends Vue {
     });
     if (brokerNames.length) {
       tags.push({
-        label: '经纪商',
+        label: this.$i18n.t('brokerName'),
         val: brokerNames.join('/'),
       });
     }

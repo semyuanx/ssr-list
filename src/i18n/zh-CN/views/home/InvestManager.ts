@@ -1,0 +1,16 @@
+export default {
+  risk: '风险',
+  ljcy: '立即参与',
+  ckxq: '查看详情',
+  cpzj: '产品资金',
+  cyrs: '参与人数',
+  tzgj: '投资管家',
+  fqcp: '发起产品',
+  nmykydmamjyyzh: '您没有可用的MAM交易员账户,请开户后重试',
+  dqcpxxyw: '抱歉~当前产品信息有误，请联系后台服务人员！',
+  dqcpgsmeym: '抱歉~当前产品跟随名额已满',
+  nsfqr: '您是发起人，无法参与',
+  nmykydmamgszzh: '您没有可用的MAM跟随者账户({account}), 请开户后重试',
+  wmamgszzh: '无MAM跟随者账户，去开户参与',
+  wgdzhkcycp: '无更多账户可参与产品，请新开账户',
+};

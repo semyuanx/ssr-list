@@ -30,6 +30,9 @@ import { getLoginStatus } from 'fmcomponents';
 import { loadAuth } from 'fmcomponents/src/utils';
 // import { openJoinDialog, openCreateDialog } from 'fmcomponents/src/components/mam';
 import { namespace, Action } from 'vuex-class';
+import zhCN from '@/i18n/zh-CN/views/home/InvestManager';
+import zhTW from '@/i18n/zh-TW/views/home/InvestManager';
+import enUS from '@/i18n/en-US/views/home/InvestManager';
 
 const ManagerStore = namespace('ManagerStore');
 
@@ -38,6 +41,13 @@ const ManagerStore = namespace('ManagerStore');
   components: {
     InvestManager,
     CommonMobile,
+  },
+  i18n: {
+    messages: {
+      'zh-CN': zhCN,
+      'zh-TW': zhTW,
+      'en-US': enUS,
+    },
   },
 })
 export default class Index extends Vue {
@@ -91,7 +101,7 @@ export default class Index extends Vue {
       data = config.data.map((i: any) => ({
         item: i,
         Name: i.Name,
-        danger: `风险<${percentFormat(i.FollowerMaxRisk)}`,
+        danger: `${this.$i18n.t('risk')}<${percentFormat(i.FollowerMaxRisk)}`,
         Balance: moneyFormat(i.Balance),
         FollowerCount: i.FollowerCount,
       }));
@@ -107,11 +117,11 @@ export default class Index extends Vue {
       data = data.map((i: any) => ({
         item: i,
         name: i.Name,
-        danger: `风险<${percentFormat(i.FollowerMaxRisk)}`,
-        confirmBtn: i.Status === 'Pending' ? '立即参与' : '查看详情',
+        danger: `${this.$i18n.t('risk')}<${percentFormat(i.FollowerMaxRisk)}`,
+        confirmBtn: i.Status === 'Pending' ? this.$i18n.t('ljcy') : this.$i18n.t('ckxq'),
         data: [
-          { prop: '产品资金', val: moneyFormat(i.Balance) },
-          { prop: '参与人数', val: i.FollowerCount },
+          { prop: this.$i18n.t('cpzj'), val: moneyFormat(i.Balance) },
+          { prop: this.$i18n.t('cyrs'), val: i.FollowerCount },
         ],
       }));
     }
@@ -126,10 +136,10 @@ export default class Index extends Vue {
       btnText: config.ChartText,
       source: config,
       background: config.ChartID,
-      title: config.RankName || '投资管家',
-      subTitle: config.RankText || '发起产品',
+      title: config.RankName || this.$i18n.t('tzgj'),
+      subTitle: config.RankText || this.$i18n.t('fqcp'),
       textTitle: config.ViceTitle,
-      filterText: config.RankText || '发起产品',
+      filterText: config.RankText || this.$i18n.t('fqcp'),
       needLeftSlot: true,
     };
   }
@@ -154,7 +164,7 @@ export default class Index extends Vue {
     const _this = this;
     if (account.length <= 0) {
       this.$fmdialog({
-        message: '您没有可用的MAM交易员账户,请开户后重试',
+        message: this.$i18n.t('nmykydmamjyyzh'),
         type: 'confirm',
         onConfirm: () => {
           // if (flag) window.open(`${_this.base}/portalindex/upgrade/index?type=4`);
@@ -166,7 +176,7 @@ export default class Index extends Vue {
       const freeAccounts = account.filter((account: any) => account.IsMAMFree === true) || [];
       if (freeAccounts.length <= 0) {
         this.$fmdialog({
-          message: '您没有可用的MAM交易员账户,请开户后重试',
+          message: this.$i18n.t('nmykydmamjyyzh'),
           type: 'confirm',
           onConfirm: () => {
             // if (flag) window.open(`${_this.base}/portalindex/upgrade/index?type=4`);
@@ -190,7 +200,7 @@ export default class Index extends Vue {
   toPersonalPage(data: any) {
     if (!data || (this.isObject(data) && !data.UserID)) {
       return this.$fmdialog({
-        message: '抱歉~当前产品信息有误，请联系后台服务人员！',
+        message: this.$i18n.t('dqcpxxyw'),
         type: 'error',
         duration: 2000,
         isSingle: true,
@@ -216,7 +226,7 @@ export default class Index extends Vue {
     // 满标直接返回
     if (mamInfo.ExpectFollowerCount == mamInfo.FollowerCount) {
       return this.$fmdialog({
-        message: '抱歉~当前产品跟随名额已满',
+        message: this.$i18n.t('dqcpgsmeym'),
         type: 'error',
         duration: 2000,
         isSingle: true,
@@ -239,7 +249,7 @@ export default class Index extends Vue {
     // 判断该产品是不是当前用户自己发起的
     if (user.id == mamInfo.Trader.UserID) {
       this.$fmdialog({
-        message: '您是发起人，无法参与',
+        message: this.$i18n.t('nsfqr'),
         type: 'error',
         duration: 2000,
         isSingle: true,
@@ -252,7 +262,7 @@ export default class Index extends Vue {
     const sameBrokerAccounts = accounts.filter((account: any) => account.BrokerId === mamInfo.Trader.BrokerID) || [];
     if (sameBrokerAccounts.length == 0) {
       this.$fmdialog({
-        message: `您没有可用的MAM跟随者账户(${mamInfo.Trader.BrokerName}),请开户后重试`,
+        message: this.$i18n.t('nmykydmamgszzh', { account: mamInfo.Trader.BrokerName }),
         type: 'confirm',
         onConfirm: (flag: any) => {
           this.redirectTo('mamCreate', '', true);
@@ -266,7 +276,7 @@ export default class Index extends Vue {
     const freeSameBrokerAccounts = sameBrokerAccounts.filter((account: any) => account.IsMAMFree === true) || [];
     if (freeSameBrokerAccounts.length == 0) {
       this.$fmdialog({
-        message: `您没有可用的MAM跟随者账户(${mamInfo.Trader.BrokerName}),请开户后重试`,
+        message: this.$i18n.t('nmykydmamgszzh', { account: mamInfo.Trader.BrokerName }),
         type: 'confirm',
         onConfirm: (flag: any) => {
           this.redirectTo('mamCreate', '', true);
@@ -280,7 +290,7 @@ export default class Index extends Vue {
     const mamFollowerAccounts = accounts.filter((account: any) => account.UserType === 2 && account.AccountType === 3) || [];
     if (mamFollowerAccounts.length == 0) {
       this.$fmdialog({
-        message: '无MAM跟随者账户，去开户参与',
+        message: this.$i18n.t('wmamgszzh'),
         type: 'confirm',
         onConfirm: (flag: any) => {
           this.redirectTo('mamCreate', '', true);
@@ -292,7 +302,7 @@ export default class Index extends Vue {
     const mamFreeFollowerAccounts = mamFollowerAccounts.filter((account: any) => account.IsMAMFree === true) || [];
     if (mamFreeFollowerAccounts.length == 0) {
       this.$fmdialog({
-        message: '无更多账户可参与产品，请新开账户',
+        message: this.$i18n.t('wgdzhkcycp'),
         type: 'error',
         duration: 2000,
         isSingle: true,

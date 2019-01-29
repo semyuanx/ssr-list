@@ -3,12 +3,12 @@
 import Vue from 'vue';
 
 interface DialogParam {
-    message: string;
+    message: any;
     title?: string;
     type?: string;
     duration?: number;
     isSingle?: boolean;
-    confirmBtnText?: string;
+    confirmBtnText?: any;
     cancelBtnText?: string;
     onConfirm?: Function;
     onCancel?: Function;

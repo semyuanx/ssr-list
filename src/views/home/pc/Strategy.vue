@@ -1,10 +1,10 @@
 <template>
   <div class="strategy-container">
     <div class="header" v-if="header">
-      <LineHeader @leftClick="leftClick" @rightClick="toRankList" rightIconDirection='left' rightTitle="" subTitle="成为交易员" :title="header.title || ''" >
+      <LineHeader @leftClick="leftClick" @rightClick="toRankList" rightIconDirection='left' rightTitle="" :subTitle="$t('cwjyy')" :title="header.title || ''" >
         <div class="header-sub-title" slot="left">
           <i :class="`icon-plus_24px`"></i>
-          <span>{{ '成为交易员' || '' }}</span>
+          <span>{{ $t('cwjyy') || '' }}</span>
         </div>
         <div slot="right">
           <FilterBtn />
@@ -65,12 +65,22 @@ import FmCard from '@/components/card/Card.vue'; // @ is an alias to /src
 import { getElementTop, getElementLeft } from '@/utils/util';
 import eventBus from '@/utils/event';
 import FilterBtn from '@/views/home/FilterHeader.vue';
+import zhCN from '@/i18n/zh-CN/views/home/pc/Strategy';
+import zhTW from '@/i18n/zh-TW/views/home/pc/Strategy';
+import enUS from '@/i18n/en-US/views/home/pc/Strategy';
 
 @Component({
   components: {
     LineHeader,
     FmCard,
     FilterBtn,
+  },
+  i18n: {
+    messages: {
+      'zh-CN': zhCN,
+      'zh-TW': zhTW,
+      'en-US': enUS,
+    },
   },
 })
 export default class Home extends Vue {

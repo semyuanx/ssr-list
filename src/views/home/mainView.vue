@@ -39,6 +39,10 @@ import { loadAuth } from 'fmcomponents/src/utils';
 import { getLoginStatus } from 'fmcomponents';
 // import FollowBox from 'fmcomponents/src/components/follow';
 import personCard from 'fmcomponents/src/components/personcard';
+import zhCN from '@/i18n/zh-CN/views/home/mainView';
+import zhTW from '@/i18n/zh-TW/views/home/mainView';
+import enUS from '@/i18n/en-US/views/home/mainView';
+
 import {
   percentFormat, propFormat, moneyFormat, gradeFormat,
 } from '@/utils/format';
@@ -53,6 +57,13 @@ const RankStore = namespace('RankStore');
     CommonListItem: () => import('@/views/home/CommonListItem.vue'),
     InvestManager: () => import('@/views/home/InvestManager.vue'),
     TradeMaster: () => import('@/views/home/TradeMaster.vue'),
+  },
+  i18n: {
+    messages: {
+      'zh-CN': zhCN,
+      'zh-TW': zhTW,
+      'en-US': enUS,
+    },
   },
 })
 export default class mainView extends Vue {
@@ -163,12 +174,12 @@ export default class mainView extends Vue {
               propData = [
                 {
                 // hightlight: needHightProp.includes(it) && ival > 0,
-                  prop: '预期收益',
+                  prop: this.$i18n.t('yqsy'),
                   val: moneyFormat(expectProfile), // propFormat(ival, it),
                 },
                 {
                   hightlight: expectRoi && expectRoi > 0,
-                  prop: '预期收益率',
+                  prop: this.$i18n.t('yqsyl'),
                   val: percentFormat(expectRoi), // propFormat(ival, it),
                 },
               ];
@@ -178,12 +189,12 @@ export default class mainView extends Vue {
               propData = [
                 {
                 // hightlight: needHightProp.includes(it) && ival > 0,
-                  prop: '当前产品收益',
+                  prop: this.$i18n.t('dqcpsy'),
                   val: moneyFormat(currentProfit), // propFormat(ival, it),
                 },
                 {
                   hightlight: item.ROI && item.ROI > 0,
-                  prop: '当前收益率',
+                  prop: this.$i18n.t('dqsyl'),
                   val: propFormat(expectRoi, 'ROI'), // propFormat(ival, it),
                 },
               ];
@@ -192,8 +203,8 @@ export default class mainView extends Vue {
               mam: true,
               name: item.Name,
               type: 'MAM',
-              danger: `风险<${percentFormat(item.FollowerMaxRisk)}`,
-              confirmBtn: item.Status === 'Pending' ? '立即参与' : '查看详情',
+              danger: `${this.$i18n.t('risk')}<${percentFormat(item.FollowerMaxRisk)}`,
+              confirmBtn: item.Status === 'Pending' ? this.$i18n.t('ljcy') : this.$i18n.t('ckxq'),
               index: item.AccountIndex,
               brokerName: item.BrokerName,
               item,
@@ -216,7 +227,7 @@ export default class mainView extends Vue {
           this.log(item, this.followList, 'this.followList');
           const isEdit = this.followList.includes(`${item.UserID}_${item.AccountIndex}`);
           // eslint-disable-next-line
-          const otherEditText = isEdit ? '编辑订阅' : item.SubPrice ? `${item.SubPrice}/月` : '免费订阅';
+          const otherEditText = isEdit ? this.$i18n.t('bjdy') : item.SubPrice ? `${item.SubPrice}/${this.$i18n.t('month')}` : this.$i18n.t('mfdy');
           // this.log(!isShowSubBtn ? false : otherEditText, 'otherEditText')
           return {
             avatar: `${this.base}/Avata/${item.UserID}`,
@@ -227,7 +238,7 @@ export default class mainView extends Vue {
             showStrategy: true,
             isShowGrade: showGrade,
             isShowPta: showPta && item.IsPTA,
-            strategyDesc: `交易策略: ${item.StrategyDesc}`,
+            strategyDesc: `${this.$i18n.t('jycl')}: ${item.StrategyDesc}`,
             brokerName: item.BrokerName,
             item,
             data: show2Data.map((it: any) => {
@@ -281,7 +292,7 @@ export default class mainView extends Vue {
       const isSelfAttendion = selfId.includes(userId);
       if (isSelfAttendion) {
         return this.$fmdialog({
-          message: 'sorry, 自己不能关注自己',
+          message: this.$i18n.t('sorryzjbngzzj'),
           onConfirm: () => {
             // this.toNoticeOrUnNoticeOne(params);
           },
@@ -296,7 +307,7 @@ export default class mainView extends Vue {
         const isSelfAttendion = selfId.includes(userId);
         if (isSelfAttendion) {
           return this.$fmdialog({
-            message: 'sorry, 自己不能关注自己',
+            message: this.$i18n.t('sorryzjbngzzj'),
             onConfirm: () => {
               // this.toNoticeOrUnNoticeOne(params);
             },
@@ -314,7 +325,7 @@ export default class mainView extends Vue {
       this.toNoticeOrUnNoticeOne(params);
     } else {
       this.$fmdialog({
-        message: '确定要取消关注?',
+        message: this.$i18n.t('qdyqxgz'),
         onConfirm: () => {
           this.toNoticeOrUnNoticeOne(params);
         },
@@ -464,9 +475,9 @@ export default class mainView extends Vue {
               type: 'failure',
               showClose: true,
               message:
-                '当前交易员最近有修改密码行为导致交易信号中断，已经被限制跟随',
+                this.$i18n.t('xzgs'),
               duration: 3000,
-              confirmBtnText: '确定',
+              confirmBtnText: this.$i18n.t('confirm'),
               onConfirm: () => {},
             });
             return true;
@@ -479,9 +490,9 @@ export default class mainView extends Vue {
         this.$fmdialog({
           type: 'failure',
           showClose: true,
-          message: '网络请求失败， 请重试!',
+          message: this.$i18n.t('wlqqsb'),
           duration: 4000,
-          confirmBtnText: '确定',
+          confirmBtnText: this.$i18n.t('confirm'),
         });
       });
   }

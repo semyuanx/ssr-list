@@ -4,9 +4,9 @@
       <LineHeader
         subIcon="flag"
         rightIcon="right_24px"
-        rightTitle="更多"
+        :rightTitle="$t('more')"
         subTitle=""
-        title="跟随大师">
+        :title="$t('gsds')">
 
         <template slot="right">
           <span>{{ rightTitle || '' }}</span>
@@ -16,9 +16,9 @@
     </div>
     <div class="invest-content">
       <div class="left">
-        <div><span>跟随大牛</span></div>
+        <div><span>{{$t('gsdn')}}</span></div>
         <div>
-          <button class="sub-btn">立即查看</button>
+          <button class="sub-btn">{{$t('ljck')}}</button>
         </div>
       </div>
       <div class="right">

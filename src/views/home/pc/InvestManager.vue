@@ -5,7 +5,7 @@
         @rightClick="toMore"
         subIcon="flag_24px"
         rightIcon="right_24px"
-        rightTitle="更多"
+        :rightTitle="$t('More')"
         :subTitle="description.filterText"
         :title="description.title">
         <div @click="toLeftMore" class="contain-icon" v-if="description.needLeftSlot" slot="left">
@@ -24,7 +24,7 @@
       <div class="left" :style="`background-image: url(${description.background})`">
         <div class="left-desc"><span class="desc-title">{{ description.textTitle }}</span></div>
         <div>
-          <button @click="toRankList" class="sub-right-now">{{description.textBtn || "立即参与"}}</button>
+          <button @click="toRankList" class="sub-right-now">{{description.textBtn || $t('Ljcy')}}</button>
         </div>
       </div>
       <div class="right">
@@ -67,12 +67,22 @@ import {
 import CommonLineHeader from './CommonLineHeader.vue'; // @ is an alias to /src
 import LineCard from '@/components/line-card/card.vue'; // @ is an alias to /src
 import LittleCard from '@/components/little-card/card.vue'; // @ is an alias to /src
+import zhCN from '@/i18n/zh-CN/views/home/pc/InvestManager';
+import zhTW from '@/i18n/zh-TW/views/home/pc/InvestManager';
+import enUS from '@/i18n/en-US/views/home/pc/InvestManager';
 
 @Component({
   components: {
     CommonLineHeader,
     LineCard,
     LittleCard,
+  },
+  i18n: {
+    messages: {
+      'zh-CN': zhCN,
+      'zh-TW': zhTW,
+      'en-US': enUS,
+    },
   },
 })
 export default class Index extends Vue {
