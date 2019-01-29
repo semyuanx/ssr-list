@@ -55,7 +55,7 @@ export default {
       tips: '最大的净值回撤比例',
       label: 'Max retracement ratio',
       desc: '备注介绍',
-      filters: [
+      filter: [
         'No limits',
         '<',
         '以上',
@@ -64,7 +64,7 @@ export default {
     {
       label: 'Return',
       desc: '备注介绍',
-      filters: [
+      filter: [
         'No limits',
         '<',
         '以上',
@@ -73,7 +73,7 @@ export default {
     {
       label: 'Broker',
       desc: '备注介绍',
-      filters: [
+      filter: [
         'All',
       ],
     },

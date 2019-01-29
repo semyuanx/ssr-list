@@ -55,7 +55,7 @@ export default {
       tips: '最大的凈值回撤比例',
       label: '最大回撤比例',
       desc: '備註介紹',
-      filters: [
+      filter: [
         '不限',
         '小於',
         '以上',
@@ -64,7 +64,7 @@ export default {
     {
       label: '收益率',
       desc: '備註介紹',
-      filters: [
+      filter: [
         '不限',
         '小於',
         '以上',
@@ -73,7 +73,7 @@ export default {
     {
       label: '經紀商',
       desc: '備註介紹',
-      filters: [
+      filter: [
         '全部',
       ],
     },

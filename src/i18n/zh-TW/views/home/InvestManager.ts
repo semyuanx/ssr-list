@@ -1,3 +1,16 @@
 export default {
-
+  risk: '風險',
+  ljcy: '立即參與',
+  ckxq: '查看詳情',
+  cpzj: '產品資金',
+  cyrs: '參與人數',
+  tzgj: '投資管家',
+  fqcp: '發起產品',
+  nmykydmamjyyzh: '您沒有可用的MAM交易員賬戶,請開戶後重試',
+  dqcpxxyw: '抱歉~當前產品信息有誤，請聯繫後台服務人員！',
+  dqcpgsmeym: '抱歉~當前產品跟隨名額已滿',
+  nsfqr: '您是發起人，無法參與',
+  nmykydmamgszzh: '您沒有可用的MAM跟隨者賬戶({account}), 請開戶後重試',
+  wmamgszzh: '無MAM跟隨者賬戶，去開戶參與',
+  wgdzhkcycp: '無更多賬戶可參與產品，請新開賬戶',
 };

@@ -1,4 +1,4 @@
 export default {
-  Sizer: '筛选器',
-  Add: '添加',
+  More: 'More',
+  Ljcy: 'Join now',
 };
