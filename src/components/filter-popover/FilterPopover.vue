@@ -4,7 +4,7 @@
     v-if="show"
   >
     <section class="filter-header">
-      <span class="filter-title">{{title}}</span>
+      <span class="filter-title">{{title || $t('gjsx')}}</span>
       <i
         class="fm-fonticon icon-close_24px filter-close"
         @click="handleColse"
@@ -141,7 +141,7 @@ export default class FilterPopover extends Vue {
   @Prop({ default: '' }) labelWidth!: string;
 
   // 弹出框页面的标题
-  @Prop({ default: '高级筛选' }) title!: string;
+  @Prop({ default: '' }) title!: string;
 
   // 要插入分割线的索引位置，从0开始
   @Prop({ default: () => [1, 4, 6] }) divided!: number[];
@@ -151,156 +151,156 @@ export default class FilterPopover extends Vue {
   @Prop({ default: false }) show!: boolean;
 
   // 过滤条件的字段格式
-  @Prop({
-    default: () => [
-      {
-        label: '账户评级',
-        desc: '账户评级',
-        value: 'GradeScore',
-        filter: [
-          { name: '不限', value: '' },
-          { name: 'S', value: '9-0' },
-          { name: 'A+', value: '8-9' },
-          { name: 'A', value: '7-8' },
-          { name: 'A-', value: '6-7' },
-          { name: 'B', value: '5-6' },
-          { name: 'C', value: '4-5' },
-          { name: 'D', value: '0-4' },
-
-        ],
-      },
-      {
-        label: '交易能力值',
-        tips: '交易能力值是通过综合评估交易员在一定周期内的盈利与风控能力、资金规划与绩效稳定性等多重维度的计算结果',
-        desc: '备注介绍',
-        value: 'Score',
-        filter: [
-          { name: '不限', value: '' },
-          { name: '60-70', value: '60-70' },
-          { name: '71-80', value: '71-80' },
-          { name: '81-90', value: '81-90' },
-          { name: '>90', value: '90-0' },
-          // {
-          //   mode: 'input',
-          //   start: '',
-          //   end: '',
-          //   type: 'interval',
-          // },
-        ],
-        needLine: true,
-      },
-      {
-        label: '订阅人数',
-        tips: '统计时刻的订阅账户数',
-        value: 'Subscribers',
-        desc: '订阅人数',
-        filter: [
-          { name: '不限', value: '' },
-          { name: '小于50人', value: '0-50' },
-          { name: '50-100人', value: '50-100' },
-          { name: '100-300人', value: '100-300' },
-          { name: '300人以上', value: '300-0' },
-          {
-            mode: 'input',
-            start: '',
-            end: '',
-            type: 'interval',
-          },
-        ],
-      },
-      {
-        label: '账户净值',
-        value: 'Equity',
-        desc: '备注介绍',
-        filter: [
-          { name: '不限', value: '' },
-          { name: '小于 $5000', value: '0-5000' },
-          { name: '$5000 - $20000', value: '5000-20000' },
-          { name: '$20000 - $50000', value: '20000-50000' },
-          {
-            mode: 'input',
-            start: '',
-            end: '',
-            type: 'interval',
-          },
-        ],
-      },
-      {
-        tips: '第一笔交易至今的周数',
-        label: '交易周期',
-        value: 'Weeks',
-        desc: '备注介绍',
-        filter: [
-          { name: '不限', value: '' },
-          { name: '小于13周', value: '0-13' },
-          { name: '13-26周', value: '13-26' },
-          { name: '26-52周', value: '26-52' },
-          { name: '52周以上', value: '52-0' },
-          {
-            mode: 'input',
-            start: '',
-            end: '',
-            type: 'interval',
-          },
-        ],
-        needLine: true,
-      },
-      {
-        tips: '最大的净值回撤比例',
-        label: '最大回撤比例',
-        value: 'Retracement',
-        desc: '备注介绍',
-        filter: [
-          { name: '不限', value: '' },
-          { name: '小于10%', value: '0-10' },
-          { name: '10%-20%', value: '10-20' },
-          { name: '20%-30%', value: '20-30' },
-          { name: '30%以上', value: '30-0' },
-          {
-            mode: 'input',
-            start: '',
-            end: '',
-            type: 'interval',
-          },
-        ],
-      },
-      {
-        label: '收益率',
-        value: 'Roi',
-        desc: '备注介绍',
-        filter: [
-          { name: '不限', value: '' },
-          { name: '小于10%', value: '0-10' },
-          { name: '10%-20%', value: '10-20' },
-          { name: '20%-30%', value: '20-30' },
-          { name: '30%以上', value: '30-0' },
-          {
-            mode: 'input',
-            start: '',
-            end: '',
-            type: 'interval',
-          },
-        ],
-        needLine: true,
-      },
-      {
-        label: '经纪商',
-        value: 'brokerId',
-        desc: '备注介绍',
-        hasAdd: true,
-        filter: [{ name: '全部', value: '' }],
-      },
-    ],
-  })
-  labelObj1!: any[];
+  // @Prop({
+  //   default: () => [
+  //     {
+  //       label: '账户评级',
+  //       desc: '账户评级',
+  //       value: 'GradeScore',
+  //       filter: [
+  //         { name: '不限', value: '' },
+  //         { name: 'S', value: '9-0' },
+  //         { name: 'A+', value: '8-9' },
+  //         { name: 'A', value: '7-8' },
+  //         { name: 'A-', value: '6-7' },
+  //         { name: 'B', value: '5-6' },
+  //         { name: 'C', value: '4-5' },
+  //         { name: 'D', value: '0-4' },
+  //
+  //       ],
+  //     },
+  //     {
+  //       label: '交易能力值',
+  //       tips: '交易能力值是通过综合评估交易员在一定周期内的盈利与风控能力、资金规划与绩效稳定性等多重维度的计算结果',
+  //       desc: '备注介绍',
+  //       value: 'Score',
+  //       filter: [
+  //         { name: '不限', value: '' },
+  //         { name: '60-70', value: '60-70' },
+  //         { name: '71-80', value: '71-80' },
+  //         { name: '81-90', value: '81-90' },
+  //         { name: '>90', value: '90-0' },
+  //         // {
+  //         //   mode: 'input',
+  //         //   start: '',
+  //         //   end: '',
+  //         //   type: 'interval',
+  //         // },
+  //       ],
+  //       needLine: true,
+  //     },
+  //     {
+  //       label: '订阅人数',
+  //       tips: '统计时刻的订阅账户数',
+  //       value: 'Subscribers',
+  //       desc: '订阅人数',
+  //       filter: [
+  //         { name: '不限', value: '' },
+  //         { name: '小于50人', value: '0-50' },
+  //         { name: '50-100人', value: '50-100' },
+  //         { name: '100-300人', value: '100-300' },
+  //         { name: '300人以上', value: '300-0' },
+  //         {
+  //           mode: 'input',
+  //           start: '',
+  //           end: '',
+  //           type: 'interval',
+  //         },
+  //       ],
+  //     },
+  //     {
+  //       label: '账户净值',
+  //       value: 'Equity',
+  //       desc: '备注介绍',
+  //       filter: [
+  //         { name: '不限', value: '' },
+  //         { name: '小于 $5000', value: '0-5000' },
+  //         { name: '$5000 - $20000', value: '5000-20000' },
+  //         { name: '$20000 - $50000', value: '20000-50000' },
+  //         {
+  //           mode: 'input',
+  //           start: '',
+  //           end: '',
+  //           type: 'interval',
+  //         },
+  //       ],
+  //     },
+  //     {
+  //       tips: '第一笔交易至今的周数',
+  //       label: '交易周期',
+  //       value: 'Weeks',
+  //       desc: '备注介绍',
+  //       filter: [
+  //         { name: '不限', value: '' },
+  //         { name: '小于13周', value: '0-13' },
+  //         { name: '13-26周', value: '13-26' },
+  //         { name: '26-52周', value: '26-52' },
+  //         { name: '52周以上', value: '52-0' },
+  //         {
+  //           mode: 'input',
+  //           start: '',
+  //           end: '',
+  //           type: 'interval',
+  //         },
+  //       ],
+  //       needLine: true,
+  //     },
+  //     {
+  //       tips: '最大的净值回撤比例',
+  //       label: '最大回撤比例',
+  //       value: 'Retracement',
+  //       desc: '备注介绍',
+  //       filter: [
+  //         { name: '不限', value: '' },
+  //         { name: '小于10%', value: '0-10' },
+  //         { name: '10%-20%', value: '10-20' },
+  //         { name: '20%-30%', value: '20-30' },
+  //         { name: '30%以上', value: '30-0' },
+  //         {
+  //           mode: 'input',
+  //           start: '',
+  //           end: '',
+  //           type: 'interval',
+  //         },
+  //       ],
+  //     },
+  //     {
+  //       label: '收益率',
+  //       value: 'Roi',
+  //       desc: '备注介绍',
+  //       filter: [
+  //         { name: '不限', value: '' },
+  //         { name: '小于10%', value: '0-10' },
+  //         { name: '10%-20%', value: '10-20' },
+  //         { name: '20%-30%', value: '20-30' },
+  //         { name: '30%以上', value: '30-0' },
+  //         {
+  //           mode: 'input',
+  //           start: '',
+  //           end: '',
+  //           type: 'interval',
+  //         },
+  //       ],
+  //       needLine: true,
+  //     },
+  //     {
+  //       label: '经纪商',
+  //       value: 'brokerId',
+  //       desc: '备注介绍',
+  //       hasAdd: true,
+  //       filter: [{ name: '全部', value: '' }],
+  //     },
+  //   ],
+  // })
+  // labelObj1!: any[];
 
   labelObj: any[] = [
     {
-      label: '账户评级',
-      desc: '账户评级',
+      label: this.lang('labels[0].label'),
+      desc: this.lang('labels[0].desc'),
       value: 'GradeScore',
       filter: [
-        { name: '不限', value: '' },
+        { name: this.lang('labels[0].filter[0]'), value: '' },
         { name: 'S', value: '9-0' },
         { name: 'A+', value: '8-9' },
         { name: 'A', value: '7-8' },
@@ -311,12 +311,12 @@ export default class FilterPopover extends Vue {
       ],
     },
     {
-      label: '交易能力值',
-      tips: '交易能力值是通过综合评估交易员在一定周期内的盈利与风控能力、资金规划与绩效稳定性等多重维度的计算结果',
-      desc: '备注介绍',
+      label: this.lang('labels[1].label'),
+      tips: this.lang('labels[1].tips'),
+      desc: this.lang('labels[1].desc'),
       value: 'Score',
       filter: [
-        { name: '不限', value: '' },
+        { name: this.lang('labels[1].filter[0]'), value: '' },
         { name: '60-70', value: '60-70' },
         { name: '71-80', value: '71-80' },
         { name: '81-90', value: '81-90' },
@@ -331,16 +331,16 @@ export default class FilterPopover extends Vue {
       needLine: true,
     },
     {
-      label: '订阅人数',
-      tips: '统计时刻的订阅账户数',
+      label: this.lang('labels[2].label'),
+      tips: this.lang('labels[2].tips'),
       value: 'Subscribers',
-      desc: '订阅人数',
+      desc: this.lang('labels[2].desc'),
       filter: [
-        { name: '不限', value: '' },
-        { name: '小于50人', value: '0-50' },
-        { name: '50-100人', value: '50-100' },
-        { name: '100-300人', value: '100-300' },
-        { name: '300人以上', value: '300-0' },
+        { name: this.lang('labels[2].filter[0]'), value: '' },
+        { name: `${this.lang('labels[2].filter[1]')}50${this.lang('labels[2].filter[2]')}`, value: '0-50' },
+        { name: `50-100${this.lang('labels[2].filter[2]')}`, value: '50-100' },
+        { name: `100-300${this.lang('labels[2].filter[2]')}`, value: '100-300' },
+        { name: `300${this.lang('labels[2].filter[3]')}`, value: '300-0' },
         {
           mode: 'input',
           start: '',
@@ -350,12 +350,12 @@ export default class FilterPopover extends Vue {
       ],
     },
     {
-      label: '账户净值',
+      label: this.lang('labels[3].label'),
       value: 'Equity',
-      desc: '备注介绍',
+      desc: this.lang('labels[3].desc'),
       filter: [
-        { name: '不限', value: '' },
-        { name: '小于 $5000', value: '0-5000' },
+        { name: this.lang('labels[3].filter[0]'), value: '' },
+        { name: `${this.lang('labels[3].filter[1]')} $5000`, value: '0-5000' },
         { name: '$5000 - $20000', value: '5000-20000' },
         { name: '$20000 - $50000', value: '20000-50000' },
         {
@@ -367,16 +367,16 @@ export default class FilterPopover extends Vue {
       ],
     },
     {
-      tips: '第一笔交易至今的周数',
-      label: '交易周期',
+      tips: this.lang('labels[4].tips'),
+      label: this.lang('labels[4].label'),
       value: 'Weeks',
-      desc: '备注介绍',
+      desc: this.lang('labels[4].desc'),
       filter: [
-        { name: '不限', value: '' },
-        { name: '小于13周', value: '0-13' },
-        { name: '13-26周', value: '13-26' },
-        { name: '26-52周', value: '26-52' },
-        { name: '52周以上', value: '52-0' },
+        { name: this.lang('labels[4].filter[0]'), value: '' },
+        { name: `${this.lang('labels[4].filter[1]')}13${this.lang('labels[4].filter[2]')}`, value: '0-13' },
+        { name: `13-26${this.lang('labels[4].filter[2]')}`, value: '13-26' },
+        { name: `26-52${this.lang('labels[4].filter[2]')}`, value: '26-52' },
+        { name: `52${this.lang('labels[4].filter[3]')}`, value: '52-0' },
         {
           mode: 'input',
           start: '',
@@ -387,16 +387,16 @@ export default class FilterPopover extends Vue {
       needLine: true,
     },
     {
-      tips: '最大的净值回撤比例',
-      label: '最大回撤比例',
+      tips: this.lang('labels[5].tips'),
+      label: this.lang('labels[5].label'),
       value: 'Retracement',
-      desc: '备注介绍',
+      desc: this.lang('labels[5].desc'),
       filter: [
-        { name: '不限', value: '' },
-        { name: '小于10%', value: '0-10' },
+        { name: this.lang('labels[5].filter[0]'), value: '' },
+        { name: `${this.lang('labels[5].filter[1]')}10%`, value: '0-10' },
         { name: '10%-20%', value: '10-20' },
         { name: '20%-30%', value: '20-30' },
-        { name: '30%以上', value: '30-0' },
+        { name: `30%${this.lang('labels[5].filter[2]')}`, value: '30-0' },
         {
           mode: 'input',
           start: '',
@@ -406,15 +406,15 @@ export default class FilterPopover extends Vue {
       ],
     },
     {
-      label: '收益率',
+      label: this.lang('labels[6].label'),
       value: 'Roi',
-      desc: '备注介绍',
+      desc: this.lang('labels[6].desc'),
       filter: [
-        { name: '不限', value: '' },
-        { name: '小于10%', value: '0-10' },
+        { name: this.lang('labels[6].filter[0]'), value: '' },
+        { name: `${this.lang('labels[6].filter[1]')}10%`, value: '0-10' },
         { name: '10%-20%', value: '10-20' },
         { name: '20%-30%', value: '20-30' },
-        { name: '30%以上', value: '30-0' },
+        { name: `30%${this.lang('labels[6].filter[2]')}`, value: '30-0' },
         {
           mode: 'input',
           start: '',
@@ -425,11 +425,11 @@ export default class FilterPopover extends Vue {
       needLine: true,
     },
     {
-      label: '经纪商',
+      label: this.lang('labels[7].label'),
       value: 'brokerId',
-      desc: '备注介绍',
+      desc: this.lang('labels[7].desc'),
       hasAdd: true,
-      filter: [{ name: '全部', value: '' }],
+      filter: [{ name: this.lang('labels[7].filter[0]'), value: '' }],
     },
   ];
 
@@ -527,6 +527,10 @@ export default class FilterPopover extends Vue {
     } else {
       labelObj[labelObj.length - 1].filter[0].value = '';
     }
+  }
+
+  public lang(path: string) {
+    return this.$i18n.t(path) as string;
   }
 
   private rangeHandler(item: any, citem: any) {

@@ -1,4 +1,4 @@
-export default{
+export default {
   filterCondition: '筛选条件：',
   filter: '筛选器',
   add: '添加',

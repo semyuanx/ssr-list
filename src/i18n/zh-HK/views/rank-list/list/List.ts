@@ -1,4 +1,4 @@
-export default{
+export default {
   trader: '交易员',
   trend: '走势图',
   noData: '暂无数据',
