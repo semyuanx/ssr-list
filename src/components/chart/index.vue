@@ -1,26 +1,26 @@
 <template>
-    <div>
-        <div class="small-chart-box"></div>
+  <div>
+    <div class="small-chart-box"></div>
 
-        <transition name="chart-fade">
-            <div class="big-chart-box"
-                 v-if="show">
-                <div class="follow-setup-box">
-                    <div class="follow-setup-box-top">
-                        <h1>{{'收益分析'}}</h1>
-                        <div class="fr mt20 mr10"><a href="javascript:;"
-                               id="bigChartBoxClose"
-                               :title="'关闭'"><i @click="close"></i></a></div>
-                    </div>
-                    <div class="follow-setup"
-                         style="padding:40px 30px;width:740px;float: left;">
-                        <div class="big-chart"
-                             style="height: 300px;width: 740px;"></div>
-                    </div>
-                </div>
-            </div>
-        </transition>
-    </div>
+    <transition name="chart-fade">
+      <div class="big-chart-box"
+           v-if="show">
+        <div class="follow-setup-box">
+          <div class="follow-setup-box-top">
+            <h1>{{$('message.syfx')}}</h1>
+            <div class="fr mt20 mr10"><a href="javascript:;"
+                                         id="bigChartBoxClose"
+                                         :title="$t('message.close')"><i @click="close"></i></a></div>
+          </div>
+          <div class="follow-setup"
+               style="padding:40px 30px;width:740px;float: left;">
+            <div class="big-chart"
+                 style="height: 300px;width: 740px;"></div>
+          </div>
+        </div>
+      </div>
+    </transition>
+  </div>
 </template>
 <script>
 import { animate, getChartData } from '@/utils/util';
@@ -161,11 +161,16 @@ export default {
           areaspline: {
             fillColor: {
               linearGradient: {
-                x1: 0, y1: 0, x2: 0, y2: 0.8,
+                x1: 0,
+                y1: 0,
+                x2: 0,
+                y2: 0.8,
               },
               stops: [
                 [0, '#ffedca'],
-                [1, Highcharts.Color('#ffedca').setOpacity(0).get('rgba')],
+                [1, Highcharts.Color('#ffedca')
+                  .setOpacity(0)
+                  .get('rgba')],
               ],
             },
             marker: {
@@ -184,8 +189,7 @@ export default {
           },
           series: {
             lineColor: '#ffc766',
-            point: {
-            },
+            point: {},
           },
         },
         series: [{
@@ -234,7 +238,7 @@ export default {
           categories: bigChartY,
           //   categories: that.bigChartY,
           tickInterval: Math.ceil(bigChartY.length / 7),
-        //   tickInterval: Math.ceil(that.bigChartY.length / 7),
+          //   tickInterval: Math.ceil(that.bigChartY.length / 7),
         },
         yAxis: {
           gridLineWidth: 1,
@@ -259,13 +263,15 @@ export default {
           backgroundColor: 'rgba(34,34,34, 0.6)',
           shared: true,
           formatter() {
-            let a; let b; let
+            let a;
+            let b;
+            let
               color;
             if (this.y >= 0) {
-              a = '总收益';
+              a = that.$i18n.t('zsy');
               color = '#00ffa3';
             } else {
-              a = '总收益';
+              a = that.$i18n.t('zsy');
               color = '#ff846b';
             }
             const s = `${this.x}<br>${a}：<span style="color:${color}">$${this.y.toFixed(2)}</span>`;
@@ -283,17 +289,22 @@ export default {
             fontSize: 12,
           },
           enabled: true,
-          text: '数据来源 Followme',
+          text: `${that.$i18n.t('sjly')} Followme`,
         },
         plotOptions: {
           areaspline: {
             fillColor: {
               linearGradient: {
-                x1: 0, y1: 0, x2: 0, y2: 1,
+                x1: 0,
+                y1: 0,
+                x2: 0,
+                y2: 1,
               },
               stops: [
                 [0, '#ffedca'],
-                [1, Highcharts.Color('#ffedca').setOpacity(0).get('rgba')],
+                [1, Highcharts.Color('#ffedca')
+                  .setOpacity(0)
+                  .get('rgba')],
               ],
             },
             marker: {
@@ -315,7 +326,7 @@ export default {
           },
         },
         series: [{
-          name: '总收益',
+          name: that.$i18n.t('zys'),
           data: bigChartX, // || that.bigChartX,
         }],
       });
@@ -348,5 +359,5 @@ export default {
 
 </script>
 <style lang="less" scoped>
-@import "./index";
+  @import "./index";
 </style>

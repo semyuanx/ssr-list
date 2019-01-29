@@ -114,6 +114,7 @@ import FilterTag from './FilterTag.vue';
 import zhCN from '@/i18n/zh-CN/components/filter-popover/FilterPopover';
 import zhTW from '@/i18n/zh-TW/components/filter-popover/FilterPopover';
 import enUS from '@/i18n/en-US/components/filter-popover/FilterPopover';
+import zhHK from '@/i18n/zh-HK/components/filter-popover/FilterPopover';
 
 import { Tooltip } from 'element-ui';
 
@@ -131,6 +132,7 @@ const RankStore = namespace('RankStore');
       'zh-CN': zhCN,
       'zh-TW': zhTW,
       'en-US': enUS,
+      'zh-HK': zhHK,
     },
   },
 })

@@ -5,7 +5,7 @@
       :class="{'border-btn':border,'active-btn':active,'closed-btn':closed}"
       @click.stop="handleClick"
     >
-      <slot>不限</slot>
+      <slot>{{$t('bx')}}</slot>
       <i
         class="fm-fonticon icon-close_24px"
         v-if="closed"
@@ -19,8 +19,20 @@
 import {
   Component, Vue, Prop, Emit,
 } from 'vue-property-decorator';
-
-@Component
+import zhCN from '@/i18n/zh-CN/components/mobile-filter/FilterButton';
+import zhTW from '@/i18n/zh-TW/components/mobile-filter/FilterButton';
+import zhHK from '@/i18n/zh-HK/components/mobile-filter/FilterButton';
+import enUS from '@/i18n/en-US/components/mobile-filter/FilterButton';
+@Component({
+  i18n: {
+    messages: {
+      'zh-CN': zhCN,
+      'zh-TW': zhTW,
+      'zh-HK': zhHK,
+      'en-US': enUS,
+    },
+  },
+})
 export default class FilterButton extends Vue {
   @Prop({ default: false }) active!: boolean;
 

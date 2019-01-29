@@ -17,6 +17,10 @@ import isequal from 'lodash.isequal';
 import FilterHeader from '@/views/rank-list/FilterHeader.vue';
 import List from '@/views/rank-list/List.vue';
 import { getElementTop, animate } from '@/utils/util';
+import zhCN from '@/i18n/zh-CN/pages/Rank';
+import zhTW from '@/i18n/zh-TW/pages/Rank';
+import zhHK from '@/i18n/zh-HK/pages/Rank';
+import enUS from '@/i18n/en-US/pages/Rank';
 
 const RankStore = namespace('RankStore');
 
@@ -26,6 +30,14 @@ let isEnterLoad: boolean = false;
   components: {
     FilterHeader,
     List,
+  },
+  i18n: {
+    messages: {
+      'zh-CN': zhCN,
+      'zh-TW': zhTW,
+      'en-US': enUS,
+      'zh-HK': zhHK,
+    },
   },
 })
 export default class RankList extends Vue {
@@ -120,29 +132,29 @@ export default class RankList extends Vue {
   public filterResult() {
     this.setFilterRes([
       {
-        label: '交易能力值',
+        label: this.$i18n.t('jynlz'),
         val: this.refactorWord('', this.rankParams.Score),
       },
       {
-        label: '账户净值',
+        label: this.$i18n.t('zhjz'),
         val: this.refactorWord('$', this.rankParams.Equity),
       },
       {
-        label: '交易周期',
+        label: this.$i18n.t('weeks'),
         val: this.refactorWord('周', this.rankParams.Weeks),
       },
       {
-        label: '最大回撤比例',
+        label: this.$i18n.t('maxBackRate'),
         val: this.refactorWord('%', this.rankParams.Retracement),
       },
-      { label: '收益率', val: this.refactorWord('%', this.rankParams.Roi) },
-      { label: '经纪商', val: this.rankParams.brokerId },
+      { label: this.$i18n.t('syl'), val: this.refactorWord('%', this.rankParams.Roi) },
+      { label: this.$i18n.t('jjs'), val: this.rankParams.brokerId },
     ]);
   }
 
   private refactorWord(unit: string, val: any) {
     if (!val) {
-      return '不限';
+      return this.$i18n.t('unlimited');
     }
     const arr: string[] = val.split('-');
     if (arr[0] === '0') {

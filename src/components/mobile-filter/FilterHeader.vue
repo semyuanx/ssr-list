@@ -14,7 +14,7 @@
       :to="{name:'filter'}"
       class="filter-link"
     >
-      <i class="icon-filtrate_24px"></i> <span>筛选</span>
+      <i class="icon-filtrate_24px"></i> <span>{{$t('sx')}}</span>
     </router-link>
   </section>
 </template>
@@ -23,10 +23,22 @@
 import { Component, Vue } from 'vue-property-decorator';
 import FilterButton from './FilterButton.vue';
 import { namespace } from 'vuex-class';
+import zhCN from '@/i18n/zh-CN/components/mobile-filter/FilterHeader';
+import zhTW from '@/i18n/zh-TW/components/mobile-filter/FilterHeader';
+import zhHK from '@/i18n/zh-HK/components/mobile-filter/FilterHeader';
+import enUS from '@/i18n/en-US/components/mobile-filter/FilterHeader';
 
 const RankStore = namespace('RankStore');
 
 @Component({
+  i18n: {
+    messages: {
+      'zh-CN': zhCN,
+      'zh-TW': zhTW,
+      'zh-HK': zhHK,
+      'en-US': enUS,
+    },
+  },
   components: {
     FilterButton,
   },
@@ -37,7 +49,7 @@ export default class FilterHeader extends Vue {
 
   get result() {
     console.log(this.filterRes);
-    return this.filterRes.filter((v: any) => v.val !== '不限').slice(0, 2);
+    return this.filterRes.filter((v: any) => v.val !== this.$i18n.t('bx')).slice(0, 2);
   }
 }
 </script>

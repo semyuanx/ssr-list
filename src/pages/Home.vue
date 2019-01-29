@@ -19,10 +19,22 @@ import { namespace, Action } from 'vuex-class';
 
 import { openWebView } from '@/utils/native';
 import MainView from '@/views/home/mainView.vue';
+import zhCN from '@/i18n/zh-CN/pages/Home';
+import zhTW from '@/i18n/zh-TW/pages/Home';
+import zhHK from '@/i18n/zh-HK/pages/Home';
+import enUS from '@/i18n/en-US/pages/Home';
 
 const HomeStore = namespace('HomeStore');
 
 @Component({
+  i18n: {
+    messages: {
+      'zh-CN': zhCN,
+      'zh-TW': zhTW,
+      'zh-HK': zhHK,
+      'en-US': enUS,
+    },
+  },
   components: {
     MainView,
   },

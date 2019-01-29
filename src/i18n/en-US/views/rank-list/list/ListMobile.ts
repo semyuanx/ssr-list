@@ -1,4 +1,4 @@
-export default{
-  profitRate: '收益率',
-  subscribeCount: '订阅人数',
+export default {
+  profitRate: 'Return',
+  subscribeCount: 'Subscribers',
 };

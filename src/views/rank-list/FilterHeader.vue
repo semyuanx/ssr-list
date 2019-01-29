@@ -186,19 +186,23 @@ export default class FilterHeader extends Vue {
   }
 
   textMaps: any = {
-    Score: this.$i18n.t('score') as string,
-    Equity: this.$i18n.t('equity') as string,
-    Weeks: this.$i18n.t('weeks') as string,
-    Retracement: this.$i18n.t('retracement') as string,
-    MaxRetracement: this.$i18n.t('maxRetracement') as string,
-    Roi: this.$i18n.t('roi') as string,
-    isDESC: this.$i18n.t('isDESC') as string,
-    orderby: this.$i18n.t('orderby') as string,
-    isPTA: this.$i18n.t('isPTA') as string,
-    freeSubPrice: this.$i18n.t('freeSubPrice') as string,
-    GradeScore: this.$i18n.t('gradeScore') as string,
-    Subscribers: this.$i18n.t('subscribers') as string,
+    Score: this.lang('score'),
+    Equity: this.lang('equity'),
+    Weeks: this.lang('weeks'),
+    Retracement: this.lang('retracement'),
+    MaxRetracement: this.lang('maxRetracement'),
+    Roi: this.lang('roi'),
+    isDESC: this.lang('isDESC'),
+    orderby: this.lang('orderby'),
+    isPTA: this.lang('isPTA'),
+    freeSubPrice: this.lang('freeSubPrice'),
+    GradeScore: this.lang('gradeScore'),
+    Subscribers: this.lang('subscribers'),
   };
+
+  public lang(path: string) {
+    return this.$i18n.t(path) as string;
+  }
 
   get filterTag() {
     const { rankParams: rankAlias } = this;

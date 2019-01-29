@@ -1,6 +1,7 @@
 export default {
   reset: 'Reset',
   filter: 'Select',
-  PTA: 'PTA会员',
+  PTA: 'PTA member',
   freeSubscription: 'Follow (free)',
+  placeholder: '请输入',
 };

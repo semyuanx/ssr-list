@@ -11,3 +11,4 @@ declare global {
     }
   }
 }
+declare module '@/i18n';

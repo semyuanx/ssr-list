@@ -8,7 +8,7 @@
       >
         <el-table-column
           align="left"
-          label="基本信息"
+          :label="$t('baseInfo')"
           prop="name"
         >
           <template slot-scope="scope">
@@ -61,7 +61,7 @@
               :border="true"
               @touch="toSubscribe"
               class="filter-button"
-            >{{scope.row.SubPrice ? scope.row.SubPrice + '/月' : '免费订阅'}}</filter-button>
+            >{{scope.row.SubPrice ? scope.row.SubPrice + $t('preMonth') : $t('freeSub')}}</filter-button>
           </template>
         </el-table-column>
         <div v-if="loading" class="loading-container" slot="append">
@@ -79,8 +79,20 @@ import { Component, Vue, Prop } from 'vue-property-decorator';
 import { percentFormat, moneyFormat } from '@/utils/format';
 import FilterButton from './FilterButton.vue';
 import { Table, TableColumn } from 'element-ui';
+import zhCN from '@/i18n/zh-CN/components/mobile-filter/FilterList';
+import zhTW from '@/i18n/zh-TW/components/mobile-filter/FilterList';
+import zhHK from '@/i18n/zh-HK/components/mobile-filter/FilterList';
+import enUS from '@/i18n/en-US/components/mobile-filter/FilterList';
 
 @Component({
+  i18n: {
+    messages: {
+      'zh-CN': zhCN,
+      'zh-TW': zhTW,
+      'zh-HK': zhHK,
+      'en-US': enUS,
+    },
+  },
   filters: {
     filterProp: (val: number, prop: string) => {
       const percentProps = ['Roi', 'ROI'];

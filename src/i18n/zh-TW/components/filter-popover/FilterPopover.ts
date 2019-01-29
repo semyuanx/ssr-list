@@ -3,4 +3,5 @@ export default {
   filter: '篩選',
   PTA: 'PTA會員',
   freeSubscription: '免費訂閱',
+  placeholder: '請輸入',
 };

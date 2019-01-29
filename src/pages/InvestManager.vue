@@ -55,6 +55,10 @@ import InfiniteScroll from '@/components/infinite-scroll/InfiniteScroll.vue';
 import { getLoginStatus } from 'fmcomponents';
 import { loadAuth } from 'fmcomponents/src/utils';
 import { openCreateDialog } from 'fmcomponents/src/components/mam';
+import zhCN from '@/i18n/zh-CN/pages/InvestManager';
+import zhTW from '@/i18n/zh-TW/pages/InvestManager';
+import zhHK from '@/i18n/zh-HK/pages/InvestManager';
+import enUS from '@/i18n/en-US/pages/InvestManager';
 
 const ManagerStore = namespace('ManagerStore');
 export interface Params {
@@ -64,6 +68,14 @@ export interface Params {
 }
 
 @Component({
+  i18n: {
+    messages: {
+      'zh-CN': zhCN,
+      'zh-TW': zhTW,
+      'zh-HK': zhHK,
+      'en-US': enUS,
+    },
+  },
   components: {
     Navbar,
     Panel,
@@ -123,7 +135,7 @@ export default class Manager extends Vue {
     const _this = this;
     if (account.length <= 0) {
       return this.$fmdialog({
-        message: '您没有可用的MAM交易员账户,请开户后重试',
+        message: this.$i18n.t('noMAM') as string,
         type: 'confirm',
         onConfirm: (flag: any) => {
           window.open(`${_this.kaiHu}/portalindex/upgrade/mam`);
@@ -134,7 +146,7 @@ export default class Manager extends Vue {
       const freeAccounts = account.filter((account: any) => account.IsMAMFree === true) || [];
     if (freeAccounts.length <= 0) {
       return this.$fmdialog({
-        message: '您没有可用的MAM交易员账户,请开户后重试',
+        message: this.$i18n.t('noMAM') as string,
         type: 'confirm',
         onConfirm: (flag: any) => {
           window.open(`${_this.kaiHu}/portalindex/upgrade/mam`);
@@ -152,7 +164,7 @@ export default class Manager extends Vue {
         }
         // window.location.href = `${this.kaiHu}/open/upgrade/newindex?type=4`;
         return this.$fmdialog({
-          message: '您当前没有可用的MAM交易员账户,请开户后再试',
+          message: this.$i18n.t('noMAM') as string,
           type: 'confirm',
           onConfirm: (flag: any) => {
             window.open(`${this.kaiHu}/open/upgrade/mam`);

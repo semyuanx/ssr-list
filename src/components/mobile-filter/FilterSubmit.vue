@@ -3,18 +3,17 @@
     <button
       class="btn reset-btn"
       @click.stop.prevent="reset"
-    >重置</button>
+    >{{$t('message.reset')}}</button>
     <button
       class="btn confirm-btn"
       @click.stop.prevent="submit"
       @keyup.enter.stop.prevent="submit"
-    >确定</button>
+    >{{$t('message.confirm')}}</button>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue, Emit } from 'vue-property-decorator';
-
 @Component
 export default class FilterSubmit extends Vue {
   @Emit()
