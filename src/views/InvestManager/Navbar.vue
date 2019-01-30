@@ -34,6 +34,7 @@ import {
 import zhCN from '@/i18n/zh-CN/views/InvestManager/Navbar';
 import zhTW from '@/i18n/zh-TW/views/InvestManager/Navbar';
 import enUS from '@/i18n/en-US/views/InvestManager/Navbar';
+import zhHK from '@/i18n/zh-HK/views/InvestManager/Navbar';
 
 @Component({
   i18n: {
@@ -41,6 +42,7 @@ import enUS from '@/i18n/en-US/views/InvestManager/Navbar';
       'zh-CN': zhCN,
       'zh-TW': zhTW,
       'en-US': enUS,
+      'zh-HK': zhHK,
     },
   },
 })

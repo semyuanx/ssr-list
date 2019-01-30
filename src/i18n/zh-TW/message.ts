@@ -1,5 +1,6 @@
 export default {
   message: {
+    more: '更多',
     reset: '重置',
     confirm: '確認',
     minutepre: '分鐘前',

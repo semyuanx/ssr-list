@@ -19,4 +19,9 @@ export default {
   noMamUse: '您沒有可用的MAM跟隨者賬戶',
   noMamFolloerAccount: '無MAM跟隨者賬戶，去開戶參與',
   noMoreAccount: '無更多賬戶可參與產品，請新開賬戶',
+  panelStatus: {
+    Trading: '查看詳情',
+    Settled: '查看詳情',
+    Pending: '立即參與',
+  },
 };

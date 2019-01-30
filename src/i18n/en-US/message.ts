@@ -1,5 +1,6 @@
 export default {
   message: {
+    more: 'More',
     reset: 'Reset',
     confirm: 'Confirm',
     minutepre: 'minutes ago',

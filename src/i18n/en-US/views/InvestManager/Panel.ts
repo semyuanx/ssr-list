@@ -16,4 +16,10 @@ export default {
   canyurenshu: 'participants',
   gensuizhezuizhongshouyi: '跟随者最终收益',
   caozuoshichang: '操作时长',
+  gcpfx: '该产品风险',
+  panelStatus: {
+    Trading: 'View details',
+    Settled: 'View details',
+    Pending: 'Join now',
+  },
 };

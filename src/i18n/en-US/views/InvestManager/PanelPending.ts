@@ -19,4 +19,9 @@ export default {
   noMamUse: '您没有可用的MAM跟随者账户',
   noMamFolloerAccount: '无MAM跟随者账户，去开户参与',
   noMoreAccount: '无更多账户可参与产品，请新开账户',
+  panelStatus: {
+    Trading: 'View details',
+    Settled: 'View details',
+    Pending: 'Join now',
+  },
 };

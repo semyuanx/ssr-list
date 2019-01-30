@@ -5,7 +5,7 @@
         @rightClick="toMore"
         subIcon="flag_24px"
         rightIcon="right_24px"
-        rightTitle="更多"
+        :rightTitle="$t('more')"
         :subTitle="description.filterText"
         :title="description.title">
 
@@ -53,11 +53,25 @@ import CommonLineHeader from './CommonLineHeader.vue'; // @ is an alias to /src
 import LineCard from '@/components/line-card/card.vue'; // @ is an alias to /src
 import LittleCard from '@/components/little-card/card.vue'; // @ is an alias to /src
 
+import zhCN from '@/i18n/zh-CN/message';
+import zhTW from '@/i18n/zh-TW/message';
+import enUS from '@/i18n/en-US/message';
+import zhHK from '@/i18n/zh-HK/message';
+
+
 @Component({
   components: {
     CommonLineHeader,
     LineCard,
     LittleCard,
+  },
+  i18n: {
+    messages: {
+      'zh-CN': zhCN,
+      'zh-TW': zhTW,
+      'en-US': enUS,
+      'zh-HK': zhHK,
+    },
   },
 })
 export default class Index extends Vue {

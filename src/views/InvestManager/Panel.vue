@@ -94,11 +94,7 @@
         :href="submitUrl"
         target="_blank"
       >{{
-        {
-          'Trading': '查看详情',
-          'Settled': '查看详情',
-          'Pending': '立即参与',
-        }[panelData.Status]
+        $t('panelStatus')[panelData.Status]
       }}</a>
     </section>
     <el-tooltip class="item" effect="dark" :content="maxRisk" placement="top">
@@ -117,6 +113,7 @@ import { API_PREFIX_V2 } from '@/constant/api';
 import zhCN from '@/i18n/zh-CN/views/InvestManager/Panel';
 import zhTW from '@/i18n/zh-TW/views/InvestManager/Panel';
 import enUS from '@/i18n/en-US/views/InvestManager/Panel';
+import zhHK from '@/i18n/zh-HK/views/InvestManager/Panel';
 import { moneyFormat, percentFormat } from '@/utils/format';
 import { Tooltip } from 'element-ui';
 
@@ -141,6 +138,7 @@ interface Context {
       'zh-CN': zhCN,
       'zh-TW': zhTW,
       'en-US': enUS,
+      'zh-HK': zhHK,
     },
   },
 })
@@ -160,8 +158,9 @@ export default class Panel extends Vue {
 
   get maxRisk() {
     let risk = this.panelData.FollowerMaxRisk || 0;
+    const val = this.$i18n.t('gcpfx');
     risk = percentFormat(risk);
-    return `该产品风险<${risk}`;
+    return `${val}<${risk}`;
   }
 
   get status() {
