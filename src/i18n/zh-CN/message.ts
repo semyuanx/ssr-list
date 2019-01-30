@@ -1,5 +1,6 @@
 export default {
   message: {
+    noMoreData: '没有更多数据了',
     more: '更多',
     reset: '重置',
     confirm: '确认',

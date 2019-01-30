@@ -8,7 +8,7 @@
       :to="{name:'rankList'}"
       :event="[]"
       @click.prevent.stop.native="openWebView({name:'rankList'})"
-    ><i class="icon-filtrate_24px"></i> 高级筛选</router-link>
+    ><i class="icon-filtrate_24px"></i> {{$t('gjsx')}}</router-link>
 
   </div>
 </template>

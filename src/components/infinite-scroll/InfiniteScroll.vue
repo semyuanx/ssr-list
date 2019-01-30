@@ -22,7 +22,7 @@
       class="fm-list-donetip"
       v-show="!isLoading && isDone"
     >
-      <slot name="doneTip">没有更多数据了</slot>
+      <slot name="doneTip">{{ $t('message.noMoreData') }}</slot>
     </div>
   </div>
 </template>
@@ -31,6 +31,7 @@
 import { Component, Vue, Prop } from 'vue-property-decorator';
 import Loading from './Loading.vue';
 import { getScrollview } from '@/utils/util';
+
 
 @Component({
   name: 'fm-infinitescroll',
