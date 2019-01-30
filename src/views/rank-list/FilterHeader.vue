@@ -433,7 +433,7 @@ export default class FilterHeader extends Vue {
       font-family: MicrosoftYaHei;
       color: rgba(51, 51, 51, 1);
       line-height: 19px;
-      width: 76px;
+      min-width: 76px;
     }
     .header-tag-lists {
       display: flex;

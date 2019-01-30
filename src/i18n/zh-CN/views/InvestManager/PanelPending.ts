@@ -1,4 +1,6 @@
 export default {
+  history: '历史发起',
+  AverageROI: '平均收益率',
   expectProfitTitle: '(发起人资金+最低参与资金*目标跟随人数）*预期收益率',
   incomeLabel: '预期收益',
   incomeRateLabel: '预期收益率',

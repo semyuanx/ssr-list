@@ -1,6 +1,6 @@
 export default {
   trader: 'Trader',
-  trend: 'the chart',
+  trend: 'Trend',
   noData: 'No data',
   subscribe: 'Subscribe',
   editSubscribe: 'Edit Subscription',

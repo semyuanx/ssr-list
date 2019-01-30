@@ -3,6 +3,7 @@ import VueI18n from 'vue-i18n';
 import en from './en-US';
 import cn from './zh-CN';
 import tw from './zh-TW';
+import hk from './zh-HK';
 
 Vue.use(VueI18n);
 
@@ -22,6 +23,7 @@ export default function createI18n(l?: string, fbl: string = 'zh-CN') {
       'zh-CN': cn,
       'en-US': en,
       'zh-TW': tw,
+      'zh-HK': hk,
     },
   });
   return i18n;

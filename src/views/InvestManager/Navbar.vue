@@ -55,9 +55,13 @@ export default class Navbar extends Vue {
   public currentTag!: string;
 
   public tags: Array<any> = [
-    { name: this.$i18n.t('jinxingzhong'), value: 'InProcess' },
-    { name: this.$i18n.t('yijieshu'), value: 'Settled' },
+    { name: this.lang('jinxingzhong'), value: 'InProcess' },
+    { name: this.lang('yijieshu'), value: 'Settled' },
   ];
+
+  public lang(path: string) {
+    return this.$i18n.t(path);
+  }
 
   @Emit('change')
   handleClick(index: string) {

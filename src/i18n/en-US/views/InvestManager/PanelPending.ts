@@ -1,4 +1,5 @@
 export default {
+  history: 'History',
   expectProfitTitle: '(Initiator funds + minimum participation funds * target followers) * Expected rate of return',
   incomeLabel: 'Expected profit',
   incomeRateLabel: 'Expected rate of return',

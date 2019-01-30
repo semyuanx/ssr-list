@@ -33,6 +33,16 @@ Vue.use(V2Datepicker);
     FMNav,
     FMFooter: () => import('fmcomponents/src/components/footer2'),
   },
+  metaInfo() {
+    const lang: any = (key: any, ...args: any[]) => this.$i18n.t(`message.meta.${key}`, ...args);
+    return {
+      title: lang('title'),
+      meta: [
+        { name: 'description', content: lang('description') },
+        { name: 'keywords', content: lang('keywords') },
+      ],
+    };
+  },
 })
 export default class App extends Vue {
   // 是否是从APP访问

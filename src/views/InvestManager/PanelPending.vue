@@ -93,10 +93,10 @@
 import {
   Vue, Watch, Prop, Component,
 } from 'vue-property-decorator';
-import zhCN from '@/i18n/zh-CN/views/InvestManager/Panel';
-import zhTW from '@/i18n/zh-TW/views/InvestManager/Panel';
-import enUS from '@/i18n/en-US/views/InvestManager/Panel';
-import zhHK from '@/i18n/zh-HK/views/InvestManager/Panel';
+import zhCN from '@/i18n/zh-CN/views/InvestManager/PanelPending';
+import zhTW from '@/i18n/zh-TW/views/InvestManager/PanelPending';
+import enUS from '@/i18n/en-US/views/InvestManager/PanelPending';
+import zhHK from '@/i18n/zh-HK/views/InvestManager/PanelPending';
 
 import {
   percentFormat, numberFormat, timeFormat, moneyFormat,

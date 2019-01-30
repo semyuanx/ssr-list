@@ -1,9 +1,10 @@
 import Vue from 'vue';
+import Meat from 'vue-meta';
 import Router from 'vue-router';
 import Home from './pages/Home.vue';
 
 Vue.use(Router);
-
+Vue.use(Meat);
 const base = '/trading-strategy';
 export default function createRouter() {
   return new Router({

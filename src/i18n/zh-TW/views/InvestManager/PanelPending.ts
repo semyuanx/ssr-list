@@ -1,4 +1,5 @@
 export default {
+  history: '历史发起',
   expectProfitTitle: '(發起人資金+最低參與資金*目標跟隨人數）*預期收益率',
   incomeLabel: '預期收益',
   incomeRateLabel: '預期收益率',
