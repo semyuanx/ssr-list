@@ -4,7 +4,7 @@
             <FmStrategy
               :subscribe="handleSub" :data="strategytData" :header="strategytDataHeader" />
         </div>
-        <div class="list-invest" v-if="['zh-CN','zh-hk'].includes($i18n.locale)">
+        <div class="list-invest" v-if="['zh-CN'].includes($i18n.locale)">
             <InvestManager ref="investManager" :subscribe="toInvest" :data="products" />
         </div>
         <div class="list-item" v-for="(item,index) in investData" :key="index">
@@ -165,7 +165,7 @@ export default class mainView extends Vue {
       // mam显示
       let mamData: any = [];
       // if (config && config.ManualCfg && !config.ManualCfg.IsAddMAM) {
-      if (config && config.ManualCfg && config.ManualCfg.IsAddMAM && ['zh-CN', 'zh-HK'].includes(this.$i18n.locale)) {
+      if (config && config.ManualCfg && config.ManualCfg.IsAddMAM && this.$i18n.locale === 'zh-CN') {
         const { progressProducts } = this;
         if (progressProducts.length) {
           mamData = progressProducts.map((item: any) => {
