@@ -70,6 +70,7 @@ import LittleCard from '@/components/little-card/card.vue'; // @ is an alias to 
 import zhCN from '@/i18n/zh-CN/views/home/pc/InvestManager';
 import zhTW from '@/i18n/zh-TW/views/home/pc/InvestManager';
 import enUS from '@/i18n/en-US/views/home/pc/InvestManager';
+import zhHK from '@/i18n/zh-HK/views/home/pc/InvestManager';
 
 @Component({
   components: {
@@ -82,6 +83,7 @@ import enUS from '@/i18n/en-US/views/home/pc/InvestManager';
       'zh-CN': zhCN,
       'zh-TW': zhTW,
       'en-US': enUS,
+      'zh-HK': zhHK,
     },
   },
 })

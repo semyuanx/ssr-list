@@ -11,10 +11,23 @@ import { namespace } from 'vuex-class';
 import SvgIcon from '@/components/svg/index.ts';
 import MobileFilterList from '@/components/mobile-filter/FilterList.vue';
 import { toLoginPage, toSubscribePage } from '@/utils/native';
+import zhCN from '@/i18n/zh-CN/views/follower-list/list/ListMobile';
+import zhTW from '@/i18n/zh-TW/views/follower-list/list/ListMobile';
+import enUS from '@/i18n/en-US/views/follower-list/list/ListMobile';
+import zhHK from '@/i18n/zh-HK/views/follower-list/list/ListMobile';
+
 
 const RankStore = namespace('RankStore');
 
 @Component({
+  i18n: {
+    messages: {
+      'zh-CN': zhCN,
+      'zh-TW': zhTW,
+      'en-US': enUS,
+      'zh-HK': zhHK,
+    },
+  },
   components: {
     SvgIcon,
     MobileFilterList,
@@ -36,11 +49,11 @@ export default class List extends Vue {
 
   showProps: any = [
     {
-      label: '跟随收益',
+      label: this.lang('jyyyjy'),
       prop: 'FollowMoney',
     },
     {
-      label: '跟随收益率',
+      label: this.lang('jyyyjy'),
       prop: 'Roi',
     },
   ];
@@ -68,6 +81,10 @@ export default class List extends Vue {
 
   sortChange({ prop, order }:any) {
     this.$emit('sortChange', { prop, order });
+  }
+
+  lang(val: any) {
+    return this.$i18n.t(val);
   }
 }
 </script>

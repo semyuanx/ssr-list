@@ -11,7 +11,7 @@
         current-row-key="UserID"
       >
         <el-table-column
-          label="基本信息"
+          :label="$t('jbxx')"
           prop="UserID"
           min-width="210px"
         >
@@ -89,7 +89,7 @@
         </el-table-column>
 
         <el-table-column
-          label="走势图"
+          :label="$t('zst')"
           prop="TrendChart"
           align="center"
         >
@@ -111,7 +111,7 @@
                   v-if="dateIsLoading && !scope.row.UserID"
                   :src="cdn + '/images/NoData-Report.jpg'"
                   style="display:block;width:100%;"
-                  :alt="'暂无数据'"
+                  :alt="$t('zwsj')"
                 >
               </div>
 
@@ -135,7 +135,7 @@
               v-else
               class="custom-display-row-sub"
             >
-              <span class="sub-row-btn">{{ scope.row.UserID | checkIfFollow(attentionList, followList) }}</span>
+              <span class="sub-row-btn">{{ scope.row.UserID | checkIfFollow(attentionList, followList, $i18n) }}</span>
             </div>
 
           </template>
@@ -149,7 +149,7 @@
                 name="no-data"
               />
             </div>
-            <div class="empty-text"><span>暂无相关内容~</span></div>
+            <div class="empty-text"><span>{{$t('zwxgnr')}}</span></div>
           </div>
         </template>
         <template slot="append">
@@ -198,11 +198,25 @@ import { getElementTop, getElementLeft } from '@/utils/util';
 import { Table, TableColumn } from 'element-ui';
 import throttle from 'lodash.throttle';
 
+import zhCN from '@/i18n/zh-CN/views/follower-list/list/List';
+import zhTW from '@/i18n/zh-TW/views/follower-list/list/List';
+import enUS from '@/i18n/en-US/views/follower-list/list/List';
+import zhHK from '@/i18n/zh-HK/views/follower-list/list/List';
+
+
 const RankStore = namespace('RankStore');
 
 const isEnterLoad = false;
 
 @Component(({
+  i18n: {
+    messages: {
+      'zh-CN': zhCN,
+      'zh-TW': zhTW,
+      'en-US': enUS,
+      'zh-HK': zhHK,
+    },
+  },
   components: {
     SvgIcon,
     Chart, // : () => import('@/components/chart/index.vue'),
@@ -215,9 +229,10 @@ const isEnterLoad = false;
       return props.includes(prop) ? moneyFormat(val) : val;
     },
     propFormat: (val: number, prop: string) => propFormat(val, prop),
-    checkIfFollow: (uid: string | number, attentionList: any, followList: any) => {
+    checkIfFollow: (uid: string | number, attentionList: any, followList: any, newi18n: any) => {
       let inAttention = false;
       let inFollow = false;
+      const status = newi18n.t('followStatus');
       if (Array.isArray(attentionList) && (attentionList.includes(uid) || attentionList.includes(`${uid}`))) {
         inAttention = true;
       }
@@ -231,7 +246,7 @@ const isEnterLoad = false;
         if (inFollow) id++;
       }
 
-      return ['关注', '已关注', '互相关注'][id];
+      return status[id];
     },
   },
 } as any))
@@ -371,9 +386,10 @@ export default class List extends Vue {
   handleSub($event: any, item: any) {
     const { attentionList } = this;
     const { UserID: uid } = item;
+    const _this = this;
     if (Array.isArray(attentionList) && (attentionList.includes(uid) || attentionList.includes(`${uid}`))) {
       return this.$fmdialog({
-        message: '您确定要取消关注吗?',
+        message: _this.$i18n.t('comintent') as string,
         onConfirm: () => {
           this.attention(item, $event);
         },
@@ -397,7 +413,7 @@ export default class List extends Vue {
         const selfId = [uid, `${uid}`];
         if (selfId.includes(userId)) {
           return this.$fmdialog({
-            message: 'sorry, 自己不能关注自己',
+            message: _this.$i18n.t('sorryToMe') as string,
             onConfirm: () => {
               // this.toNoticeOrUnNoticeOne(params);
             },

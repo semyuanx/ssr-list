@@ -68,6 +68,7 @@ import FilterBtn from '@/views/home/FilterHeader.vue';
 import zhCN from '@/i18n/zh-CN/views/home/pc/Strategy';
 import zhTW from '@/i18n/zh-TW/views/home/pc/Strategy';
 import enUS from '@/i18n/en-US/views/home/pc/Strategy';
+import zhHK from '@/i18n/zh-HK/views/home/pc/Strategy';
 
 @Component({
   components: {
@@ -80,6 +81,7 @@ import enUS from '@/i18n/en-US/views/home/pc/Strategy';
       'zh-CN': zhCN,
       'zh-TW': zhTW,
       'en-US': enUS,
+      'zh-HK': zhHK,
     },
   },
 })

@@ -29,6 +29,7 @@ import { needHighlight } from '@/constant/propFormat';
 import zhCN from '@/i18n/zh-CN/views/home/TradeMaster';
 import zhTW from '@/i18n/zh-TW/views/home/TradeMaster';
 import enUS from '@/i18n/en-US/views/home/TradeMaster';
+import zhHK from '@/i18n/zh-HK/views/home/TradeMaster';
 
 // const followerMaster = require('@/assets/followerMaster.png');
 
@@ -41,6 +42,7 @@ import enUS from '@/i18n/en-US/views/home/TradeMaster';
       'zh-CN': zhCN,
       'zh-TW': zhTW,
       'en-US': enUS,
+      'zh-HK': zhHK,
     },
   },
 })
@@ -63,17 +65,17 @@ export default class Index extends Vue {
 
   header: any = [
     {
-      label: '跟随者',
+      label: this.lang('follower'),
       prop: 'Name',
       align: 'left',
     },
     {
-      label: ' 跟随获利',
+      label: this.lang('gshl'),
       prop: 'FollowMoney',
       align: 'right',
     },
     {
-      label: '收益率',
+      label: this.lang('syl'),
       prop: 'Roi',
       align: 'right',
     },
@@ -105,6 +107,10 @@ export default class Index extends Vue {
   toMore() {
     // this.redirectTo('tradeMaster');
     this.$router.push({ name: 'follower' });
+  }
+
+  lang(val: any) {
+    return this.$i18n.t(val);
   }
 
   toMoreMobile() {

@@ -209,6 +209,7 @@ import PtaLogo from '@/components/ptaLogo/index.vue';
 import zhCN from '@/i18n/zh-CN/views/rank-list/list/List';
 import zhTW from '@/i18n/zh-TW/views/rank-list/list/List';
 import enUS from '@/i18n/en-US/views/rank-list/list/List';
+import zhHK from '@/i18n/zh-HK/views/rank-list/list/List';
 
 const RankStore = namespace('RankStore');
 
@@ -240,6 +241,7 @@ const isEnterLoad = false;
       'zh-CN': zhCN,
       'zh-TW': zhTW,
       'en-US': enUS,
+      'zh-HK': zhHK,
     },
   },
 } as any))

@@ -80,6 +80,7 @@ import Clickoutside from 'element-ui/src/utils/clickoutside';
 import zhCN from '@/i18n/zh-CN/views/home/FilterHeader';
 import zhTW from '@/i18n/zh-TW/views/home/FilterHeader';
 import enUS from '@/i18n/en-US/views/home/FilterHeader';
+import zhHK from '@/i18n/zh-HK/views/home/FilterHeader';
 
 const RankStore = namespace('RankStore');
 
@@ -102,6 +103,7 @@ const RankStore = namespace('RankStore');
       'zh-CN': zhCN,
       'zh-TW': zhTW,
       'en-US': enUS,
+      'zh-HK': zhHK,
     },
   },
 })
@@ -163,19 +165,7 @@ export default class FilterHeader extends Vue {
     }
   }
 
-  textMaps: any = {
-    Score: '交易能力值',
-    Equity: '账户净值',
-    Weeks: '交易周期',
-    Retracement: '最大回撤比例',
-    Roi: '收益率',
-    isDESC: '排序',
-    orderby: '排序字段',
-    isPTA: 'PTA会员',
-    freeSubPrice: '免费订阅',
-    GradeScore: '账户评级',
-    Subscribers: '订阅人数',
-  };
+  textMaps: any = this.lang('textMaps');
 
   get filterTag() {
     const { rankParams } = this;
@@ -308,6 +298,10 @@ export default class FilterHeader extends Vue {
     this.$nextTick(() => {
       this.$router.push({ name: 'rankList' });
     });
+  }
+
+  lang(val: any) {
+    return this.$i18n.t(val);
   }
 
   handleReset(value: object) {

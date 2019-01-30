@@ -2,7 +2,7 @@
   <div>
     <div class="filter-header">
       <div class="select-container">
-        <div class="select-title">交易时间</div>
+        <div class="select-title">{{ $t('jytime') }}</div>
         <div class="selected-content">
           <span @click="toggleShow" class="selected-detail">{{selected.label}}</span>
           <i  @click="toggleShow" :class="{'default-icon-set': true, 'icon-caret_up_small_24px': isShow, 'icon-caret_down_small_24px': !isShow,}"></i>
@@ -33,15 +33,28 @@ import {
   Component, Vue, Watch, Emit, Prop,
 } from 'vue-property-decorator';
 // import { namespace } from 'vuex-class';
+import zhCN from '@/i18n/zh-CN/views/follower-list/FilterHeader';
+import zhTW from '@/i18n/zh-TW/views/follower-list/FilterHeader';
+import enUS from '@/i18n/en-US/views/follower-list/FilterHeader';
+import zhHK from '@/i18n/zh-HK/views/follower-list/FilterHeader';
+
 
 @Component({
+  i18n: {
+    messages: {
+      'zh-CN': zhCN,
+      'zh-TW': zhTW,
+      'en-US': enUS,
+      'zh-HK': zhHK,
+    },
+  },
   components: {
 
   },
 })
 export default class FilterHeader extends Vue {
   selected: any = {
-    label: '全部',
+    label: this.lang('all'),
     val: 0,
     selected: false,
   };
@@ -58,22 +71,22 @@ export default class FilterHeader extends Vue {
 
   options: any = [
     {
-      label: '全部',
+      label: this.lang('all'),
       val: 0,
       selected: true,
     },
     {
-      label: '近一日有交易',
+      label: this.lang('jyryjy'),
       val: 1,
       selected: false,
     },
     {
-      label: '近一周有交易',
+      label: this.lang('jyzyjy'),
       val: 7,
       selected: false,
     },
     {
-      label: '近一月有交易',
+      label: this.lang('jyyyjy'),
       val: 30,
       selected: false,
     },
@@ -91,6 +104,10 @@ export default class FilterHeader extends Vue {
     if (hiddenInput) {
       (hiddenInput as any).focus();
     }
+  }
+
+  lang(val: any) {
+    return this.$i18n.t(val);
   }
 
   handleBlur() {

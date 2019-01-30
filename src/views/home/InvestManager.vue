@@ -33,6 +33,7 @@ import { namespace, Action } from 'vuex-class';
 import zhCN from '@/i18n/zh-CN/views/home/InvestManager';
 import zhTW from '@/i18n/zh-TW/views/home/InvestManager';
 import enUS from '@/i18n/en-US/views/home/InvestManager';
+import zhHK from '@/i18n/zh-HK/views/home/InvestManager';
 
 const ManagerStore = namespace('ManagerStore');
 
@@ -47,6 +48,7 @@ const ManagerStore = namespace('ManagerStore');
       'zh-CN': zhCN,
       'zh-TW': zhTW,
       'en-US': enUS,
+      'zh-HK': zhHK,
     },
   },
 })

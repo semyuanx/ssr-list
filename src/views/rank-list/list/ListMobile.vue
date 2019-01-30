@@ -15,6 +15,7 @@ import { toLoginPage, toSubscribePage } from '@/utils/native';
 import zhCN from '@/i18n/zh-CN/views/rank-list/list/ListMobile';
 import zhTW from '@/i18n/zh-TW/views/rank-list/list/ListMobile';
 import enUS from '@/i18n/en-US/views/rank-list/list/ListMobile';
+import zhHK from '@/i18n/zh-HK/views/rank-list/list/ListMobile';
 
 const RankStore = namespace('RankStore');
 
@@ -28,6 +29,7 @@ const RankStore = namespace('RankStore');
       'zh-CN': zhCN,
       'zh-TW': zhTW,
       'en-US': enUS,
+      'zh-HK': zhHK,
     },
   },
 })

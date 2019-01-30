@@ -94,6 +94,7 @@ import {
 import zhCN from '@/i18n/zh-CN/views/rank-list/FilterHeader';
 import zhTW from '@/i18n/zh-TW/views/rank-list/FilterHeader';
 import enUS from '@/i18n/en-US/views/rank-list/FilterHeader';
+import zhHK from '@/i18n/zh-HK/views/rank-list/FilterHeader';
 
 import { namespace } from 'vuex-class';
 import FmTag from '@/components/tag/tag.vue'; // @ is an alias to /src
@@ -128,6 +129,7 @@ const RankStore = namespace('RankStore');
       'zh-CN': zhCN,
       'zh-TW': zhTW,
       'en-US': enUS,
+      'zh-HK': zhHK,
     },
   },
 })

@@ -28,6 +28,7 @@ import { needHighlight } from '@/constant/propFormat';
 import zhCN from '@/i18n/zh-CN/views/home/CommonListItem';
 import zhTW from '@/i18n/zh-TW/views/home/CommonListItem';
 import enUS from '@/i18n/en-US/views/home/CommonListItem';
+import zhHK from '@/i18n/zh-HK/views/home/CommonListItem';
 
 const RankStore = namespace('RankStore');
 
@@ -41,6 +42,7 @@ const RankStore = namespace('RankStore');
       'zh-CN': zhCN,
       'zh-TW': zhTW,
       'en-US': enUS,
+      'zh-HK': zhHK,
     },
   },
 })

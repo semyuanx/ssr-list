@@ -47,6 +47,7 @@ import LittleCard from '@/components/little-card/card.vue'; // @ is an alias to 
 import zhCN from '@/i18n/zh-CN/views/home/pc/DangerKeep';
 import zhTW from '@/i18n/zh-TW/views/home/pc/DangerKeep';
 import enUS from '@/i18n/en-US/views/home/pc/DangerKeep';
+import zhHK from '@/i18n/zh-HK/views/home/pc/DangerKeep';
 
 @Component({
   components: {
@@ -58,6 +59,7 @@ import enUS from '@/i18n/en-US/views/home/pc/DangerKeep';
       'zh-CN': zhCN,
       'zh-TW': zhTW,
       'en-US': enUS,
+      'zh-HK': zhHK,
     },
   },
 })

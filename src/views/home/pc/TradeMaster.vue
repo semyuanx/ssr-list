@@ -44,11 +44,24 @@
 import { Component, Vue } from 'vue-property-decorator';
 import LineHeader from './LineHeader.vue'; // @ is an alias to /src
 import LittleCard from '@/components/little-card/card.vue'; // @ is an alias to /src
+import zhCN from '@/i18n/zh-CN/views/home/pc/TradeMaster';
+import zhTW from '@/i18n/zh-TW/views/home/pc/TradeMaster';
+import enUS from '@/i18n/en-US/views/home/pc/TradeMaster';
+import zhHK from '@/i18n/zh-HK/views/home/pc/TradeMaster';
+
 
 @Component({
   components: {
     LineHeader,
     LittleCard,
+  },
+  i18n: {
+    messages: {
+      'zh-CN': zhCN,
+      'zh-TW': zhTW,
+      'en-US': enUS,
+      'zh-HK': zhHK,
+    },
   },
 })
 export default class Index extends Vue {

@@ -42,6 +42,7 @@ import personCard from 'fmcomponents/src/components/personcard';
 import zhCN from '@/i18n/zh-CN/views/home/mainView';
 import zhTW from '@/i18n/zh-TW/views/home/mainView';
 import enUS from '@/i18n/en-US/views/home/mainView';
+import zhHK from '@/i18n/zh-HK/views/home/mainView';
 
 import {
   percentFormat, propFormat, moneyFormat, gradeFormat,
@@ -63,6 +64,7 @@ const RankStore = namespace('RankStore');
       'zh-CN': zhCN,
       'zh-TW': zhTW,
       'en-US': enUS,
+      'zh-HK': zhHK,
     },
   },
 })
