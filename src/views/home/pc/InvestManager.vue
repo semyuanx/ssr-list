@@ -5,7 +5,7 @@
         @rightClick="toMore"
         subIcon="flag_24px"
         rightIcon="right_24px"
-        :rightTitle="$t('More')"
+        :rightTitle="$t('message.more')"
         :subTitle="description.filterText"
         :title="description.title">
         <div @click="toLeftMore" class="contain-icon" v-if="description.needLeftSlot" slot="left">

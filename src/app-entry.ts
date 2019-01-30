@@ -48,7 +48,9 @@ export function createApp(ctx: any) {
   }, domain);
   Vue.use(injectEnv, mainDomain);
   Vue.use(fmcomponents, mainDomain);
-  Vue.use(fmui);
+  Vue.use(fmui, {
+    lang,
+  });
   Vue.mixin(envMixin);
 
   const i18n = createI18n(lang);
