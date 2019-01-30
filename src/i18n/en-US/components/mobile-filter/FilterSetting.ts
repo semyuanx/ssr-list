@@ -6,14 +6,14 @@ export default {
   labels: [
     {
       label: 'Ability ',
-      desc: '备注介绍',
+      desc: 'Remarks introduction',
       filters: [
         'No limits',
       ],
     },
     {
       label: 'Equity',
-      desc: '备注介绍',
+      desc: 'Remarks introduction',
       filters: [
         'No limits',
         '<',
@@ -21,35 +21,35 @@ export default {
     },
     {
       label: 'Trading period',
-      desc: '备注介绍',
+      desc: 'Remarks introduction',
       filters: [
         'No limits',
         '<',
         'Week',
-        '周以上',
+        'Week the above',
       ],
     },
     {
       label: 'Max retracement ratio',
-      desc: '备注介绍',
+      desc: 'Remarks introduction',
       filters: [
         'No limits',
         '<',
-        '以上',
+        'the above',
       ],
     },
     {
       label: 'Return',
-      desc: '备注介绍',
+      desc: 'Remarks introduction',
       filters: [
         'No limits',
         '<',
-        '以上',
+        'the above',
       ],
     },
     {
       label: 'Broker',
-      desc: '备注介绍',
+      desc: 'Remarks introduction',
       filters: [
         'All',
       ],

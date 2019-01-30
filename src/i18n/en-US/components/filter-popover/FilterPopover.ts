@@ -4,75 +4,75 @@ export default {
   filter: 'Select',
   PTA: 'PTA member',
   freeSubscription: 'Follow (free)',
-  placeholder: '请输入',
+  placeholder: 'Please Enter',
   labels: [
     {
-      label: '账户评级',
-      desc: '账户评级',
+      label: 'Account Rating',
+      desc: 'Account Rating',
       filter: [
         'No limits',
       ],
     },
     {
       label: 'Ability ',
-      tips: '交易能力值是通过综合评估交易员在一定周期内的盈利与风控能力、资金规划与绩效稳定性等多重维度的计算结果',
-      desc: '备注介绍',
+      tips: 'The trading ability value is a comprehensive evaluation of the multiple dimensions of the trader\'s profit and risk control ability, capital planning and performance stability in a certain period.',
+      desc: 'Remarks introduction',
       filter: [
         'No limits',
       ],
     },
     {
       label: 'Subscribers',
-      tips: '统计时刻的订阅账户数',
+      tips: 'Number of subscription accounts at the time of statistics',
       desc: 'Subscribers',
       filter: [
         'No limits',
         '<',
         'People',
-        '人以上',
+        'More than people',
       ],
     },
     {
       label: 'Equity',
-      desc: '备注介绍',
+      desc: 'Remarks introduction',
       filter: [
         'No limits',
         '<',
       ],
     },
     {
-      tips: '第一笔交易至今的周数',
+      tips: 'The number of weeks since the first transaction',
       label: 'Trading period',
-      desc: '备注介绍',
+      desc: 'Remarks introduction',
       filter: [
         'No limits',
         '<',
         'Week',
-        '周以上',
+        'Week the above',
       ],
     },
     {
-      tips: '最大的净值回撤比例',
+      tips: 'Maximum net worth retracement ratio',
       label: 'Max retracement ratio',
-      desc: '备注介绍',
+      desc: 'Remarks introduction',
       filter: [
         'No limits',
         '<',
-        '以上',
+        'the above',
       ],
     },
     {
       label: 'Return',
-      desc: '备注介绍',
+      desc: 'Remarks introduction',
       filter: [
         'No limits',
         '<',
-        '以上',
+        'the above',
       ],
     },
     {
       label: 'Broker',
-      desc: '备注介绍',
+      desc: 'Remarks introduction',
       filter: [
         'All',
       ],

@@ -1,7 +1,7 @@
 export default {
-  jydn: '交易大牛',
-  ljdy: '立即订阅',
-  jyzj: '交易专家',
+  jydn: 'Trading big cow',
+  ljdy: 'Subscribe now',
+  jyzj: 'Trading expert',
   more: 'More',
-  sbtj: '上榜条件：交易周期>12周、收益率>10%',
+  sbtj: 'On the list conditions: trading cycle >12 weeks, yield >10%',
 };

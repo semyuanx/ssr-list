@@ -1,3 +1,3 @@
 export default {
-  noMAM: '您没有可用的MAM交易员账户,请开户后重试',
+  noMAM: 'You do not have a MAM trader account available. Please open the account and try again.',
 };

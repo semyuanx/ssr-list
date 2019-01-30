@@ -1,5 +1,5 @@
 export default {
-  bjdy: '编辑订阅',
+  bjdy: 'Edit subscription',
   month: 'Month',
   mfdy: 'Follow (free)',
 };

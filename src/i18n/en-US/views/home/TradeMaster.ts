@@ -5,5 +5,5 @@ export default {
   gshl: 'Profit by follow',
   syl: 'Return',
   gsds: 'Following master',
-  more: '查看更多',
+  more: 'See more',
 };

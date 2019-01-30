@@ -1,10 +1,10 @@
 export default {
   jbxx: 'Basic info',
-  zst: '走势图',
+  zst: 'Trend',
   zwsj: 'No data',
-  zwxgnr: '暂无相关内容~',
-  comintent: '您确定要取消关注吗?',
-  sorryToMe: 'sorry, 自己不能关注自己',
+  zwxgnr: 'No related content~',
+  comintent: 'Are you sure you want to cancel your attention?',
+  sorryToMe: 'sorry, I can\'t pay attention to myself',
   followStatus: [
     'Link',
     'Linked',

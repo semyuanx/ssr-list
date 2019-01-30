@@ -1,6 +1,6 @@
 export default {
-  syfx: '收益分析',
+  syfx: 'Income analysis',
   close: 'Close',
   zsy: 'Total profit',
-  sjly: '数据来源',
+  sjly: 'Data Sources',
 };
