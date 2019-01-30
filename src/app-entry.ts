@@ -19,16 +19,16 @@ export function createApp(ctx: any) {
   if (process.env.NODE_ENV !== 'production') {
     Vue.config.productionTip = false;
   }
-  // const lang = 'zh-CN';
-  const lang = 'en-US';
+  let lang = 'zh-CN';
+  // const lang = 'en-US';
   // const gLang = (window as any).FMLANG;
   // if (gLang) {
   //   lang = gLang;
   // } else {
-  //   const cLang = (window as any).LANG;
-  //   if (cLang) {
-  //     lang = cLang;
-  //   }
+  const cLang = (window as any).LANG;
+  if (cLang) {
+    lang = cLang;
+  }
   // }
   const injectEnv: any = {
     install(vue: any, option: any) {
