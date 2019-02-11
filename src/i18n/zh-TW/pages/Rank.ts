@@ -6,4 +6,5 @@ export default {
   syl: '收益率',
   jjs: '經紀商',
   unlimited: '不限',
+  noData: '沒有數據了！',
 };

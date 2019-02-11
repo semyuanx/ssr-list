@@ -3,8 +3,9 @@
     <div>
       <FilterHeader @filter="handleFilter" />
     </div>
-    <div>
+    <div style="padding-bottom:40px;">
       <List :showProps="showProps" :getData="getData" @sortChange="sortChange" />
+      <div class="listNone" v-if="!hasMore">{{ $t('noData') }}</div>
     </div>
   </div>
 </template>
@@ -461,5 +462,11 @@ export default class RankList extends Vue {
 <style lang="less" scoped>
 .rank-container {
   // padding-top: 20px;
+}
+.listNone{
+  text-align: center;
+  font-size: 14px;
+  padding-top: 20px;
+  color: #666;
 }
 </style>
