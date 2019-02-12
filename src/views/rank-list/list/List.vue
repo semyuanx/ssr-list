@@ -548,6 +548,7 @@ export default class List extends Vue {
   .list-container {
     .list-table {
       .rank-table {
+        position: static;
         :global(.odd-row) {
           background: rgba(249, 249, 249, 1);
         }

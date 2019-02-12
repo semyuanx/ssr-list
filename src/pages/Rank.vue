@@ -208,7 +208,6 @@ export default class RankList extends Vue {
   getData() {
     const params: any = this.refactor();
     const { size } = this.params;
-    console.log(params, 'pppppp', this.hasMore);
     if (!this.hasMore) {
       return new Promise(() => ({}));
     }
@@ -338,8 +337,8 @@ export default class RankList extends Vue {
     const scrollTop = this.getScrollTop();
     const windowHeight = this.getWinHeight();
     const docHeight = this.getDocHeight();
-
-    const allHeight = scrollTop + windowHeight + (this.throttleHeight || 10);
+    const footerEl = document.getElementsByClassName('page-footer')[0];
+    const allHeight = scrollTop + windowHeight + (this.throttleHeight || 10) + footerEl.clientHeight || 0;
     if (allHeight > docHeight) {
       return true;
     }
@@ -369,21 +368,9 @@ export default class RankList extends Vue {
   }
 
   loadMore() {
-    const scrollTop = this.getScrollTop();
-    const windowHeight = this.getWinHeight();
-    const docHeight = this.getDocHeight();
-
     const needLoad = this.computeNeedLoad();
-
-    const reScroll = scrollTop - this.computeTrHeight(5);
-
     if (needLoad) {
-      this.scrollTo(reScroll);
       this.getData().then(() => {
-        const reComputeNeedLoad = this.computeNeedLoad();
-        if (reComputeNeedLoad) {
-          this.scrollTo(reScroll);
-        }
         isEnterLoad = false;
       });
     } else {
