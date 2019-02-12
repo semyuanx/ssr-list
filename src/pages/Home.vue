@@ -68,7 +68,7 @@ export default class Home extends Vue {
     this.getMasterFollower({
       pageSize: 4,
       pageIndex: 1,
-      time: 1,
+      time: 30,
       pageField: 'FollowMoney',
       pageSort: 'desc',
     });

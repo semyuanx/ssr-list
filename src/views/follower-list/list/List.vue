@@ -205,6 +205,7 @@ import zhHK from '@/i18n/zh-HK/views/follower-list/list/List';
 
 
 const RankStore = namespace('RankStore');
+const FollowerStore = namespace('FollowerStore');
 
 const isEnterLoad = false;
 
@@ -253,8 +254,8 @@ const isEnterLoad = false;
 export default class List extends Vue {
   isLoading: boolean = false;
 
-  @RankStore.State
-  rankListLoading: any;
+  @FollowerStore.State('followersLoading')
+  followersLoading: boolean;
 
   @Prop({
     type: Array,
@@ -276,7 +277,7 @@ export default class List extends Vue {
   personCard: any = personCard;
 
   get dataList() {
-    if (this.rankListLoading) {
+    if (this.followersLoading) {
       const data = this.data && this.data.length ? this.data : Array(10).fill({});
       return data;
     }
@@ -366,7 +367,7 @@ export default class List extends Vue {
   }
 
   public get dateIsLoading() {
-    return this.rankListLoading;
+    return this.followersLoading;
   }
 
   winHeight: any = 800;
@@ -440,6 +441,7 @@ export default class List extends Vue {
 .list-container {
   .list-table {
     .follower-rank-table {
+      position: static;
       :global(.header-column) {
         :global(.cell) {
           padding-left: 20px;

@@ -29,8 +29,8 @@ let isEnterLoad: boolean = false;
 })
 export default class RankList extends Vue {
   selected: any = {
-    label: '全部',
-    val: 0,
+    label: '',
+    val: 30,
     selected: false,
   };
 
@@ -46,7 +46,7 @@ export default class RankList extends Vue {
   paramsData:any = {
     pageSize: 20,
     pageIndex: 1,
-    time: 1,
+    time: 30,
     pageField: 'FollowMoney',
     pageSort: 'desc',
   };
@@ -82,9 +82,8 @@ export default class RankList extends Vue {
 
   filterChanged(item: any) {
     const { val: time } = item;
-    const params = { time: time || 1 };
+    const params = { time };
     this.selected = item;
-    console.log(item, 'ii');
     this.getDataAccourdingParam(params);
   }
 
@@ -324,12 +323,12 @@ export default class RankList extends Vue {
     const reScroll = scrollTop - this.computeTrHeight(5);
 
     if (needLoad) {
-      this.scrollTo(reScroll);
+      // this.scrollTo(reScroll);
       this.getData().then(() => {
-        const reComputeNeedLoad = this.computeNeedLoad();
-        if (reComputeNeedLoad) {
-          this.scrollTo(reScroll);
-        }
+        // const reComputeNeedLoad = this.computeNeedLoad();
+        // if (reComputeNeedLoad) {
+        // this.scrollTo(reScroll);
+        // }
         isEnterLoad = false;
       });
     } else {

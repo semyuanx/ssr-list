@@ -124,4 +124,7 @@ export default class App extends Vue {
     padding-top: 20px;
     position: relative;
   }
+  .el-table::before{
+    content: none!important;
+  }
 </style>

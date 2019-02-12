@@ -10,14 +10,14 @@ import {
 // import propMaps from '@/constant/propMap';
 
 @Repository('FollowerStore')
-export default class RankStore {
+export default class FollowerStore {
   @State([])
   public followers: Array<any> = [];
 
   @State(1)
   public pageIndex: number = 1;
 
-  @State([])
+  @State(false)
   public followersLoading: boolean = false;
 
   @State([

@@ -54,8 +54,8 @@ import zhHK from '@/i18n/zh-HK/views/follower-list/FilterHeader';
 })
 export default class FilterHeader extends Vue {
   selected: any = {
-    label: this.lang('all'),
-    val: 0,
+    label: this.lang('jyyyjy'),
+    val: 30,
     selected: false,
   };
   // @Prop({
@@ -73,7 +73,7 @@ export default class FilterHeader extends Vue {
     {
       label: this.lang('all'),
       val: 0,
-      selected: true,
+      selected: false,
     },
     {
       label: this.lang('jyryjy'),
@@ -88,7 +88,7 @@ export default class FilterHeader extends Vue {
     {
       label: this.lang('jyyyjy'),
       val: 30,
-      selected: false,
+      selected: true,
     },
   ];
 
