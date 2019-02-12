@@ -3,8 +3,9 @@
     <div>
       <FilterHeader :selected="selected" @filter-changed="filterChanged" />
     </div>
-    <div>
+    <div style="padding-bottom:40px;">
       <List :data="dataList" :showProps="showProps" :getData="getData" @sortChange="sortChange" />
+      <div class="listNone" v-if="!hasMore && TotalCount > 0">{{ $t('noData') }}</div>
     </div>
   </div>
 </template>
@@ -17,6 +18,11 @@ import FilterHeader from '@/views/follower-list/FilterHeader.vue';
 import List from '@/views/follower-list/List.vue';
 import { getElementTop, animate } from '@/utils/util';
 
+import zhCN from '@/i18n/zh-CN/pages/Rank';
+import zhTW from '@/i18n/zh-TW/pages/Rank';
+import zhHK from '@/i18n/zh-HK/pages/Rank';
+import enUS from '@/i18n/en-US/pages/Rank';
+
 const FollowerStore = namespace('FollowerStore');
 
 let isEnterLoad: boolean = false;
@@ -25,6 +31,14 @@ let isEnterLoad: boolean = false;
   components: {
     FilterHeader,
     List,
+  },
+  i18n: {
+    messages: {
+      'zh-CN': zhCN,
+      'zh-TW': zhTW,
+      'en-US': enUS,
+      'zh-HK': zhHK,
+    },
   },
 })
 export default class RankList extends Vue {
@@ -42,6 +56,8 @@ export default class RankList extends Vue {
 
   @FollowerStore.State
   showProps: any;
+
+  TotalCount: any;
 
   paramsData:any = {
     pageSize: 20,
@@ -156,6 +172,7 @@ export default class RankList extends Vue {
 
   getData() {
     const params: any = this.refactor();
+    const _this = this;
     console.log(params, 'pppppp');
     if (!this.hasMore) {
       return new Promise(() => ({}));
@@ -165,6 +182,7 @@ export default class RankList extends Vue {
       .then((res: any) => {
         if (res && !res.error) {
           const { items } = res;
+          _this.TotalCount = res.total;
           if (items.length < this.pageSize) {
             this.hasMore = false;
           } else {
@@ -346,5 +364,11 @@ export default class RankList extends Vue {
 <style lang="less" scoped>
 .rank-container {
   padding-top: 20px;
+}
+.listNone{
+  text-align: center;
+  font-size: 14px;
+  padding-top: 20px;
+  color: #666;
 }
 </style>

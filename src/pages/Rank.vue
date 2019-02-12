@@ -5,7 +5,7 @@
     </div>
     <div style="padding-bottom:40px;">
       <List :showProps="showProps" :getData="getData" @sortChange="sortChange" />
-      <div class="listNone" v-if="!hasMore">{{ $t('noData') }}</div>
+      <div class="listNone" v-if="!hasMore && TotalCount > 0">{{ $t('noData') }}</div>
     </div>
   </div>
 </template>
@@ -68,6 +68,8 @@ export default class RankList extends Vue {
 
   @RankStore.Mutation
   setFilterRes: any;
+
+  TotalCount: any;
 
   params: any = {
     index: 1,
@@ -209,6 +211,7 @@ export default class RankList extends Vue {
   getData() {
     const params: any = this.refactor();
     const { size } = this.params;
+    const _this = this;
     if (!this.hasMore) {
       return new Promise(() => ({}));
     }
@@ -216,6 +219,7 @@ export default class RankList extends Vue {
       .then((res: any) => {
         if (res && !res.error) {
           const { List: list } = res;
+          _this.TotalCount = res.TotalCount;
           console.log(list.length, size, 'List.length');
           if (list.length < size) {
             this.hasMore = false;
