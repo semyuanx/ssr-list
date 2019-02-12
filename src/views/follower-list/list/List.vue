@@ -254,8 +254,8 @@ const isEnterLoad = false;
 export default class List extends Vue {
   isLoading: boolean = false;
 
-  @FollowerStore.State('followersLoading')
-  followersLoading: boolean;
+  @FollowerStore.State
+  followersLoading: any;
 
   @Prop({
     type: Array,
