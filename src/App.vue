@@ -13,6 +13,7 @@
     <div class="page-footer" v-show="isShow">
       <FMFooter :show-links="false" />
     </div>
+    <FMSlideTool></FMSlideTool>
   </div>
 </template>
 <script lang="ts">
@@ -31,6 +32,7 @@ Vue.use(V2Datepicker);
 @Component({
   components: {
     FMNav,
+    FMSlideTool: () => /* webpackChunkName: "fm-footer" */ import('fmcomponents/src/components/slide-tool'),
     FMFooter: () => import('fmcomponents/src/components/footer2'),
   },
   metaInfo() {
@@ -110,7 +112,11 @@ export default class App extends Vue {
   }
 }
 </script>
+
 <style lang="less">
+  .el-table .sort-caret.descending {
+    bottom: 8px!important;
+  }
   .fm-content-header+.fm-content-container {
     margin-top: 60px;
     width: 100%;
