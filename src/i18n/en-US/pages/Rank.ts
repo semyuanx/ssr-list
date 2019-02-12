@@ -6,4 +6,5 @@ export default {
   syl: 'Return',
   jjs: 'Broker',
   unlimited: 'No limits',
+  noData: 'No more data!',
 };
