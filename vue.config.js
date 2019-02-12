@@ -55,12 +55,14 @@ module.exports = {
     types.forEach(type => addStyleResource(config.module.rule('less').oneOf(type)));
     svgLoader(config);
     config.resolve.extensions.add('.vue').add('.js');
-    config.externals({
-      vue: 'Vue',
-      echarts: 'echarts',
-      axios: 'axios',
-      'vue-router': 'VueRouter',
-    });
+    if (process.env.NODE_ENV === 'production') {
+      config.externals({
+        vue: 'Vue',
+        echarts: 'echarts',
+        axios: 'axios',
+        'vue-router': 'VueRouter',
+      });
+    }
     console.log('***********', process.env.NODE_ENV, '************');
     if (process.env.NODE_ENV === 'development') {
       config.plugin('bundle-analyze').use(BundleAnalyzerPlugin);
