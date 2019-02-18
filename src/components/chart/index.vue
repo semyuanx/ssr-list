@@ -7,10 +7,10 @@
            v-if="show">
         <div class="follow-setup-box">
           <div class="follow-setup-box-top">
-            <h1>{{$('message.syfx')}}</h1>
+            <h1>{{$t('syfx')}}</h1>
             <div class="fr mt20 mr10"><a href="javascript:;"
                                          id="bigChartBoxClose"
-                                         :title="$t('message.close')"><i @click="close"></i></a></div>
+                                         :title="$t('close')"><i @click="close"></i></a></div>
           </div>
           <div class="follow-setup"
                style="padding:40px 30px;width:740px;float: left;">
@@ -24,10 +24,22 @@
 </template>
 <script>
 import { animate, getChartData } from '@/utils/util';
+import zhCN from '@/i18n/zh-CN/components/chart';
+import zhTW from '@/i18n/zh-TW/components/chart';
+import enUS from '@/i18n/en-US/components/chart';
+import zhHK from '@/i18n/zh-HK/components/chart';
 
 const Highcharts = require('highcharts');
 
 export default {
+  i18n: {
+    messages: {
+      'zh-CN': zhCN,
+      'zh-TW': zhTW,
+      'en-US': enUS,
+      'zh-HK': zhHK,
+    },
+  },
   data() {
     return {
       target: undefined,
@@ -58,6 +70,12 @@ export default {
     // },
   },
   methods: {
+    lang(path) {
+      return this.$i18n.t(path);
+    },
+    $t(path) {
+      return this.$i18n.t(path);
+    },
     init() {
       this.$nextTick(() => {
         this.initChart();
@@ -289,7 +307,7 @@ export default {
             fontSize: 12,
           },
           enabled: true,
-          text: `${that.$i18n.t('sjly')} Followme`,
+          text: `${that.$t('sjly')} Followme`,
         },
         plotOptions: {
           areaspline: {
@@ -326,7 +344,7 @@ export default {
           },
         },
         series: [{
-          name: that.$i18n.t('zys'),
+          name: that.$i18n.t('zsy'),
           data: bigChartX, // || that.bigChartX,
         }],
       });

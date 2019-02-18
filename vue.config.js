@@ -46,6 +46,7 @@ const svgLoader = (config) => {
 
 module.exports = {
   baseUrl: '/trading-strategy/',
+  // productionSourceMap: true,
   devServer: {
     disableHostCheck: true,
   },
@@ -86,5 +87,5 @@ module.exports = {
       msTileImage: 'img/icons/followme-120-120.png',
     },
   },
-  // transpileDependencies: [/fmcomponents/],
+  transpileDependencies: [/fmcomponents/],
 };

@@ -1,8 +1,7 @@
 /* eslint-disable */
 module.exports = {
   presets: [
-    '@vue/app',
-    // ["es2015", { "modules": false }]
+    ['@vue/app', { useBuiltIns: 'entry'}]
   ],
   "plugins": [
     [
@@ -12,6 +11,5 @@ module.exports = {
         "styleLibraryName": "theme-chalk"
       }
     ],
-    // "@babel/plugin-transform-modules-commonjs",
   ]
 };
