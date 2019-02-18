@@ -13,7 +13,7 @@
     <div class="page-footer" v-show="isShow">
       <FMFooter :show-links="false" />
     </div>
-    <FMSlideTool></FMSlideTool>>
+    <FMSlideTool></FMSlideTool>
   </div>
 </template>
 <script lang="ts">

@@ -1,3 +1,5 @@
+// eslint-disable-next-line
+import '@babel/polyfill';
 import { createApp } from './app-entry';
 
 declare global {
