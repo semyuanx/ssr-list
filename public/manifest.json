@@ -1,14 +1,19 @@
 {
-  "name": "ssr-rank-list",
-  "short_name": "ssr-rank-list",
+  "name": "followme-rank",
+  "short_name": "followme-rank",
   "icons": [
     {
-      "src": "./img/icons/android-chrome-192x192.png",
+      "src": "./img/icons/followme-32-32.png",
+      "sizes": "32x32",
+      "type": "image/png"
+    },
+    {
+      "src": "./img/icons/followme-120-120.png",
       "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "./img/icons/android-chrome-512x512.png",
+      "src": "./img/icons/followme-120-120.png",
       "sizes": "512x512",
       "type": "image/png"
     }

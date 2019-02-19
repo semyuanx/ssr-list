@@ -121,3 +121,22 @@ export const toNumber = function toNumber(string:any) {
   }
   return hash;
 };
+
+export const loadAsyncImage = function (src: string, timeout: any = 1000) {
+  return new Promise((resolve, rejected) => {
+    const img = new Image();
+    img.onload = () => {
+      resolve({
+        naturalHeight: img.naturalHeight,
+        naturalWidth: img.naturalWidth,
+        src: img.src,
+      });
+    };
+    img.onerror = (e) => {
+      rejected(e);
+    };
+    setTimeout(() => {
+      img.src = src;
+    }, timeout);
+  });
+};
