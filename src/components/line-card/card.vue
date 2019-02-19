@@ -7,7 +7,7 @@
             <img
               @mouseenter.self="mouseenter($event)"
               @mouseleave="mouseleave($event)"
-              @click="toPersonal" :alt="data.name || '头像'" :src="data.avatar" />
+              @click="toPersonal" :alt="data.name || '头像'" :src="data.avatar + '?x-oss-process=image/resize,m_fill,h_70,w_70'" />
           </div>
         </div>
         <div class="card-header-right">
@@ -149,8 +149,7 @@ export default class FmLittleCard extends Vue {
           justify-content: center;
           >img {
             cursor: pointer;
-            max-width: 100%;
-            max-width: 100%;
+            max-width: 40px;
             border-radius: 50%;
           }
         }
@@ -161,12 +160,14 @@ export default class FmLittleCard extends Vue {
         color:rgba(153,153,153,1);
         .flex-column();
         padding-left: 4px;
+        min-height: 40px;
         >div {
           flex: 1;
         }
         .name {
           cursor: pointer;
           font-size:16px;
+          // min-height:16px;
           color:rgba(51,51,51,1);
           .name-hover {
             &:hover {

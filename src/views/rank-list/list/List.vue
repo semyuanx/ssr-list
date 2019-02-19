@@ -41,7 +41,7 @@
                     @click="toUserPage(scope.row)"
                     @mouseenter.self="showCard($event, scope.row)"
                     @mouseleave="personCard.hide()"
-                    :src="base+'/Avata/'+scope.row.UserID"/>
+                    :src="base+'/Avata/'+scope.row.UserID + '?x-oss-process=image/resize,m_fill,h_50,w_50'"/>
                 </div>
                 <div class="loading-first trader-info">
                   <div
