@@ -1,4 +1,4 @@
 vue.config.js
 ./src/i18n
 ./public
-./public/flexibility.*
+**/public/*
