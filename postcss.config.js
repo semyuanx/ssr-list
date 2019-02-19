@@ -1,9 +1,10 @@
+/* eslint-disable */
 const px2rem = require('postcss-pxtorem');
 
 module.exports = {
   plugins: [
-    // eslint-disable-next-line
     require('autoprefixer'),
+    require('postcss-flexibility'),
     px2rem({
       selectorBlackList: [/^html$/, /^\.fm-/, /follow-setup/, /fmcomponent/],
       mediaQuery: false,

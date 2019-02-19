@@ -86,6 +86,9 @@ module.exports = {
       maskIcon: 'img/icons/followme-120-120.png',
       msTileImage: 'img/icons/followme-120-120.png',
     },
+    workboxOptions: {
+      importWorkboxFrom: 'local'
+    }
   },
-  transpileDependencies: [/fmcomponents/],
+  transpileDependencies: [/fmcomponents/, /element-ui/],
 };

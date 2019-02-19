@@ -7938,6 +7938,13 @@ postcss-discard-overridden@^4.0.1:
   dependencies:
     postcss "^7.0.0"
 
+postcss-flexibility@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/postcss-flexibility/-/postcss-flexibility-2.0.0.tgz#5612c1b85d6595ed480966839928a41617a6a768"
+  integrity sha1-VhLBuF1lle1ICWaDmSikFhemp2g=
+  dependencies:
+    postcss "^6.0.1"
+
 postcss-load-config@^2.0.0:
   version "2.0.0"
   resolved "http://registry.npm.taobao.org/postcss-load-config/download/postcss-load-config-2.0.0.tgz#f1312ddbf5912cd747177083c5ef7a19d62ee484"
