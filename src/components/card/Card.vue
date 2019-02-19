@@ -8,7 +8,7 @@
               @click="toPersonal"
               @mouseenter.self="mouseenter($event)"
               @mouseleave="mouseleave($event)"
-              v-if="data.avatar" :src="data.avatar" alt="avatar" />
+              v-if="data.avatar" :src="data.avatar + '?x-oss-process=image/resize,m_fill,h_50,w_50'" alt="avatar" />
           </div>
         </div>
 

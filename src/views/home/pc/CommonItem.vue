@@ -16,7 +16,7 @@
       </CommonLineHeader>
     </div>
     <div class="invest-content">
-      <div class="left" :style="`background-image: url(${description.background})`">
+      <div class="left" v-lazyLoad="description.background" :style1="`background-image: url(${description.background})`">
         <div class="left-desc"><span class="desc-title">{{ description.textTitle }}</span></div>
         <div>
           <button @click="toMore" class="sub-right-now">{{ description.btnText || '立即订阅'}}</button>
@@ -58,6 +58,7 @@ import zhTW from '@/i18n/zh-TW/message';
 import enUS from '@/i18n/en-US/message';
 import zhHK from '@/i18n/zh-HK/message';
 
+import { loadAsyncImage } from '@/utils/util';
 
 @Component({
   components: {
@@ -71,6 +72,19 @@ import zhHK from '@/i18n/zh-HK/message';
       'zh-TW': zhTW,
       'en-US': enUS,
       'zh-HK': zhHK,
+    },
+  },
+  directives: {
+    lazyLoad: {
+      bind: (el: any, binding: any) => {
+        const src = binding.value;
+        loadAsyncImage(src)
+          .then((res: any) => {
+            el.style.backgroundImage = `url(${src})`;
+          }).catch(() => {
+            el.style.backgroundImage = `url(${src})`;
+          });
+      },
     },
   },
 })

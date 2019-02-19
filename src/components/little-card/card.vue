@@ -7,7 +7,9 @@
             <img
               @mouseenter.self="mouseenter($event)"
               @mouseleave="mouseleave($event)"
-              @click="toPersonal" alt="头像" src1="//cdn.followme.com/images/default_avata.png" :src="data.avatar + '?x-oss-process=image/resize,m_fill,h_50,w_50'" />
+              @click="toPersonal" alt="头像"
+              v-lazyLoad="data.avatar + '?x-oss-process=image/resize,m_fill,h_50,w_50'"
+              src="//cdn.followme.com/images/default_avata.png" :src1="data.avatar + '?x-oss-process=image/resize,m_fill,h_50,w_50'" />
           </div>
         </div>
         <div class="card-header-right">
@@ -59,10 +61,24 @@
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
 import PtaLogo from '@/components/ptaLogo/index.vue';
+import { loadAsyncImage } from '@/utils/util';
 
 @Component({
   components: {
     PtaLogo,
+  },
+  directives: {
+    lazyLoad: {
+      bind: (el: any, binding: any) => {
+        const src = binding.value;
+        loadAsyncImage(src, 0)
+          .then((res: any) => {
+            el.src = src;
+          }).catch(() => {
+            el.src = src;
+          });
+      },
+    },
   },
 })
 export default class FmLittleCard extends Vue {
@@ -151,12 +167,14 @@ export default class FmLittleCard extends Vue {
         font-size:12px;
         color:rgba(153,153,153,1);
         .flex-column();
+        min-height: 40px;
         >div {
           flex: 1;
         }
         .name {
           cursor: pointer;
           font-size:16px;
+          min-height:16px;
           color:rgba(51,51,51,1);
           .name-hover {
             &:hover {
