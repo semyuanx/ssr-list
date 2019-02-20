@@ -5,10 +5,10 @@
   "scripts": {
     "start": "vue-cli-service serve",
     "alibeta": "vue-cli-service serve --mode=alibeta",
-    "build:beta": "vue-cli-service build --mode=alibeta",
+    "build:beta": "vue-cli-service build --mode=alibeta --modern",
     "build:beta:modern": "vue-cli-service build --mode=alibeta --modern",
     "beta": "npm run build:beta",
-    "build:prod": "vue-cli-service build --mode=production",
+    "build:prod": "vue-cli-service build --mode=production --modern",
     "build:modern": "vue-cli-service build --mode=production  --modern",
     "prod": "npm run build:prod",
     "serve": "vue-cli-service serve",

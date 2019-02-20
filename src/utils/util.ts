@@ -122,7 +122,7 @@ export const toNumber = function toNumber(string:any) {
   return hash;
 };
 
-export const loadAsyncImage = function (src: string, timeout: any = 1000) {
+export const loadAsyncImage = function loadAsyncImage(src: string, timeout: any = 1000) {
   return new Promise((resolve, rejected) => {
     const img = new Image();
     img.onload = () => {
