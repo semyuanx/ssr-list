@@ -56,7 +56,7 @@
                     <span v-if="showOthers.includes('GradeScore')"
                           :class="'grade-score-icon ' + mapGradeClass(scope.row.GradeScore)"
                     >
-                      {{scope.row.GradeScore | propFormat('GradeScore', null, this.$i18n)}}
+                      {{scope.row.GradeScore | propFormat('GradeScore', null, $i18n)}}
                     </span>
                     <span v-if="showOthers.includes('IsPTA') && scope.row.IsPTA" class="pta-icon">
                       <PtaLogo/>
@@ -88,7 +88,7 @@
             <div
               v-else
               class="custom-display-row-line"
-            ><span :class="{green: i.highlight && scope.row[i.prop] > 0}">{{scope.row[i.prop] | propFormat(i.prop, null, this.$i18n)}} {{i.suffix}}</span>
+            ><span :class="{green: i.highlight && scope.row[i.prop] > 0}">{{scope.row[i.prop] | propFormat(i.prop, null, $i18n)}} {{i.suffix}}</span>
             </div>
 
           </template>
