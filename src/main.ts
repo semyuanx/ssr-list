@@ -2,6 +2,9 @@
 import '@babel/polyfill';
 import { createApp } from './app-entry';
 
+if (process.env.MODE_ENV === 'production' && typeof console !== 'undefined' && console.log) {
+  console.log = () => {};
+}
 declare global {
   interface Window {
     FM_BASE: string;

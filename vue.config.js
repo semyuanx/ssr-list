@@ -44,9 +44,11 @@ const svgLoader = (config) => {
     .loader('file-loader');
 };
 
+
+
 module.exports = {
   baseUrl: '/trading-strategy/',
-  // productionSourceMap: true,
+  productionSourceMap: process.env.MODE_ENV !== 'production',
   devServer: {
     disableHostCheck: true,
   },
