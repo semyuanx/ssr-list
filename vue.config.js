@@ -68,7 +68,7 @@ module.exports = {
     }
     console.log('***********', process.env.NODE_ENV, '************');
     if (process.env.NODE_ENV === 'development') {
-      // config.plugin('bundle-analyze').use(BundleAnalyzerPlugin);
+      config.plugin('bundle-analyze').use(BundleAnalyzerPlugin);
     }
   },
   css: {
