@@ -1,9 +1,9 @@
 export default{
   jbxx: '基本信息',
-  zst: '走势图',
-  zwsj: '暂无数据',
-  zwxgnr: '暂无相关内容~',
-  comintent: '您确定要取消关注吗?',
-  sorryToMe: 'sorry, 自己不能关注自己',
-  followStatus: ['关注', '已关注', '互相关注'],
+  zst: '走勢圖',
+  zwsj: '暫無數據',
+  zwxgnr: '暫無相關內容~',
+  comintent: '您確定要取消關注嗎?',
+  sorryToMe: 'sorry, 自己不能關注自己',
+  followStatus: ['關注', '已關注', '互相關注'],
 };

@@ -98,6 +98,7 @@
           :label="$t('trend')"
           prop="TrendChart"
           align="center"
+          key="TrendChart"
         >
           <template slot-scope="scope">
             <div
@@ -130,6 +131,7 @@
           :label="$t('subscribe')"
           prop="SubPrice"
           align="center"
+          key="SubPrice"
           min-width="120px"
           v-if="showOthers.includes('SubPrice')"
         >

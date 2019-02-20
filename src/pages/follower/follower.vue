@@ -48,14 +48,44 @@ export default class RankList extends Vue {
     selected: false,
   };
 
+  showProps: any = [
+    {
+      label: this.lang('FollowMoney'),
+      prop: 'FollowMoney',
+      suffix: '',
+    },
+    {
+      label: this.lang('Pips'),
+      prop: 'Pips',
+      suffix: this.lang('Pip'),
+    },
+    {
+      label: this.lang('Roi'),
+      prop: 'Roi',
+      suffix: '',
+    },
+    {
+      label: this.lang('AveragePips'),
+      prop: 'AveragePips',
+      suffix: this.lang('Pip'),
+    },
+    {
+      label: this.lang('Orders'),
+      prop: 'Orders',
+      suffix: this.lang('Volumes'),
+    },
+    {
+      label: this.lang('Weeks'),
+      prop: 'Weeks',
+      suffix: this.lang('week'),
+    },
+  ];
+
   @FollowerStore.Action
   getRankFollowers: any;
 
   @FollowerStore.State
   followers: any;
-
-  @FollowerStore.State
-  showProps: any;
 
   TotalCount: any;
 
@@ -125,6 +155,10 @@ export default class RankList extends Vue {
         this.getSortData();
       });
     }
+  }
+
+  lang(path: string) {
+    return this.$i18n.t(path) as string;
   }
 
   getSortData(param?: any) {

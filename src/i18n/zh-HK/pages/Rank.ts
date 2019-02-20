@@ -1,10 +1,20 @@
 export default {
   jynlz: '交易能力值',
-  zhjz: '账户净值',
+  zhjz: '賬戶凈值',
   weeks: '交易周期',
   maxBackRate: '最大回撤比例',
   syl: '收益率',
-  jjs: '经纪商',
+  jjs: '經紀商',
   unlimited: '不限',
   noData: '沒有更多數據了！',
+  // 跟隨大師
+  FollowMoney: '跟隨收益',
+  Pips: '跟隨點數',
+  Roi: '跟隨收益率',
+  AveragePips: '平均跟隨點數',
+  Orders: '跟隨筆數',
+  Weeks: '交易周期',
+  Pip: '點',
+  Volumes: '筆',
+  Week: '周',
 };

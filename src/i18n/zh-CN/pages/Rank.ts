@@ -7,4 +7,14 @@ export default {
   jjs: '经纪商',
   unlimited: '不限',
   noData: '没有更多数据了！',
+  // 跟随大师
+  FollowMoney: '跟随收益',
+  Pips: '跟随点数',
+  Roi: '跟随收益率',
+  AveragePips: '平均跟随点数',
+  Orders: '跟随笔数',
+  Weeks: '交易周期',
+  Pip: '点',
+  Volumes: '笔',
+  Week: '周',
 };

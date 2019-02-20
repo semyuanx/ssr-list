@@ -1,4 +1,4 @@
 export default {
-  confirm: '确定',
+  confirm: '確定',
   reset: '重置',
 };

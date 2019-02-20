@@ -1,3 +1,3 @@
 export default {
-  cwjyy: '成为交易员',
+  cwjyy: '成為交易員',
 };

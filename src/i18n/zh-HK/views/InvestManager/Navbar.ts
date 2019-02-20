@@ -1,6 +1,6 @@
 export default {
-  createAccount: '创建MAM账户',
-  launchedProduct: '自主发起产品',
-  jinxingzhong: '进行中',
-  yijieshu: '已结束',
+  createAccount: '創建MAM賬戶',
+  launchedProduct: '自主發起產品',
+  jinxingzhong: '進行中',
+  yijieshu: '已結束',
 };

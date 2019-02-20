@@ -1,4 +1,4 @@
 export default {
-  sx: '筛选',
+  sx: '篩選',
   bx: '不限',
 };
