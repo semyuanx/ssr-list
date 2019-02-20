@@ -82,6 +82,9 @@ export default {
       });
     },
     initChart() {
+      if (this.target && this.target.destory) {
+        this.target.destory();
+      }
       const that = this;
       const transformData = !this.chartData ? {} : getChartData(this.chartData);
       const { x, y } = transformData;
