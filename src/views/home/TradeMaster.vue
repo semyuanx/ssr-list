@@ -11,16 +11,16 @@
         v-if="configData.data.length > 1"
         :data="configData" :description="description" />
     </div>
-    <div class="fm-show-mobile">
+    <!-- <div class="fm-show-mobile">
       <CommonMobile @toPersonal="toPersonal" @toMore="toMoreMobile" v-if="mobileConfigData.length" :data="mobileConfigData" :description="description" />
-    </div>
+    </div> -->
   </div>
 </template>
 <script lang="ts">
 import { Component, Vue, Prop } from 'vue-property-decorator';
 import InvestManager from '@/views/home/pc/InvestManager.vue';
 // import TradeMasterMobile from '@/views/home/mobile/TradeMaster.vue';
-import CommonMobile from '@/views/home/mobile/CommonMobile.vue';
+// import CommonMobile from '@/views/home/mobile/CommonMobile.vue';
 import { moneyFormat, percentFormat, propFormat } from '@/utils/format';
 import { toPersonalPage } from '@/utils/native';
 import mapKey from '@/constant/propMap';
@@ -35,7 +35,8 @@ import zhHK from '@/i18n/zh-HK/views/home/TradeMaster';
 
 @Component({
   components: {
-    InvestManager, CommonMobile,
+    InvestManager,
+    // CommonMobile,
   },
   i18n: {
     messages: {

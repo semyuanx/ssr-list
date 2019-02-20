@@ -7,12 +7,14 @@
         <div class="list-invest" v-if="['zh-CN'].includes($i18n.locale)">
             <InvestManager ref="investManager" :subscribe="toInvest" :data="products" />
         </div>
-        <div class="list-item" v-for="(item,index) in investData" :key="index">
-            <CommonListItem
-              @hideCard="hideCard"
-              @showCard="showCard"
-              :followList="followList"
-              :subscribe="handleSub" :data="item" />
+        <div v-for="(item) in investData" :key="item.RankIndex || item.RankID">
+            <div class="list-item" v-if="item.listData && Array.isArray(item.listData.List) && item.listData.List.length > 1">
+              <CommonListItem
+                @hideCard="hideCard"
+                @showCard="showCard"
+                :followList="followList"
+                :subscribe="handleSub" :data="item" />
+            </div>
         </div>
         <div class="invest">
             <TradeMaster

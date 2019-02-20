@@ -44,9 +44,11 @@ const svgLoader = (config) => {
     .loader('file-loader');
 };
 
+
+
 module.exports = {
   baseUrl: '/trading-strategy/',
-  // productionSourceMap: true,
+  productionSourceMap: process.env.MODE_ENV !== 'production',
   devServer: {
     disableHostCheck: true,
   },
@@ -66,7 +68,7 @@ module.exports = {
     }
     console.log('***********', process.env.NODE_ENV, '************');
     if (process.env.NODE_ENV === 'development') {
-      config.plugin('bundle-analyze').use(BundleAnalyzerPlugin);
+      // config.plugin('bundle-analyze').use(BundleAnalyzerPlugin);
     }
   },
   css: {

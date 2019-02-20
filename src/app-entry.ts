@@ -16,7 +16,7 @@ import createI18n from './i18n';
 
 export function createApp(ctx: any) {
   const { domain } = ctx;
-  if (process.env.NODE_ENV !== 'production') {
+  if (process.env.NODE_ENV === 'production') {
     Vue.config.productionTip = false;
   }
   let lang = 'zh-CN';

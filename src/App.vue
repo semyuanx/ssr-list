@@ -32,7 +32,11 @@ Vue.use(V2Datepicker);
 @Component({
   components: {
     FMNav,
-    FMSlideTool: () => /* webpackChunkName: "fm-footer" */ import('fmcomponents/src/components/slide-tool'),
+    FMSlideTool: () => /* webpackChunkName: "fm-footer" */ new Promise((resolve, reject) => {
+      setTimeout(() => {
+        resolve(import('fmcomponents/src/components/slide-tool'));
+      }, 1000);
+    }),
     FMFooter: () => import('fmcomponents/src/components/footer2'),
   },
   metaInfo() {
