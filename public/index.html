@@ -6,6 +6,12 @@
     <meta name="viewport" content="width=device-width,initial-scale=1.0, user-scalable=no, viewport-fit=cover">
     <link rel="dns-prefetch" href="//cdn.followme.com" />
     <link rel="dns-prefetch" href="//cdn.staticfile.org" />
+
+    <link rel="preload" href=https://cdn.followme.com/common/fmfont/style.css as="style">
+    <link rel="preload" href=//cdn.staticfile.org/vue/2.6.6/vue.min.js as="script">
+    <link rel="preload" href=//cdn.staticfile.org/vue-router/3.0.2/vue-router.min.js as="script">
+    <link rel="preload" href=//cdn.staticfile.org/axios/0.18.0/axios.min.js as="script">
+
     <% if (NODE_ENV !== 'development') { %>
     <link rel="icon" href="<%=BASE_URL%>/favicon.ico">
     <% } %>
@@ -17,7 +23,7 @@
       <script src="//cdn.staticfile.org/axios/0.18.0/axios.min.js"></script>
     <% } %>
     <script src="<%=VUE_APP_FM_CONFIG%>"></script>
-    <script src="https://cdn.followme.com/common/cookie-1.0.0.min.js"></script>
+    <script src="https://cdn.followme.com/common/cookie-1.0.0.min.js" async></script>
     <!-- <script>var echarts = {} </script> -->
     <!--[if IE]>
     <script src="./flexibility.js"></script>
@@ -26,7 +32,7 @@
   </head>
   <body>
     <noscript>
-      <strong>We're sorry but ssr-rank-list doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
+      <strong>We're sorry but rank-list doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
     </noscript>
     <div id="app"></div>
     <!-- built files will be auto injected -->

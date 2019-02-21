@@ -111,7 +111,7 @@ export default class Index extends Vue {
 
   get configData() {
     const config:any = this.data;
-    console.log(config);
+    // console.log(config);
     if (!config) {
       return null;
     }

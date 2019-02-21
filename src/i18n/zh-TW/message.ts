@@ -212,6 +212,10 @@ export default {
       IsPTA: 'PTA會員',
       GradeScore: '評級',
     },
+    propFormat: {
+      Week: '周',
+      Order: '单',
+    },
     meta: {
       title: '外匯優秀交易員排名__經紀商交易員操盤排行_Followme外匯社區',
       description: '最新跟單大師排行榜可以根據外匯跟單的盈利,收益率，獲利點數和交易筆數以及交易周期查詢，跟隨交易盈利也是需要策略的，參考跟隨交易大師的交易情況,可選擇跟隨交易員',

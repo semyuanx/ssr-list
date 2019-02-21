@@ -1,9 +1,9 @@
 export default {
   gjsx: 'Advanced filter',
   reset: 'Reset',
-  filter: 'Select',
+  filter: 'Confirm',
   PTA: 'PTA member',
-  freeSubscription: 'Follow (free)',
+  freeSubscription: 'Free subscription',
   placeholder: 'Please Enter',
   labels: [
     {
@@ -29,7 +29,7 @@ export default {
         'No limits',
         '<',
         'People',
-        'More than people',
+        'people',
       ],
     },
     {
@@ -48,7 +48,7 @@ export default {
         'No limits',
         '<',
         'Week',
-        'Week the above',
+        'Weeks',
       ],
     },
     {
@@ -58,7 +58,7 @@ export default {
       filter: [
         'No limits',
         '<',
-        'the above',
+        ' ',
       ],
     },
     {
@@ -67,7 +67,7 @@ export default {
       filter: [
         'No limits',
         '<',
-        'the above',
+        ' ',
       ],
     },
     {

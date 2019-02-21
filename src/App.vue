@@ -31,15 +31,15 @@ Vue.use(V2Datepicker);
 
 @Component({
   components: {
-    FMNav: () => import('fmcomponents/src/components/nav2'),
+    FMNav: () => import(/* webpackChunkName: "nav2" */ 'fmcomponents/src/components/nav2'),
     FMSlideTool: () => /* webpackChunkName: "fm-footer" */ new Promise((resolve, reject) => {
       setTimeout(() => {
-        resolve(import('fmcomponents/src/components/slide-tool'));
+        resolve(import(/* webpackChunkName: "slide-tool" */ 'fmcomponents/src/components/slide-tool'));
       }, 1300);
     }),
     FMFooter: () => new Promise((resolve, reject) => {
       setTimeout(() => {
-        resolve(import('fmcomponents/src/components/footer2'));
+        resolve(import(/* webpackChunkName: "footer2" */ 'fmcomponents/src/components/footer2'));
       }, 1000);
     }),
   },

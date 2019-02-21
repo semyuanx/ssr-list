@@ -56,10 +56,10 @@ const RankStore = namespace('RankStore');
 
 @Component({
   components: {
-    FmStrategy: () => import('@/views/home/Strategy.vue'),
-    CommonListItem: () => import('@/views/home/CommonListItem.vue'),
-    InvestManager: () => import('@/views/home/InvestManager.vue'),
-    TradeMaster: () => import('@/views/home/TradeMaster.vue'),
+    FmStrategy: () => import(/* webpackChunkName: "strategy" */ '@/views/home/Strategy.vue'),
+    CommonListItem: () => import(/* webpackChunkName: "com-list" */ '@/views/home/CommonListItem.vue'),
+    InvestManager: () => import(/* webpackChunkName: "invest" */ '@/views/home/InvestManager.vue'),
+    TradeMaster: () => import(/* webpackChunkName: "trade-master" */ '@/views/home/TradeMaster.vue'),
   },
   i18n: {
     messages: {

@@ -28,7 +28,7 @@ export default function createRouter() {
         // route level code-splitting
         // this generates a separate chunk (about.[hash].js) for this route
         // which is lazy-loaded when the route is visited.
-        component: () => import(/* webpackChunkName: "about" */ './pages/Rank.vue'),
+        component: () => import(/* webpackChunkName: "ranking" */ './pages/Rank.vue'),
       },
       {
         path: '/invest',
@@ -39,7 +39,7 @@ export default function createRouter() {
         // route level code-splitting
         // this generates a separate chunk (about.[hash].js) for this route
         // which is lazy-loaded when the route is visited.
-        component: () => import(/* webpackChunkName: "about" */ './pages/InvestManager.vue'),
+        component: () => import(/* webpackChunkName: "invest" */ './pages/InvestManager.vue'),
       },
       // {
       //   path: '/test',
@@ -58,7 +58,7 @@ export default function createRouter() {
         // route level code-splitting
         // this generates a separate chunk (about.[hash].js) for this route
         // which is lazy-loaded when the route is visited.
-        component: () => import(/* webpackChunkName: "about" */ './views/rank-list/mobileList/Filter.vue'),
+        component: () => import(/* webpackChunkName: "filter" */ './views/rank-list/mobileList/Filter.vue'),
       },
       {
         path: '/book',
@@ -69,7 +69,7 @@ export default function createRouter() {
         // route level code-splitting
         // this generates a separate chunk (about.[hash].js) for this route
         // which is lazy-loaded when the route is visited.
-        component: () => import(/* webpackChunkName: "about" */ './components/address-book/AddressBook.vue'),
+        component: () => import(/* webpackChunkName: "book" */ './components/address-book/AddressBook.vue'),
       },
 
       // {
@@ -86,7 +86,7 @@ export default function createRouter() {
         meta: {
           title: '最新跟随交易排行榜_外汇跟单盈利榜单_ Followme外汇社区',
         },
-        component: () => import(/* webpackChunkName: "about" */ './pages/follower/follower.vue'),
+        component: () => import(/* webpackChunkName: "follower" */ './pages/follower/follower.vue'),
       },
       {
         path: '/dynamic', // 交易动态
@@ -94,7 +94,7 @@ export default function createRouter() {
         meta: {
           title: 'Followme最新交易员和投资者跟随交易动态_Followme外汇社区',
         },
-        component: () => import(/* webpackChunkName: "about" */ './pages/tradedynamics/index.vue'),
+        component: () => import(/* webpackChunkName: "dynamic" */ './pages/tradedynamics/index.vue'),
       },
     ],
 
