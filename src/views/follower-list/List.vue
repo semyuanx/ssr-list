@@ -21,7 +21,7 @@ const RankStore = namespace('RankStore');
 
 @Component({
   components: {
-    FmList: () => import('./list/List.vue'),
+    FmList: () => import(/* webpackChunkName: "follow-list" */ './list/List.vue'),
     // MobileList: () => import('./list/ListMobile.vue'),
   },
 })

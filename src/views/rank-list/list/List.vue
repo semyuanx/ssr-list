@@ -41,6 +41,7 @@
                     @click="toUserPage(scope.row)"
                     @mouseenter.self="showCard($event, scope.row)"
                     @mouseleave="personCard.hide()"
+                    onerror="this.src='//cdn.followme.com/images/default_avata.png'"
                     :src="base+'/Avata/'+scope.row.UserID + '?x-oss-process=image/resize,m_fill,h_50,w_50'"/>
                 </div>
                 <div class="loading-first trader-info">
@@ -71,7 +72,7 @@
         </el-table-column>
 
         <el-table-column
-          show-overflow-tooltip="true"
+          :show-overflow-tooltip="true"
           :label="i.label"
           :prop="i.prop"
           sortable="custom"
@@ -97,8 +98,8 @@
         <el-table-column
           :label="$t('trend')"
           prop="TrendChart"
-          align="center"
           key="TrendChart"
+          align="center"
         >
           <template slot-scope="scope">
             <div
@@ -130,8 +131,8 @@
         <el-table-column
           :label="$t('subscribe')"
           prop="SubPrice"
+          key="SubPrice12"
           align="center"
-          key="SubPrice"
           min-width="120px"
           v-if="showOthers.includes('SubPrice')"
         >
@@ -436,7 +437,7 @@ export default class List extends Vue {
     }
 
     showFollowCard(_this: any, list: any) {
-      import('fmcomponents/src/components/follow').then((followModule: any) => {
+      import(/* webpackChunkName: "followbox" */ 'fmcomponents/src/components/follow').then((followModule: any) => {
         const followBox: any = followModule.default;
         this.showFollowCard1(followBox, list);
       });

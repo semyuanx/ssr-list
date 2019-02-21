@@ -291,10 +291,10 @@ export default class FilterHeader extends Vue {
                 }
               }
               if (!valArr[0] || [0, '0'].includes(valArr[0])) {
-                finalVal = `${this.$i18n.t('lessThan')}${valArr[1]}${needProcessMap[i].suffix}`;
+                finalVal = `<${valArr[1]}${needProcessMap[i].suffix}`;
               } else
               if (!valArr[1] || [0, '0'].includes(valArr[1])) {
-                finalVal = `${this.$i18n.t('moreThan')}${valArr[0]}${needProcessMap[i].suffix}`;
+                finalVal = `>${valArr[0]}${needProcessMap[i].suffix}`;
               } else if (needProcessMap[i].percent) {
                 finalVal = `${valArr[0]}-${valArr[1]}${needProcessMap[i].suffix}`;
               } else {

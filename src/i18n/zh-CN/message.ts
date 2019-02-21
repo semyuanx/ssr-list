@@ -212,6 +212,10 @@ export default {
       IsPTA: 'PTA会员',
       GradeScore: '评级',
     },
+    propFormat: {
+      Week: '周',
+      Order: '单',
+    },
     meta: {
       title: '外汇优秀交易员排名__经纪商交易员操盘排行_Followme外汇社区',
       description: '最新跟单大师排行榜可以根据外汇跟单的盈利,收益率，获利点数和交易笔数以及交易周期查询，跟随交易盈利也是需要策略的，参考跟随交易大师的交易情况,可选择跟随交易员',
