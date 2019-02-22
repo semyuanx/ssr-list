@@ -3281,8 +3281,8 @@ es-to-primitive@^1.1.1:
     is-symbol "^1.0.2"
 
 es5-ext@^0.10.35, es5-ext@^0.10.9, es5-ext@~0.10.14:
-  version "0.10.47"
-  resolved "https://registry.yarnpkg.com/es5-ext/-/es5-ext-0.10.47.tgz#d24232e1380daad5449a817be19bde9729024a11"
+  version "0.10.48"
+  resolved "https://registry.yarnpkg.com/es5-ext/-/es5-ext-0.10.48.tgz#9a0b31eeded39e64453bcedf6f9d50bbbfb43850"
   dependencies:
     es6-iterator "~2.0.3"
     es6-symbol "~3.1.1"
@@ -3972,7 +3972,7 @@ flush-write-stream@^1.0.0:
 
 "fmcomponents@git+ssh://git@gitlab.followme.com/Frontend/fmcomponents.git#production":
   version "2.0.0"
-  resolved "git+ssh://git@gitlab.followme.com/Frontend/fmcomponents.git#99823c34db8aaccd083fb02a9c0ed13c9e309dc2"
+  resolved "git+ssh://git@gitlab.followme.com/Frontend/fmcomponents.git#eb07da5f2b4d08f50b373b748ba2a37279ee771e"
   dependencies:
     babel-polyfill "^6.23.0"
     echarts "^4.2.0-rc.2"
