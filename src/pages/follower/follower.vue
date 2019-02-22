@@ -77,7 +77,7 @@ export default class RankList extends Vue {
     {
       label: this.lang('Weeks'),
       prop: 'Weeks',
-      suffix: this.lang('week'),
+      suffix: this.lang('Week'),
     },
   ];
 

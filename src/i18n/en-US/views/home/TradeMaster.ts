@@ -3,7 +3,7 @@ export default {
   followed: 'Linked',
   follower: 'Follower',
   gshl: 'Profit by follow',
-  syl: 'Return',
+  syl: 'Follower Return',
   gsds: 'Following master',
   more: 'See more',
 };

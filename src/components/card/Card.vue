@@ -45,11 +45,11 @@
           </div>
         </div>
       </div>
-      <div v-if="data.showStrategy" class="strategy-content fm-show-pc">
+      <!-- <div v-if="data.showStrategy" class="strategy-content fm-show-pc">
         <div class="strategy-content-container">
           <span :title="data.strategyDesc" class="strategy-detail">{{data.strategyDesc}}</span>
         </div>
-      </div>
+      </div> -->
       <div v-if="data.confirmBtn" class="sub">
         <div @click="sub" class="subscibe-content">
           <span >
