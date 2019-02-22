@@ -11,9 +11,9 @@ export default {
   Pips: 'FollowPips',
   Roi: 'ROI',
   AveragePips: 'AveragePips',
-  Orders: 'Orders',
-  Weeks: 'Weeks',
+  Orders: 'Order',
+  Weeks: 'Week',
   Pip: 'Point',
-  Volumes: 'Order',
-  Week: 'Week',
+  Volumes: 'Orders',
+  Week: 'Weeks',
 };
