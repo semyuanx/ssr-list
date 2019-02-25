@@ -1081,8 +1081,8 @@ ajv@^5.2.3, ajv@^5.3.0:
     json-schema-traverse "^0.3.0"
 
 ajv@^6.1.0:
-  version "6.9.1"
-  resolved "https://registry.yarnpkg.com/ajv/-/ajv-6.9.1.tgz#a4d3683d74abc5670e75f0b16520f70a20ea8dc1"
+  version "6.9.2"
+  resolved "https://registry.yarnpkg.com/ajv/-/ajv-6.9.2.tgz#4927adb83e7f48e5a32b45729744c71ec39c9c7b"
   dependencies:
     fast-deep-equal "^2.0.1"
     fast-json-stable-stringify "^2.0.0"
@@ -3972,7 +3972,7 @@ flush-write-stream@^1.0.0:
 
 "fmcomponents@git+ssh://git@gitlab.followme.com/Frontend/fmcomponents.git#production":
   version "2.0.0"
-  resolved "git+ssh://git@gitlab.followme.com/Frontend/fmcomponents.git#eb07da5f2b4d08f50b373b748ba2a37279ee771e"
+  resolved "git+ssh://git@gitlab.followme.com/Frontend/fmcomponents.git#21fab26a177a28265198c3fb856f10e6b5b53497"
   dependencies:
     babel-polyfill "^6.23.0"
     echarts "^4.2.0-rc.2"
@@ -8027,7 +8027,7 @@ socks@~1.1.5:
     ip "^1.1.4"
     smart-buffer "^1.0.13"
 
-sortablejs@^1.7.0:
+sortablejs@^1.8.3:
   version "1.8.3"
   resolved "https://registry.yarnpkg.com/sortablejs/-/sortablejs-1.8.3.tgz#5ae908ef96300966e95440a143340f5dd565a0df"
 
@@ -8953,11 +8953,16 @@ vue@^2.5.17:
   version "2.5.17"
   resolved "http://registry.npm.taobao.org/vue/download/vue-2.5.17.tgz#0f8789ad718be68ca1872629832ed533589c6ada"
 
+vue@^2.5.22:
+  version "2.6.7"
+  resolved "https://registry.yarnpkg.com/vue/-/vue-2.6.7.tgz#254f188e7621d2d19ee28d0c0442c6d21b53ae2d"
+
 vuedraggable@^2.14.1:
-  version "2.17.0"
-  resolved "https://registry.yarnpkg.com/vuedraggable/-/vuedraggable-2.17.0.tgz#489c16c9bcb9eb06f441944d3c52e5f2bb7060f9"
+  version "2.18.0"
+  resolved "https://registry.yarnpkg.com/vuedraggable/-/vuedraggable-2.18.0.tgz#04e30a67437e8c38e0ed63620cfaeec27e4a8d07"
   dependencies:
-    sortablejs "^1.7.0"
+    sortablejs "^1.8.3"
+    vue "^2.5.22"
 
 vuex-class@^0.3.1:
   version "0.3.1"
