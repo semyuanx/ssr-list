@@ -129,7 +129,7 @@ export default class InfiniteScroll extends Vue {
     if (
       tagOffsetTop > offsetTop
       && tagOffsetTop - (distance + offsetTop) * this.num <= contentHeight
-      && this.$el.offsetHeight > scrollviewHeight
+      && (this.$el as any).offsetHeight > scrollviewHeight
     ) {
       this.isLoading = true;
       if (typeof this.callback === 'function') this.callback();
