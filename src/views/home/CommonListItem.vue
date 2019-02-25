@@ -21,7 +21,9 @@ import { Component, Vue, Prop } from 'vue-property-decorator';
 import CommonItem from '@/views/home/pc/CommonItem.vue';
 // import InvestManagerMobile from '@/views/home/mobile/InvestManagerMobile.vue';
 import mapKey from '@/constant/propMap';
-import { propFormat, processConfig, gradeFormat } from '@/utils/format';
+import {
+  propFormat, processConfig, gradeFormat, moneyFormat,
+} from '@/utils/format';
 import { toLoginPage, toSubscribePage, toPersonalPage } from '@/utils/native';
 import { namespace } from 'vuex-class';
 import { needHighlight } from '@/constant/propFormat';
@@ -144,7 +146,7 @@ export default class Index extends Vue {
           index: item.AccountIndex,
           brokerName: item.BrokerName,
           price: item.SubPrice,
-          confirmBtn: !isShowSubBtn ? false : isEdit ? this.$i18n.t('bjdy') : item.SubPrice ? `${item.SubPrice}/${this.$i18n.t('month')}` : this.$i18n.t('mfdy'),
+          confirmBtn: !isShowSubBtn ? false : isEdit ? this.$i18n.t('bjdy') : item.SubPrice ? `${moneyFormat(item.SubPrice)}/${this.$i18n.t('month')}` : this.$i18n.t('mfdy'),
           isShowGrade: showGrade,
           grade: gradeFormat(item.GradeScore),
           isShowPta: showPta && item.IsPTA,
