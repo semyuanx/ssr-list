@@ -52,7 +52,7 @@
       </div> -->
       <div v-if="data.confirmBtn" class="sub">
         <div @click="sub" class="subscibe-content">
-          <span >
+          <span>
             {{data.confirmBtn}}
           </span>
         </div>

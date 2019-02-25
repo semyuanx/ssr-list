@@ -231,7 +231,7 @@ export default class mainView extends Vue {
           this.log(item, this.followList, 'this.followList');
           const isEdit = this.followList.includes(`${item.UserID}_${item.AccountIndex}`);
           // eslint-disable-next-line
-          const otherEditText = isEdit ? this.$i18n.t('bjdy') : item.SubPrice ? `${item.SubPrice}/${this.$i18n.t('month')}` : this.$i18n.t('mfdy');
+          const otherEditText = isEdit ? this.$i18n.t('bjdy') : item.SubPrice ? `${moneyFormat(item.SubPrice)}/${this.$i18n.t('month')}` : this.$i18n.t('mfdy');
           // this.log(!isShowSubBtn ? false : otherEditText, 'otherEditText')
           return {
             avatar: `${this.base}/Avata/${item.UserID}`,
