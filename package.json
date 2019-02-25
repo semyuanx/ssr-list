@@ -74,7 +74,7 @@
     "husky": "^1.2.0",
     "less": "^3.0.4",
     "less-loader": "^4.1.0",
-    "lint-staged": "^8.1.0",
+    "lint-staged": "^8.1.4",
     "postcss-flexibility": "^2.0.0",
     "style-resources-loader": "^1.2.1",
     "svg-inline-loader": "^0.8.0",
