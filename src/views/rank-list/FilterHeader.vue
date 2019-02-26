@@ -211,7 +211,7 @@ export default class FilterHeader extends Vue {
     const rankParams = { ...rankAlias };
     const tags: any = [];
     // this.log(rankParams, 'innerParams')
-    const needProcess = ['Subscribers', 'Score', 'Equity', 'Weeks', 'Retracement', 'MaxRetracement', 'Roi'];
+    const needProcess = ['Subscribers', 'Equity', 'Weeks', 'Retracement', 'MaxRetracement', 'Roi'];
     if (rankParams.SubCount) {
       rankParams.Subscribers = rankParams.SubCount;
       rankParams.SubCount = '';
@@ -273,7 +273,7 @@ export default class FilterHeader extends Vue {
             // this.log(gradeMap[val], val, '******');
             finalVal = gradeMap[val] || '';
           }
-          const needIgnore = ['orderby', 'isDESC', 'brokerId', 'ExpSymbol', 'BrokerID'];
+          const needIgnore = ['orderby', 'isDESC', 'brokerId', 'ExpSymbol', 'BrokerID', 'Score'];
 
           this.log(needProcess.includes(i), finalVal, 'kkkkkkkkkkkkkkk');
           if (needProcess.includes(i) && finalVal) {
