@@ -1,4 +1,4 @@
-export default{
+export default {
   jbxx: '基本信息',
   zst: '走勢圖',
   zwsj: '暫無數據',
