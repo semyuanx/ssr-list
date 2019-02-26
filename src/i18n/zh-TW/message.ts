@@ -214,7 +214,7 @@ export default {
     },
     propFormat: {
       Week: '周',
-      Order: '单',
+      Order: '單',
     },
     meta: {
       title: '外匯優秀交易員排名__經紀商交易員操盤排行_Followme外匯社區',

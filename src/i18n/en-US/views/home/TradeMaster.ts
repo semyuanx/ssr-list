@@ -6,4 +6,5 @@ export default {
   syl: 'Follower Return',
   gsds: 'Following master',
   more: 'See more',
+  jyzq: 'Trading period',
 };
