@@ -18,7 +18,7 @@ import { Component, Vue } from 'vue-property-decorator';
 import { namespace, Action } from 'vuex-class';
 
 import { openWebView } from '@/utils/native';
-import MainView from '@/views/home/mainView.vue';
+// import MainView from '@/views/home/mainView.vue';
 import zhCN from '@/i18n/zh-CN/pages/Home';
 import zhTW from '@/i18n/zh-TW/pages/Home';
 import zhHK from '@/i18n/zh-HK/pages/Home';
@@ -36,7 +36,7 @@ const HomeStore = namespace('HomeStore');
     },
   },
   components: {
-    MainView,
+    MainView: () => import(/* webpackChunkName: "home-main" */ '@/views/home/mainView.vue'),
   },
 })
 export default class Home extends Vue {
@@ -64,7 +64,9 @@ export default class Home extends Vue {
     this.getSepRankConfig({ index: 2 });
     this.getSepRankConfig({ index: 3 });
     this.getCustomConfig();
-    this.getProductsAsync(this.params);
+    if (['zh-CN'].includes(this.$i18n.locale)) {
+      this.getProductsAsync(this.params);
+    }
     this.getMasterFollower({
       pageSize: 4,
       pageIndex: 1,
