@@ -89,7 +89,8 @@ module.exports = {
       msTileImage: 'img/icons/followme-120-120.png',
     },
     workboxOptions: {
-      importWorkboxFrom: 'local'
+      importWorkboxFrom: 'local',
+      offlineGoogleAnalytics: false,
     }
   },
   transpileDependencies: [/fmcomponents/, /element-ui/],
