@@ -1,5 +1,5 @@
 export default {
-  bjdy: '编辑订阅',
+  bjdy: '編輯訂閱',
   month: '月',
-  mfdy: '免费订阅',
+  mfdy: '免費訂閱',
 };

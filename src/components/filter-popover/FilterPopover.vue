@@ -340,7 +340,7 @@ export default class FilterPopover extends Vue {
         { name: `${this.lang('labels[2].filter[1]')}50${this.lang('labels[2].filter[2]')}`, value: '0-50' },
         { name: `50-100${this.lang('labels[2].filter[2]')}`, value: '50-100' },
         { name: `100-300${this.lang('labels[2].filter[2]')}`, value: '100-300' },
-        { name: `300${this.lang('labels[2].filter[3]')}`, value: '300-0' },
+        { name: `>300${this.lang('labels[2].filter[3]')}`, value: '300-0' },
         {
           mode: 'input',
           start: '',
@@ -376,7 +376,7 @@ export default class FilterPopover extends Vue {
         { name: `${this.lang('labels[4].filter[1]')}13${this.lang('labels[4].filter[2]')}`, value: '0-13' },
         { name: `13-26${this.lang('labels[4].filter[2]')}`, value: '13-26' },
         { name: `26-52${this.lang('labels[4].filter[2]')}`, value: '26-52' },
-        { name: `52${this.lang('labels[4].filter[3]')}`, value: '52-0' },
+        { name: `>52${this.lang('labels[4].filter[3]')}`, value: '52-0' },
         {
           mode: 'input',
           start: '',
@@ -396,7 +396,7 @@ export default class FilterPopover extends Vue {
         { name: `${this.lang('labels[5].filter[1]')}10%`, value: '0-10' },
         { name: '10%-20%', value: '10-20' },
         { name: '20%-30%', value: '20-30' },
-        { name: `30%${this.lang('labels[5].filter[2]')}`, value: '30-0' },
+        { name: `>30%${this.lang('labels[5].filter[2]')}`, value: '30-0' },
         {
           mode: 'input',
           start: '',
@@ -414,7 +414,7 @@ export default class FilterPopover extends Vue {
         { name: `${this.lang('labels[6].filter[1]')}10%`, value: '0-10' },
         { name: '10%-20%', value: '10-20' },
         { name: '20%-30%', value: '20-30' },
-        { name: `30%${this.lang('labels[6].filter[2]')}`, value: '30-0' },
+        { name: `>30%${this.lang('labels[6].filter[2]')}`, value: '30-0' },
         {
           mode: 'input',
           start: '',

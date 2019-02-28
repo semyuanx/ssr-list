@@ -90,6 +90,8 @@ export const propFormat = function propFormat(val: string | number, prop: string
   ];
   if (percentKeys.includes(prop)) {
     return percentFormat(val);
+  } if (prop == 'Equity') {
+    return moneyFormat(val);
   } if (dotKeys.includes(prop)) {
     return numberFormat(val);
   } if (moneyKeys.includes(prop)) {

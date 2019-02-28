@@ -41,6 +41,7 @@
                     @click="toUserPage(scope.row)"
                     @mouseenter.self="showCard($event, scope.row)"
                     @mouseleave="personCard.hide()"
+                    onerror="this.src='//cdn.followme.com/images/default_avata.png'"
                     :src="base+'/Avata/'+scope.row.UserID + '?x-oss-process=image/resize,m_fill,h_50,w_50'"/>
                 </div>
                 <div class="loading-first trader-info">
@@ -56,7 +57,7 @@
                     <span v-if="showOthers.includes('GradeScore')"
                           :class="'grade-score-icon ' + mapGradeClass(scope.row.GradeScore)"
                     >
-                      {{scope.row.GradeScore | propFormat('GradeScore', null, this.$i18n)}}
+                      {{scope.row.GradeScore | propFormat('GradeScore', null, $i18n)}}
                     </span>
                     <span v-if="showOthers.includes('IsPTA') && scope.row.IsPTA" class="pta-icon">
                       <PtaLogo/>
@@ -71,7 +72,7 @@
         </el-table-column>
 
         <el-table-column
-          show-overflow-tooltip="true"
+          :show-overflow-tooltip="true"
           :label="i.label"
           :prop="i.prop"
           sortable="custom"
@@ -88,7 +89,7 @@
             <div
               v-else
               class="custom-display-row-line"
-            ><span :class="{green: i.highlight && scope.row[i.prop] > 0}">{{scope.row[i.prop] | propFormat(i.prop, null, this.$i18n)}} {{i.suffix}}</span>
+            ><span :class="{green: i.highlight && scope.row[i.prop] > 0}">{{scope.row[i.prop] | propFormat(i.prop, null, $i18n)}} {{i.suffix}}</span>
             </div>
 
           </template>
@@ -97,6 +98,7 @@
         <el-table-column
           :label="$t('trend')"
           prop="TrendChart"
+          key="TrendChart"
           align="center"
         >
           <template slot-scope="scope">
@@ -129,6 +131,7 @@
         <el-table-column
           :label="$t('subscribe')"
           prop="SubPrice"
+          key="SubPrice12"
           align="center"
           min-width="120px"
           v-if="showOthers.includes('SubPrice')"
@@ -434,7 +437,7 @@ export default class List extends Vue {
     }
 
     showFollowCard(_this: any, list: any) {
-      import('fmcomponents/src/components/follow').then((followModule: any) => {
+      import(/* webpackChunkName: "followbox" */ 'fmcomponents/src/components/follow').then((followModule: any) => {
         const followBox: any = followModule.default;
         this.showFollowCard1(followBox, list);
       });

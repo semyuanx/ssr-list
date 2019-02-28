@@ -211,7 +211,7 @@ export default class FilterHeader extends Vue {
     const rankParams = { ...rankAlias };
     const tags: any = [];
     // this.log(rankParams, 'innerParams')
-    const needProcess = ['Subscribers', 'Score', 'Equity', 'Weeks', 'Retracement', 'MaxRetracement', 'Roi'];
+    const needProcess = ['Subscribers', 'Equity', 'Weeks', 'Retracement', 'MaxRetracement', 'Roi'];
     if (rankParams.SubCount) {
       rankParams.Subscribers = rankParams.SubCount;
       rankParams.SubCount = '';
@@ -273,7 +273,7 @@ export default class FilterHeader extends Vue {
             // this.log(gradeMap[val], val, '******');
             finalVal = gradeMap[val] || '';
           }
-          const needIgnore = ['orderby', 'isDESC', 'brokerId', 'ExpSymbol', 'BrokerID'];
+          const needIgnore = ['orderby', 'isDESC', 'brokerId', 'ExpSymbol', 'BrokerID', 'Score'];
 
           this.log(needProcess.includes(i), finalVal, 'kkkkkkkkkkkkkkk');
           if (needProcess.includes(i) && finalVal) {
@@ -291,10 +291,10 @@ export default class FilterHeader extends Vue {
                 }
               }
               if (!valArr[0] || [0, '0'].includes(valArr[0])) {
-                finalVal = `${this.$i18n.t('lessThan')}${valArr[1]}${needProcessMap[i].suffix}`;
+                finalVal = `<${valArr[1]}${needProcessMap[i].suffix}`;
               } else
               if (!valArr[1] || [0, '0'].includes(valArr[1])) {
-                finalVal = `${this.$i18n.t('moreThan')}${valArr[0]}${needProcessMap[i].suffix}`;
+                finalVal = `>${valArr[0]}${needProcessMap[i].suffix}`;
               } else if (needProcessMap[i].percent) {
                 finalVal = `${valArr[0]}-${valArr[1]}${needProcessMap[i].suffix}`;
               } else {

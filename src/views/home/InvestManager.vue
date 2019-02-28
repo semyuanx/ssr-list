@@ -14,15 +14,15 @@
         :data="configData"
         :description="description" />
     </div>
-    <div class="fm-show-mobile">
+    <!-- <div class="fm-show-mobile">
       <CommonMobile @toMore="toMore" v-if="mobileConfigData.length"  :data="mobileConfigData" :description="description" />
-    </div>
+    </div> -->
   </div>
 </template>
 <script lang="ts">
 import { Component, Vue, Prop } from 'vue-property-decorator';
 import InvestManager from '@/views/home/pc/InvestManager.vue';
-import CommonMobile from '@/views/home/mobile/CommonMobile.vue';
+// import CommonMobile from '@/views/home/mobile/CommonMobile.vue';
 import mapKey from '@/constant/propMap';
 import { moneyFormat, percentFormat } from '@/utils/format';
 
@@ -41,7 +41,7 @@ const ManagerStore = namespace('ManagerStore');
 @Component({
   components: {
     InvestManager,
-    CommonMobile,
+    // CommonMobile,
   },
   i18n: {
     messages: {

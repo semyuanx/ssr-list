@@ -1,3 +1,3 @@
 export default {
-  noMoreData: '没有更多数据了',
+  noMoreData: '沒有更多數據了',
 };

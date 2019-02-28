@@ -10,8 +10,9 @@ import {
   getSepRankConfigService,
 } from '@/service/home';
 import { getAllProducts } from '@/service/manager';
-import { processConfig } from '@/utils/format';
-import propMaps from '@/constant/propMap';
+// import { processConfig } from '@/utils/format';
+import storage from '@/utils/storage';
+// import propMaps from '@/constant/propMap';
 
 @Repository('HomeStore')
 export default class HomeStore {
@@ -67,16 +68,10 @@ export default class HomeStore {
   @Action
   public getCustomConfig(context: { commit: Commit }, payload: any): any {
     const key = 'home-page-config';
-    if (typeof localStorage !== 'undefined') {
-      const cacheData = localStorage.getItem(key);
-      try {
-        if (cacheData) {
-          const result = JSON.parse(cacheData);
-          context.commit('setConfig', result);
-        }
-      } catch (e) {
-        console.log(e);
-      }
+    let cacheData = storage.getValue(key);
+    if (cacheData) {
+      context.commit('setConfig', cacheData);
+      cacheData = null;
     }
 
     getCustomConfig().then((res: any) => {
@@ -98,15 +93,11 @@ export default class HomeStore {
         });
 
         Promise.all(dPromise).then((result: any) => {
-          // console.log(result, 'result');
-          if (result && typeof localStorage !== 'undefined') {
-            try {
-              localStorage.setItem(key, JSON.stringify(result));
-            } catch (e) {
-              console.log(e);
-            }
+          if (result) {
+            storage.setValue(key, result);
           }
           context.commit('setConfig', result);
+          result = null;
         });
       }
     }).catch(() => {});
@@ -116,6 +107,12 @@ export default class HomeStore {
   @Action
   public async getProductsAsync(context: any, params: any) {
     const { commit } = context;
+    const key = 'ovwew23awea';
+    let cacheData = storage.getValue(key);
+    if (cacheData) {
+      context.commit('setProgressProducts', cacheData);
+      cacheData = null;
+    }
     let data: any = {};
     try {
       data = await getAllProducts(params);
@@ -123,8 +120,8 @@ export default class HomeStore {
       console.log(e);
     }
     if (data.items) {
-      // console.log(data, 'progressProducts');
       commit('setProgressProducts', data.items);
+      storage.setValue(key, data.items);
     }
     return data;
   }
@@ -189,32 +186,6 @@ export default class HomeStore {
       if (res) {
         commit(`setSpecialConfig${index}`, res);
       }
-      // if (res && res.HideConfig) {
-      //   const hideConfig = res.HideConfig;
-      //   const blackList: any = [];
-      //   const showProps = Object.keys(hideConfig).filter((i: any) => !hideConfig[i] && !blackList.includes(i)).map((i: any) => ({
-      //     label: (propMaps as any)[i] || ' ',
-      //     prop: i,
-      //     // highlight: needHighlight.includes(i),
-      //     // suffix: suffixProps[i] || '',
-      //   }));
-      //   // console.log(showProps, propMaps, 'showProps');
-      //   commit('setShowProps', showProps);
-      // }
-
-      // if (res && res.CondCfg) {
-      //   const { CondCfg } = res;
-      //   const { rankParams, useDefaultParams } = state;
-      //   let params: any = {};
-
-      //   params = processConfig(CondCfg);
-
-      //   params = { ...rankParams, ...params };
-      //   console.log(params, 'ppp***pp', useDefaultParams);
-      //   if (useDefaultParams) {
-      //     commit('setRankParams', params);
-      //   }
-      // }
       // eslint-disable-next-line
       return res;
     });

@@ -44,9 +44,11 @@ const svgLoader = (config) => {
     .loader('file-loader');
 };
 
+
+
 module.exports = {
   baseUrl: '/trading-strategy/',
-  // productionSourceMap: true,
+  productionSourceMap: process.env.MODE_ENV !== 'production',
   devServer: {
     disableHostCheck: true,
   },
@@ -87,7 +89,8 @@ module.exports = {
       msTileImage: 'img/icons/followme-120-120.png',
     },
     workboxOptions: {
-      importWorkboxFrom: 'local'
+      importWorkboxFrom: 'local',
+      offlineGoogleAnalytics: false,
     }
   },
   transpileDependencies: [/fmcomponents/, /element-ui/],

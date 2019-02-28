@@ -7,12 +7,14 @@
         <div class="list-invest" v-if="['zh-CN'].includes($i18n.locale)">
             <InvestManager ref="investManager" :subscribe="toInvest" :data="products" />
         </div>
-        <div class="list-item" v-for="(item,index) in investData" :key="index">
-            <CommonListItem
-              @hideCard="hideCard"
-              @showCard="showCard"
-              :followList="followList"
-              :subscribe="handleSub" :data="item" />
+        <div v-for="(item) in investData" :key="item.RankIndex || item.RankID">
+            <div class="list-item" v-if="item.listData && Array.isArray(item.listData.List) && item.listData.List.length > 1">
+              <CommonListItem
+                @hideCard="hideCard"
+                @showCard="showCard"
+                :followList="followList"
+                :subscribe="handleSub" :data="item" />
+            </div>
         </div>
         <div class="invest">
             <TradeMaster
@@ -54,10 +56,10 @@ const RankStore = namespace('RankStore');
 
 @Component({
   components: {
-    FmStrategy: () => import('@/views/home/Strategy.vue'),
-    CommonListItem: () => import('@/views/home/CommonListItem.vue'),
-    InvestManager: () => import('@/views/home/InvestManager.vue'),
-    TradeMaster: () => import('@/views/home/TradeMaster.vue'),
+    FmStrategy: () => import(/* webpackChunkName: "strategy" */ '@/views/home/Strategy.vue'),
+    CommonListItem: () => import(/* webpackChunkName: "com-list" */ '@/views/home/CommonListItem.vue'),
+    InvestManager: () => import(/* webpackChunkName: "invest" */ '@/views/home/InvestManager.vue'),
+    TradeMaster: () => import(/* webpackChunkName: "trade-master" */ '@/views/home/TradeMaster.vue'),
   },
   i18n: {
     messages: {
@@ -229,7 +231,7 @@ export default class mainView extends Vue {
           this.log(item, this.followList, 'this.followList');
           const isEdit = this.followList.includes(`${item.UserID}_${item.AccountIndex}`);
           // eslint-disable-next-line
-          const otherEditText = isEdit ? this.$i18n.t('bjdy') : item.SubPrice ? `${item.SubPrice}/${this.$i18n.t('month')}` : this.$i18n.t('mfdy');
+          const otherEditText = isEdit ? this.$i18n.t('bjdy') : item.SubPrice ? `${moneyFormat(item.SubPrice)}/${this.$i18n.t('month')}` : this.$i18n.t('mfdy');
           // this.log(!isShowSubBtn ? false : otherEditText, 'otherEditText')
           return {
             avatar: `${this.base}/Avata/${item.UserID}`,

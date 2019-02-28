@@ -4,9 +4,9 @@
       <Strategy
         @toPersonal="toPersonalPc" :subscribe="subscribe" :data="data" :header="header" />
     </div>
-    <div class="fm-show-mobile">
+    <!-- <div class="fm-show-mobile">
       <Strategy @toPersonal="toPersonal" :subscribe="mobileSubscribe" :data="data" :header="header" />
-    </div>
+    </div> -->
   </div>
 </template>
 <script lang="ts">

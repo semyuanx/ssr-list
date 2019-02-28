@@ -7,4 +7,13 @@ export default {
   jjs: 'Broker',
   unlimited: 'No limits',
   noData: 'No more data!',
+  FollowMoney: 'FollowingProfit',
+  Pips: 'FollowPips',
+  Roi: 'ROI',
+  AveragePips: 'AveragePips',
+  Orders: 'Order',
+  Weeks: 'Week',
+  Pip: 'Point',
+  Volumes: 'Orders',
+  Week: 'Weeks',
 };

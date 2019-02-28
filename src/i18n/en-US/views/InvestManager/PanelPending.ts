@@ -25,4 +25,5 @@ export default {
     Settled: 'View details',
     Pending: 'Join now',
   },
+  AverageROI: '平均收益率',
 };

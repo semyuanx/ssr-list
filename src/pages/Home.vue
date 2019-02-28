@@ -64,7 +64,9 @@ export default class Home extends Vue {
     this.getSepRankConfig({ index: 2 });
     this.getSepRankConfig({ index: 3 });
     this.getCustomConfig();
-    this.getProductsAsync(this.params);
+    if (['zh-CN'].includes(this.$i18n.locale)) {
+      this.getProductsAsync(this.params);
+    }
     this.getMasterFollower({
       pageSize: 4,
       pageIndex: 1,

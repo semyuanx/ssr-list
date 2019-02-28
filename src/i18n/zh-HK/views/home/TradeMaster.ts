@@ -1,9 +1,10 @@
 export default {
-  follow: '关注',
-  followed: '已关注',
-  follower: '跟随者',
-  gshl: '跟随获利',
-  syl: '收益率',
-  gsds: '跟随大师',
+  follow: '關注',
+  followed: '已關注',
+  follower: '跟隨者',
+  gshl: '跟隨獲利',
+  syl: '跟隨收益率',
+  jyzq: '交易周期',
+  gsds: '跟隨大師',
   more: '查看更多',
 };

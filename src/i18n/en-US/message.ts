@@ -212,6 +212,10 @@ export default {
       IsPTA: 'PTA member',
       GradeScore: 'Rating',
     },
+    propFormat: {
+      Week: 'Weeks',
+      Order: 'Orders',
+    },
     meta: {
       title: 'Forex Excellent Trader Ranking __ Broker Trader Trader Ranking _Followme Forex Community',
       description: 'The latest list of masters can be based on the profit of foreign exchange orders, the rate of return, the number of profit points and the number of transactions and the trading cycle query, follow the transaction profit is also a strategy, with reference to the trading situation of the trading master, you can choose Follow the trader',

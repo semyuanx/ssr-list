@@ -8,7 +8,6 @@ import {
 } from '@/service/home';
 // import { toNumber } from '@/utils/util';
 // import propMaps from '@/constant/propMap';
-
 @Repository('FollowerStore')
 export default class FollowerStore {
   @State([])
@@ -19,40 +18,6 @@ export default class FollowerStore {
 
   @State(false)
   public followersLoading: boolean = false;
-
-  @State([
-    {
-      label: '跟随收益',
-      prop: 'FollowMoney',
-      suffix: '',
-    },
-    {
-      label: '跟随点数',
-      prop: 'Pips',
-      suffix: '点',
-    },
-    {
-      label: '跟随收益率',
-      prop: 'Roi',
-      suffix: '',
-    },
-    {
-      label: '平均跟随点数',
-      prop: 'AveragePips',
-      suffix: '点',
-    },
-    {
-      label: '跟随笔数',
-      prop: 'Orders',
-      suffix: '笔',
-    },
-    {
-      label: '交易周期',
-      prop: 'Weeks',
-      suffix: '周',
-    },
-  ])
-  public showProps: any = [];
 
   @Set('followers') public setFollowers: any;
 

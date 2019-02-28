@@ -7,4 +7,14 @@ export default {
   jjs: '經紀商',
   unlimited: '不限',
   noData: '沒有更多數據了！',
+  // 跟隨大師
+  FollowMoney: '跟隨收益',
+  Pips: '跟隨點數',
+  Roi: '跟隨收益率',
+  AveragePips: '平均跟隨點數',
+  Orders: '跟隨筆數',
+  Weeks: '交易周期',
+  Pip: '點',
+  Volumes: '筆',
+  Week: '周',
 };

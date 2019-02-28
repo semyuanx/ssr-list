@@ -18,7 +18,7 @@
 </template>
 <script lang="ts">
 import { Component, Vue, Prop } from 'vue-property-decorator';
-import FMNav from 'fmcomponents/src/components/nav2';
+// import FMNav from 'fmcomponents/src/components/nav2';
 // import FMFooter from 'fmcomponents/src/components/footer2';
 import eventBus from '@/utils/event';
 import 'minireset.css';
@@ -31,9 +31,17 @@ Vue.use(V2Datepicker);
 
 @Component({
   components: {
-    FMNav,
-    FMSlideTool: () => /* webpackChunkName: "fm-footer" */ import('fmcomponents/src/components/slide-tool'),
-    FMFooter: () => import('fmcomponents/src/components/footer2'),
+    FMNav: () => import(/* webpackChunkName: "nav2" */ 'fmcomponents/src/components/nav2'),
+    FMSlideTool: () => /* webpackChunkName: "fm-footer" */ new Promise((resolve, reject) => {
+      setTimeout(() => {
+        resolve(import(/* webpackChunkName: "slide-tool" */ 'fmcomponents/src/components/slide-tool'));
+      }, 1300);
+    }),
+    FMFooter: () => new Promise((resolve, reject) => {
+      setTimeout(() => {
+        resolve(import(/* webpackChunkName: "footer2" */ 'fmcomponents/src/components/footer2'));
+      }, 1000);
+    }),
   },
   metaInfo() {
     const lang: any = (key: any, ...args: any[]) => this.$i18n.t(`message.meta.${key}`, ...args);

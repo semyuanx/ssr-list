@@ -15,7 +15,7 @@ export default {
   gradeScore: 'Account Rating',
   subscribers: 'Subscribers',
   people: 'People',
-  week: 'Week',
+  week: 'Weeks',
   orderbyDesc: 'reverse order',
   orderbyAsc: 'order',
   lessThan: 'less than',
