@@ -34,13 +34,14 @@
         <div
           class="filter-label"
           :style="{width:labelWidth,minWidth:labelWidth}"
+          v-if="index != 1"
         >
           <span class="label-name">{{item.label}}</span>
           <el-tooltip v-if="item.tips" class="item" effect="dark" :content="item.tips" placement="top">
             <i class="fm-fonticon icon-info_circle_24px"></i>
           </el-tooltip>
         </div>
-        <ul class="filter-content">
+        <ul class="filter-content" v-if="index != 1">
           <li
             class="filter-content-item"
             v-for="(citem,inx) in item.filter"
@@ -310,26 +311,26 @@ export default class FilterPopover extends Vue {
         { name: 'D', value: '0-4' },
       ],
     },
-    // {
-    //   label: this.lang('labels[1].label'),
-    //   tips: this.lang('labels[1].tips'),
-    //   desc: this.lang('labels[1].desc'),
-    //   value: 'Score',
-    //   filter: [
-    //     { name: this.lang('labels[1].filter[0]'), value: '' },
-    //     { name: '60-70', value: '60-70' },
-    //     { name: '71-80', value: '71-80' },
-    //     { name: '81-90', value: '81-90' },
-    //     { name: '>90', value: '90-0' },
-    //     // {
-    //     //   mode: 'input',
-    //     //   start: '',
-    //     //   end: '',
-    //     //   type: 'interval',
-    //     // },
-    //   ],
-    //   needLine: true,
-    // },
+    {
+      label: this.lang('labels[1].label'),
+      tips: this.lang('labels[1].tips'),
+      desc: this.lang('labels[1].desc'),
+      value: 'Score',
+      filter: [
+        { name: this.lang('labels[1].filter[0]'), value: '' },
+        { name: '60-70', value: '60-70' },
+        { name: '71-80', value: '71-80' },
+        { name: '81-90', value: '81-90' },
+        { name: '>90', value: '90-0' },
+        // {
+        //   mode: 'input',
+        //   start: '',
+        //   end: '',
+        //   type: 'interval',
+        // },
+      ],
+      needLine: true,
+    },
     {
       label: this.lang('labels[2].label'),
       tips: this.lang('labels[2].tips'),

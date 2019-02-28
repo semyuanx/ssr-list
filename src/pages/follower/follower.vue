@@ -322,7 +322,7 @@ export default class RankList extends Vue {
             const navHeight = this.getTopNavHeight();
             this.setStyleProp(header, 'fixed', 'position');
             this.setStyleProp(header, `${navHeight}px`, 'top');
-            this.setStyleProp(header, 99, 'zIndex');
+            this.setStyleProp(header, 200, 'zIndex');
           } else {
             this.setStyleProp(header, 'unset', 'position');
           }

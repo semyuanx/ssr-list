@@ -4025,7 +4025,7 @@ flush-write-stream@^1.0.0:
 
 "fmcomponents@git+ssh://git@gitlab.followme.com/Frontend/fmcomponents.git#production":
   version "2.0.0"
-  resolved "git+ssh://git@gitlab.followme.com/Frontend/fmcomponents.git#21fab26a177a28265198c3fb856f10e6b5b53497"
+  resolved "git+ssh://git@gitlab.followme.com/Frontend/fmcomponents.git#04b767e823a66d014b8948100a7907f20d363420"
   dependencies:
     babel-polyfill "^6.23.0"
     echarts "^4.2.0-rc.2"
@@ -8959,8 +8959,8 @@ vue@^2.5.17, vue@^2.5.22:
   resolved "https://registry.yarnpkg.com/vue/-/vue-2.6.7.tgz#254f188e7621d2d19ee28d0c0442c6d21b53ae2d"
 
 vuedraggable@^2.14.1:
-  version "2.18.0"
-  resolved "https://registry.yarnpkg.com/vuedraggable/-/vuedraggable-2.18.0.tgz#04e30a67437e8c38e0ed63620cfaeec27e4a8d07"
+  version "2.18.1"
+  resolved "https://registry.yarnpkg.com/vuedraggable/-/vuedraggable-2.18.1.tgz#e896990bc6b478223e1a94802aa07bc2574caa4a"
   dependencies:
     sortablejs "^1.8.3"
     vue "^2.5.22"
