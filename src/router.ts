@@ -1,7 +1,6 @@
 import Vue from 'vue';
 import Meat from 'vue-meta';
 import Router from 'vue-router';
-import Home from './pages/Home.vue';
 
 Vue.use(Router);
 Vue.use(Meat);
@@ -17,7 +16,7 @@ export default function createRouter() {
         meta: {
           title: '外汇优秀交易员排名__经纪商交易员操盘排行_ Followme外汇社区',
         },
-        component: Home,
+        component: () => import(/* webpackChunkName: "mh" */ './pages/Home.vue'),
       },
       {
         path: '/ranking',

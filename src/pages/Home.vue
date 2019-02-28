@@ -18,7 +18,7 @@ import { Component, Vue } from 'vue-property-decorator';
 import { namespace, Action } from 'vuex-class';
 
 import { openWebView } from '@/utils/native';
-// import MainView from '@/views/home/mainView.vue';
+import MainView from '@/views/home/mainView.vue';
 import zhCN from '@/i18n/zh-CN/pages/Home';
 import zhTW from '@/i18n/zh-TW/pages/Home';
 import zhHK from '@/i18n/zh-HK/pages/Home';
@@ -36,7 +36,7 @@ const HomeStore = namespace('HomeStore');
     },
   },
   components: {
-    MainView: () => import(/* webpackChunkName: "home-main" */ '@/views/home/mainView.vue'),
+    MainView,
   },
 })
 export default class Home extends Vue {
