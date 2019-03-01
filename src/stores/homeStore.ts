@@ -81,7 +81,7 @@ export default class HomeStore {
         const dPromise: Array<Promise<any>> = data.map(async (element:any) => {
           if (element.RankIndex > 1) {
             if (element.RankIndex < 100) {
-              context.commit(`setSpecialConfig${element.RankIndex}`, res);
+              context.commit(`setSpecialConfig${element.RankIndex}`, element);
               return { element };
             }
             try {
