@@ -72,7 +72,7 @@ export function getElementLeft(element: any, className?: any) {
     if (className && typeof className === 'string') {
       const cls:any = current.className || current.classList.value;
 
-      console.log(actualLeft, 'actualTop');
+      // console.log(actualLeft, 'actualTop');
       if (cls && cls.indexOf(className) > -1) return actualLeft;
     }
     actualLeft += current.offsetLeft;
@@ -140,3 +140,24 @@ export const loadAsyncImage = function loadAsyncImage(src: string, timeout: any 
     }, timeout);
   });
 };
+
+export const loadScript = (function (d) {
+  const isLoaded: any = [];
+  return function loadScript1(url: any, fn: any) {
+    if (isLoaded.includes(url)) {
+      // eslint-disable-next-line
+      return typeof fn === 'function' && fn();
+    }
+    const b = d.getElementsByTagName('body')[0];
+    const script = d.createElement('script');
+    script.async = !0;
+    script.type = 'text/javascript';
+    script.src = url;
+    script.onload = () => {
+      isLoaded.push(url);
+      // eslint-disable-next-line
+      typeof fn === 'function' && fn();
+    };
+    return b.appendChild(script);
+  };
+}(document));

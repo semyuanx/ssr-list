@@ -143,6 +143,13 @@ export default class HomeStore {
     }
     if (data.items) {
       // console.log(data, 'setMasterFollower');
+      let items: any = data.items;
+      items = items.map((i: any) => {
+        if ('List' in i) {
+          i.List = undefined;
+        }
+        return i;
+      });
       commit('setMasterFollower', data.items);
     }
     return data;

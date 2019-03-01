@@ -21,6 +21,7 @@ import { Component, Vue, Prop } from 'vue-property-decorator';
 // import FMNav from 'fmcomponents/src/components/nav2';
 // import FMFooter from 'fmcomponents/src/components/footer2';
 import eventBus from '@/utils/event';
+import { loadScript } from '@/utils/util';
 import 'minireset.css';
 import '@/theme/main.less';
 
@@ -115,8 +116,56 @@ export default class App extends Vue {
     }
   }
 
+  uploadloadingInfo() {
+    setTimeout(() => {
+      loadScript('https://cdn.followme.com/common/raven/vue/raven.min.js', () => {
+        const Raven = (window as any).Raven;
+        Raven.config('https://27bdc53567784bb3b1a471e61ec0ed15@sentry.followme.com/16', {
+          release: 'rank-self@1.0',
+          // sampleRate: 1,
+          whitelistUrls: [/sentry\.followme\.com/, /cdn\.followme\.com/],
+        }).install();
+        if (performance && performance.timing) {
+          const t: any = performance.timing;
+          Raven.captureException({
+            message: t,
+            connect: {
+              d: '握手时间',
+              t: t.connectEnd - t.connectStart,
+            },
+            unload: {
+              d: '卸载',
+              t: t.unloadEventEnd - t.unloadEventStart,
+            },
+            dns: {
+              d: 'dns lookup',
+              t: t.domainLookupEnd - t.domainLookupStart,
+            },
+            index: {
+              d: 'index.html time',
+              t: t.domLoading - t.navigationStart,
+            },
+            pageShow: {
+              d: 'page is loaded an finished',
+              t: t.domComplete - t.navigationStart,
+            },
+            domInteractive: {
+              d: 'page is showed',
+              t: t.domInteractive - t.navigationStart,
+            },
+          }, {
+            tags: { time: 'timeRecord' },
+          });
+        }
+      });
+    }, 4000);
+  }
+
   public mounted() {
     this.resize();
+    // if (process.env.NODE_ENV === 'production') {
+    this.uploadloadingInfo();
+    // }
   }
 }
 </script>
