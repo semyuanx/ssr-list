@@ -90,8 +90,11 @@ module.exports = {
     },
     workboxOptions: {
       importWorkboxFrom: 'local',
-      offlineGoogleAnalytics: false,
-    }
+      // offlineGoogleAnalytics: false,
+      swSrc: 'public/sw.js',
+      include: [/\.png?/, /\.jpg?/, /\.svg?/]
+    },
+    workboxPluginMode: 'InjectManifest'
   },
   transpileDependencies: [/fmcomponents/, /element-ui/],
 };
