@@ -61,8 +61,8 @@ export default class Home extends Vue {
   };
 
   mounted() {
-    this.getSepRankConfig({ index: 2 });
-    this.getSepRankConfig({ index: 3 });
+    // this.getSepRankConfig({ index: 2 });
+    // this.getSepRankConfig({ index: 3 });
     this.getCustomConfig();
     if (['zh-CN'].includes(this.$i18n.locale)) {
       this.getProductsAsync(this.params);

@@ -79,7 +79,11 @@ export default class HomeStore {
         const data: Array<any> = Array.isArray(res.cfgs) ? res.cfgs.sort((a: any, b: any) => (a.RankIndex - b.RankIndex > 0 ? 1 : -1)) : [];
 
         const dPromise: Array<Promise<any>> = data.map(async (element:any) => {
-          if (element.RankIndex) {
+          if (element.RankIndex > 1) {
+            if (element.RankIndex < 100) {
+              context.commit(`setSpecialConfig${element.RankIndex}`, res);
+              return { element };
+            }
             try {
               const resp: Promise<any> = await getCustomRankList({ rankIndex: element.RankIndex });
               // console.log(resp, 'resp');
@@ -93,10 +97,12 @@ export default class HomeStore {
         });
 
         Promise.all(dPromise).then((result: any) => {
-          if (result) {
-            storage.setValue(key, result);
+          // 因为接口合并了 所以特殊榜单 RankIndex <= 100 的配置另外存放
+          const rst = result.filter((cfg: any) => cfg.RankIndex > 100);
+          if (rst) {
+            storage.setValue(key, rst);
           }
-          context.commit('setConfig', result);
+          context.commit('setConfig', rst);
           result = null;
         });
       }
