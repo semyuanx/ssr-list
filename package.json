@@ -16,7 +16,8 @@
     "lint": "vue-cli-service lint",
     "test:e2e": "vue-cli-service test:e2e",
     "test:unit": "vue-cli-service test:unit",
-    "i18n": "i18n-auto -t ./src/i18n/zh-CN -d ./src/i18n/zh-TW -l zh-TW && i18n-auto -t ./src/i18n/zh-CN -d ./src/i18n/zh-HK -l zh-HK && i18n-auto -s -t ./src/i18n/zh-CN -d ./src/i18n/en-US -i index.ts"
+    "i18n": "i18n-auto -t ./src/i18n/zh-CN -d ./src/i18n/zh-TW -l zh-TW && i18n-auto -t ./src/i18n/zh-CN -d ./src/i18n/zh-HK -l zh-HK && i18n-auto -s -t ./src/i18n/zh-CN -d ./src/i18n/en-US -i index.ts",
+    "cp": "cp -R ./dist/* ../fsup-new/assets/www/trade"
   },
   "dependencies": {
     "@fmfe/fm-vue-ui": "^2.0.60",
