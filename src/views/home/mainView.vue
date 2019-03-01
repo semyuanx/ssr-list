@@ -40,6 +40,7 @@ import mapKey from '@/constant/propMap';
 import { loadAuth } from 'fmcomponents/src/utils';
 import { getLoginStatus } from 'fmcomponents';
 // import FollowBox from 'fmcomponents/src/components/follow';
+import CommonListItem from '@/views/home/CommonListItem.vue';
 import personCard from 'fmcomponents/src/components/personcard';
 import zhCN from '@/i18n/zh-CN/views/home/mainView';
 import zhTW from '@/i18n/zh-TW/views/home/mainView';
@@ -57,7 +58,7 @@ const RankStore = namespace('RankStore');
 @Component({
   components: {
     FmStrategy: () => import(/* webpackChunkName: "strategy" */ '@/views/home/Strategy.vue'),
-    CommonListItem: () => import(/* webpackChunkName: "com-list" */ '@/views/home/CommonListItem.vue'),
+    CommonListItem, // : () => import(/* webpackChunkName: "com-list" */ '@/views/home/CommonListItem.vue'),
     InvestManager: () => import(/* webpackChunkName: "invest" */ '@/views/home/InvestManager.vue'),
     TradeMaster: () => import(/* webpackChunkName: "trade-master" */ '@/views/home/TradeMaster.vue'),
   },
