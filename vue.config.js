@@ -40,7 +40,7 @@ const svgLoader = (config) => {
 const configDefinePlugin = (config) => {
   config.plugin('define')
   .tap(args => {
-    args[0]['process.env']['COMPILE_TIME'] = JSON.stringify(dayjs().format('YYYY-MM-DD-HH'));
+    args[0]['process.env']['COMPILE_TIME'] = JSON.stringify(dayjs().format('YYYY-MM-DD-HH-mm'));
     return args;
   })
 }
