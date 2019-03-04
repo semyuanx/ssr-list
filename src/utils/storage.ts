@@ -35,7 +35,7 @@ export default {
       cacheableValue = value;
     }
     if (cacheableValue) {
-      setV(key, value);
+      setV(key, cacheableValue);
       cacheableValue = undefined;
     }
   },
