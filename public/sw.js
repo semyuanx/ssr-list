@@ -11,6 +11,9 @@
  * See https://goo.gl/2aRDsh
  */
 
+workbox.core.skipWaiting();
+workbox.core.clientsClaim();
+
 workbox.core.setCacheNameDetails({prefix: "ssr-rank-list"});
 
 /**
