@@ -13,18 +13,6 @@
 
 workbox.core.setCacheNameDetails({prefix: "ssr-rank-list"});
 
-workbox.routing.registerRoute(
-  new RegExp("cdn\.staticfile\.org/"),
-  workbox.strategies.staleWhileRevalidate({
-    cacheName: 'rank-staticfile'
-  })
-);
-workbox.routing.registerRoute(
-  new RegExp("cdn\.followme\.com/"),
-  workbox.strategies.staleWhileRevalidate({
-    cacheName: 'rank-cdn-follow'
-  })
-);
 /**
  * The workboxSW.precacheAndRoute() method efficiently caches and responds to
  * requests for URLs in the manifest.
@@ -33,3 +21,16 @@ workbox.routing.registerRoute(
 self.__precacheManifest = [].concat(self.__precacheManifest || []);
 workbox.precaching.suppressWarnings();
 workbox.precaching.precacheAndRoute(self.__precacheManifest, {});
+
+workbox.routing.registerRoute(
+  new RegExp("https://cdn\.staticfile\.org/"),
+  workbox.strategies.staleWhileRevalidate({
+    cacheName: 'rank-staticfile'
+  })
+);
+workbox.routing.registerRoute(
+  new RegExp("https://cdn\.followme\.com/"),
+  workbox.strategies.staleWhileRevalidate({
+    cacheName: 'rank-cdn-follow'
+  })
+);

@@ -93,7 +93,7 @@ module.exports = {
       importWorkboxFrom: 'local',
       // offlineGoogleAnalytics: false,
       swSrc: 'public/sw.js',
-      include: [/\.png?/, /\.jpg?/, /\.svg?/]
+      include: [/\.png?/, /\.jpg?/, /\.svg?/, /\.js$/, /\.css$/, /cdn\./]
     },
     workboxPluginMode: 'InjectManifest'
   },
