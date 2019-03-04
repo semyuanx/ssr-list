@@ -226,7 +226,7 @@ export default class FilterHeader extends Vue {
             if (valArr && valArr.length) {
               // console.log(i, valArr[0], valArr[1], 'jjjjjjjjjjjj', needProcessMap[i].percent)
               if (needProcessMap[i].percent) {
-                console.log(valArr[0] && ![0, '0'].includes(valArr[0]));
+                // console.log(valArr[0] && ![0, '0'].includes(valArr[0]));
                 if (valArr[0] && ![0, '0'].includes(valArr[0])) {
                   valArr[0] = percentFormat(valArr[0] / 100);
                   console.log(valArr[0]);

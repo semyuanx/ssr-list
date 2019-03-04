@@ -1,4 +1,4 @@
-// eslint-disable-next-line
+/* eslint-disable */
 import '@babel/polyfill';
 import { createApp } from './app-entry';
 

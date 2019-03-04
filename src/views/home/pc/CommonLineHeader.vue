@@ -81,7 +81,6 @@ export default class Home extends Vue {
   private rightIcon!: string;
 
   public rightClick() {
-    console.log('@click="rightClick"');
     this.$emit('rightClick');
   }
 }
