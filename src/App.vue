@@ -121,7 +121,7 @@ export default class App extends Vue {
       loadScript('https://cdn.followme.com/common/raven/vue/raven.min.js', () => {
         const Raven = (window as any).Raven;
         Raven.config('https://27bdc53567784bb3b1a471e61ec0ed15@sentry.followme.com/16', {
-          release: 'rank-self@1.0',
+          release: `rank-self@${process.env.COMPILE_TIME}`,
           // sampleRate: 1,
           whitelistUrls: [/sentry\.followme\.com/, /cdn\.followme\.com/],
         }).install();

@@ -127,7 +127,7 @@ export default class mainView extends Vue {
       callback(val: any) {
         return new Promise((res) => {
           if (res) {
-            console.log('res:', val);
+            // console.log('res:', val);
             if (val.code === 'SUCCESS' || val.code === 0) {
               _this.getFollowAndAttention();
             } else {
@@ -410,7 +410,7 @@ export default class mainView extends Vue {
         traderaccount: list.Account,
       },
       (result: any) => {
-        console.log(result);
+        // console.log(result);
         if (result.code === 'SUCCESS' || result.code === 0) {
           this.getFollowAndAttention();
         } else {

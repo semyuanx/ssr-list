@@ -1,5 +1,6 @@
 
 const path = require('path');
+const dayjs = require('dayjs');
 // const WebpackBundleAnalyzer = require('webpack-bundle-analyzer');
 // eslint-disable-next-line
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
@@ -17,15 +18,7 @@ function addStyleResource(rule) {
 const svgLoader = (config) => {
   const svgRule = config.module.rule('svg');
   const svgRuleModule = config.module.rule('svgModule');
-  // 清除已有的所有 loader。
-  // 如果你不这样做，接下来的 loader 会附加在该规则现有的 loader 之后。
   svgRule.uses.clear();
-
-  // 添加要替换的 loader
-  // svgRule
-  //   .use('svg-inline-loader')
-  //   .loader('svg-inline-loader');
-
 
   svgRule
     .test(/\.svg$/)
@@ -44,10 +37,17 @@ const svgLoader = (config) => {
     .loader('file-loader');
 };
 
+const configDefinePlugin = (config) => {
+  config.plugin('define')
+  .tap(args => {
+    args[0]['process.env']['COMPILE_TIME'] = JSON.stringify(dayjs().format('YYYY-MM-DD-HH'));
+    return args;
+  })
+}
 
 
 module.exports = {
-  baseUrl: '/trading-strategy/',
+  publicPath: '/trading-strategy/',
   productionSourceMap: process.env.MODE_ENV !== 'production',
   devServer: {
     disableHostCheck: true,
@@ -70,6 +70,7 @@ module.exports = {
     if (process.env.NODE_ENV === 'development') {
       config.plugin('bundle-analyze').use(BundleAnalyzerPlugin);
     }
+    configDefinePlugin(config);
   },
   css: {
     loaderOptions: {

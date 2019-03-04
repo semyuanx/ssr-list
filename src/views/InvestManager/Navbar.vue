@@ -65,7 +65,7 @@ export default class Navbar extends Vue {
 
   @Emit('change')
   handleClick(index: string) {
-    console.log(index);
+    // console.log(index);
   }
 
   @Emit('startMam')
