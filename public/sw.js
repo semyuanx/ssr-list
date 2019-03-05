@@ -42,3 +42,38 @@ workbox.routing.registerRoute(
     cacheName: 'rank-cdn-follow'
   })
 );
+workbox.routing.registerRoute(
+  new RegExp("https://static\.followme\.com/"),
+  workbox.strategies.cacheFirst({
+    cacheName: 'rst:img',
+    plugins: [
+      new workbox.cacheableResponse.Plugin({
+        statuses: [0, 200]
+      }),
+      new workbox.expiration.Plugin({
+        maxEntries: 20,
+        maxAgeSeconds: 12 * 60 * 60
+      })
+    ]
+  })
+);
+var cacheList = [
+  '/trading-strategy',
+  '/trading-strategy/ranking',
+];
+
+workbox.routing.registerRoute(
+  function(event) {
+    // 需要缓存的HTML路径列表
+    if (~cacheList.indexOf(event.url.pathname)) return true;
+    else return false;
+  },
+  workbox.strategies.networkFirst({
+    cacheName: 'rl:html',
+    plugins: [
+      new workbox.expiration.Plugin({
+        maxEntries: 10
+      })
+    ]
+  })
+);
