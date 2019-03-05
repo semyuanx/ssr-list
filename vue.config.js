@@ -93,7 +93,7 @@ module.exports = {
       importWorkboxFrom: 'local',
       // offlineGoogleAnalytics: false,
       excludeChunks: [/trading-strategy\//, /trading-strategy\/index.html/],
-      swSrc: 'public/sw.js',
+      swSrc: 'public/service-worker.js',
       include: [/\.png?/, /\.jpg?/, /\.svg?/, /\.js$/, /\.css$/, /cdn\./]
     },
     workboxPluginMode: 'InjectManifest'
