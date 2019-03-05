@@ -261,6 +261,7 @@ export default class FilterHeader extends Vue {
             currentProp = '';
           }
           if (i === 'GradeScore') {
+            // const gradeMaps = val.split('-');
             const gradeMap: any = {
               '9-0': 'S',
               '8-9': 'A+',
@@ -269,8 +270,13 @@ export default class FilterHeader extends Vue {
               '5-6': 'B',
               '4-5': 'C',
               '0-4': 'D',
+              '0-0': '≥D',
+              '4-0': '≥C',
+              '5-0': '≥B',
+              '6-0': '≥A-',
+              '7-0': '≥A',
+              '8-0': '≥A+',
             };
-            // this.log(gradeMap[val], val, '******');
             finalVal = gradeMap[val] || '';
           }
           const needIgnore = ['orderby', 'isDESC', 'brokerId', 'ExpSymbol', 'BrokerID', 'Score'];
