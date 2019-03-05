@@ -30,7 +30,7 @@ export default {
       ],
     },
     {
-      label: 'Max retracement ratio',
+      label: 'Max drawdown',
       desc: 'Remarks introduction',
       filters: [
         'No limits',

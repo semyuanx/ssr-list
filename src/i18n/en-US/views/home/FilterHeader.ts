@@ -5,7 +5,7 @@ export default {
     Score: 'Ability ',
     Equity: 'Equity',
     Weeks: 'Trading period',
-    Retracement: 'Max retracement ratio',
+    Retracement: 'Max drawdown',
     Roi: 'Return',
     isDESC: 'Rank',
     orderby: 'Sort field',

@@ -52,8 +52,8 @@ export default {
       ],
     },
     {
-      tips: 'Maximum net worth retracement ratio',
-      label: 'Max retracement ratio',
+      tips: 'Maximum net worth drawdown',
+      label: 'Max drawdown',
       desc: 'Remarks introduction',
       filter: [
         'No limits',
