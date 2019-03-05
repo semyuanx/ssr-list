@@ -59,14 +59,19 @@ workbox.routing.registerRoute(
 );
 var cacheList = [
   '/trading-strategy',
+  '/trading-strategy/',
   '/trading-strategy/ranking',
 ];
 
 workbox.routing.registerRoute(
   function(event) {
     // 需要缓存的HTML路径列表
-    if (~cacheList.indexOf(event.url.pathname)) return true;
-    else return false;
+    if (~cacheList.indexOf(event.url.pathname)) 
+    { 
+      return true; 
+    } else {
+      return false;
+    }
   },
   workbox.strategies.networkFirst({
     cacheName: 'rl:html',
