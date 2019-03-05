@@ -67,8 +67,8 @@ workbox.routing.registerRoute(
   function(event) {
     // 需要缓存的HTML路径列表
     if (~cacheList.indexOf(event.url.pathname)) 
-    { 
-      return true; 
+    {
+      return false;
     } else {
       return false;
     }

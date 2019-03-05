@@ -92,6 +92,7 @@ module.exports = {
     workboxOptions: {
       importWorkboxFrom: 'local',
       // offlineGoogleAnalytics: false,
+      excludeChunks: [/trading-strategy\//, /trading-strategy\/index.html/],
       swSrc: 'public/sw.js',
       include: [/\.png?/, /\.jpg?/, /\.svg?/, /\.js$/, /\.css$/, /cdn\./]
     },
