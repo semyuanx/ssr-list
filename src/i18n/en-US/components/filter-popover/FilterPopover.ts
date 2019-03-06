@@ -47,7 +47,7 @@ export default {
       filter: [
         'No limits',
         '<',
-        'Week',
+        'Weeks',
         'Weeks',
       ],
     },

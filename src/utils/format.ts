@@ -98,9 +98,6 @@ export const propFormat = function propFormat(val: string | number, prop: string
   if (prop == 'Equity') {
     return moneyFormat(val);
   }
-  if (prop == 'Weeks') {
-    return weekFormat(val);
-  }
   if (dotKeys.includes(prop)) {
     return numberFormat(val);
   }

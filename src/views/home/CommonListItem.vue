@@ -22,7 +22,7 @@ import CommonItem from '@/views/home/pc/CommonItem.vue';
 // import InvestManagerMobile from '@/views/home/mobile/InvestManagerMobile.vue';
 import mapKey from '@/constant/propMap';
 import {
-  propFormat, processConfig, gradeFormat, moneyFormat,
+  propFormat, processConfig, gradeFormat, moneyFormat, weekFormat,
 } from '@/utils/format';
 import { toLoginPage, toSubscribePage, toPersonalPage } from '@/utils/native';
 import { namespace } from 'vuex-class';
@@ -69,6 +69,9 @@ export default class Index extends Vue {
   formatVal(val: string|number, type: string): string | number {
     if (Array.isArray(val)) {
       return val.join('/');
+    }
+    if (type == 'Weeks') {
+      return weekFormat(val);
     }
     return propFormat(val, type);
   }
