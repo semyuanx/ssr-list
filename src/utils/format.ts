@@ -1,4 +1,5 @@
 import numeral from 'numeral';
+import { i18n } from '@/i18n';
 
 export const numberFormat = function numberFormat(val: string|number, format: number = 2) {
   if (!val) {
@@ -74,6 +75,9 @@ export const percentFormat = function percentFormat(val: string|number, format: 
   }
   return transformed && transformed.includes('NaN') ? '0%' : transformed;
 };
+export const weekFormat = function weekFormat(val: any) {
+  return val + i18n.t('message.propFormat.Week');
+};
 
 export const propFormat = function propFormat(val: string | number, prop: string) {
   const percentKeys = ['ROI', 'Roi', 'MaxRetracement'];
@@ -90,11 +94,17 @@ export const propFormat = function propFormat(val: string | number, prop: string
   ];
   if (percentKeys.includes(prop)) {
     return percentFormat(val);
-  } if (prop == 'Equity') {
+  }
+  if (prop == 'Equity') {
     return moneyFormat(val);
-  } if (dotKeys.includes(prop)) {
+  }
+  if (prop == 'Weeks') {
+    return weekFormat(val);
+  }
+  if (dotKeys.includes(prop)) {
     return numberFormat(val);
-  } if (moneyKeys.includes(prop)) {
+  }
+  if (moneyKeys.includes(prop)) {
     return val;
   }
   return val;

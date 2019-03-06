@@ -10,7 +10,7 @@ Vue.use(VueI18n);
 const lang = 'zh-CN';
 
 // eslint-disable-next-line
-export let i18n = {};
+export let i18n: any = {};
 
 export default function createI18n(l?: string, fbl: string = 'zh-CN') {
   if (i18n instanceof VueI18n) {
