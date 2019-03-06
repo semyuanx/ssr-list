@@ -53,8 +53,8 @@ export function createApp(ctx: any) {
   });
   Vue.mixin(envMixin);
 
-  // const i18n = createI18n(lang);
-  const i18n = createI18n('en-US');
+  const i18n = createI18n(lang);
+  // const i18n = createI18n('en-US');
   const store = createStore();
   const router = createRouter();
   router.beforeEach((to, from, next) => {
