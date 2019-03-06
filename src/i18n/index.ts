@@ -17,8 +17,7 @@ export default function createI18n(l?: string, fbl: string = 'zh-CN') {
     return i18n;
   }
   i18n = new VueI18n({
-    // locale: l || lang,
-    locale: 'en-US',
+    locale: l || lang,
     fallbackLocale: fbl || 'zh-CN',
     messages: {
       'zh-CN': cn,
