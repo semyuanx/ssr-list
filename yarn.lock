@@ -4038,7 +4038,7 @@ flush-write-stream@^1.0.0:
 
 "fmcomponents@git+ssh://git@gitlab.followme.com/Frontend/fmcomponents.git#production":
   version "2.0.0"
-  resolved "git+ssh://git@gitlab.followme.com/Frontend/fmcomponents.git#7aafaf049e59d2bc7765a728fcbe73bffee676c6"
+  resolved "git+ssh://git@gitlab.followme.com/Frontend/fmcomponents.git#c5b3adabb524ffcbe820e017a9f1d693f9d647cd"
   dependencies:
     "@fmfe/fm-vue-ui" "^2.1.1"
     babel-polyfill "^6.23.0"
