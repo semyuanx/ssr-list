@@ -9,7 +9,7 @@ export default {
   noData: 'No more data!',
   FollowMoney: 'FollowingProfit',
   Pips: 'FollowPips',
-  Roi: 'ROI',
+  Roi: 'Return',
   AveragePips: 'AveragePips',
   Orders: 'Order',
   Weeks: 'Week',
