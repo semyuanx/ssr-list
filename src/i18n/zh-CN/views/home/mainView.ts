@@ -8,6 +8,7 @@ export default {
   ckxq: '查看详情',
   mjdy: '编辑订阅',
   month: '月',
+  bjdy: '编辑订阅',
   mfdy: '免费订阅',
   jycl: '交易策略',
   sorryzjbngzzj: 'sorry, 自己不能关注自己',

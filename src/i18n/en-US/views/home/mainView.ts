@@ -10,9 +10,10 @@ export default {
   month: 'Month',
   mfdy: 'Follow (free)',
   jycl: 'Strategy',
-  sorryzjbngzzj: 'sorry, I can\'t pay attention to myself',
+  sorryzjbngzzj: "sorry, I can't pay attention to myself",
   qdyqxgz: 'Ok to cancel attention?',
   xzgs: 'The current trader has recently changed the password behavior, causing the trading signal to be interrupted and has been restricted to follow.',
   wlqqsb: 'The network request failed, please try again!',
   confirm: 'Confirm',
+  bjdy: 'Edit subscription',
 };
