@@ -325,6 +325,7 @@ export default class FilterPopover extends Vue {
   @Emit('filter')
   handleFilter() {
     const params = { ...this.rankParams, ...this.innerParams };
+
     this.setRankParams(params);
   }
 

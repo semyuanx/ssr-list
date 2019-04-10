@@ -10,9 +10,11 @@
         @toPersonal="toPersonalPc"
         @toLeftMore="publishProduct"
         @toJoinMore="toJoinMore"
-        @toMore="toMore" :subscribe="subscribe"
+        @toMore="toMore"
+        :subscribe="subscribe"
         :data="configData"
-        :description="description" />
+        :description="description"
+      />
     </div>
     <!-- <div class="fm-show-mobile">
       <CommonMobile @toMore="toMore" v-if="mobileConfigData.length"  :data="mobileConfigData" :description="description" />
@@ -54,7 +56,7 @@ const ManagerStore = namespace('ManagerStore');
 })
 export default class Index extends Vue {
   @Prop()
-  data:any;
+  data: any;
 
   @ManagerStore.Action
   getAllAccounts: any;
@@ -97,7 +99,7 @@ export default class Index extends Vue {
   }
 
   get mobileConfigData() {
-    const config:any = this.data;
+    const config: any = this.data;
     let data = [];
     if (Array.isArray(config.data)) {
       data = config.data.map((i: any) => ({
@@ -112,13 +114,14 @@ export default class Index extends Vue {
   }
 
   get configData() {
-    const config:any = this.data;
+    const config: any = this.data;
     let data = [];
     if (Array.isArray(config.data)) {
       data = config.data.slice(0, 4);
       data = data.map((i: any) => ({
         item: i,
         name: i.Name,
+        trader: i.Trader,
         danger: `${this.$i18n.t('risk')}<${percentFormat(i.FollowerMaxRisk)}`,
         confirmBtn: i.Status === 'Pending' ? this.$i18n.t('ljcy') : this.$i18n.t('ckxq'),
         data: [
@@ -131,7 +134,7 @@ export default class Index extends Vue {
   }
 
   get description() {
-    const { config }:any = this.data;
+    const { config }: any = this.data;
     return {
       linkUrl: '',
       textBtn: config.ChartText,
@@ -175,7 +178,8 @@ export default class Index extends Vue {
       });
     } else {
       // eslint-disable-next-line
-      const freeAccounts = account.filter((account: any) => account.IsMAMFree === true) || [];
+      const freeAccounts =
+        account.filter((val: any) => val.IsMAMFree === true) || [];
       if (freeAccounts.length <= 0) {
         this.$fmdialog({
           message: this.$i18n.t('nmykydmamjyyzh'),
@@ -209,10 +213,14 @@ export default class Index extends Vue {
         onConfirm: () => {},
       });
     }
-    return this.redirectTo('personalPage', {
-      userId: data.UserID,
-      index: data.AccountIndex,
-    }, true);
+    return this.redirectTo(
+      'personalPage',
+      {
+        userId: data.UserID,
+        index: data.AccountIndex,
+      },
+      true,
+    );
   }
 
   join(mamData: any) {
@@ -261,10 +269,14 @@ export default class Index extends Vue {
     }
 
     // 判断是否有相同经纪商的账户，并且是空闲的，否则去开户
-    const sameBrokerAccounts = accounts.filter((account: any) => account.BrokerId === mamInfo.Trader.BrokerID) || [];
+    const sameBrokerAccounts = accounts.filter(
+      (account: any) => account.BrokerId === mamInfo.Trader.BrokerID,
+    ) || [];
     if (sameBrokerAccounts.length == 0) {
       this.$fmdialog({
-        message: this.$i18n.t('nmykydmamgszzh', { account: mamInfo.Trader.BrokerName }),
+        message: this.$i18n.t('nmykydmamgszzh', {
+          account: mamInfo.Trader.BrokerName,
+        }),
         type: 'confirm',
         onConfirm: (flag: any) => {
           this.redirectTo('mamCreate', '', true);
@@ -275,10 +287,13 @@ export default class Index extends Vue {
       });
       return;
     }
-    const freeSameBrokerAccounts = sameBrokerAccounts.filter((account: any) => account.IsMAMFree === true) || [];
+    const freeSameBrokerAccounts = sameBrokerAccounts.filter((account: any) => account.IsMAMFree === true)
+      || [];
     if (freeSameBrokerAccounts.length == 0) {
       this.$fmdialog({
-        message: this.$i18n.t('nmykydmamgszzh', { account: mamInfo.Trader.BrokerName }),
+        message: this.$i18n.t('nmykydmamgszzh', {
+          account: mamInfo.Trader.BrokerName,
+        }),
         type: 'confirm',
         onConfirm: (flag: any) => {
           this.redirectTo('mamCreate', '', true);
@@ -287,9 +302,10 @@ export default class Index extends Vue {
       return;
     }
 
-
     // 判断是否有MAM跟随者账户
-    const mamFollowerAccounts = accounts.filter((account: any) => account.UserType === 2 && account.AccountType === 3) || [];
+    const mamFollowerAccounts = accounts.filter(
+      (account: any) => account.UserType === 2 && account.AccountType === 3,
+    ) || [];
     if (mamFollowerAccounts.length == 0) {
       this.$fmdialog({
         message: this.$i18n.t('wmamgszzh'),
@@ -301,7 +317,9 @@ export default class Index extends Vue {
       return;
     }
     // 判断是否有空闲的MAM跟随者账户
-    const mamFreeFollowerAccounts = mamFollowerAccounts.filter((account: any) => account.IsMAMFree === true) || [];
+    const mamFreeFollowerAccounts = mamFollowerAccounts.filter(
+      (account: any) => account.IsMAMFree === true,
+    ) || [];
     if (mamFreeFollowerAccounts.length == 0) {
       this.$fmdialog({
         message: this.$i18n.t('wgdzhkcycp'),

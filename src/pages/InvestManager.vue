@@ -4,6 +4,7 @@
       :callback="handleList"
       ref="infinitescroll"
     >
+    <SbHeader></SbHeader>
     <Navbar
       @change="handleChange"
       @startMam="startMam"
@@ -50,6 +51,7 @@ import { Component, Vue } from 'vue-property-decorator';
 import { Navbar, Panel, PanelPending } from '@/views/InvestManager';
 import FmCol from '@/components/grid/Col.vue';
 import FmRow from '@/components/grid/Row.vue';
+import SbHeader from '@/components/header/SbHeader.vue';
 import { namespace } from 'vuex-class';
 import InfiniteScroll from '@/components/infinite-scroll/InfiniteScroll.vue';
 import { getLoginStatus } from 'fmcomponents';
@@ -83,6 +85,7 @@ export interface Params {
     FmCol,
     FmRow,
     InfiniteScroll,
+    SbHeader,
   },
 })
 export default class Manager extends Vue {
@@ -112,7 +115,7 @@ export default class Manager extends Vue {
 
 
   public params: Params = {
-    status: 'InProcess',
+    status: '',
     pageSize: 10,
     pageIndex: 1,
   };
@@ -223,7 +226,7 @@ export default class Manager extends Vue {
     // overflow-x: hidden;
     max-width: 1180rem / @base-font;
     margin: 0 auto;
-    padding-top: 30rem / @base-font;
+    padding-top: 20rem / @base-font;
     .panel-wrapper {
       margin-top: 20rem / @base-font;
     }

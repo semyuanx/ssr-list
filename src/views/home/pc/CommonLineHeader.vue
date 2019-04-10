@@ -5,7 +5,7 @@
         <div class="content-header">
           <h2 class="h2-titile">{{title || ''}}</h2>
             <slot name="left">
-              <div :style="subTitle ? {} : {background: 'transparent'}" class="flex-center sub-title">
+              <div :style="subTitle ? {} : {background: 'transparent'}" class="title-bottom sub-title">
                   <span>{{ subTitle || '' }}</span>
               </div>
             </slot>
@@ -93,7 +93,7 @@ i[class^="icon-"] {
   vertical-align: text-bottom;
 }
 .header {
-  margin-bottom: 20px;
+  // margin-bottom: 20px;
   .flex-center {
       display: flex;
       align-items: center;
@@ -106,7 +106,7 @@ i[class^="icon-"] {
     width: 100%;
     color: #333333;
     .h2-titile {
-      font-size:24px;
+      font-size:20px;
     }
     .sub-title {
       // background-color: #fff;
@@ -115,7 +115,15 @@ i[class^="icon-"] {
       line-height: 26px;
       // padding: 0 15px;
       margin-left: 10px;
-      font-size: 12px;
+      font-size: 14px;
+      color: #999;
+      &.title-bottom{
+        display: flex;
+        align-items: flex-end;
+        span{
+          line-height: 24px;
+        }
+      }
     }
     .right-filter {
       justify-content: flex-end;
@@ -126,6 +134,7 @@ i[class^="icon-"] {
       }
       .right-click {
         cursor: pointer;
+        color: #666;
         &:hover {
           color: @default-color;
         }

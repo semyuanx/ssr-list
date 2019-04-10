@@ -65,12 +65,30 @@ export default class RankStore {
   @State(true)
   public useDefaultParams: boolean = true;
 
+  // 排行榜内部页面切换
+  @State(true)
+  public rankDomShow:boolean = true;
+
+  // 导航红点显示
+  @State(true)
+  public navTip:boolean = true;
+
+  // 表格type切换
+  @State('list')
+  public tableShowType:any;
+
   // @Set('pageIndex') public setPageIndex: any;
   @Mutation
   public setPageIndex(state: any, payload: any[]) {
     // console.log(payload, 'payload');
     state.pageIndex = payload;
   }
+
+  @Set('tableShowType') public setTableShowType:any;
+
+  @Set('navTip') public setNavTip:any;
+
+  @Set('rankDomShow') public setRankDomShow:any;
 
   @Set('rankListLoading') public setRankLoading: any;
 
@@ -184,9 +202,9 @@ export default class RankStore {
 
         params = { ...rankParams, ...params };
         // console.log(params, 'ppp***pp', useDefaultParams);
-        if (useDefaultParams) {
-          commit('setRankParams', params);
-        }
+        // if (useDefaultParams) {
+        //   commit('setRankParams', params);
+        // }
       }
       return res;
     });

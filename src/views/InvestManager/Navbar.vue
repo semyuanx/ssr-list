@@ -1,6 +1,6 @@
 <template>
   <article class="navbar">
-    <ul class="navbar-item navbar-left">
+    <!-- <ul class="navbar-item navbar-left">
       <li
         class="navbar-left-item"
         :class="{active:currentTag=== item.value}"
@@ -10,15 +10,21 @@
       >
         <a href="javascript:;">{{item.name}}</a>
       </li>
-    </ul>
-    <ul class="navbar-item navbar-right">
-      <li class="navbar-right-item" @click="startMam">
+    </ul> -->
+    <ul class="navbar-item navbar-left">
+      <li
+        class="navbar-right-item"
+        @click="startMam"
+      >
         <a href="javascript:;">
-          <i class="fm-fonticon icon-user_24px"></i>
+          <i class="fm-fonticon icon-plus_24px"></i>
           <span>{{$t('createAccount')}}</span>
         </a>
       </li>
-      <li class="navbar-right-item" @click="startProduct">
+      <li
+        class="navbar-right-item"
+        @click="startProduct"
+      >
         <a href="javascript:;">
           <i class="fm-fonticon  icon-flag_24px"></i>
           <span>{{$t('launchedProduct')}}</span>
@@ -85,12 +91,12 @@ export default class Navbar extends Vue {
 }
 .navbar {
   background-color: #fff;
-  .height(60);
+  .height(90);
   width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  font-size: 16rem / @base-font;
+  font-size: 14rem / @base-font;
   font-family: MicrosoftYaHei;
   color: rgba(51, 51, 51, 1);
   padding: 0 26rem / @base-font;
@@ -130,7 +136,7 @@ export default class Navbar extends Vue {
           content: "";
           width: 100%;
           height: 2px;
-          background: rgba(255, 98, 0, 1);
+          background: rgb(138, 118, 105);
           position: absolute;
           bottom: 0;
           left: 0;
@@ -142,8 +148,18 @@ export default class Navbar extends Vue {
     justify-content: flex-end;
     &-item {
       align-items: center;
-      i,span {
+      border: 1px solid #cccccc;
+      padding: 5rem / @base-font 10rem / @base-font;
+      border-radius: 30rem / @base-font;
+      i {
         color: @default-color;
+        margin-right: 4rem / @base-font;
+      }
+      &:hover {
+        border-color: @default-color;
+        span {
+          color: @default-color;
+        }
       }
     }
   }

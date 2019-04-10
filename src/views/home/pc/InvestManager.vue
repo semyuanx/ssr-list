@@ -1,7 +1,7 @@
 <template>
   <div class="invest-container">
     <div class="header">
-      <CommonLineHeader
+      <!-- <CommonLineHeader
         @rightClick="toMore"
         subIcon="flag_24px"
         rightIcon="right_24px"
@@ -13,14 +13,23 @@
           <span>{{ description.subTitle || '' }}</span>
           <i :class="`icon-${subRespIcon}`"></i>
         </div>
+      </CommonLineHeader> -->
 
-        <!-- <template slot="right">
-          <span>{{ rightTitle || '' }}</span>
-          <i :class="`icon-right_24px`"></i>
-        </template> -->
+      <CommonLineHeader
+        @rightClick="toMore"
+        subIcon="flag_24px"
+        rightIcon="right_24px"
+        :rightTitle="$t('message.more')"
+        :subTitle="description.filterText"
+        :title="description.title">
+        <div @click="toLeftMore" v-if="description.needLeftSlot" slot="left">
+          <!-- <i :class="`icon-flag_24px`"></i>
+          <span>{{ description.subTitle || '' }}</span>
+          <i :class="`icon-${subRespIcon}`"></i> -->
+        </div>
       </CommonLineHeader>
     </div>
-    <div class="invest-content">
+    <!-- <div class="invest-content">
       <div class="left" :style="`background-image: url(${description.background})`">
         <div class="left-desc"><span class="desc-title">{{ description.textTitle }}</span></div>
         <div>
@@ -49,13 +58,21 @@
               </LineCard>
             </div>
           </template>
-
-          <!-- <div class="list-item">
-            <LineCard />
-          </div> -->
         </div>
       </div>
+    </div> -->
+
+    <div class="invest-table">
+      <div class="list-item" v-for="item in data.data" :key="item.avatar + item.index">
+          <LineCard @showCard="showCard($event, item)" @hideCard="hideCard" @toPersonal="toPersonal" @subscribe="handleSub" :data="item">
+            <div v-if="data.needSlot" class="prod-desc" slot="left">
+                  <div @click="toPersonal(item)" class="prod-name">{{item.trader.Nickname || ''}}<span>{{item.danger || ''}}</span></div>
+                  <div class="prod-danger" :style="`background-image:url(${item.trader.Signature})`">{{item.trader.BrokerName || ''}}</div>
+                </div>
+          </LineCard>
+      </div>
     </div>
+
   </div>
 </template>
 <script lang="ts">
@@ -65,8 +82,11 @@ import {
 // import { namespace } from 'vuex-class';
 
 import CommonLineHeader from './CommonLineHeader.vue'; // @ is an alias to /src
-import LineCard from '@/components/line-card/card.vue'; // @ is an alias to /src
-import LittleCard from '@/components/little-card/card.vue'; // @ is an alias to /src
+// import LineCard from '@/components/line-card/card.vue'; // @ is an alias to /src
+import LineCard from '@/components/line-card1/card.vue'; // @ is an alias to /src
+
+// import LittleCard from '@/components/little-card/card.vue'; // @ is an alias to /src
+// import ChartCard from '@/components/chart-card/card.vue';
 import zhCN from '@/i18n/zh-CN/views/home/pc/InvestManager';
 import zhTW from '@/i18n/zh-TW/views/home/pc/InvestManager';
 import enUS from '@/i18n/en-US/views/home/pc/InvestManager';
@@ -76,7 +96,6 @@ import zhHK from '@/i18n/zh-HK/views/home/pc/InvestManager';
   components: {
     CommonLineHeader,
     LineCard,
-    LittleCard,
   },
   i18n: {
     messages: {
@@ -252,5 +271,16 @@ i[class^="icon-"] {
       }
     }
   }
+
+  .invest-table{
+    .list-item{
+      background-color: #ffffff;
+      &:nth-child(2n){
+        background-color: #fafafa;
+      }
+    }
+  }
+
+
 }
 </style>

@@ -27,6 +27,7 @@ import {
 import { toLoginPage, toSubscribePage, toPersonalPage } from '@/utils/native';
 import { namespace } from 'vuex-class';
 import { needHighlight } from '@/constant/propFormat';
+import eventBus from '@/utils/event';
 import zhCN from '@/i18n/zh-CN/views/home/CommonListItem';
 import zhTW from '@/i18n/zh-TW/views/home/CommonListItem';
 import enUS from '@/i18n/en-US/views/home/CommonListItem';
@@ -108,10 +109,14 @@ export default class Index extends Vue {
     const params = processConfig(CondCfg);
 
     this.setUseDefaultParams(false);
-    this.setRankParams(params);
-    this.$nextTick(() => {
-      this.$router.push({ name: 'rankList' });
-    });
+
+    // this.setRankParams(params);
+    // alert(JSON.stringify(params))
+    eventBus.$emit('changeRankParams', params);
+    window.scrollTo(0, 100);
+    // this.$nextTick(() => {
+    //   this.$router.push({ name: 'rankList' });
+    // });
   }
 
   get configData() {
@@ -154,6 +159,7 @@ export default class Index extends Vue {
           grade: gradeFormat(item.GradeScore),
           isShowPta: showPta && item.IsPTA,
           item,
+          subscribers: item.Subscribers,
           data: showData.map((it: any) => {
             const ival: any = item[it];
             return {

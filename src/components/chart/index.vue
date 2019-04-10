@@ -102,8 +102,9 @@ export default {
       that.target = Highcharts.chart(this.$el.querySelector('.small-chart-box'), {
         chart: {
           type: 'areaspline',
-          plotBackgroundImage: `${this.cdn}/images/smallBackImg.png`,
+          // plotBackgroundImage: `${this.cdn}/images/smallBackImg.png`,
           spacing: [0, 0, 0, 0],
+          backgroundColor: 'rgba(0,0,0,0)',
           events: {
             click() {
               that.show = true;

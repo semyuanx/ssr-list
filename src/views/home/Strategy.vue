@@ -19,7 +19,7 @@ const RankStore = namespace('RankStore');
 
 @Component({
   components: {
-    Strategy: () => import('@/views/home/pc/Strategy.vue'),
+    Strategy: () => import('@/views/home/pc/Strategy2.vue'),
     // StrategyMobile,
   },
 })

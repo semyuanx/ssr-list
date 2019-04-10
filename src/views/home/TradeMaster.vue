@@ -1,7 +1,7 @@
 <template>
   <div class="trader-master">
-    <div class="fm-show-pc">
-      <InvestManager
+    <div class="fm-show-pc" v-if="configData.data.length > 1">
+      <!-- <InvestManager
         @hideCard="hideCard"
         @showCard="showCard"
         @toPersonal="toPersonalPc"
@@ -9,7 +9,18 @@
         @toMore="toMore"
         :subscribe="subscribe"
         v-if="configData.data.length > 1"
-        :data="configData" :description="description" />
+        :data="configData" :description="description" /> -->
+
+        <TradeMaster
+          @hideCard="hideCard"
+          @showCard="showCard"
+          @toPersonal="toPersonalPc"
+          @toJoinMore="toJoinMore"
+          @toMore="toMore"
+          :subscribe="subscribe"
+          :data="configData"
+          :description="description"
+        ></TradeMaster>
     </div>
     <!-- <div class="fm-show-mobile">
       <CommonMobile @toPersonal="toPersonal" @toMore="toMoreMobile" v-if="mobileConfigData.length" :data="mobileConfigData" :description="description" />
@@ -26,6 +37,8 @@ import { toPersonalPage } from '@/utils/native';
 import mapKey from '@/constant/propMap';
 import { needHighlight } from '@/constant/propFormat';
 
+import TradeMaster from '@/views/home/pc/TradeMaster1.vue';
+
 import zhCN from '@/i18n/zh-CN/views/home/TradeMaster';
 import zhTW from '@/i18n/zh-TW/views/home/TradeMaster';
 import enUS from '@/i18n/en-US/views/home/TradeMaster';
@@ -36,6 +49,7 @@ import zhHK from '@/i18n/zh-HK/views/home/TradeMaster';
 @Component({
   components: {
     InvestManager,
+    TradeMaster,
     // CommonMobile,
   },
   i18n: {

@@ -15,7 +15,7 @@
         </template> -->
       </CommonLineHeader>
     </div>
-    <div class="invest-content">
+    <!-- <div class="invest-content">
       <div class="left" v-lazyLoad="description.background" :style1="`background-image: url(${description.background})`">
         <div class="left-desc"><span class="desc-title">{{ description.textTitle }}</span></div>
         <div>
@@ -34,11 +34,12 @@
               <LineCard @showCard="showCard($event, item)" @hideCard="hideCard" @toPersonal="toPersonal" @subscribe="handleSub" :data="item" />
             </div>
           </template>
-
-          <!-- <div class="list-item">
-            <LineCard />
-          </div> -->
         </div>
+      </div>
+    </div> -->
+    <div class="invest-list">
+      <div class="list-item" v-for="(item,key) in data" :key="key">
+        <ChartCard @showCard="showCard($event, item)"  @hideCard="hideCard" @toPersonal="toPersonal" @subscribe="handleSub" :item="item" />
       </div>
     </div>
   </div>
@@ -50,8 +51,10 @@ import {
 import { namespace } from 'vuex-class';
 
 import CommonLineHeader from './CommonLineHeader.vue'; // @ is an alias to /src
-import LineCard from '@/components/line-card/card.vue'; // @ is an alias to /src
-import LittleCard from '@/components/little-card/card.vue'; // @ is an alias to /src
+// import LineCard from '@/components/line-card/card.vue'; // @ is an alias to /src
+// import LittleCard from '@/components/little-card/card.vue'; // @ is an alias to /src
+
+import ChartCard from '@/components/chart-card/card.vue';
 
 import zhCN from '@/i18n/zh-CN/message';
 import zhTW from '@/i18n/zh-TW/message';
@@ -63,8 +66,7 @@ import { loadAsyncImage } from '@/utils/util';
 @Component({
   components: {
     CommonLineHeader,
-    LineCard,
-    LittleCard,
+    ChartCard,
   },
   i18n: {
     messages: {
@@ -212,6 +214,13 @@ export default class Index extends Vue {
         flex-direction: row;
         flex-wrap: wrap;
       }
+    }
+  }
+  .invest-list{
+    display: flex;
+    justify-content: space-between;
+    .list-item{
+      padding-right: 12px;
     }
   }
 }

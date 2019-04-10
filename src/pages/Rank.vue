@@ -1,11 +1,19 @@
 <template>
   <div class="rank-container">
-    <div>
+    <!-- <div>
       <FilterHeader @filter="handleFilter" />
-    </div>
+    </div> -->
     <div style="padding-bottom:40px;">
-      <List :showProps="showProps" :getData="getData" @sortChange="sortChange" />
-      <div class="listNone" v-if="!hasMore && TotalCount > 0">{{ $t('noData') }}</div>
+      <List
+        :showProps="showProps"
+        :getData="getData"
+        :sortTitleData="sortTitleData"
+        @sortChange="sortChange"
+      />
+      <div
+        class="listNone"
+        v-if="!hasMore && TotalCount > 0"
+      >{{ $t('noData') }}</div>
     </div>
   </div>
 </template>
@@ -14,8 +22,6 @@ import { Component, Vue, Watch } from 'vue-property-decorator';
 import { namespace } from 'vuex-class';
 import throttle from 'lodash.throttle';
 import isequal from 'lodash.isequal';
-
-import FilterHeader from '@/views/rank-list/FilterHeader.vue';
 import List from '@/views/rank-list/List.vue';
 import { getElementTop, animate } from '@/utils/util';
 import zhCN from '@/i18n/zh-CN/pages/Rank';
@@ -29,7 +35,6 @@ let isEnterLoad: boolean = false;
 
 @Component({
   components: {
-    FilterHeader,
     List,
   },
   i18n: {
@@ -44,6 +49,9 @@ let isEnterLoad: boolean = false;
 export default class RankList extends Vue {
   @RankStore.State
   rankListLoading: any;
+
+  @RankStore.State
+  rankDomShow: any;
 
   @RankStore.Action
   getRankList: any;
@@ -90,9 +98,12 @@ export default class RankList extends Vue {
 
   sortArr: any = [];
 
+  sortTitleData: any = { orderby: null, order: null };
+
   startQueue: any = false;
 
   sortChange({ prop, order: ord }: any) {
+    this.sortTitleData = { prop, order: ord };
     const order = ord === 'ascending' ? 0 : 1;
     const params = {
       orderby: prop,
@@ -125,9 +136,7 @@ export default class RankList extends Vue {
     }
     this.resetIndex();
     this.setParams(params);
-    this.getRankList(
-      this.refactor(params),
-    ).then(() => {
+    this.getRankList(this.refactor(params)).then(() => {
       this.getSortData();
     });
   }
@@ -150,7 +159,10 @@ export default class RankList extends Vue {
         label: this.$i18n.t('maxBackRate'),
         val: this.refactorWord('%', this.rankParams.Retracement),
       },
-      { label: this.$i18n.t('syl'), val: this.refactorWord('%', this.rankParams.Roi) },
+      {
+        label: this.$i18n.t('syl'),
+        val: this.refactorWord('%', this.rankParams.Roi),
+      },
       { label: this.$i18n.t('jjs'), val: this.rankParams.brokerId },
     ]);
   }
@@ -176,10 +188,12 @@ export default class RankList extends Vue {
     return unit === '$' ? unit + val : val + unit;
   }
 
-  @Watch('rankParams', { deep: true })
-  handleRefresh() {
+  @Watch('rankParams')
+  handleRefresh(val: any) {
     this.resetIndex();
-    this.getPageData();
+    if (JSON.stringify(val) !== '{}') {
+      this.getPageData();
+    }
   }
 
   resetIndex() {
@@ -215,21 +229,20 @@ export default class RankList extends Vue {
     if (!this.hasMore) {
       return new Promise(() => ({}));
     }
-    return this.getRankList(params)
-      .then((res: any) => {
-        if (res && !res.error) {
-          const { List: list } = res;
-          _this.TotalCount = res.TotalCount;
-          console.log(list.length, size, 'List.length');
-          if (list.length < size) {
-            this.hasMore = false;
-          } else {
-            this.updatePageIndex();
-          }
+    return this.getRankList(params).then((res: any) => {
+      if (res && !res.error) {
+        const { List: list } = res;
+        _this.TotalCount = res.TotalCount;
+        console.log(list.length, size, 'List.length');
+        if (list.length < size) {
+          this.hasMore = false;
+        } else {
+          this.updatePageIndex();
         }
-        this.dataLoading = false;
-        return res;
-      });
+      }
+      this.dataLoading = false;
+      return res;
+    });
   }
 
   fixHeader() {
@@ -238,6 +251,11 @@ export default class RankList extends Vue {
     animate(() => {
       this.needFixTableHeader(scrollTop);
     });
+  }
+
+  beforeDestroy() {
+    // alert(123);
+    window.removeEventListener('scroll', () => {});
   }
 
   mounted() {
@@ -251,7 +269,12 @@ export default class RankList extends Vue {
 
     window.addEventListener('scroll', () => {
       fixThrottle();
-      if (isEnterLoad || this.rankListLoading || !this.hasMore) return;
+      if (
+        isEnterLoad
+        || this.rankListLoading
+        || !this.hasMore
+        || this.rankDomShow
+      ) return;
       isEnterLoad = true;
       loadThrottle();
     });
@@ -264,7 +287,6 @@ export default class RankList extends Vue {
       throttle(this.scrollCb, 200)();
     });
   }
-
 
   scrollCb() {
     animate(() => {
@@ -317,23 +339,32 @@ export default class RankList extends Vue {
     }
   }
 
+  fixDomStyle(dom: any, scrollTop: any) {
+    if (dom) {
+      const top = getElementTop(dom);
+      if (scrollTop > top) {
+        const navHeight = this.getTopNavHeight();
+        this.setStyleProp(dom, 'fixed', 'position');
+        this.setStyleProp(dom, `${navHeight}px`, 'top');
+        this.setStyleProp(dom, 200, 'zIndex');
+      } else {
+        this.setStyleProp(dom, 'unset', 'position');
+      }
+    }
+  }
+
   needFixTableHeader(scrollTop: number) {
     const el = this.$el;
     if (el) {
       const rankTable = el.querySelector('.rank-table');
+      const rankCardTable = el.querySelector('.card-table-header');
       if (rankTable) {
-        const header: any = rankTable.querySelector('.el-table__header-wrapper');
-        if (header) {
-          const top = getElementTop(header);
-          if (scrollTop > top) {
-            const navHeight = this.getTopNavHeight();
-            this.setStyleProp(header, 'fixed', 'position');
-            this.setStyleProp(header, `${navHeight}px`, 'top');
-            this.setStyleProp(header, 200, 'zIndex');
-          } else {
-            this.setStyleProp(header, 'unset', 'position');
-          }
-        }
+        const header: any = rankTable.querySelector(
+          '.el-table__header-wrapper',
+        );
+        this.fixDomStyle(header, scrollTop);
+      } else {
+        this.fixDomStyle(rankCardTable, scrollTop);
       }
     }
   }
@@ -343,7 +374,10 @@ export default class RankList extends Vue {
     const windowHeight = this.getWinHeight();
     const docHeight = this.getDocHeight();
     const footerEl = document.getElementsByClassName('page-footer')[0];
-    const allHeight = scrollTop + windowHeight + (this.throttleHeight || 10) + footerEl.clientHeight || 0;
+    const allHeight = scrollTop
+        + windowHeight
+        + (this.throttleHeight || 10)
+        + footerEl.clientHeight || 0;
     if (allHeight > docHeight) {
       return true;
     }
@@ -360,7 +394,7 @@ export default class RankList extends Vue {
 
   tdHeight: number = 50;
 
-  computeTrHeight(n?:number) {
+  computeTrHeight(n?: number) {
     const tableBody = document.querySelector('.el-table__body');
     let height = 50;
     if (tableBody) {
@@ -393,7 +427,10 @@ export default class RankList extends Vue {
       ...params,
     };
 
-    const brokerList = this.checkedBrokers.length ? { brokerId: this.checkedBrokers.join(';') } : {};
+    // const brokerList = this.checkedBrokers.length ? { brokerId: this.checkedBrokers.join(';') } : {};
+    const brokerList = this.rankParams.brokerId && this.rankParams.brokerId.length
+      ? { brokerId: this.rankParams.brokerId.join(';') }
+      : {};
     const processParam = this.preProcessParams(obj);
     getParams = { ...processParam, ...getParams, ...brokerList };
     if ('minSubscribers' in getParams) {
@@ -414,7 +451,7 @@ export default class RankList extends Vue {
   allParams: any = {};
 
   @Watch('allParams')
-  allParamsChanged(v:any) {
+  allParamsChanged(v: any) {
     console.log('allParams has changed', performance.now(), v);
   }
 
@@ -431,9 +468,13 @@ export default class RankList extends Vue {
               const split: any = val.split('-');
               if (split && split.length) {
                 // eslint-disable-next-line
-                params[`min${i}`] = needPercent.includes(i) ? (split[0] / 100): split[0];
+                params[`min${i}`] = needPercent.includes(i)
+                  ? split[0] / 100
+                  : split[0];
                 // eslint-disable-next-line
-                params[`max${i}`] = needPercent.includes(i) ? (split[1] / 100): split[1];
+                params[`max${i}`] = needPercent.includes(i)
+                  ? split[1] / 100
+                  : split[1];
               }
             } else {
               params[i] = val;
@@ -452,9 +493,9 @@ export default class RankList extends Vue {
 </script>
 <style lang="less" scoped>
 .rank-container {
-  // padding-top: 20px;
+  margin-top: 12px;
 }
-.listNone{
+.listNone {
   text-align: center;
   font-size: 14px;
   padding-top: 20px;

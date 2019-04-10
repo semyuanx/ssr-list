@@ -212,6 +212,7 @@ export default class mainView extends Vue {
               confirmBtn: item.Status === 'Pending' ? this.$i18n.t('ljcy') : this.$i18n.t('ckxq'),
               index: item.AccountIndex,
               brokerName: item.BrokerName,
+              subscribers: item.Subscribers,
               item,
               data: propData,
             };
@@ -245,6 +246,7 @@ export default class mainView extends Vue {
             isShowPta: showPta && item.IsPTA,
             strategyDesc: `${this.$i18n.t('jycl')}: ${item.StrategyDesc}`,
             brokerName: item.BrokerName,
+            subscribers: item.Subscribers,
             item,
             data: show2Data.map((it: any) => {
               const ival: any = item[it];

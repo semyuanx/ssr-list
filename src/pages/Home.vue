@@ -1,15 +1,15 @@
 <template>
   <div class="home">
-    <div>
-      <MainView />
-    </div>
-    <router-link
+      <SbHeader></SbHeader>
+      <RankFilter></RankFilter>
+      <MainView v-if="rankDomShow" />
+      <Rank v-if="!rankDomShow"></Rank>
+    <!-- <router-link
       class="super-filter-button fm-show-mobile"
       :to="{name:'rankList'}"
       :event="[]"
       @click.prevent.stop.native="openWebView({name:'rankList'})"
-    ><i class="icon-filtrate_24px"></i> {{$t('gjsx')}}</router-link>
-
+    ><i class="icon-filtrate_24px"></i> {{$t('gjsx')}}</router-link> -->
   </div>
 </template>
 
@@ -19,12 +19,17 @@ import { namespace, Action } from 'vuex-class';
 
 import { openWebView } from '@/utils/native';
 import MainView from '@/views/home/mainView.vue';
+import SbHeader from '@/components/header/SbHeader.vue';
+import RankFilter from '@/views/rank-filter/rankFilter.vue';
+// import Rank from '@/pages/Rank.vue';
+
 import zhCN from '@/i18n/zh-CN/pages/Home';
 import zhTW from '@/i18n/zh-TW/pages/Home';
 import zhHK from '@/i18n/zh-HK/pages/Home';
 import enUS from '@/i18n/en-US/pages/Home';
 
 const HomeStore = namespace('HomeStore');
+const RankStore = namespace('RankStore');
 
 @Component({
   i18n: {
@@ -37,6 +42,9 @@ const HomeStore = namespace('HomeStore');
   },
   components: {
     MainView,
+    Rank: () => import('@/pages/Rank.vue'),
+    SbHeader,
+    RankFilter,
   },
 })
 export default class Home extends Vue {
@@ -52,7 +60,13 @@ export default class Home extends Vue {
   @HomeStore.Action
   getMasterFollower: any;
 
-  openWebView:any = openWebView;
+  @RankStore.State
+  rankDomShow: any;
+
+  @RankStore.Mutation
+  setRankDomShow:any;
+
+  openWebView: any = openWebView;
 
   public params: any = {
     status: 'InProcess',
@@ -74,6 +88,10 @@ export default class Home extends Vue {
       pageField: 'FollowMoney',
       pageSort: 'desc',
     });
+  }
+
+  beforeDestroy() {
+    this.setRankDomShow(true);
   }
 }
 </script>

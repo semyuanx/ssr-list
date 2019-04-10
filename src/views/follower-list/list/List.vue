@@ -9,6 +9,7 @@
         :header-cell-class-name="getHeaderCellClassName"
         @sort-change="handleSortChange"
         current-row-key="UserID"
+        :default-sort="sortTitleData"
       >
         <el-table-column
           :label="$t('jbxx')"
@@ -40,22 +41,24 @@
                   <img
                     @click="toUserPage(scope.row)"
                     @mouseenter.self="showCard($event, scope.row)"
-                    @mouseleave="personCard.hide()"
+                    @mouseleave="hideCard"
                     onerror="this.src='//cdn.followme.com/images/default_avata.png'"
-                    :src="base+'/Avata/'+scope.row.UserID + '?x-oss-process=image/resize,m_fill,h_50,w_50'" />
+                    :src="base+'/Avata/'+scope.row.UserID + '?x-oss-process=image/resize,m_fill,h_50,w_50'"
+                  />
                 </div>
                 <div class="loading-first trader-info">
                   <div
-                  @click="toUserPage(scope.row)"
-                  @mouseenter.self="showCard($event, scope.row)"
-                  @mouseleave="personCard.hide()"
-                  class="info-1"><span class="nick-name">{{scope.row.NickName}}</span> #{{scope.row.AccountIndex}}</div>
+                    @click="toUserPage(scope.row)"
+                    @mouseenter.self="showCard($event, scope.row)"
+                    @mouseleave="hideCard"
+                    class="info-1"
+                  ><span class="nick-name">{{scope.row.NickName}}</span> #{{scope.row.AccountIndex}}</div>
                   <div class="info-2"><span>
-                    {{
+                      {{
                       Array.isArray(scope.row.AccountList) ?
                       (scope.row.AccountList.find((i) => i && i.AccountIndex === scope.row.AccountIndex) || {})['BrokerName']
                       : ''
-                    }}</span>
+                      }}</span>
                   </div>
                 </div>
               </div>
@@ -125,6 +128,22 @@
           prop="Price"
           align="center"
         >
+          <template
+            slot="header"
+          >
+            <div class="custom-sort-icon">
+              <span
+                :class="{'on':tableShowType==='list'}"
+                @click="setTableShowType('list')"
+                class="icon-hamburger_24px"
+              ></span>
+              <span
+                :class="{'on':tableShowType==='card'}"
+                @click="setTableShowType('card')"
+                class="icon-order-form_24px"
+              ></span>
+            </div>
+          </template>
           <!-- eslint-disable-next-line -->
           <template slot-scope="scope">
             <div
@@ -132,7 +151,7 @@
               class="custom-display-row-loading"
             ></div>
             <div
-              @click="handleSub($event, scope.row)"
+              @click="handleSub($event, scope.row,'table')"
               v-else
               class="custom-display-row-sub"
             >
@@ -155,11 +174,12 @@
         </template>
         <template slot="append">
           <!-- <div class="loading-container"> -->
-          <div v-if="dateIsLoading && this.data && this.data.length" class="loading-container">
+          <div
+            v-if="dateIsLoading && this.data && this.data.length"
+            class="loading-container"
+          >
             <div class="loading-lists">
-              <div
-                class="custom-display-row-loading-1"
-              >
+              <div class="custom-display-row-loading-1">
                 <div class="trader-container-row">
                   <div class="loading-first loading-avatar">
                   </div>
@@ -170,9 +190,7 @@
                 </div>
               </div>
             </div>
-             <div
-              class="custom-display-row-loading"
-            ></div>
+            <div class="custom-display-row-loading"></div>
           </div>
         </template>
       </el-table>
@@ -188,12 +206,12 @@ import { namespace } from 'vuex-class';
 import { loadAuth } from 'fmcomponents/src/utils';
 import { getLoginStatus } from 'fmcomponents';
 import FollowBox from 'fmcomponents/src/components/follow';
-import personCard from 'fmcomponents/src/components/personcard';
 import Chart from '@/components/chart/index.vue';
 import SvgIcon from '@/components/svg/index.ts';
 import {
   // numberFormat,
-  propFormat, moneyFormat,
+  propFormat,
+  moneyFormat,
 } from '@/utils/format';
 import { getElementTop, getElementLeft } from '@/utils/util';
 import { Table, TableColumn } from 'element-ui';
@@ -204,13 +222,12 @@ import zhTW from '@/i18n/zh-TW/views/follower-list/list/List';
 import enUS from '@/i18n/en-US/views/follower-list/list/List';
 import zhHK from '@/i18n/zh-HK/views/follower-list/list/List';
 
-
 const RankStore = namespace('RankStore');
 const FollowerStore = namespace('FollowerStore');
 
 const isEnterLoad = false;
 
-@Component(({
+@Component({
   i18n: {
     messages: {
       'zh-CN': zhCN,
@@ -231,14 +248,25 @@ const isEnterLoad = false;
       return props.includes(prop) ? moneyFormat(val) : val;
     },
     propFormat: (val: number, prop: string) => propFormat(val, prop),
-    checkIfFollow: (uid: string | number, attentionList: any, followList: any, newi18n: any) => {
+    checkIfFollow: (
+      uid: string | number,
+      attentionList: any,
+      followList: any,
+      newi18n: any,
+    ) => {
       let inAttention = false;
       let inFollow = false;
       const status = newi18n.t('followStatus');
-      if (Array.isArray(attentionList) && (attentionList.includes(uid) || attentionList.includes(`${uid}`))) {
+      if (
+        Array.isArray(attentionList)
+        && (attentionList.includes(uid) || attentionList.includes(`${uid}`))
+      ) {
         inAttention = true;
       }
-      if (Array.isArray(followList) && (followList.includes(uid) || followList.includes(`${uid}`))) {
+      if (
+        Array.isArray(followList)
+        && (followList.includes(uid) || followList.includes(`${uid}`))
+      ) {
         inFollow = true;
       }
       // console.log(inFollow, inAttention, 'inAttention');
@@ -251,12 +279,15 @@ const isEnterLoad = false;
       return status[id];
     },
   },
-} as any))
+} as any)
 export default class List extends Vue {
   isLoading: boolean = false;
 
   @FollowerStore.State
   followersLoading: any;
+
+  @Prop()
+  sortTitleData:any;
 
   @Prop({
     type: Array,
@@ -264,18 +295,17 @@ export default class List extends Vue {
   })
   data: any;
 
+  @Prop()
+  tableShowType:any;
+
   @Prop({
     type: Array,
     default: () => [],
   })
   showProps: any;
 
-  data1: any = [];
-
   @Prop()
   getData: any;
-
-  personCard: any = personCard;
 
   get dataList() {
     if (this.followersLoading) {
@@ -296,59 +326,19 @@ export default class List extends Vue {
   }
 
   toUserPage(data: any) {
-    const { UserID, AccountIndex } = data;
-    this.redirectTo('personalPage', { userId: UserID, index: AccountIndex }, true);
+    this.$emit('toUserPage', data);
   }
 
   showCard(e: any, item: any) {
-    // eslint-disable-next-line
-    const _this = this;
-    const top = getElementTop(e.target);
-    const left = getElementLeft(e.target);
-    let ids = item.UserID;
-    if (item.AccountIndex) {
-      ids += `_${item.AccountIndex}`;
-    }
-    personCard.show({
-      id: ids,
-      position: {
-        top: top || e.target.offsetTop,
-        left: left || e.target.offsetLeft,
-        height: e.target.offsetHeight,
-      },
-      callback(val: any) {
-        return new Promise((res) => {
-          if (res) {
-            console.log('res:', val);
-            if (val.code === 'SUCCESS' || val.code === 0) {
-              _this.getFollowAndAttention();
-            } else {
-              // 失败
-            }
-          }
-        });
-      },
-    });
+    this.$emit('showCard', e, item);
   }
 
-  // 获取登录用户的跟随列表和关注列表
-  getFollowAndAttention() {
-    getLoginStatus().then((user: any) => {
-      if (user.isLogin) {
-        this.getRelations()
-          .then((res: any) => {
-            this.followList = res.follows;
-            this.attentionList = res.attentions;
-          })
-          .catch((err: any) => {
-            console.log('获取登录用户的跟随列表和关注列表失败', err);
-          });
-      }
-    });
+  hideCard() {
+    this.$emit('hideCard');
   }
 
   mounted() {
-    this.getFollowAndAttention();
+    console.log(this.showProps, 'yyyyyiiiii');
   }
 
   getRowClassName({ row, rowIndex }: any) {
@@ -373,68 +363,22 @@ export default class List extends Vue {
 
   winHeight: any = 800;
 
-  @RankStore.Action
-  getRelations: any;
+  @Prop()
+  attentionList: any;
 
-  @RankStore.Action
-  addOrCancelAttention: any;
+  @Prop()
+  followList: any;
 
-  attentionList: any = [];
-
-  followList: any = [];
-
-  selfPwdChanged: any = [];
-
-  handleSub($event: any, item: any) {
-    const { attentionList } = this;
-    const { UserID: uid } = item;
-    const _this = this;
-    if (Array.isArray(attentionList) && (attentionList.includes(uid) || attentionList.includes(`${uid}`))) {
-      return this.$fmdialog({
-        message: _this.$i18n.t('comintent') as string,
-        onConfirm: () => {
-          this.attention(item, $event);
-        },
-      });
-    }
-    return this.attention(item, $event);
-  }
-
-  attention(user: any, e: any) {
-    const _this = this;
-    const userId = user.UserID;
-    const params = {
-      toUserId: userId,
-    };
-    const { attentionList } = this;
-
-    getLoginStatus().then((user1: any) => {
-      if (user1.isLogin) {
-        const uid = user1.id;
-        this.log(attentionList, uid, 'attentionList');
-        const selfId = [uid, `${uid}`];
-        if (selfId.includes(userId)) {
-          return this.$fmdialog({
-            message: _this.$i18n.t('sorryToMe') as string,
-            onConfirm: () => {
-              // this.toNoticeOrUnNoticeOne(params);
-            },
-          });
-        }
-        // e.target.className = e.target.className === 'follow' ? 'follow attation-active' : 'follow';
-        e.target.innerHTML = e.target.innerHTML === this.$t('message.attened') ? this.$t('message.atten') : this.$t('message.attened');
-        return this.addOrCancelAttention(params).then((res : any) => {
-          this.getFollowAndAttention();
-        }).catch((err: any) => {
-          console.log(err);
-        });
-      }
-      return loadAuth();
-    });
+  handleSub($event: any, item: any, type:any) {
+    this.$emit('handleSub', $event, item, type);
   }
 
   handleSortChange({ prop, order }: any) {
     this.$emit('sortChange', { prop, order });
+  }
+
+  setTableShowType(type:any) {
+    this.$emit('changeTableType', type);
   }
 }
 </script>
@@ -446,16 +390,16 @@ export default class List extends Vue {
       :global(.header-column) {
         :global(.cell) {
           padding-left: 20px;
-          font-size:12px;
-          color:rgba(102,102,102,1);
+          font-size: 12px;
+          color: rgba(102, 102, 102, 1);
           font-weight: normal;
         }
       }
       :global(.header-column-default) {
         :global(.cell) {
           padding: 0;
-          font-size:12px;
-          color:rgba(102,102,102,1);
+          font-size: 12px;
+          color: rgba(102, 102, 102, 1);
           font-weight: normal;
         }
       }
@@ -466,10 +410,10 @@ export default class List extends Vue {
         background: rgba(255, 255, 255, 1);
       }
       :global(.descending .sort-caret.descending) {
-        border-top-color: #FF6200;
+        border-top-color: #ff6200;
       }
       :global(.ascending .sort-caret.ascending) {
-        border-bottom-color: #FF6200;
+        border-bottom-color: #ff6200;
       }
       :global(.default-row) {
         height: 80px;
@@ -528,13 +472,13 @@ export default class List extends Vue {
             flex-direction: column;
             text-align: left;
             padding-left: 10px;
-            font-family:MicrosoftYaHei;
+            font-family: MicrosoftYaHei;
             .info-1 {
               flex: 1;
               cursor: pointer;
-              font-size:14px;
-              color:rgba(51,51,51,1);
-              line-height:19px;
+              font-size: 14px;
+              color: rgba(51, 51, 51, 1);
+              line-height: 19px;
               &:hover {
                 .nick-name {
                   color: @default-color;
@@ -546,10 +490,10 @@ export default class List extends Vue {
               display: flex;
               align-items: flex-end;
               padding-bottom: 2px;
-              >span {
-                font-size:12px;
-                color:rgba(153,153,153,1);
-                line-height:16px;
+              > span {
+                font-size: 12px;
+                color: rgba(153, 153, 153, 1);
+                line-height: 16px;
               }
             }
           }
@@ -573,6 +517,21 @@ export default class List extends Vue {
           transition: all 0.3s ease-in;
           text-align: center;
           overflow: hidden;
+        }
+      }
+
+      .custom-sort-icon {
+        height: 25px;
+        font-size: 25px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        span {
+          cursor: pointer;
+          display: inline-block;
+          &.on {
+            color: @default-color;
+          }
         }
       }
       .custom-display-row-loading {
@@ -631,50 +590,50 @@ export default class List extends Vue {
     }
 
     .loading-container {
-        height: 80px;
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        .loading-lists {
-          width: 210px;
-          .custom-display-row-loading-1 {
-        animation: animations-loading 2s ease-in-out 0.1s infinite forwards;
-        display: flex;
-        flex-direction: row;
-        .trader-container-row {
+      height: 80px;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      .loading-lists {
+        width: 210px;
+        .custom-display-row-loading-1 {
+          animation: animations-loading 2s ease-in-out 0.1s infinite forwards;
           display: flex;
           flex-direction: row;
-          margin-left: 20px;
-          .loading-avatar {
-            width: 40px;
-            height: 40px;
-            background: rgba(230, 230, 230, 1);
-            border-radius: 20px;
-          }
-          .loading-info {
+          .trader-container-row {
             display: flex;
-            flex-direction: column;
-            justify-content: center;
-            margin-left: 4px;
-            .info-1 {
-              width: 70px;
-              height: 6px;
+            flex-direction: row;
+            margin-left: 20px;
+            .loading-avatar {
+              width: 40px;
+              height: 40px;
               background: rgba(230, 230, 230, 1);
-              margin-bottom: 2px;
+              border-radius: 20px;
             }
-            .info-2 {
-              width: 70px;
-              height: 6px;
-              margin-top: 2px;
-              background: rgba(230, 230, 230, 1);
+            .loading-info {
+              display: flex;
+              flex-direction: column;
+              justify-content: center;
+              margin-left: 4px;
+              .info-1 {
+                width: 70px;
+                height: 6px;
+                background: rgba(230, 230, 230, 1);
+                margin-bottom: 2px;
+              }
+              .info-2 {
+                width: 70px;
+                height: 6px;
+                margin-top: 2px;
+                background: rgba(230, 230, 230, 1);
+              }
             }
           }
         }
       }
-        }
-        .custom-display-row-loading {
-          flex: 1;
-        }
+      .custom-display-row-loading {
+        flex: 1;
+      }
     }
   }
 }
